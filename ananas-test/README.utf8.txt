@@ -14,3 +14,6 @@
 
 Взято с
 http://ananas.lrn.ru/index.php?title=UnitTests
+
+Для получения исходного кода тестов используйте команду
+svn co https://ananasproject.svn.sourceforge.net/svnroot/ananasproject/ananas-test
