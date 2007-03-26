@@ -1,0 +1,9 @@
+dbpass=
+workdir=tests/lib/
+dbhost=localhost
+dbtitle=testdb
+dbtype=mysql
+dbuser=root
+configfile=tests/lib/test.cfg
+dbname=ananas_inventory_test
+dbport=3306

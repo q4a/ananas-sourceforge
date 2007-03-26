@@ -1,0 +1,9 @@
+<!DOCTYPE PROJECT SYSTEM "dtd/project.dtd">
+<PROJECT NAME="Ananas" >
+ <AUTHOR>Grigory Panov</AUTHOR>
+ <DESCRIPTION>Testing the Ananas core lib.</DESCRIPTION>
+ <MODULE>
+  <FILEPATH>tests-bin/libcoretest.so</FILEPATH>
+  <SOURCEPATH>tests/lib/</SOURCEPATH>
+ </MODULE>
+</PROJECT>
