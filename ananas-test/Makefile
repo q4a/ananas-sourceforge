@@ -8,3 +8,9 @@ all: Makefile
 clean:
 	cd tests && $(MAKE) clean
 dummy:
+
+test: ananas.qpj tests-bin/libcoretest.so
+	texttestrunner ananas.qpj
+
+	
+	
