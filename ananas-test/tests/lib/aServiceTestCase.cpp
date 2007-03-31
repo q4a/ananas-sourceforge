@@ -46,5 +46,14 @@ aServiceTest::testNumber2money(){
 		digit, false, true, "рублей", "рубль", "рубля" ), spellRubOnly);
 	qassertEquals( aService::number2money(
 		digit, false, false, "рублей", "рубль", "рубля" ), spellRubOnly);
+	qassertEquals( 
+		aService::number2money(1001000.01, true, true, "рублей", "рубль", "рубля"), 
+		"один миллион   одна тысяча    рублей   01 копейка");
+	qassertEquals( 
+		aService::number2money(1000001000.01, true, true, "рублей", "рубль", "рубля"), 
+		"один миллиард   одна тысяча    рублей   01 копейка");
+	qassertEquals( 
+		aService::number2money(1000000001.00, true, true, "рублей", "рубль", "рубля"), 
+		"один миллиард   один рубль   00 копеек");
 }
 
