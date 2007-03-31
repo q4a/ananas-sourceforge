@@ -40,4 +40,5 @@ aTestSuite::aTestSuite()
 	addTestUnit(m_aCfgTestCase);
 	addTestUnit(m_aFilterTestCase);
 	addTestUnit(m_aServiceTestCase);
+	addTestUnit(m_aMoneyTestCase);
 }
