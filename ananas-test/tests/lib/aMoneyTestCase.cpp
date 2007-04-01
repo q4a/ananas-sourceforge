@@ -20,6 +20,7 @@
 
 #include "amoney.h"
 #include "aMoneyTestCase.h"
+#include <qtextcodec.h>
 
 using namespace com_uwyn_qtunit;
 
@@ -29,8 +30,7 @@ aMoneyTest::aMoneyTest() {
 
 void	
 aMoneyTest::setUp(){
-//	printf("result='%s'\n", (const char*) aService::number2money(
-//		digit, true, false, "рублей", "рубль", "рубля" ));
+	QTextCodec::setCodecForCStrings( QTextCodec::codecForName("UTF8") );
 }
 
 void 	
