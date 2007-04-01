@@ -17,9 +17,9 @@
 ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 **
 **********************************************************************/
-
 #include "aservice.h"
 #include "aServiceTestCase.h"
+#include <qtextcodec.h>
 
 using namespace com_uwyn_qtunit;
 
@@ -55,11 +55,11 @@ aServiceTest::testNumber2money(){
 		"один миллиард   один рубль   00 копеек");
 		
 // Преобразование в пропись для разных валют
+	QTextCodec::setCodecForCStrings( QTextCodec::codecForName("UTF8") );
 
 	// РУБЛИ
 	
 	qassertEquals( aService::number2money("RUR",100.10), "Сто рублей 10 копеек");
-
   	qassertEquals( aService::number2money("RUR",0000.00), "Ноль рублей 0 копеек");
 	qassertEquals( aService::number2money("RUR",1.01), "Один рубль 1 копейка");
 	qassertEquals( aService::number2money("RUR",2.02), "Два рубля 2 копейки");
@@ -98,6 +98,5 @@ aServiceTest::testNumber2money(){
 	qassertEquals( aService::number2money("EUR",1002000.01), "Один миллион две тысячи евро 1 цент");
 	qassertEquals( aService::number2money("EUR",1000001000.13), "Один миллиард одна тысяча евро 13 центов");
 	qassertEquals( aService::number2money("EUR",1000000001.00), "Один миллиард один евро 0 центов");
-
 }
 
