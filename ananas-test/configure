@@ -1,4 +1,0 @@
-#!/bin/bash
-
-echo "Unit tests for ananas are configured."
-echo "Run make."
