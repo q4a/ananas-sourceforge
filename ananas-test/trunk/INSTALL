@@ -1,0 +1,60 @@
+This file desribe installation procedure unit-tests of Ananas library.
+You need: 
+-library qt3.3.x for compile this project. 
+-ananas libraries and headers to compile and run tests 
+
+== Download files ==
+Download ananas unit-test project from cvs. 
+Use commands like this:
+
+cd /home/username/devel/
+cvs -d :pserver:anonimus@www.leaderit.ru:/var/lib/cvs co -z6 ananas-tests
+
+Download QTUnit library from http://www.uwyn.com/projects/qtunit
+Unpack downloaded files into some directory, e.g. /home/username/devel/qtunit
+
+== Compile QTUnit ==
+
+Compile QTUnit library with command:
+cd /home/username/devel/qtunit && configure && make
+
+If make ended without any errors, you get in /home/username/devel/qtunit/bin directory files 
+texttestrunner, statictestrunner and guitestrunner, and in /home/username/devel/qtunit/lib file libqtunut.so, libqtunut.so.1 
+etc.
+
+== Install QTUnit==
+Unfortunatly, QTUnit not support installation procedure with make command.
+If you want install QTUnit into your system, just copy files (or create symlink) 
+
+cp -f /home/username/devel/qtunit/bin/texttestrunner /usr/bin
+cp -f /home/username/devel/qtunit/lib/libqtunit.so* /usr/lib
+
+If you want install QTUnit library for ananas-test project only, you should copy (create symlink) files
+into directory /home/username/devel/ananas-tests
+
+cp -f /home/username/devel/qtunit/bin/texttestrunner /home/username/devel/ananas-tests
+cp -f /home/username/devel/qtunit/lib/libqtunit.so* /home/username/devel/ananas-tests/lib
+
+== Install ananas libraries and headers  ==
+
+sudo rpm -ivh ananas-<VERSION>.i386.rpm
+sudo rpm -ivh ananas-devel-<VERSION>.i386.rpm
+
+== Compile ==
+
+Now you can compile ananas-tests with command 
+cd /home/username/devel/ananas-tests && configure && make;
+
+== Run tests ==
+
+If you install QTUnit local, use next commands for run unit-tests
+
+cd /home/username/devel/ananas-tests
+./texttestrunner ananas.qpj
+
+Otherwise use
+
+texttestrunner /home/username/devel/ananas-tests/ananas.qpj
+
+
+@gr
