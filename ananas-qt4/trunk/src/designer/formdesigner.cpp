@@ -120,3 +120,6 @@ aFormDesigner::mouseDoubleClickEvent ( QMouseEvent * e )
 	//--MainWindow::mouseDoubleClickEvent ( e );
 }
 
+void aFormDesigner::fileOpen(const QString&, const QString&, const QString&)
+{
+}

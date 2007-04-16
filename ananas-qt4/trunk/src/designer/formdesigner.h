@@ -33,9 +33,12 @@
 //Added by qt3to4:
 #include <QMouseEvent>
 #include <QCloseEvent>
+#include <QMainWindow>
 
 
-class aFormDesigner : public QWidget//--: public MainWindow
+class QDesignerWorkbench;
+
+class aFormDesigner : public QMainWindow//--: public MainWindow
 {
 public:
 	aFormDesigner();
@@ -43,11 +46,15 @@ public:
 	void show();
 	void hide();
 	//--
-	void fileOpen(const QString&, const QString&, const QString&) {};
+	void fileOpen(const QString&);
 	void fileSaveAll() {};
+
 protected:
 	virtual void closeEvent( QCloseEvent *e );
 	virtual void mouseDoubleClickEvent ( QMouseEvent * e );
+
+private:
+    QDesignerWorkbench *m_workbench;
 };
 
 #endif

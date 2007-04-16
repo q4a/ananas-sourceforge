@@ -296,6 +296,9 @@ wCatalogEditor::openForm(const bool toSelect)
 				toSelect);
 
 	newform->setId(value().toULongLong());
+	//--
+	if (ws)
+        ((QWorkspace*)ws)->addWindow(newform);
 	newform->show();
 	((QWidget*)newform->parent())->move(0,0);
 }

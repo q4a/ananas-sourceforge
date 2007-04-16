@@ -217,7 +217,7 @@ void dEditDialog::EditForm()
 
 		aLog::print(aLog::ERROR, tr("dEditDialog file %1 not exists").arg(eFormFile->text()));
    	}
-	formdesigner->fileOpen( "", "", eFormFile->text() );
+	formdesigner->fileOpen( eFormFile->text() );
    	aLog::print(aLog::DEBUG, tr("dEditDialog show formdesigner"));
 	formdesigner->show();
 
