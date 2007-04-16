@@ -32,6 +32,18 @@
 #include <qfocusdata.h>
 #include <qpainter.h>
 #include <qmessagebox.h> 
+//Added by qt3to4:
+#include <QContextMenuEvent>
+#include <Q3HBoxLayout>
+#include <QKeyEvent>
+#include <Q3SqlPropertyMap>
+#include <Q3ValueList>
+#include <Q3SqlCursor>
+#include <QPixmap>
+#include <Q3Frame>
+#include <q3mimefactory.h>
+#include <Q3PopupMenu>
+#include <QEvent>
 #include "propertyeditor.h"
 #include "command.h"
 #include "formwindow.h"
@@ -50,7 +62,7 @@
  * 	Задает значение ширины по умолчанию для столбца = 100. \_ru
  */
 wDBTable::wDBTable( QString objtype,  QWidget *parent, const char *name )
-    : QDataTable( parent, name )
+    : Q3DataTable( parent, name )
 {
 //	vId = 0;
 //	verticalHeader()->hide();
@@ -151,7 +163,7 @@ wDBTable::getDefIdList() const
  *	Получение идентификатора документа метаданных, которому принадлежит виджет.
  *	\~
  */
-Q_ULLONG
+qulonglong
 wDBTable::getId() const
 {
 	return doc_id;		
@@ -257,7 +269,7 @@ wDBTable::setDefIdList(QStringList lst)
  *	\~
  */
 void
-wDBTable::setId( Q_ULLONG fn )
+wDBTable::setId( qulonglong fn )
 {
 	doc_id = fn;
 }
@@ -345,7 +357,7 @@ wDBTable::init()// aDatabase *adb )
         
 	// set up pixmap for calculated fields
 
-	cur = new QSqlCursor("cur",false);
+	cur = new Q3SqlCursor("cur",false);
 	md = aWidget::parentContainer(this)->getMd();
 	if ( md )
 	{
@@ -391,7 +403,7 @@ aCfgItem o_table, o = tables;
 QString str;
 QStringList listIdTable;
 int res;
-QValueList<int> vList = getBindList();
+Q3ValueList<int> vList = getBindList();
 
 	if(o.isNull()) return;
 	QString objClass = md->objClass(o);
@@ -487,7 +499,7 @@ wDBTable::paintField ( QPainter * p, const QSqlField * field, const QRect & cr, 
         if ( sqlCursor()->contains( "text_"+field->name() ) ) {
 		QSqlField f(*field);
 		f.setValue(((aDataTable*)sqlCursor())->sysValue("text_"+f.name()));
-		 QDataTable::paintField( p, &f, cr, selected );
+		 Q3DataTable::paintField( p, &f, cr, selected );
 		 return;
 	//	f = * sqlCursor()->field( "text_"+f.name() );
         }
@@ -495,10 +507,10 @@ wDBTable::paintField ( QPainter * p, const QSqlField * field, const QRect & cr, 
 	{
 		QSqlField f(*field);
 		f.setValue(field->value().toDate());// don't show time
-		QDataTable::paintField( p, &f, cr, selected );
+		Q3DataTable::paintField( p, &f, cr, selected );
 		return;
 	}
-	QDataTable::paintField( p, field, cr, selected );
+	Q3DataTable::paintField( p, field, cr, selected );
 }
 
 
@@ -516,7 +528,7 @@ wDBTable::systemIcon()
         aWidget *container = aWidget::parentContainer( this );
         QString ctype="";
         QPixmap pm;
-        QSqlCursor *r = sqlCursor();
+        Q3SqlCursor *r = sqlCursor();
         int df=0, cf=0, mf=0;
 
         if ( container ) ctype = container->className();
@@ -601,7 +613,7 @@ CHECK_POINT
 	int field_count,j;
 	int i; //,tableCount;
 	//QSqlCursor *cur;
-	const QSqlFieldInfo *field;
+	const Q3SqlFieldInfo *field;
 	QString str;
 	QStringList Cwidth, list_fields,list_id;
 	aCfgItem o, o_table, o_field;
@@ -646,7 +658,7 @@ CHECK_POINT
 			list_fields << md->attr(o_field,mda_name);
 			list_id << md->attr(o_field,mda_id);
 			str.setNum(j);
-			field = new QSqlFieldInfo(md->attr(o_field,"name"));
+			field = new Q3SqlFieldInfo(md->attr(o_field,"name"));
 			cur->append(*field);
 			setSqlCursor(cur);
 			addColumn(field->name(),field->name(),property("DefaultColWidth").toInt());
@@ -937,15 +949,15 @@ wDBTable::init(aDatabase *adb, aEngine *e )
 	int tid;
 	aWidget *container = NULL;
 
-	t_doc = QPixmap::fromMimeSource( "t_doc.png" );
-        t_doc_d = QPixmap::fromMimeSource( "t_doc_d.png" );
-        t_doc_t = QPixmap::fromMimeSource( "t_doc_t.png" );
-        t_doc_m = QPixmap::fromMimeSource( "t_doc_m.png" );
-        t_doc_tm = QPixmap::fromMimeSource( "t_doc_tm.png" );
-	t_cat_e = QPixmap::fromMimeSource( "t_cat_e.png" );
-        t_cat_ed = QPixmap::fromMimeSource( "t_cat_ed.png" );
-	t_cat_g = QPixmap::fromMimeSource( "t_cat_g.png" );
-	t_cat_gd = QPixmap::fromMimeSource( "t_cat_gd.png" );
+	t_doc = qPixmapFromMimeSource( "t_doc.png" );
+        t_doc_d = qPixmapFromMimeSource( "t_doc_d.png" );
+        t_doc_t = qPixmapFromMimeSource( "t_doc_t.png" );
+        t_doc_m = qPixmapFromMimeSource( "t_doc_m.png" );
+        t_doc_tm = qPixmapFromMimeSource( "t_doc_tm.png" );
+	t_cat_e = qPixmapFromMimeSource( "t_cat_e.png" );
+        t_cat_ed = qPixmapFromMimeSource( "t_cat_ed.png" );
+	t_cat_g = qPixmapFromMimeSource( "t_cat_g.png" );
+	t_cat_gd = qPixmapFromMimeSource( "t_cat_gd.png" );
 	
 	engine = e;
 	setConfirmDelete(true);
@@ -1001,14 +1013,14 @@ wDBTable::init(aDatabase *adb, aEngine *e )
                 tbl = container->table(); //new aSQLTable( o, adb );
 		setFilter(QString("idg=0"));
 		newDataId(0);
-		tbl->append( QSqlFieldInfo("system_icon") );
+		tbl->append( Q3SqlFieldInfo("system_icon") );
 //		tbl->setGenerated( "system_icon", false );
 		tbl->setCalculated("system_icon", true );
           }
 	if ( containerType() == "wJournal" ) {
 		tbl = container->table(); //new aSQLTable( o, adb );
 		tbl->setMode( 0 );
-		tbl->append( QSqlFieldInfo( "system_icon" ) );
+		tbl->append( Q3SqlFieldInfo( "system_icon" ) );
 //		tbl->setGenerated( "system_icon", false );
 		tbl->setCalculated( "system_icon", true );
 //		tbl->append( QSqlFieldInfo( "t1" ) );
@@ -1113,7 +1125,7 @@ wDBTable::setWFieldEditor()
 {
 	 aEditorFactory * f = new  aEditorFactory(this,"");
 	 f->setMd(md);
-	 QSqlPropertyMap * m = new QSqlPropertyMap();
+	 Q3SqlPropertyMap * m = new Q3SqlPropertyMap();
 	 m->insert("wField", "value");
 	 installPropertyMap(m);
 	 installEditorFactory(f);
@@ -1208,7 +1220,7 @@ aEditorFactory::setMd(aCfg * cfg)
  *	\~
  *	\return \~english list of id binding table. \~russian список таблиц \~
  */
-QValueList<int>
+Q3ValueList<int>
 wDBTable::getBindList()
 {
 aCfgItem obj;
@@ -1274,7 +1286,7 @@ wDBTable::lineChange(int, int)
 {
 	QSqlRecord * rec = currentRecord();
 	if ( !rec ) return;
-	Q_ULLONG id = 0;
+	qulonglong id = 0;
 	if(rec->contains("id")) id = rec->value("id").toLongLong();
 	//if (containerType() == "wJournal")
 	//{
@@ -1317,7 +1329,7 @@ bool
 wDBTable::deleteCurrent()
 {
 	bool res;
-	res = QDataTable::deleteCurrent();
+	res = Q3DataTable::deleteCurrent();
 	emit(updateCurr(currentRow(),currentColumn()));
 	return res;
 	
@@ -1334,7 +1346,7 @@ wDBTable::deleteCurrent()
 void
 wDBTable::keyPressEvent ( QKeyEvent *e )
 {
-	Q_ULLONG id;
+	qulonglong id;
 
 	aWidget *container = NULL;
 	if ( searchMode == FALSE && e->text().at( 0 ).isPrint() ) 
@@ -1361,7 +1373,7 @@ wDBTable::keyPressEvent ( QKeyEvent *e )
 			if(currentRecord())
 			{
 				id = currentRecord()->value(0).toLongLong();
-				if ( e->state() == Qt::ShiftButton ) 
+				if ( e->state() == Qt::ShiftModifier ) 
 				{
 					//printf("Shift+Return pressed %Ld\n", id);
 					EditElement();
@@ -1382,7 +1394,7 @@ wDBTable::keyPressEvent ( QKeyEvent *e )
 			break;
 		}
 	}
-	QDataTable::keyPressEvent( e );
+	Q3DataTable::keyPressEvent( e );
 }
 
 
@@ -1410,7 +1422,7 @@ wDBTable::newFilter(const QString & flt)
  *\_ru
  */
 void
-wDBTable::newDataId(const Q_ULLONG id)
+wDBTable::newDataId(const qulonglong id)
 {
 	if(containerType() == "wDocument")
 	{
@@ -1511,7 +1523,7 @@ wDBTable::updateTableCellHandler(int r, int c)
 bool
 wDBTable::updateCurrent()
 {
-	bool res = QDataTable::updateCurrent();
+	bool res = Q3DataTable::updateCurrent();
 	if(res)
 	{
 //		printf(">>>>real update curr row %d  col %d!\n",lastEditedRow, lastEditedCol);
@@ -1553,7 +1565,7 @@ QWidget *
 wDBTable::beginUpdate ( int row, int col, bool replace )
 {
 	wField  *wd;
-	wd = (wField*)QDataTable::beginUpdate(row,col,replace);
+	wd = (wField*)Q3DataTable::beginUpdate(row,col,replace);
 	if(wd)
 	{
 		//inEditMode = true;
@@ -1570,7 +1582,7 @@ wDBTable::doubleClickEventHandler(int /*rol*/, int /*col*/, int /*button*/, cons
 	{
 		if(currentRecord())
 		{
-			Q_ULLONG id = currentRecord()->value(0).toLongLong();
+			qulonglong id = currentRecord()->value(0).toLongLong();
 			emit( selected( id ) );
 		}
 	}
@@ -1599,7 +1611,7 @@ wDBTable::confirmEdit( QSql::Op m ) {
             	return QSql::No; 
         }
 	} else {
-		return QDataTable::confirmEdit( m );
+		return Q3DataTable::confirmEdit( m );
 	}
 }
 		
@@ -1617,7 +1629,7 @@ wDBTable::beginInsert() {
     if ( !sqlCursor()->canInsert() )
 		return FALSE;
 	
-	bool result = QDataTable::beginInsert();
+	bool result = Q3DataTable::beginInsert();
 	endEdit( currentRow(), currentColumn(), false, false);
 	setCurrentCell( numRows(), 0 );
 	return result; 	
@@ -1635,7 +1647,7 @@ wDBTable::beginInsert() {
 void
 wDBTable::contentsContextMenuEvent ( QContextMenuEvent * e )
 {
-	QTable::contentsContextMenuEvent( e );
+	Q3Table::contentsContextMenuEvent( e );
 	QString str, ctype;
 	
 	if ( containerType() == "wDocument" || containerType() == "wCatalogue" ) {
@@ -1648,7 +1660,7 @@ wDBTable::contentsContextMenuEvent ( QContextMenuEvent * e )
     		IdDelete,
 		};
 		
-		QGuardedPtr<QPopupMenu> popupForDoc = new QPopupMenu( this );
+		QPointer<Q3PopupMenu> popupForDoc = new Q3PopupMenu( this );
 		int id[ 3 ];
 		id[ IdInsert ] 	= popupForDoc->insertItem( tr( "New" ) );
 		id[ IdUpdate ] 	= popupForDoc->insertItem( tr( "Edit" ) );
@@ -1661,13 +1673,13 @@ wDBTable::contentsContextMenuEvent ( QContextMenuEvent * e )
 		}
 
 		int r = popupForDoc->exec( e->globalPos() );
-		delete (QPopupMenu*) popupForDoc;
+		delete (Q3PopupMenu*) popupForDoc;
 		if(r==id[IdInsert]) { 
 			beginInsert();
 		} else if(r==id[IdUpdate]) {
 			keyPressEvent( new QKeyEvent( QEvent::KeyPress, Qt::Key_F2, 0, Qt::NoButton));
 		} else if(r==id[IdDelete]) {
-			QDataTable::deleteCurrent();
+			Q3DataTable::deleteCurrent();
 		}
 	}
 	
@@ -1681,7 +1693,7 @@ wDBTable::contentsContextMenuEvent ( QContextMenuEvent * e )
 	    		IdDelete,
 	    		IdView,
 			IdRefresh };
-		QGuardedPtr<QPopupMenu> popup = new QPopupMenu( this );
+		QPointer<Q3PopupMenu> popup = new Q3PopupMenu( this );
 		int id[ 5 ];
 		id[ IdInsert ] = popup->insertItem( tr( "New" ) );
 		id[ IdUpdate ] = popup->insertItem( tr( "Edit" ) );
@@ -1689,7 +1701,7 @@ wDBTable::contentsContextMenuEvent ( QContextMenuEvent * e )
 		id[ IdView ] = popup->insertItem( tr( "View" ) );
 		id[ IdRefresh ] = popup->insertItem( tr( "Refresh" ) );
 		int r = popup->exec( e->globalPos() );
-		delete (QPopupMenu*) popup;
+		delete (Q3PopupMenu*) popup;
 		if(r==id[IdInsert]) 
 			emit(insertRequest());
 		else
@@ -1810,13 +1822,13 @@ wDBTable::searchClose()
  *\~
  */
 aSearchWidget::aSearchWidget( QWidget *parent, wDBTable *table )
-: QFrame( parent )
+: Q3Frame( parent )
 {
 	t = table;
 	ftext = "";
-	setFrameStyle( QFrame::PopupPanel | QFrame::Raised );
+	setFrameStyle( Q3Frame::PopupPanel | Q3Frame::Raised );
 	setFocusPolicy( StrongFocus );
-	new QHBoxLayout( this, 0, 0 );
+	new Q3HBoxLayout( this, 0, 0 );
 	l = new QLineEdit( this );
         l->installEventFilter( this );
 	setFocusProxy( l );
@@ -1881,6 +1893,6 @@ aSearchWidget::eventFilter( QObject *obj, QEvent *ev )
             }
         } else {
             // pass the event on to the parent class
-            return QFrame::eventFilter( obj, ev );
+            return Q3Frame::eventFilter( obj, ev );
         }
 }

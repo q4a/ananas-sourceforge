@@ -36,11 +36,13 @@
 #include "ananasglobal.h"
 
 #include <qobject.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qsproject.h>
 #include <qsinterpreter.h>
 #include <qsargument.h>
 #include <qmutex.h>
+//Added by qt3to4:
+#include <Q3SqlForm>
 
 #include "engine.h"
 #include "adatabase.h"
@@ -49,7 +51,7 @@
 
 
 class QWidget;
-class QSqlForm;
+class Q3SqlForm;
 class aWidget;
 
 
@@ -58,15 +60,15 @@ class aWidget;
  *\~english
  *	Ananas form.
  *\~russian
- *	\brief Определяет программный интерфейс экранных форм Ананаса, предназначенный для использования 
+ *	\brief Определяет программный интерфейс экранных форм Ананаса, предназначенный для использования
  *	Ананас.Скриптом модуля экранной формы Документа и других бизнес объектов Ананаса.
- *	
+ *
  *	Любая экранная форма, спроектированная в Ананас.Дизайнере имеет методы этого класса.
  *	Объект данного класса создается при создании формы. Программный код, написанный на Ананас.Скрипте и хранящийся
- *	в модуле экранной формы (вкладка "Модуль" в Дизайнере) может обращаться к методам этого объекта напрямую, 
- *	без указания имени объекта. 
+ *	в модуле экранной формы (вкладка "Модуль" в Дизайнере) может обращаться к методам этого объекта напрямую,
+ *	без указания имени объекта.
  *
- *	Кроме того, класс обеспечивает вызов некоторых функций на Ананас.Скрипте, определенных в модуле экранной формы, 
+ *	Кроме того, класс обеспечивает вызов некоторых функций на Ананас.Скрипте, определенных в модуле экранной формы,
  *	при наступлении определенных событий, например открытии или закрытии формы, изменения значения виджетов формы и т.п
  *	Полный список этих событий и функций можно посмотеть на сайте Ананаса в разделе руководства по Ананас.Дизайнеру.
  *\~
@@ -91,13 +93,13 @@ public:
 	void		init();
 	QWidget*	aParent( QWidget *widget );
 	int		New();
-	int		Select( Q_ULLONG id );
-	int		SelectGroup( Q_ULLONG id );
-	Q_ULLONG	selectedCatId(){ return db_uid;} // Return uid, selected in Catalogue
-	Q_ULLONG	selectedId(){ return id;} // Return uid, selected in  main wDBTable
+	int		Select( qulonglong id );
+	int		SelectGroup( qulonglong id );
+	qulonglong	selectedCatId(){ return db_uid;} // Return uid, selected in Catalogue
+	qulonglong	selectedId(){ return id;} // Return uid, selected in  main wDBTable
 signals:
-	void selected( Q_ULLONG uid );
-	void closeForm( Q_ULLONG );
+	void selected( qulonglong uid );
+	void closeForm( qulonglong );
 	void changedData();
 	void update( ANANAS_UID );
 public:
@@ -140,18 +142,18 @@ public slots:
 	void		SetReadOnly( bool status );
 	bool		IsReadOnly();
 	int 		GetMode();
-		
-	QString 	Propis( 	QString val ,  
+
+	QString 	Propis( 	QString val ,
 					bool need_kopeyki=true,
 					bool male=true,
 					const QString &end1="рублей",
 					const QString &end2="рубль",
 					const QString &end3="рубля");
-	QString 	MoneyToText( QString amount , QString currency ); 
+	QString 	MoneyToText( QString amount , QString currency );
 	QString 	ConvertNumber2MoneyFormat(double number);
 	QString 	ConvertDateFromIso(const QString &ISODate);
 	QString		EndOfDay(const QString& ISODate);
-	
+
 	void		SelectByCurrent(aObject *doc);
 	void		SetCurrent(aObject *doc);
 	aObject*	Current();
@@ -179,9 +181,9 @@ private slots:
 	void on_valueChanged(const QString &s);
 	void on_valueChanged( const QString & name, const QVariant & value );
 	void on_tabvalueChanged(int row, int col);
-	void on_tabselected( Q_ULLONG uid );
+	void on_tabselected( qulonglong uid );
 	void on_event( const QString &source, const QString &data );
-	void on_tablerow( Q_ULLONG uid );
+	void on_tablerow( qulonglong uid );
 //	QObject *findWidget(QString name);
 //	QString widgetName(QObject *w);
 //	void openForm( int oid, int fid = 0 , int defaultfor = 1, int mode = 0, bool readonly = false );
@@ -194,8 +196,8 @@ private:
 	QObject*	dbobject;
 	int		tobj, objid;
 	int 		mode;
-	Q_ULLONG	id;
-	Q_ULLONG	db_uid;
+	qulonglong	id;
+	qulonglong	db_uid;
 	bool		RO;
 	aWidget*	mainWidget;
 	aWidget*	callerWidget;

@@ -34,10 +34,12 @@
 #include <qwidget.h>
 #include <qwidgetplugin.h>
 #include <qlabel.h>
-#include <qobjectlist.h>
+#include <qobject.h>
 #include <qlayout.h>
-#include <qsocket.h>
+#include <q3socket.h>
 #include <qeventloop.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 #include "adatabase.h"
 #include "acfg.h"
 #include "wfield.h"
@@ -70,8 +72,8 @@ friend class addfdialog;
 	
 public:
 
-	wDBField( QWidget *parent, WFlags fl );
-	wDBField( QWidget *parent, const char *name, WFlags fl );
+	wDBField( QWidget *parent, Qt::WFlags fl );
+	wDBField( QWidget *parent, const char *name, Qt::WFlags fl );
 	~wDBField();
 
 	virtual QDialog* createEditor( QWidget *parent );
@@ -84,7 +86,7 @@ public:
 protected:	
 	QStringList	getFields();
 	void		init();
-	QValueList<Q_ULLONG> getBindList();
+	Q3ValueList<qulonglong> getBindList();
 	void		setEditorType(void);
 
 	QString		FieldName;

@@ -38,6 +38,8 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include "wdbtable.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 
 void eDBTable::init()
 {
@@ -260,7 +262,7 @@ void eDBTable::ColumnUpd()
 {
 QStringList lst;
 int id;
-QValueList<int> listTableId;
+Q3ValueList<int> listTableId;
 	id = table->getTableId(ComboBoxTable->currentItem()-1);
 	listTableId = table->getBindList();
 	if(listTableId.find(id)!=listTableId.end())
@@ -297,7 +299,7 @@ void eDBTable::getData( wDBTable *t )
 QStringList lst;
 QString str, str2;
 int i;
-const QSqlFieldInfo *f;
+const Q3SqlFieldInfo *f;
 	if(ComboBoxTable->count())
 	{
 	//	t->setProperty("TableInd", tables[ComboBoxTable->currentItem()].section("\t",0,0).toInt())
@@ -314,11 +316,11 @@ const QSqlFieldInfo *f;
 			ListCol->setCurrentItem(j);
 			str = ListCol->currentText();
 			lst << str;
-			f = new QSqlFieldInfo(fname[j]);
+			f = new Q3SqlFieldInfo(fname[j]);
 			t->cur->append(*f);
 			t->setSqlCursor(t->cur);
 			t->addColumn(f->name(),str,atoi(cwidth[j].ascii()));
-			t->refresh(QDataTable::RefreshColumns); 
+			t->refresh(Q3DataTable::RefreshColumns); 
 		}
 		t->setProperty("DefHeaders",lst);
 		t->setProperty("DefFields",fname);

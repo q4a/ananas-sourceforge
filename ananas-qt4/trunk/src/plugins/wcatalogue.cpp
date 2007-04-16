@@ -29,9 +29,9 @@
 **********************************************************************/
 
 #include <qobject.h>
-#include <qsqlcursor.h>
-#include <qsqlpropertymap.h>
-#include <qtoolbar.h>
+#include <q3sqlcursor.h>
+#include <q3sqlpropertymap.h>
+#include <q3toolbar.h>
 #include <qaction.h>
 #include <qfocusdata.h> 
 #include "adatabase.h"
@@ -49,7 +49,7 @@
  *\_en \ru
  *\_ru
  */
-wCatalogue::wCatalogue( QWidget *parent, WFlags fl )
+wCatalogue::wCatalogue( QWidget *parent, Qt::WFlags fl )
 :aWidget( parent, "wCatalogue", fl )
 {
 	setInited( false );
@@ -82,16 +82,16 @@ wCatalogue::initObject( aDatabase *adb )
 		if(obj->inherits("wGroupTree"))
 		{
 			((wGroupTree*)obj)->setId(getId());
-			connect( (wGroupTree *)obj, SIGNAL(selectionChanged( const Q_ULLONG )),
-				this, SLOT(selectionChanged( const Q_ULLONG )) );
+			connect( (wGroupTree *)obj, SIGNAL(selectionChanged( const qulonglong )),
+				this, SLOT(selectionChanged( const qulonglong )) );
 			
 		}
 		if(obj->inherits("wDBTable"))
 		{
 			connect( this, SIGNAL(newSelectionFilter( const QString&  )),
 				(wDBTable*)obj, SLOT(newFilter( const QString& )) );
-			connect( this, SIGNAL(newSelectionGroupId( const Q_ULLONG  )),
-				(wDBTable*)obj, SLOT(newDataId( const Q_ULLONG )) );
+			connect( this, SIGNAL(newSelectionGroupId( const qulonglong  )),
+				(wDBTable*)obj, SLOT(newDataId( const qulonglong )) );
 			
 		}
 			
@@ -204,13 +204,13 @@ wCatalogue::createEditor( QWidget *parent )
 
 
 int
-wCatalogue::select( Q_ULLONG )//id )
+wCatalogue::select( qulonglong )//id )
 {
 	return 0;
 }
 
 
-Q_ULLONG
+qulonglong
 wCatalogue::insert()
 {
     return 0;
@@ -258,7 +258,7 @@ wCatalogue::createDBObject(  aCfgItem obj, aDatabase *adb )
 
 
 ERR_Code
-wCatalogue::Select( Q_ULLONG id )
+wCatalogue::Select( qulonglong id )
 {
 
 	//if ( formMode()==0 ) {
@@ -296,7 +296,7 @@ wCatalogue::Select( Q_ULLONG id )
 
 
 ERR_Code
-wCatalogue::SelectGroup( Q_ULLONG id )
+wCatalogue::SelectGroup( qulonglong id )
 {
 
 	ERR_Code err = ((aCatalogue*)dbobj)->groupSelect( id );
@@ -378,8 +378,8 @@ wCatalogue::setFormMode( int Mode )
 /*!
  * Create toolbar for Catalogue.
  */
-QToolBar*
-wCatalogue::createToolBar( QMainWindow * owner )
+Q3ToolBar*
+wCatalogue::createToolBar( Q3MainWindow * owner )
 {
 	/*
 	QAction *a;
@@ -434,7 +434,7 @@ wCatalogue::createToolBar( QMainWindow * owner )
 }
 
 void
-wCatalogue::selectionChanged(const Q_ULLONG groupId)
+wCatalogue::selectionChanged(const qulonglong groupId)
 {
 	aLog::print(aLog::ERROR, tr("wCatalogue selection changed to %1 ").arg(groupId));
 	emit(newSelectionGroupId(groupId));

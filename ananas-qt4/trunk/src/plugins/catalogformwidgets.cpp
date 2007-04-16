@@ -27,22 +27,26 @@
 **
 **********************************************************************/
 
-#include <qpopupmenu.h> 
+#include <q3popupmenu.h> 
 #include <qtimer.h>
 #include <qmessagebox.h>
+//Added by qt3to4:
+#include <Q3Frame>
+#include <QKeyEvent>
+#include <QFocusEvent>
 
 #include "catalogformwidgets.h"
 /*!
  * Constructor
  */
-aListBox::aListBox(QWidget* parent, const char * name, WFlags f):QListBox(parent,name,f)
+aListBox::aListBox(QWidget* parent, const char * name, Qt::WFlags f):Q3ListBox(parent,name,f)
 {
 	
-	listPrivate = new QListBox(parent);
+	listPrivate = new Q3ListBox(parent);
 	listPrivate->hide();
 	setFocusPolicy (QWidget::StrongFocus);
-	connect(this, 	SIGNAL	( doubleClicked( QListBoxItem * ) ), 
-		this,	SLOT	( doubleClickHandler( QListBoxItem * ) ));
+	connect(this, 	SIGNAL	( doubleClicked( Q3ListBoxItem * ) ), 
+		this,	SLOT	( doubleClickHandler( Q3ListBoxItem * ) ));
 //	layout1 = new QVBoxLayout();
 //	statusBar = new QLabel(this,"statusBar");
 //	statusBar->
@@ -64,7 +68,7 @@ aListBox::~aListBox()
  * \param fr (in, out) - status frame.
  */
 void
-aListBox::show(QWidget *wd, QFrame *fr)//, QLabel *lb)
+aListBox::show(QWidget *wd, Q3Frame *fr)//, QLabel *lb)
 {
  	setGeometry(wd->x(),
 		    wd->y()+wd->size().height()+1,
@@ -116,7 +120,7 @@ aListBox::keyPressEvent(QKeyEvent *e)
 		
 	}
 	e->accept();
-	QListBox::keyPressEvent(e);
+	Q3ListBox::keyPressEvent(e);
 }
 /*!
  * Inserts s in list and idx in list of id.
@@ -128,7 +132,7 @@ void
 aListBox::insertItem(const QString &s, long idx, int index)
 {
 	listPrivate->insertItem(QString("%1").arg(idx),index);
-	QListBox::insertItem(s,index);
+	Q3ListBox::insertItem(s,index);
 }
 /*!
  * Clears list and list of id.
@@ -137,7 +141,7 @@ void
 aListBox::clear()
 {
 	listPrivate->clear();
-	QListBox::clear();
+	Q3ListBox::clear();
 }
 /*!
  * Focus out event handler. Emit signal lost focus.
@@ -154,12 +158,12 @@ aListBox::focusOutEvent ( QFocusEvent *e )
 void
 aListBox::setFocus()
 {
-	QListBox::setFocus();
+	Q3ListBox::setFocus();
 	emit(sendMessage(tr("Use Enter for go to item and arrow for navigation")));
 }
 
 void 
-aListBox::doubleClickHandler(QListBoxItem *i)
+aListBox::doubleClickHandler(Q3ListBoxItem *i)
 {
 //	printf("double click handler!\n");
 	emit(keyArrowLRPressed());
@@ -238,16 +242,16 @@ aLineEdit::setFocus()
  */
 aListView::aListView(QWidget* parent, 
 		     const char* name,
-		     WFlags f) : QListView(parent,name,f)
+		     Qt::WFlags f) : Q3ListView(parent,name,f)
 {
 	menu = 0;	
 	toSelect = true;
 	
-	connect(this, SIGNAL( doubleClicked( QListViewItem *, const QPoint&, int)),
-		this, SLOT( doubleClickHandler( QListViewItem *, const QPoint&, int)));
+	connect(this, SIGNAL( doubleClicked( Q3ListViewItem *, const QPoint&, int)),
+		this, SLOT( doubleClickHandler( Q3ListViewItem *, const QPoint&, int)));
 		
-	connect(this, SIGNAL( contextMenuRequested (QListViewItem*, const QPoint&, int)),  	   
-		this, SLOT( showMenu( QListViewItem*, const QPoint&, int)));
+	connect(this, SIGNAL( contextMenuRequested (Q3ListViewItem*, const QPoint&, int)),  	   
+		this, SLOT( showMenu( Q3ListViewItem*, const QPoint&, int)));
 	
 }
 
@@ -263,10 +267,10 @@ aListView::~aListView()
  * \param col (in) - current column.
  */
 void 
-aListView::showMenu( QListViewItem* item, const QPoint& p, int col)
+aListView::showMenu( Q3ListViewItem* item, const QPoint& p, int col)
 {
 	delete menu;
-	menu = new QPopupMenu();
+	menu = new Q3PopupMenu();
 	if(toSelect)
 	{
 		menu->insertItem(tr("Select"),	this,	SLOT(select()));
@@ -395,14 +399,14 @@ aListView::keyPressEvent(QKeyEvent *e)
 		e->ignore();
 		break;
 	}
-	QListView::keyPressEvent(e);
+	Q3ListView::keyPressEvent(e);
 	
 }
 
 void
 aListView::setFocus()
 {
-	QListView::setFocus();
+	Q3ListView::setFocus();
 	if(toSelect)
 	{
 		emit(sendMessage(tr("<Enter> - select, <Ins> - add, <Del> - delete items")));
@@ -415,7 +419,7 @@ aListView::setFocus()
 
 
 void
-aListView::doubleClickHandler( QListViewItem *item, const QPoint& p, int col)
+aListView::doubleClickHandler( Q3ListViewItem *item, const QPoint& p, int col)
 {
 	parentItem = item;
 	columnClicked = col;

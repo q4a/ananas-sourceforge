@@ -35,10 +35,14 @@
 #include <qdom.h>
 #include <qvalidator.h>
 #include <qlabel.h>
-#include <qlistbox.h>
+#include <q3listbox.h>
 #include <qsizepolicy.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qpushbutton.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3Frame>
+#include <QKeyEvent>
 
 #include "command.h"
 #include "mainwindow.h"
@@ -56,15 +60,15 @@
  * \en	Constructs object with parent=parent, name=name and flags=fl \_en
  * \ru	Создает объект с родителем parent, именем name и флагом fl. \_ru
  */
-wField::wField( QWidget *parent, const char *name, WFlags fl )
+wField::wField( QWidget *parent, const char *name, Qt::WFlags fl )
     : aWidget( parent, name, fl )
 {
 	loaded = 0;
 	md_oid = 0;
 	md_fid = 0;
 	setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ) );
-	setFocusPolicy(StrongFocus);
-	new QHBoxLayout( this, 0, 0 );
+	setFocusPolicy(Qt::StrongFocus);
+	new Q3HBoxLayout( this, 0, 0 );
 	lineEdit = new QLineEdit(this);
 	lineEdit->hide();
 	dateEdit = new wDateEdit(this);
@@ -73,7 +77,7 @@ wField::wField( QWidget *parent, const char *name, WFlags fl )
 	objButton->hide();
 	objLabel = new QLabel(this);
 	objLabel->setSizePolicy( QSizePolicy( QSizePolicy::Ignored, QSizePolicy::Preferred ));
-	objLabel->setFrameShape(QFrame::Box);
+	objLabel->setFrameShape(Q3Frame::Box);
 	objLabel->setText("UnknownField");
 	objLabel->show();
 	checkBox = new wCheckBox(this);
@@ -213,7 +217,7 @@ wField::widgetInit()
 	case DateTime:
 	// used object wDateTime, inherits QDateTime
 		dateEdit->setSeparator(".");
-		dateEdit->setOrder( QDateEdit::DMY );
+		dateEdit->setOrder( Q3DateEdit::DMY );
 		connect(dateEdit, SIGNAL( valueChanged ( const QDate&) ),
 				this, SLOT( setValue( const QDate & ) ) );
 		connect(dateEdit, SIGNAL( lostFocus() ),
@@ -226,11 +230,11 @@ wField::widgetInit()
 		
 	case Catalogue:
 		md_oid = n1;
-		objLabel->setFrameShape( QFrame::Box );
+		objLabel->setFrameShape( Q3Frame::Box );
 		objLabel->setLineWidth( 1 );
-		objLabel->setFocusPolicy(NoFocus);
+		objLabel->setFocusPolicy(Qt::NoFocus);
 		objButton->setMaximumWidth(25);
-		objButton->setFocusPolicy(StrongFocus);
+		objButton->setFocusPolicy(Qt::StrongFocus);
 		connect( objButton,	SIGNAL( clicked() ),
 			 this, SLOT( fieldSelect() ) );
 		
@@ -245,11 +249,11 @@ wField::widgetInit()
 //>>>>>>> 1.49.2.4
 	// Field type = Document
 		md_oid = n1;
-		objLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+		objLabel->setFrameStyle( Q3Frame::Panel | Q3Frame::Sunken );
 		objLabel->setLineWidth( 1 );
-		objLabel->setFocusPolicy(NoFocus);
+		objLabel->setFocusPolicy(Qt::NoFocus);
 		objButton->setMaximumWidth(25);
-		objButton->setFocusPolicy(StrongFocus);
+		objButton->setFocusPolicy(Qt::StrongFocus);
 		connect( objButton,	SIGNAL( clicked() ),
 			 this, SLOT( fieldSelect() ) );
 
@@ -273,8 +277,8 @@ wField::widgetInit()
 		
     default:
 		objLabel->setText("UnknownField");
-		objLabel->setFrameShape(QFrame::Box);
-		setFocusPolicy(NoFocus);
+		objLabel->setFrameShape(Q3Frame::Box);
+		setFocusPolicy(Qt::NoFocus);
 		layout()->add( objLabel );
 		objLabel->show();
 	break;
@@ -492,7 +496,7 @@ wField::fieldSelect()
 			f = engine->openForm( md_oid, 0, md_action_view, 0, false );
 			if ( f ) 
 			{
-				connect(f, SIGNAL(selected( Q_ULLONG )), this, SLOT(on_selected( Q_ULLONG )));
+				connect(f, SIGNAL(selected( qulonglong )), this, SLOT(on_selected( qulonglong )));
 				f->closeAfterSelect = true;
 			}
 		}
@@ -514,7 +518,7 @@ wField::fieldSelect()
 			f =  engine->openForm( md->id(journ), 0, md_action_view, 0, false );
 			if( f )
 			{
-				connect(f, SIGNAL(selected( Q_ULLONG )), this, SLOT(on_selected( Q_ULLONG )));
+				connect(f, SIGNAL(selected( qulonglong )), this, SLOT(on_selected( qulonglong )));
 				f->closeAfterSelect = true;
 			}
 			
@@ -571,7 +575,7 @@ wField::focusOutEvent()
 
 
 void
-wField::on_selected( Q_ULLONG uid )
+wField::on_selected( qulonglong uid )
 {
 	setValue( QString::number( uid ) );
 	setFocus();

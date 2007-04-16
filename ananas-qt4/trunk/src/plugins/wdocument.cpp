@@ -49,7 +49,7 @@
  *\param - \~english \~russian \~
  *\param - \~english \~russian \~
  */
-wDocument::wDocument( QWidget *parent, WFlags fl )
+wDocument::wDocument( QWidget *parent, Qt::WFlags fl )
 :aWidget( parent, "wDocument", fl )
 {
 	setInited( false );
@@ -118,8 +118,8 @@ wDocument::initObject( aDatabase *adb )
 //		if ( (wActionButtton*) obj )->isActionUpdate() )
 		connect( this, SIGNAL(changeObj(const QString &)),
 			 (wDBTable *)obj, SLOT(newFilter(const QString &)));
-		connect( this, SIGNAL(changeObjId(const Q_ULLONG)),
-			 (wDBTable *)obj, SLOT(newDataId(const Q_ULLONG)));
+		connect( this, SIGNAL(changeObjId(const qulonglong)),
+			 (wDBTable *)obj, SLOT(newDataId(const qulonglong)));
 	}
 	delete lb; // delete the list, not the objects
 	focusData()->next()->setFocus();
@@ -164,7 +164,7 @@ wDocument::createEditor( QWidget *parent )
  *\return \~english \~russian \~
  */
 int
-wDocument::select( Q_ULLONG id )
+wDocument::select( qulonglong id )
 {
 	id=id;
 	return 0;
@@ -182,7 +182,7 @@ wDocument::select( Q_ULLONG id )
  *\return id -\~english error code.\~russian код ошибки.\~
  */
 ERR_Code
-wDocument::Select( Q_ULLONG id )
+wDocument::Select( qulonglong id )
 {
 	ERR_Code err = aWidget::Select ( id );
 /*	if ( err )
@@ -204,7 +204,7 @@ wDocument::Select( Q_ULLONG id )
  *\param - \~english \~russian \~
  *\return \~english \~russian \~
  */
-Q_ULLONG
+qulonglong
 wDocument::Insert()
 {
 	return 0;
@@ -287,7 +287,7 @@ int
 wDocument::New()
 {
 	ERR_Code err = aWidget::New();
-	Q_ULLONG idd;
+	qulonglong idd;
 	if ( err ) return  err;
 	NewValues();
 	idd = uid();

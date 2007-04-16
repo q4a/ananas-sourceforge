@@ -32,23 +32,27 @@
 #include <stdlib.h>
 #include <qwidget.h>
 #include <qtimer.h>
-#include <qlistbox.h>
+#include <q3listbox.h>
 #include <qlineedit.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qlayout.h> 
 #include <qlabel.h>
 #include <qevent.h> 
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
+//Added by qt3to4:
+#include <Q3Frame>
+#include <QKeyEvent>
+#include <QFocusEvent>
 //class QVBoxLayout;
 
-class aListBox:public QListBox
+class aListBox:public Q3ListBox
 {
 	Q_OBJECT
 public:
-	aListBox(QWidget *parent = 0, const char* name = 0, WFlags f = 0);
+	aListBox(QWidget *parent = 0, const char* name = 0, Qt::WFlags f = 0);
 	~aListBox();
 	void insertItem(const QString &s, long idx, int index = -1);
-	void show(QWidget *w, QFrame *fr);//, QLabel *lb);
+	void show(QWidget *w, Q3Frame *fr);//, QLabel *lb);
 		
 	long getId(int ind) { return atol(listPrivate->text(ind).ascii()); };
 	
@@ -62,7 +66,7 @@ protected:
 	virtual void keyPressEvent ( QKeyEvent *e );	
 	void focusOutEvent ( QFocusEvent *e ); 
 protected slots:
-	void doubleClickHandler(QListBoxItem *i);
+	void doubleClickHandler(Q3ListBoxItem *i);
 	//	QVBoxLayout* layout1;
 //	QLabel * statusBar;	
 signals:
@@ -72,7 +76,7 @@ signals:
 	void lostFocus();
 	void sendMessage(const QString &);
 private:
-	QListBox* listPrivate;
+	Q3ListBox* listPrivate;
 };
 
 
@@ -103,14 +107,14 @@ signals:
 	void	sendMessage(const QString &);
 };
 
-class aListView : public QListView
+class aListView : public Q3ListView
 {
 	Q_OBJECT
 public:
-	aListView(QWidget* parent = 0, const char* name = 0, WFlags f = 0);
+	aListView(QWidget* parent = 0, const char* name = 0, Qt::WFlags f = 0);
 	~aListView();
 	
-	QPopupMenu *menu;
+	Q3PopupMenu *menu;
 	void setDestination(const bool dest);
 	bool getDestination();
 protected:
@@ -118,7 +122,7 @@ protected:
 	
 public slots:
 	
-	void 	showMenu( QListViewItem* item, const QPoint& p, int);
+	void 	showMenu( Q3ListViewItem* item, const QPoint& p, int);
 	void 	newItem();
 	void 	newGroup();
 	void	delItem();
@@ -129,20 +133,20 @@ public slots:
 	virtual void 	setFocus();
 	
 protected slots:
-	void 	doubleClickHandler( QListViewItem *, const QPoint&, int col);	
+	void 	doubleClickHandler( Q3ListViewItem *, const QPoint&, int col);	
 	
 signals:
 	
 	void	sendMessage(const QString &);
- 	void	newItemRequest(QListViewItem* parentItem);
-	void	newGroupRequest(QListViewItem* parentItem);
-	void	delItemRequest(QListViewItem* item);
-	void	markDeletedRequest(QListViewItem* item);
-	void 	undoMarkDeletedRequest(QListViewItem* item);
-	void	editRequest(QListViewItem* item, int columnClicked);
-	void	selectRequest(QListViewItem* item);
+ 	void	newItemRequest(Q3ListViewItem* parentItem);
+	void	newGroupRequest(Q3ListViewItem* parentItem);
+	void	delItemRequest(Q3ListViewItem* item);
+	void	markDeletedRequest(Q3ListViewItem* item);
+	void 	undoMarkDeletedRequest(Q3ListViewItem* item);
+	void	editRequest(Q3ListViewItem* item, int columnClicked);
+	void	selectRequest(Q3ListViewItem* item);
 private:
-	QListViewItem* parentItem;
+	Q3ListViewItem* parentItem;
 	int columnClicked;
 	bool toSelect;
 };

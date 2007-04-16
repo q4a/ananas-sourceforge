@@ -25,6 +25,10 @@
 
 #include <qwidgetplugin.h>
 #include "qcombobox.h"
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3StrList>
+#include <QEvent>
 
 
 /*!
@@ -64,8 +68,8 @@ public slots:
     int		count() const;
 
     void	insertStringList( const QStringList &, int index=-1 );
-    void	insertStrList( const QStrList &, int index=-1 );
-    void	insertStrList( const QStrList *, int index=-1 );
+    void	insertStrList( const Q3StrList &, int index=-1 );
+    void	insertStrList( const Q3StrList *, int index=-1 );
     void	insertStrList( const char **, int numStrings=-1, int index=-1);
 
     void	insertItem( const QString &text, int index=-1 );
@@ -108,8 +112,8 @@ public slots:
     virtual void setValidator( const QValidator * );
     const QValidator * validator() const;
 
-    virtual void setListBox( QListBox * );
-    QListBox *	listBox() const;
+    virtual void setListBox( Q3ListBox * );
+    Q3ListBox *	listBox() const;
 
     virtual void setLineEdit( QLineEdit *edit );
     QLineEdit*	lineEdit() const;

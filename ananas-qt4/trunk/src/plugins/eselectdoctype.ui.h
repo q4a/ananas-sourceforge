@@ -32,7 +32,7 @@ void eSelectDocType::setJournal( aCfg *md, int id )
 	    dobj = md->find( did );
 	    if ( !dobj.isNull() ) {
 		name = md->attr( dobj, mda_name );
-		new QListViewItem( listDocs, name, dlist[i] );
+		new Q3ListViewItem( listDocs, name, dlist[i] );
 	    }
 	}
 	listDocs->setSelected( listDocs->firstChild(), true );

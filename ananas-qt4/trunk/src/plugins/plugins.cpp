@@ -38,6 +38,8 @@
 #include "wactionbutton.h"
 #include "wreport.h"
 #include "acombobox.h"
+//Added by qt3to4:
+#include <QPixmap>
 
 #define FA_FIELD 		"wField"
 #define FA_DBFIELD 		"wDBField"
@@ -107,22 +109,22 @@ aPlugins::group( const QString& feature ) const
     	return QString::null;
 }
 
-QIconSet
+QIcon
 aPlugins::iconSet( const QString& feature) const
 {
-	if ( feature == FA_FIELD ) return QIconSet( QPixmap::fromMimeSource( "wfield.png" ) );
-    	if ( feature == FA_DBFIELD ) return QIconSet( QPixmap::fromMimeSource( "wdbfield.png" ) );
-    	if ( feature == FA_TABLE ) return QIconSet( QPixmap::fromMimeSource( "wtable.png" ) ); 
-    	if ( feature == FA_DBTABLE ) return QIconSet( QPixmap::fromMimeSource( "wdbtable.png" ) ); 
-    	if ( feature == FA_CATALOGUE ) return QIconSet( QPixmap::fromMimeSource( "wcatalogue.png" ) );
-    	if ( feature == FA_DOCUMENT ) return QIconSet( QPixmap::fromMimeSource( "wdocument.png" ) );
-    	if ( feature == FA_JOURNAL ) return QIconSet( QPixmap::fromMimeSource( "wjournal.png" ) );
-    	if ( feature == FA_GROUPTREE ) return QIconSet( QPixmap::fromMimeSource( "wgrouptree.png" ) );
-    	if ( feature == FA_ACTIONBUTTON ) return QIconSet( QPixmap::fromMimeSource( "wactionbutton.png" ) );
-    	if ( feature == FA_REPORT ) return QIconSet( QPixmap::fromMimeSource( "wreport.png" ) );
-    	if ( feature == FA_COMBOBOX ) return QIconSet( QPixmap::fromMimeSource( "acombobox.png" ) );
+	if ( feature == FA_FIELD ) return QIcon( QPixmap::fromMimeSource( "wfield.png" ) );
+    	if ( feature == FA_DBFIELD ) return QIcon( QPixmap::fromMimeSource( "wdbfield.png" ) );
+    	if ( feature == FA_TABLE ) return QIcon( QPixmap::fromMimeSource( "wtable.png" ) ); 
+    	if ( feature == FA_DBTABLE ) return QIcon( QPixmap::fromMimeSource( "wdbtable.png" ) ); 
+    	if ( feature == FA_CATALOGUE ) return QIcon( QPixmap::fromMimeSource( "wcatalogue.png" ) );
+    	if ( feature == FA_DOCUMENT ) return QIcon( QPixmap::fromMimeSource( "wdocument.png" ) );
+    	if ( feature == FA_JOURNAL ) return QIcon( QPixmap::fromMimeSource( "wjournal.png" ) );
+    	if ( feature == FA_GROUPTREE ) return QIcon( QPixmap::fromMimeSource( "wgrouptree.png" ) );
+    	if ( feature == FA_ACTIONBUTTON ) return QIcon( QPixmap::fromMimeSource( "wactionbutton.png" ) );
+    	if ( feature == FA_REPORT ) return QIcon( QPixmap::fromMimeSource( "wreport.png" ) );
+    	if ( feature == FA_COMBOBOX ) return QIcon( QPixmap::fromMimeSource( "acombobox.png" ) );
 
-	return QIconSet( QPixmap() );
+	return QIcon( QPixmap() );
 }
 
 QString

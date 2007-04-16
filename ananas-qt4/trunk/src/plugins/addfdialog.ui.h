@@ -1,3 +1,5 @@
+//Added by qt3to4:
+#include <Q3ValueList>
 /****************************************************************************
 ** $Id: addfdialog.ui.h,v 1.9 2006/04/04 12:49:39 gr Exp $
 **
@@ -106,7 +108,7 @@ void addfdialog::getData( QWidget *o )
 {
 	QString s;
 	wDBField *w = (wDBField *)o;
-	QValueList<Q_ULLONG> bindList = w->getBindList();
+	Q3ValueList<qulonglong> bindList = w->getBindList();
 		s = getData(true);
 		if(s.isEmpty()) return;
 		w->setFieldName(s);

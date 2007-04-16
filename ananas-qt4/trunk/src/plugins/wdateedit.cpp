@@ -27,7 +27,9 @@
 **
 **********************************************************************/
 
-#include <qdatetimeedit.h> 
+#include <q3datetimeedit.h> 
+//Added by qt3to4:
+#include <QFocusEvent>
 #include "wdateedit.h"
 
 
@@ -36,7 +38,7 @@
  * \en	Constructor. \_en
  * \ru	Конструктор. \_ru
  */
-wDateEdit::wDateEdit(QWidget* parent, const char* name ):QDateEdit(parent,name)
+wDateEdit::wDateEdit(QWidget* parent, const char* name ):Q3DateEdit(parent,name)
 {}
 
 
@@ -47,7 +49,7 @@ wDateEdit::wDateEdit(QWidget* parent, const char* name ):QDateEdit(parent,name)
  */
 wDateEdit::wDateEdit(const QDate &date,
 		     QWidget* parent,
-		     const char* name) : QDateEdit(date,parent,name)
+		     const char* name) : Q3DateEdit(date,parent,name)
 {}
 
 

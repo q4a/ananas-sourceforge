@@ -35,9 +35,11 @@
 #include <qwidgetplugin.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
-#include <qdatetimeedit.h>
+#include <q3datetimeedit.h>
 #include <qcheckbox.h>
 #include "qlineedit.h"
+//Added by qt3to4:
+#include <QKeyEvent>
 #include "wdateedit.h"
 #include "adatabase.h"
 #include "ananas.h"
@@ -70,7 +72,7 @@ class QT_WIDGET_PLUGIN_EXPORT wField : public aWidget
 public:
 	enum tEditorType { Unknown, Numberic, String, Date, DateTime, Boolean, Catalogue=101, Document};
 
-	wField( QWidget *parent, const char *name, WFlags fl = 0 );
+	wField( QWidget *parent, const char *name, Qt::WFlags fl = 0 );
 //	wField( QWidget *parent, const char *name, WFlags fl, bool dbf = TRUE );
 	virtual ~wField();
 
@@ -101,7 +103,7 @@ public slots:
 	virtual void		SetReadOnly(bool);
 
 private slots:
-	void on_selected( Q_ULLONG uid );
+	void on_selected( qulonglong uid );
 
 protected:
 	QLineEdit 	*lineEdit;

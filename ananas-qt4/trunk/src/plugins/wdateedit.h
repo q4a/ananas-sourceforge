@@ -31,7 +31,9 @@
 #define WDATEEDIT_H
 
 #include <qlabel.h>
-#include <qdatetimeedit.h> 	
+#include <q3datetimeedit.h> 	
+//Added by qt3to4:
+#include <QFocusEvent>
 
 /*!
  * \en Unknown field editor. \_en
@@ -58,7 +60,7 @@ public:
  * 	
  * \_ru
  */
-class wDateEdit : public QDateEdit
+class wDateEdit : public Q3DateEdit
 {
 	Q_OBJECT
 public:

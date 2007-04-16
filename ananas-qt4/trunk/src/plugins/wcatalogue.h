@@ -44,7 +44,7 @@ class QT_WIDGET_PLUGIN_EXPORT wCatalogue : public aWidget
 {
 	Q_OBJECT
 public:
-	wCatalogue( QWidget *parent = 0, WFlags fl = 0 );
+	wCatalogue( QWidget *parent = 0, Qt::WFlags fl = 0 );
 	virtual ~wCatalogue();
 	bool checkStructure();
 	virtual void 		initObject( aDatabase *adb );
@@ -52,26 +52,26 @@ public:
 	virtual QString 	displayString();
 	virtual bool 		isContainer() { return true; };
         virtual aObject*	createDBObject(  aCfgItem obj, aDatabase *adb );
-	virtual QToolBar*	createToolBar( QMainWindow *parent );
+	virtual Q3ToolBar*	createToolBar( Q3MainWindow *parent );
 	void setFormMode( int Mode );
 public slots:
-	virtual ERR_Code Select( Q_ULLONG id );
-	virtual ERR_Code SelectGroup( Q_ULLONG id );
+	virtual ERR_Code Select( qulonglong id );
+	virtual ERR_Code SelectGroup( qulonglong id );
 	void valueChanged( const QVariant & value );
 	QVariant value( const QString &name );
 	void setValue( const QString &name, QVariant &value );
-	int select( Q_ULLONG id );
-	Q_ULLONG insert();
+	int select( qulonglong id );
+	qulonglong insert();
 	int update();
 	int markDelete();
-	void selectionChanged(const Q_ULLONG);
+	void selectionChanged(const qulonglong);
 
 private:
 
 	void NewValues();
 signals:
 	void newSelectionFilter(const QString &);
-	void newSelectionGroupId( const Q_ULLONG );
+	void newSelectionGroupId( const qulonglong );
 
 };
 

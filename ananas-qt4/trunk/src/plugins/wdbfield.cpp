@@ -29,7 +29,9 @@
 **********************************************************************/
 
 #include <stdlib.h>
-#include <qlistbox.h>
+#include <q3listbox.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 #include "ananas.h"
 #include "wfield.h"
@@ -44,7 +46,7 @@
  * \en	Constructor without name. \_en
  * \ru 	Создает конструктор без указания имени виджета. \_ru
  */
-wDBField::wDBField( QWidget *parent, WFlags fl )
+wDBField::wDBField( QWidget *parent, Qt::WFlags fl )
     : wField( parent, "wDBField", fl)
 {
 	init();
@@ -56,7 +58,7 @@ wDBField::wDBField( QWidget *parent, WFlags fl )
  * \en	Constructor. \_en
  * \ru	Конструктор. \_ru
  */
-wDBField::wDBField( QWidget *parent, const char *name, WFlags fl )
+wDBField::wDBField( QWidget *parent, const char *name, Qt::WFlags fl )
     : wField( parent, name, fl)
 {
 	init();
@@ -164,7 +166,7 @@ wDBField::getMdFieldName() const
 void
 wDBField::init()
 {
-	Q_ULLONG id;
+	qulonglong id;
 	id=0;
 	//get copy of metadata
 	md = getMd();
@@ -193,7 +195,7 @@ wDBField::getFields()
   QStringList lst, dlst;
   QString str;
   int res,i;
-  QValueList<Q_ULLONG> bindList = getBindList();
+  Q3ValueList<qulonglong> bindList = getBindList();
   aCfgItem o, o_head;
   defId.clear();
   defFields.clear();
@@ -351,7 +353,7 @@ wDBField::setEditorType ()
 			{
 			//editor type is Object .
 			//May be Catalog or Document.
-				Q_ULLONG tid;
+				qulonglong tid;
 				//gets object id.
 				str = type.section(' ',1,1);
 				tid = atol(str);
@@ -384,13 +386,13 @@ wDBField::setEditorType ()
  * 	\return \en List of binding fields id. \_en
  * 		\ru Список id забинденых полей. \_ru
  */
-QValueList<Q_ULLONG>
+Q3ValueList<qulonglong>
 wDBField::getBindList()
 {
 aCfgItem obj;
 QObjectList *wList;
 int id;
-QValueList<Q_ULLONG> listBindings;
+Q3ValueList<qulonglong> listBindings;
 wDBField* wfield;
 QObject* wd = aWidget::parentContainer (this);
 	listBindings.clear();

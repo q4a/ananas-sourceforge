@@ -30,7 +30,7 @@
 #ifndef WJOURNAL_H
 #define WJOURNAL_H
 #include <qwidgetplugin.h>
-#include <qdatetimeedit.h>
+#include <q3datetimeedit.h>
 #include "awidget.h"
 
 class QWidget;
@@ -57,11 +57,11 @@ class QT_WIDGET_PLUGIN_EXPORT wJournal : public aWidget
 {
 	Q_OBJECT
 public:
-	wJournal( QWidget *parent = 0, WFlags fl = 0 );
+	wJournal( QWidget *parent = 0, Qt::WFlags fl = 0 );
 	virtual ~wJournal();
 	bool			checkStructure();
 	virtual void		initObject( aDatabase *adb );
-	virtual QToolBar*	createToolBar( QMainWindow *parent );
+	virtual Q3ToolBar*	createToolBar( Q3MainWindow *parent );
 	virtual QDialog*	createEditor( QWidget *parent );
 	virtual QString		displayString();
 	virtual bool		isContainer() { return true; };
@@ -70,8 +70,8 @@ public:
 
 
 public slots:
-	int		select( Q_ULLONG id );
-	Q_ULLONG	insert();
+	int		select( qulonglong id );
+	qulonglong	insert();
 	int		update();
 	int		view();
 	int		markDelete();
@@ -82,9 +82,9 @@ protected slots:
 	
 private:
 	QDialog *dSelectType;
-	QToolBar *toolbar;
-	QDateEdit *date_from, *date_to;
-	Q_ULLONG docUid;
+	Q3ToolBar *toolbar;
+	Q3DateEdit *date_from, *date_to;
+	qulonglong docUid;
 	int docId;
 };
 

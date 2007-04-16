@@ -32,9 +32,11 @@
 
 //#include <qimage.h>
 #include "atoolbar.h"
+//Added by qt3to4:
+#include <QPixmap>
 
-aToolBar::aToolBar( aCfg *cfg, aCfgItem &obj, aEngine *e, QMainWindow* parent , const char* name )
-: QToolBar( parent, name )
+aToolBar::aToolBar( aCfg *cfg, aCfgItem &obj, aEngine *e, Q3MainWindow* parent , const char* name )
+: Q3ToolBar( parent, name )
 {
 	md = cfg;
 	en = e;
@@ -63,7 +65,7 @@ aToolBar::ReadTool( aCfgItem &obj )
 		);	// first action pixmap cfg object
 	QPixmap pix( md->binary( apix ) );	// pixmap
 	QAction *a = new QAction( 
-		QIconSet(pix), // pixmap
+		QIcon(pix), // pixmap
 		md->attr( aobj, mda_name), // name
 		aKey, // key sequence
 		this, // owner
@@ -79,7 +81,7 @@ aToolBar::ReadTool( aCfgItem &obj )
 void
 aToolBar::on_Item()
 {
-    QIntDictIterator<QAction> it( actions );	//dict iterator
+    Q3IntDictIterator<QAction> it( actions );	//dict iterator
     for ( ; it.current(); ++it ) {	// foreach action
 	if ( it.current() == sender() ) {	// sender object
 	    en->on_MenuBar( it.currentKey() );	// call slot

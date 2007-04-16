@@ -33,12 +33,12 @@
 
 #include <qwidget.h>
 #include <qwidgetplugin.h>
-#include <qobjectlist.h>
-#include <qscrollview.h>
-#include <qtable.h>
+#include <qobject.h>
+#include <q3scrollview.h>
+#include <q3table.h>
 #include <qlabel.h>
 #include <qevent.h>
-#include <qdatatable.h>
+#include <q3datatable.h>
 #include "acfg.h"
 #include "aobject.h"
 #include "awidget.h"
@@ -60,7 +60,7 @@
  */
 
 
-class QT_WIDGET_PLUGIN_EXPORT wTable : public QTable
+class QT_WIDGET_PLUGIN_EXPORT wTable : public Q3Table
 {
 	Q_OBJECT
 	

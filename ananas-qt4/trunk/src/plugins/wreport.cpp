@@ -28,10 +28,10 @@
 **********************************************************************/
 
 #include <qobject.h>
-#include <qsqlcursor.h>
-#include <qsqlpropertymap.h>
+#include <q3sqlcursor.h>
+#include <q3sqlpropertymap.h>
 #include <qfocusdata.h> 
-#include <qtoolbar.h>
+#include <q3toolbar.h>
 #include "adatabase.h"
 #include "wreport.h"
 #include "ereport.h"
@@ -39,7 +39,7 @@
 //extern aCfg *plugins_aCfg;
 
 
-wReport::wReport( QWidget *parent, WFlags fl )
+wReport::wReport( QWidget *parent, Qt::WFlags fl )
 :aWidget( parent, "wReport", fl )
 {
 	setInited( false );
@@ -79,13 +79,13 @@ wReport::createEditor( QWidget *parent )
 
 
 int
-wReport::select( Q_ULLONG id )
+wReport::select( qulonglong id )
 {
     return 0;
 }
 
 
-Q_ULLONG
+qulonglong
 wReport::insert()
 {
     return 0;
@@ -127,7 +127,7 @@ wReport::TurnOn()
 
 
 ERR_Code	
-wReport::Select( Q_ULLONG id )
+wReport::Select( qulonglong id )
 {
 	return err_abstractobj;
 }
@@ -138,7 +138,7 @@ wReport::displayString()
     return QString("");
 }
 
-Q_ULLONG
+qulonglong
 wReport::uid()
 {
 	return 0;

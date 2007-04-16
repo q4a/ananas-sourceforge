@@ -67,9 +67,9 @@ public:
     	QString value() const;
     	void setValue(QString newvalue);
     	void initCat(aDatabase *adb);
-    	QString displayValue(Q_ULLONG id_element) const;
+    	QString displayValue(qulonglong id_element) const;
 private slots:
-	void on_selected( Q_ULLONG );
+	void on_selected( qulonglong );
 	void on_destroyed_form();
 
 protected slots:
@@ -81,7 +81,7 @@ public slots:
 
 signals:
 	void valueChanged(const QString &);
-	void selected( Q_ULLONG );
+	void selected( qulonglong );
 	void destroyed_form();
 private:
 	QString vValue;

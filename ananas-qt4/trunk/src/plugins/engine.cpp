@@ -29,8 +29,8 @@
 **********************************************************************/
 #include <qsinterpreter.h>
 #include <qsinputdialogfactory.h>
-#include <qobjectlist.h>
-#include <qvaluelist.h>
+#include <qobject.h>
+#include <q3valuelist.h>
 #include <qstringlist.h>
 #include <qstring.h>
 #include <qfile.h>
@@ -38,10 +38,13 @@
 #include <qsscript.h>
 #include <qdialog.h>
 #include <qwidgetfactory.h>
-#include <qobjectlist.h>
+#include <qobject.h>
 #include <qsutilfactory.h>
 #include <qsinputdialogfactory.h>
 #include <qapplication.h>
+//Added by qt3to4:
+#include <QTimerEvent>
+#include <Q3PopupMenu>
 
 #include "ananas.h"
 #include "wcatalogeditor.h"
@@ -117,7 +120,7 @@ aObjectsFactory::create( const QString &className,
 //	context=context;
 	if (className=="PopupMenu") {
 //			return new QApopupmenu();
-			res = new QPopupMenu();
+			res = new Q3PopupMenu();
 	}else if (className=="Document") {
 		if (arguments.size()>0) {
 			res = new aDocument(arguments[0].variant().toString(), db );
@@ -308,7 +311,7 @@ aEngine::on_systemstart(){
 void
 aEngine::on_event( const QString &data )
 {
-	QValueList<QVariant> lst;
+	Q3ValueList<QVariant> lst;
 	lst <<  sender()->name();
 	lst << data;
 	if (project.interpreter()->functions().findIndex("on_event")!=-1) {
@@ -602,7 +605,7 @@ aEngine::OpenForm(QString fname, int mode, aObject* selecter)//Q_ULLONG ido)
 	{
 		object = md->parent(md->parent(form));
 		if(object.isNull()) return 0;
-		Q_ULLONG ido =0;
+		qulonglong ido =0;
 		if(selecter) ido = selecter->sysValue("id").toULongLong();
 		return openForm(atoi(md->attr(object,mda_id)), atoi(md->attr(form,mda_id)), mode, mode, ido);
 	}
@@ -731,8 +734,8 @@ aEngine::openEmbedCatalogueEditor(int oid, QWidget* parent,const bool toSelect)
 	wCatalogEditor * w = new wCatalogEditor(ws,oid);
 	if( parent )
 	{
-		connect(w,		SIGNAL(selected( Q_ULLONG )),
-		        (wField*)parent,SLOT(on_selected( Q_ULLONG )));
+		connect(w,		SIGNAL(selected( qulonglong )),
+		        (wField*)parent,SLOT(on_selected( qulonglong )));
 		connect(w,		SIGNAL(destroyed_form()),
 			(wField*)parent,SLOT(setFocus()));
 	}

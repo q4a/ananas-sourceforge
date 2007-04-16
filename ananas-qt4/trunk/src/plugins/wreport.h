@@ -38,7 +38,7 @@ class QT_WIDGET_PLUGIN_EXPORT wReport : public aWidget
 {
 	Q_OBJECT
 public:
-	wReport( QWidget *parent = 0, WFlags fl = 0 );
+	wReport( QWidget *parent = 0, Qt::WFlags fl = 0 );
 	virtual ~wReport();
 	bool checkStructure();
 	virtual void initObject( aDatabase *adb );
@@ -46,17 +46,17 @@ public:
 	virtual QString displayString();
 	virtual bool isContainer() { return true; };
 
-	virtual Q_ULLONG	uid();
+	virtual qulonglong	uid();
 	virtual ERR_Code	New();
 	virtual ERR_Code	Update();
 	virtual ERR_Code	TurnOn();
-	virtual ERR_Code	Select( Q_ULLONG id );
+	virtual ERR_Code	Select( qulonglong id );
 
 public slots:
 //	QVariant value( const QString &name );
 //	void setValue( const QString &name, QVariant &value );
-	int select( Q_ULLONG id );
-	Q_ULLONG insert();
+	int select( qulonglong id );
+	qulonglong insert();
 	int update();
 	int markDelete();
 

@@ -27,14 +27,18 @@
 **
 **********************************************************************/
 
-#include <qheader.h>
+#include <q3header.h>
 #include <qlayout.h>
 #include <qaction.h>
+//Added by qt3to4:
+#include <q3mimefactory.h>
+#include <Q3GridLayout>
+#include <QKeyEvent>
 #include "wgrouptree.h"
 #include "awidget.h"
 
-wGroupTreeItem::wGroupTreeItem( QListView *parent, const QString &name )
-    : QListViewItem( parent, name )
+wGroupTreeItem::wGroupTreeItem( Q3ListView *parent, const QString &name )
+    : Q3ListViewItem( parent, name )
 {
 	level = -1;
 	parent = 0;
@@ -43,7 +47,7 @@ wGroupTreeItem::wGroupTreeItem( QListView *parent, const QString &name )
 
 
 wGroupTreeItem::wGroupTreeItem( wGroupTreeItem *parent, wGroupTreeItem *after, const QString &name, int newlevel, ANANAS_UID newid )
-    : QListViewItem( parent, after, name )
+    : Q3ListViewItem( parent, after, name )
 {
 	level = newlevel;
 	id = newid;
@@ -51,7 +55,7 @@ wGroupTreeItem::wGroupTreeItem( wGroupTreeItem *parent, wGroupTreeItem *after, c
 
 
 wGroupTreeItem::wGroupTreeItem( wGroupTreeItem *parent, wGroupTreeItem *after, aCatGroup *g )
-    : QListViewItem( parent, after )
+    : Q3ListViewItem( parent, after )
 {
 	level = g->Value( "Level" ).toInt();
 	id = g->getUid();
@@ -73,22 +77,22 @@ wGroupTreeItem::parentItem()
 }
 
 
-wGroupTree::wGroupTree( QWidget *parent, WFlags fl )
+wGroupTree::wGroupTree( QWidget *parent, Qt::WFlags fl )
     : aWidget( parent, "wGroupTree", fl )
 {
-	tree = new QListView( this );
+	tree = new Q3ListView( this );
 	tree->addColumn( "" );
 	tree->header()->hide();
 	tree->setSorting( 0 );
-	tree->setSelectionMode( QListView::Single );
+	tree->setSelectionMode( Q3ListView::Single );
 	root = new wGroupTreeItem( tree, "ROOT" );
 	root->setOpen( true );
-	root->setPixmap(0, QPixmap::fromMimeSource("wcatalogue.png"));
+	root->setPixmap(0, qPixmapFromMimeSource("wcatalogue.png"));
 
-	QGridLayout *l = new QGridLayout( this );
+	Q3GridLayout *l = new Q3GridLayout( this );
 	l->addWidget( tree, 0, 0 );
-	connect(tree, SIGNAL(selectionChanged(QListViewItem*)),
-		this, SLOT( on_selectionChanged(QListViewItem*)));
+	connect(tree, SIGNAL(selectionChanged(Q3ListViewItem*)),
+		this, SLOT( on_selectionChanged(Q3ListViewItem*)));
 }
 
 
@@ -145,7 +149,7 @@ wGroupTree::buildGroupTree( aCfgItem obj, aCatGroup * cg1, wGroupTreeItem * wG )
 			t = cg2.Value("Name").toString();
 //			CHECK_POINT
 			item = new wGroupTreeItem ( wG, 0, &cg2 ); //cg2.Value("Level").toInt(), cg2.getUid() );
-			item->setPixmap( 0, QPixmap::fromMimeSource( "t_cat_g.png" ));
+			item->setPixmap( 0, qPixmapFromMimeSource( "t_cat_g.png" ));
 //			buildGroupTree( obj, &cg2, wG );
 //			CHECK_POINT
 			buildGroupTree( obj, &cg2, item );
@@ -201,7 +205,7 @@ wGroupTree::keyPressEvent ( QKeyEvent *e )
 	switch ( e->key() ){
 	case Qt::Key_Return:
 		id = item->id;
-		if ( e->state() == Qt::ShiftButton ) {
+		if ( e->state() == Qt::ShiftModifier ) {
 			printf("Shift+Return pressed %Li\n", id);
 			if ( id ) EditGroup();
 		} else {
@@ -338,7 +342,7 @@ wGroupTree::findItem( ANANAS_UID id )
 {
 	wGroupTreeItem *i = 0;
 
-	QListViewItemIterator it( tree );
+	Q3ListViewItemIterator it( tree );
 	while ( i = ( wGroupTreeItem *) it.current() ) {
 		if ( i->id == id ) break;
 		++it;
@@ -350,14 +354,14 @@ wGroupTree::findItem( ANANAS_UID id )
 /*!
  * Create toolbar for Journal.
  */
-QToolBar*
-wGroupTree::createToolBar( QMainWindow * owner )
+Q3ToolBar*
+wGroupTree::createToolBar( Q3MainWindow * owner )
 {
 	QAction *a;
-	QToolBar *t = new QToolBar( owner, "GroupTreeTools" );
+	Q3ToolBar *t = new Q3ToolBar( owner, "GroupTreeTools" );
 
 	a = new QAction(
-	QPixmap::fromMimeSource("doc_new.png"),
+	qPixmapFromMimeSource("doc_new.png"),
 	tr("New"),
 	QKeySequence(""),//Insert"),
 	t,
@@ -368,7 +372,7 @@ wGroupTree::createToolBar( QMainWindow * owner )
 	connect( a, SIGNAL( activated() ), this, SLOT( NewGroup() ) );
 
 	a = new QAction(
-	QPixmap::fromMimeSource("doc_edit.png"),
+	qPixmapFromMimeSource("doc_edit.png"),
 	tr("Edit"),
 	QKeySequence(""),//Return"),
 	t,
@@ -390,7 +394,7 @@ wGroupTree::createToolBar( QMainWindow * owner )
 	connect( a, SIGNAL( activated() ), this, SLOT( view() ) );
 */
 	a = new QAction(
-	QPixmap::fromMimeSource("doc_delete.png"),
+	qPixmapFromMimeSource("doc_delete.png"),
 	tr("Delete group"),
 	QKeySequence(""),//Delete"),
 	t,
@@ -405,7 +409,7 @@ wGroupTree::createToolBar( QMainWindow * owner )
 }
 
 void
-wGroupTree::on_selectionChanged( QListViewItem * item)
+wGroupTree::on_selectionChanged( Q3ListViewItem * item)
 {
 	printf("wGroupTree id =%llu\n",((wGroupTreeItem*) item)->id);
 	emit(selectionChanged( ((wGroupTreeItem*) item)->id) );

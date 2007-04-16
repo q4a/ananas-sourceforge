@@ -28,11 +28,13 @@
 **********************************************************************/
 
 #include <qobject.h>
-#include <qsqlcursor.h>
-#include <qsqlpropertymap.h>
+#include <q3sqlcursor.h>
+#include <q3sqlpropertymap.h>
 #include <qmessagebox.h>
 #include <qaction.h>
-#include <qdatetimeedit.h> 
+#include <q3datetimeedit.h> 
+//Added by qt3to4:
+#include <q3mimefactory.h>
 #include "adatabase.h"
 #include "wjournal.h"
 #include "ejournal.h"
@@ -44,7 +46,7 @@
 
 
 
-wJournal::wJournal( QWidget *parent, WFlags fl )
+wJournal::wJournal( QWidget *parent, Qt::WFlags fl )
 :aWidget( parent, "wJournal", fl )
 {
 	dSelectType = new eSelectDocType();
@@ -70,8 +72,8 @@ wJournal::initObject( aDatabase *adb )
 	
 	if(((aDocJournal*)dbobj)->type()==0 && toolbar)
 	{
-		date_from = new QDateEdit(toolbar);
-		date_to = new QDateEdit(toolbar);
+		date_from = new Q3DateEdit(toolbar);
+		date_to = new Q3DateEdit(toolbar);
 		QDate current = QDate::currentDate();
 		date_to->setMinimumWidth(100);
 		date_from->setMinimumWidth(100);
@@ -95,8 +97,8 @@ wJournal::initObject( aDatabase *adb )
 		++itb;
 		//printf("wDBTable #%u found\n",++i);
 		aLog::print(aLog::INFO, tr("wDBTable #%1 found ").arg(++i));
-		connect( (wDBTable *)obj, SIGNAL(selectRecord( Q_ULLONG )),
-			 this, SLOT(select( Q_ULLONG )) );
+		connect( (wDBTable *)obj, SIGNAL(selectRecord( qulonglong )),
+			 this, SLOT(select( qulonglong )) );
 		connect( (wDBTable *)obj, SIGNAL( insertRequest()),
 			 this, SLOT(insert()) );
 		connect( (wDBTable *)obj, SIGNAL(updateRequest()),
@@ -130,13 +132,13 @@ wJournal::checkStructure()
 /*!
  * Create toolbar for Journal.
  */
-QToolBar*
-wJournal::createToolBar( QMainWindow * owner )
+Q3ToolBar*
+wJournal::createToolBar( Q3MainWindow * owner )
 {
 	QAction *a,*b,*c,*d, *e;
-	toolbar = new QToolBar( owner, "JournalTools" );
+	toolbar = new Q3ToolBar( owner, "JournalTools" );
 	a = new QAction(
-	QPixmap::fromMimeSource("doc_new.png"),
+	qPixmapFromMimeSource("doc_new.png"),
 	tr("New"),
 	QKeySequence(QString("Insert")),
 	toolbar,
@@ -146,9 +148,9 @@ wJournal::createToolBar( QMainWindow * owner )
 	a->addTo( toolbar );
 	connect( a, SIGNAL( activated() ), this, SLOT( insert() ) );
 	b = new QAction(
-	QPixmap::fromMimeSource("doc_edit.png"),
+	qPixmapFromMimeSource("doc_edit.png"),
 	tr("Edit"),
-	QKeySequence(Key_Return),
+	QKeySequence(Qt::Key_Return),
 	toolbar,
 	tr("Edit document")
 	);
@@ -156,9 +158,9 @@ wJournal::createToolBar( QMainWindow * owner )
 	b->addTo( toolbar );
 	connect( b, SIGNAL( activated() ), this, SLOT( update() ) );
 	c = new QAction(
-	QPixmap::fromMimeSource("doc_view.png"),
+	qPixmapFromMimeSource("doc_view.png"),
 	tr("View"),
-	QKeySequence(SHIFT + Key_Return),
+	QKeySequence(Qt::SHIFT + Qt::Key_Return),
 	toolbar,
 	tr("View document")
 	);
@@ -166,7 +168,7 @@ wJournal::createToolBar( QMainWindow * owner )
 	c->addTo( toolbar );
 	connect( c, SIGNAL( activated() ), this, SLOT( view() ) );
 	d = new QAction(
-	QPixmap::fromMimeSource("doc_delete.png"),
+	qPixmapFromMimeSource("doc_delete.png"),
 	tr("Delete"),
 	QKeySequence(QString("Del")),
 	toolbar,
@@ -177,9 +179,9 @@ wJournal::createToolBar( QMainWindow * owner )
 	connect( d, SIGNAL( activated() ), this, SLOT( markDelete() ) );
 	
 	e = new QAction(
-	QPixmap::fromMimeSource("doc_copy.png"),
+	qPixmapFromMimeSource("doc_copy.png"),
 	tr("Copy"),
-	QKeySequence(CTRL+Key_D),
+	QKeySequence(Qt::CTRL+Qt::Key_D),
 	toolbar,
 	tr("Copy document")
 	);
@@ -200,7 +202,7 @@ wJournal::createEditor( QWidget *parent )
 
 
 int
-wJournal::select( Q_ULLONG id )
+wJournal::select( qulonglong id )
 {
 	if ( !dbobj ) return err_abstractobj;
 	docUid = dbobj->docId();
@@ -212,7 +214,7 @@ wJournal::select( Q_ULLONG id )
 
 
 
-Q_ULLONG
+qulonglong
 wJournal::insert()
 {
 	aForm * f = 0;

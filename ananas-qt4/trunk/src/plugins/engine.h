@@ -32,15 +32,17 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 #include <qobject.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qsobjectfactory.h>
 #include <qsproject.h>
 #include <qsinterpreter.h>
+//Added by qt3to4:
+#include <QTimerEvent>
 
 #include "adatabase.h"
 #include "acfg.h"
 #include "awindowslist.h"
-#include <qmainwindow.h>
+#include <q3mainwindow.h>
 #include "adatafield.h"
 #include "aobject.h"
 
@@ -48,6 +50,7 @@
 
 class aEngine;
 class aWidget;
+class QSInterpreter;
 
 /*!
  * \~english
@@ -57,15 +60,15 @@ class aWidget;
  *	делая доступным работу с объектами зарегистрированного класса из Ананас.Скрипта.
  *	Наследует QSObjectFactory.
  * \~
- */ 
-class ANANAS_EXPORT aObjectsFactory : public QSObjectFactory
+ */
+class ANANAS_EXPORT aObjectsFactory //--: public QSObjectFactory
 {
 public:
         aEngine   *engine;
 	aDatabase *db;
         aObjectsFactory( aEngine *e );
         QObject *create( const QString &className,
-                     const QSArgumentList &arguments,
+                     const QVariantList &arguments,
                      QObject *context );
 };
 
@@ -78,9 +81,9 @@ class aForm;
  *	\~russian
  *	\brief Определяет программный интерфейс Runtime системы, который используется Ананас скриптом.
  *	Наследует QObject.
- *	
- *	Класс, реализующий обработку и выполнение скриптов, открытие экранных форм, 
- *	предварительную обработку скрипта перед выполнением (для последующего использования русских управляющих инструкций), 
+ *
+ *	Класс, реализующий обработку и выполнение скриптов, открытие экранных форм,
+ *	предварительную обработку скрипта перед выполнением (для последующего использования русских управляющих инструкций),
  *	системные функции получения даты и времени, печати сообщений об ошибках и т.д
  *	\~
  */
@@ -135,7 +138,7 @@ public:
  *	ссылка на проект.
  *	\~
 */
-	QSProject	project;
+	//--QSProject	project;
 /*!
  *	\~english
  *	number to form
@@ -144,7 +147,7 @@ public:
  *	\~
 */
 	int 		next_obj_id;
-	
+
 	aEngine();
         virtual	~aEngine();
 	virtual bool init( const QString &rcfile );
@@ -187,7 +190,7 @@ signals:
 private:
 	QString pr_timer;
 	QString mGlobal;
-	QDict <QVariant> values;
+	Q3Dict <QVariant> values;
 
 };
 

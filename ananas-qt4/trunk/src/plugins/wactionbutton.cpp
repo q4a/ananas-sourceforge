@@ -29,11 +29,13 @@
 
 #include "wactionbutton.h"
 #include "eactionbutton.h"
-#include <qmainwindow.h>
-#include <qheader.h>
+#include <q3mainwindow.h>
+#include <q3header.h>
 #include <qvariant.h>
 #include "qobject.h"
-#include "qobjectlist.h"
+#include "qobject.h"
+//Added by qt3to4:
+#include <QKeyEvent>
 
 #include "command.h"
 #include "formwindow.h"
@@ -90,7 +92,7 @@ wActionButton::keyPressHandler ( QKeyEvent * e )
 		case Qt::Key_Return:
 		break;
 		case Qt::Key_Escape:
-			if(accel() == QKeySequence(Key_Escape))
+			if(accel() == QKeySequence(Qt::Key_Escape))
 			{
 				emit(clicked());
 				e->accept();

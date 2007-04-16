@@ -31,10 +31,10 @@
 
 #include <qwidgetfactory.h>
 #include <qdialog.h>
-#include <qobjectlist.h>
+#include <qobject.h>
 #include <qdialog.h>
 #include <qbuffer.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 #include <qiodevice.h>
 #include <qstring.h>
 #include <qfile.h>
@@ -44,8 +44,8 @@
 #include <qpushbutton.h>
 #include <qfocusdata.h>
 #include <qlabel.h>
-#include <qmainwindow.h>
-#include <qdatetimeedit.h>
+#include <q3mainwindow.h>
+#include <q3datetimeedit.h>
 #include <qstatusbar.h>
 #include <qlineedit.h>
 #include <qlayout.h>
@@ -53,10 +53,14 @@
 #include <qiodevice.h>
 #include <qmessagebox.h>
 #include <qstatusbar.h>
-#include <qsqlcursor.h>
-#include <qsqlpropertymap.h>
-#include <qsqlform.h>
+#include <q3sqlcursor.h>
+#include <q3sqlpropertymap.h>
+#include <q3sqlform.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <QKeyEvent>
+#include <Q3ValueList>
+#include <q3mimefactory.h>
 
 #include "aform.h"
 #include "wcatalogue.h"
@@ -196,7 +200,7 @@ aForm::initContainer( aWidget *widget, aDatabase *adb ){
 			{
 				aw->init( adb );
 			}
-			if ( form->inherits( "QMainWindow" ) ) aw->createToolBar( ( QMainWindow *) form );
+			if ( form->inherits( "QMainWindow" ) ) aw->createToolBar( ( Q3MainWindow *) form );
 		} else initWidget( ( QWidget *) obj, adb );
 	}
 	it.toFirst();
@@ -237,11 +241,11 @@ aForm::init()
 		sModule = md->sText( mdObj, md_sourcecode );
 		if ( !ui.isEmpty() ) {
 			QBuffer b;
-			b.open(IO_WriteOnly);
+			b.open(QIODevice::WriteOnly);
 
 			b.writeBlock( ( const char *) ui, strlen( ( const char *) ui) );
 			b.close();
-			b.open(IO_ReadOnly );
+			b.open(QIODevice::ReadOnly );
 			aLog::print(aLog::INFO, tr("aForm creating form from ui"));
 			form = QWidgetFactory::create( &b );
 			aLog::print(aLog::INFO, tr("aForm form create from ui ok"));
@@ -249,7 +253,7 @@ aForm::init()
 		}
 	}
 	if (form) {
-		QMainWindow *mw = new QMainWindow( parentWidget, "main form", Qt::WDestructiveClose );
+		Q3MainWindow *mw = new Q3MainWindow( parentWidget, "main form", Qt::WDestructiveClose );
   		mw->statusBar()->hide();
 		mw->setCaption( form->caption() );
 	
@@ -266,7 +270,7 @@ aForm::init()
 		engine->wl->insert( objid, mw, db_uid );
 		printf("insert new in wl ok\n");
 		if ( form->inherits("QMainWindow" )){
-			((QMainWindow *) form)->statusBar()->hide();
+			((Q3MainWindow *) form)->statusBar()->hide();
 		}
 	    	mainWidget = 0;
 		aCfgItem par = md->parent( md->parent( mdObj ) );
@@ -279,21 +283,21 @@ aForm::init()
                 // Create main widgets container.
 	    	if ( md->objClass( par ) == md_catalogue ) {
                         mainWidget = ( wCatalogue *) form; //new wCatalogue( mw );
-                        mw->setIcon( QPixmap::fromMimeSource("wcatalogue.png"));
+                        mw->setIcon( qPixmapFromMimeSource("wcatalogue.png"));
                 }
 	    	if ( md->objClass( par ) == md_document ) {
                         mainWidget = ( wDocument *) form; //new wDocument( mw );
-                        mw->setIcon( QPixmap::fromMimeSource("wdocument.png"));
+                        mw->setIcon( qPixmapFromMimeSource("wdocument.png"));
                 }
 	    	if ( md->objClass( par ) == md_journal ) {
                         mainWidget = ( wJournal *) form; //new wJournal( mw );
-                        mw->setIcon( QPixmap::fromMimeSource("wjournal.png"));
+                        mw->setIcon( qPixmapFromMimeSource("wjournal.png"));
 			mw->statusBar()->show();
 			mw->statusBar()->message(tr("New document - <Ins>, Edit - <Enter>, View - <Shift+Enter>"));
 		}
 	    	if ( md->objClass( par ) == md_report ) {
                         mainWidget = ( wReport *) form;
-                        mw->setIcon( QPixmap::fromMimeSource("wreport.png"));
+                        mw->setIcon( qPixmapFromMimeSource("wreport.png"));
                 }
 
 		if ( !mainWidget ) {
@@ -309,7 +313,7 @@ aForm::init()
 			initContainer( mainWidget, db );
 			mainWidget->show();
 			form = mw;
-			mw->setFocusPolicy( QWidget::NoFocus );
+			mw->setFocusPolicy( Qt::NoFocus );
                 }
 
 		connectSlots();
@@ -685,8 +689,8 @@ aForm::connectSlots()
 				connect(obj,	SIGNAL(updateCurr(int,int) ),
 					this,	SLOT( on_tabvalueChanged(int, int) ) );
 //				connect( obj, SIGNAL( primeUpdate(  QSqlRecord * ) ), this, SLOT( on_tabupdate( QSqlRecord * ) ) );
-				connect( obj, SIGNAL( selected( Q_ULLONG ) ), this, SLOT( on_tabselected( Q_ULLONG ) ) );
-				connect( obj, SIGNAL( selectRecord( Q_ULLONG ) ), this, SLOT( on_tablerow( Q_ULLONG ) ) );
+				connect( obj, SIGNAL( selected( qulonglong ) ), this, SLOT( on_tabselected( qulonglong ) ) );
+				connect( obj, SIGNAL( selectRecord( qulonglong ) ), this, SLOT( on_tablerow( qulonglong ) ) );
                                 continue;
 			}
 	}
@@ -1012,7 +1016,7 @@ aForm::TabNewLine(const QString &tname)
        if ( w  && !strcmp(w->className(),"wDBTable"))
        {
                wDBTable *wdb = (wDBTable*)w;
-               QSqlCursor *cur = wdb->sqlCursor();
+               Q3SqlCursor *cur = wdb->sqlCursor();
                QSqlRecord *buffer = cur->primeInsert();
                wdb->lineInsert(buffer);
                cur->insert();
@@ -1032,7 +1036,7 @@ aForm::TabUpdate(const QString &tname)
        if ( w  && !strcmp(w->className(),"wDBTable"))
        {
                wDBTable *wdb = (wDBTable*)w;
-               QSqlCursor *cur = wdb->sqlCursor();
+               Q3SqlCursor *cur = wdb->sqlCursor();
                //QSqlRecord *buffer = cur->primeInsert();
              //  wdb->lineInsert(buffer);
                cur->primeUpdate();
@@ -1357,7 +1361,7 @@ aForm::on_valueChanged( const QString & name, const QVariant & val )
 
 	if ( engine->project.interpreter()->functions(this).findIndex("on_valuechanged")!=-1)
 	{
-		QValueList<QVariant> lst;
+		Q3ValueList<QVariant> lst;
 		lst << name;
 		lst << val;
 //		if(!val.isNull() && !val.isValid()) v = val; 
@@ -1373,7 +1377,7 @@ aForm::on_tabvalueChanged(int row, int col)
 
 	if ( engine->project.interpreter()->functions(this).findIndex("on_tabupdate")!=-1)
 	{
-		QValueList<QVariant> lst;
+		Q3ValueList<QVariant> lst;
 		lst << row;
 		lst << col;
 		lst << sender()->name();
@@ -1421,7 +1425,7 @@ aForm::on_dbtablerow( QSqlRecord *r )
 void 
 aForm::on_event( const QString &source, const QString &data )
 {
-	QValueList<QVariant> lst;
+	Q3ValueList<QVariant> lst;
 	lst << source;
 	lst << data;
 	if ( engine->project.interpreter()->functions(this).findIndex("on_event")!=-1) {
@@ -1432,7 +1436,7 @@ aForm::on_event( const QString &source, const QString &data )
 
 
 void
-aForm::on_tabselected( Q_ULLONG uid )
+aForm::on_tabselected( qulonglong uid )
 {
 	emit selected( uid );
 	if ( closeAfterSelect ) {
@@ -1441,9 +1445,9 @@ aForm::on_tabselected( Q_ULLONG uid )
 }
 
 void
-aForm::on_tablerow( Q_ULLONG uid )
+aForm::on_tablerow( qulonglong uid )
 {
-	QValueList<QVariant> lst;
+	Q3ValueList<QVariant> lst;
 	lst << sender()->name();
 	lst << QString("%1").arg(uid);
 	if ( engine->project.interpreter()->functions(this).findIndex("on_tabrowselected")!=-1) {
@@ -1482,7 +1486,7 @@ aForm::New()
 
 
 int
-aForm::Select( Q_ULLONG id )
+aForm::Select( qulonglong id )
 {
         if ( mainWidget ) {
 //		printf("try find in windowslist %d, %llu\n ", objid, db_uid);
@@ -1514,7 +1518,7 @@ aForm::Select( Q_ULLONG id )
 
 
 int
-aForm::SelectGroup( Q_ULLONG id )
+aForm::SelectGroup( qulonglong id )
 {
 	if ( mainWidget && !strcmp(mainWidget->className(),"wCatalogue"))
 	 {
@@ -1825,7 +1829,7 @@ aForm::ConvertNumber2MoneyFormat(double number)
 QString
 aForm::ConvertDateFromIso(const QString &ISODate)
 {
-	return aService::Date2Print(ISODate);
+	return aService::Date2Print(Qt::ISODate);
 }
 
 
@@ -1841,7 +1845,7 @@ aForm::ConvertDateFromIso(const QString &ISODate)
 QString
 aForm::EndOfDay(const QString& ISODate)
 {
-	return QString("%1T%2").arg(ISODate.section('T',0,0)).arg("23:59:59");
+	return QString("%1T%2").arg(Qt::ISODate.section('T',0,0)).arg("23:59:59");
 }
 
 /*!

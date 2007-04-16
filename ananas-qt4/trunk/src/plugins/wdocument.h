@@ -48,7 +48,7 @@ class QT_WIDGET_PLUGIN_EXPORT wDocument : public aWidget
 {
 	Q_OBJECT
 public:
-	wDocument( QWidget *parent = 0, WFlags fl = 0 );
+	wDocument( QWidget *parent = 0, Qt::WFlags fl = 0 );
 	virtual ~wDocument();
 	bool checkStructure();
 	virtual void initObject( aDatabase *adb );
@@ -58,11 +58,11 @@ public:
 	virtual aObject *createDBObject(  aCfgItem obj, aDatabase *adb );
 
 	virtual ERR_Code New();
-	virtual ERR_Code Select( Q_ULLONG id );
+	virtual ERR_Code Select( qulonglong id );
 
 public slots:
-	int		select( Q_ULLONG id );
-	Q_ULLONG	Insert();
+	int		select( qulonglong id );
+	qulonglong	Insert();
 	virtual int	Update();
 	virtual int	TurnOn();
 	virtual int	TurnOff();

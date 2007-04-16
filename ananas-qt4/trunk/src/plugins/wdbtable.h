@@ -31,8 +31,17 @@
 #ifndef WDBTABLE_H
 #define WDBTABLE_H
 
-#include <qsqlpropertymap.h>
-#include <qdatatable.h>
+#include <q3sqlpropertymap.h>
+#include <q3datatable.h>
+//Added by qt3to4:
+#include <Q3SqlEditorFactory>
+#include <QContextMenuEvent>
+#include <Q3Frame>
+#include <Q3ValueList>
+#include <QPixmap>
+#include <Q3SqlCursor>
+#include <QKeyEvent>
+#include <QEvent>
 #include "acfg.h"
 #include "aobject.h"
 #include "awidget.h"
@@ -40,9 +49,9 @@
 
 class aDatabase;
 class wDBTable;
-class QDataTable;
+class Q3DataTable;
 
-class aSearchWidget : public QFrame
+class aSearchWidget : public Q3Frame
 {
 Q_OBJECT
 public:
@@ -73,12 +82,12 @@ private:
  * \_ru
  *
  */
-class QT_WIDGET_PLUGIN_EXPORT wDBTable : public QDataTable
+class QT_WIDGET_PLUGIN_EXPORT wDBTable : public Q3DataTable
 {
 	friend class aForm;
 
 	Q_OBJECT
-	Q_PROPERTY( Q_ULLONG	Id READ getId WRITE setId DESIGNABLE true )
+	Q_PROPERTY( qulonglong	Id READ getId WRITE setId DESIGNABLE true )
 	Q_PROPERTY( int		DefaultColWidth READ getDefColWidth WRITE setDefColWidth DESIGNABLE true )
 	Q_PROPERTY( int		TableInd READ getTblInd WRITE setTblInd DESIGNABLE true )
 	Q_PROPERTY( QStringList	DefFields READ getDefFields WRITE setDefFields DESIGNABLE true )
@@ -97,7 +106,7 @@ public:
 	int		defColWidth;
 	int		tableInd;
 	aCfgItem	tables;
-	QSqlCursor*	cur;
+	Q3SqlCursor*	cur;
 	bool		searchMode;
 	QString		searchString;
 	aSearchWidget	*searchWidget;
@@ -124,7 +133,7 @@ public:
 	QStringList	getDefHeaders()	const;
 	QStringList	getColWidth() 	const;
 	QStringList	getDefIdList()	const;
-	Q_ULLONG	getId() 	const;
+	qulonglong	getId() 	const;
 	int 		getTblInd() 	const;
 	bool		getOpenEditor() const;
 	int		getDefColWidth() const;
@@ -133,7 +142,7 @@ public:
 	void 	setDefHeaders(QStringList lst);
 	void 	setColWidth(QStringList lst);
 	void 	setDefIdList(QStringList lst);
-	void 	setId( Q_ULLONG fn );
+	void 	setId( qulonglong fn );
 	void	setTblInd( int ind );
 	void 	setOpenEditor( bool fn );
 	void 	setDefColWidth( int fn );
@@ -146,12 +155,12 @@ public:
 	QPixmap systemIcon();
 	virtual int Select( ANANAS_UID db_uid );
 public slots:
-	QValueList<int> getBindList();
+	Q3ValueList<int> getBindList();
 	void 	setWFieldEditor();
 	void	setAvailableTables();
 	void 	lineUpdate(QSql::Op mode);
 	void	newFilter(const QString & );
-	void	newDataId(const Q_ULLONG );
+	void	newDataId(const qulonglong );
 	QVariant Value( const QString &colname );
 
 	bool searchColumn( const QString &text, bool FromCurrent = FALSE, bool Forward = TRUE );
@@ -187,7 +196,7 @@ signals:
  *	Сигнал испускается после выбора документа.
  *	\~
  */
-	void selected( Q_ULLONG uid );
+	void selected( qulonglong uid );
 /*!
  *	\~english
  *	Signal emitted after change line.
@@ -195,7 +204,7 @@ signals:
  *	Сигнал испускается после изменения строки.
  *	\~
  */
-	void selectRecord ( Q_ULLONG );
+	void selectRecord ( qulonglong );
 /*!
  *	\~english
  *	Signal emitted after update cell.
@@ -276,18 +285,18 @@ private:
 	int lastEditedCol;
 	
 	QString container_type;
-	Q_ULLONG	doc_id;
-	Q_ULLONG	cat_group_id;
+	qulonglong	doc_id;
+	qulonglong	cat_group_id;
 	long journalFieldId(long);
 	QString journalFieldName(long);
 	bool inEditMode;
 	//aDBTablePrivate impl;
 //	void updateProp(void);
-	QValueList<int> listBindings;
+	Q3ValueList<int> listBindings;
 	aCfgItem obj;
         QString vName, vEditFormName;
 	QString	vDefineCols;
-	Q_ULLONG oid;
+	qulonglong oid;
 };
 
 
@@ -298,14 +307,14 @@ private:
  * 	Наследует QSqlEditorFactory.
  * \_ru
  */
-class aEditorFactory: public QSqlEditorFactory
+class aEditorFactory: public Q3SqlEditorFactory
 {
 public:
 /*!
  * \~english	Constructor 
  * \~russian 	Конструктор \~
  */
-	aEditorFactory(QObject * parent = 0, const char * name = 0):QSqlEditorFactory(parent,name) {};
+	aEditorFactory(QObject * parent = 0, const char * name = 0):Q3SqlEditorFactory(parent,name) {};
 	QWidget * createEditor (QWidget * parent, const QSqlField * field);
 	void setMd(aCfg *md);
 private:

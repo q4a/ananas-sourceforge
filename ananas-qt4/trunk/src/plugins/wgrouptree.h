@@ -30,9 +30,11 @@
 #ifndef WGROUPTREE_H
 #define WGROUPTREE_H
 
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qwidgetplugin.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <QKeyEvent>
 #include "awidget.h"
 
 class wGroupTreeItem;
@@ -41,15 +43,15 @@ class QT_WIDGET_PLUGIN_EXPORT wGroupTree : public aWidget
 {
     Q_OBJECT
 public:
-	QListView *tree;
+	Q3ListView *tree;
 	wGroupTreeItem *root;
 
-	wGroupTree( QWidget *parent = 0, WFlags fl = 0 );
+	wGroupTree( QWidget *parent = 0, Qt::WFlags fl = 0 );
 	virtual ~wGroupTree();
 
 	virtual void initObject( aDatabase *adb );
 	virtual QDialog* createEditor( QWidget *parent );
-	virtual QToolBar*	createToolBar( QMainWindow *parent );
+	virtual Q3ToolBar*	createToolBar( Q3MainWindow *parent );
 	virtual aObject *createDBObject(  aCfgItem obj, aDatabase *adb );
 	void buildGroupTree( aCfgItem obj, aCatGroup * cg1, wGroupTreeItem * wG );
 	void findGroupTree();
@@ -63,10 +65,10 @@ private slots:
 	void on_selected( ANANAS_UID element );
 //	void updateItem( ANANAS_UID element );
 	void updateItem( ANANAS_UID element );
-	void on_selectionChanged( QListViewItem *);
+	void on_selectionChanged( Q3ListViewItem *);
 signals:
     virtual void selected( ANANAS_UID group );
-    virtual void selectionChanged( const Q_ULLONG );
+    virtual void selectionChanged( const qulonglong );
 protected:
 	virtual void keyPressEvent ( QKeyEvent *e );
 private:
@@ -74,12 +76,12 @@ private:
 
 
 
-class wGroupTreeItem : public QListViewItem
+class wGroupTreeItem : public Q3ListViewItem
 {
 public:
 	ANANAS_UID id;
 	int level;
-    wGroupTreeItem( QListView *parent, const QString &name = QString::null );
+    wGroupTreeItem( Q3ListView *parent, const QString &name = QString::null );
     wGroupTreeItem( wGroupTreeItem *parent, wGroupTreeItem *after, const QString &name = QString::null, int newlevel = 0, ANANAS_UID newid = 0 );
     wGroupTreeItem( wGroupTreeItem *parent, wGroupTreeItem *after, aCatGroup *g = 0 );
     virtual ~wGroupTreeItem();

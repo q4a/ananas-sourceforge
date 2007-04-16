@@ -32,8 +32,11 @@
 #include <qlayout.h>
 #include <qvalidator.h>
 #include <qlabel.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qsizepolicy.h>
+//Added by qt3to4:
+#include <Q3Frame>
+#include <QPixmap>
 #include "ananas.h"
 #include "wcatalogeditor.h"
 #include "wfield.h"
@@ -63,7 +66,7 @@ wCatalogEditor::wCatalogEditor(	wField *parent,
   md = NULL;
   QString str;
   label = new QLabel(parent, name);
-	label->setFrameShape(QFrame::Box);
+	label->setFrameShape(Q3Frame::Box);
 	w =(QWidget*) parent->parent()->parent();
 	str = parent->getFieldType();
 	catId = atoi(str.remove(0,2));// gets catalog id.
@@ -165,21 +168,21 @@ wCatalogEditor::openForm(const bool toSelect)
   		CatalogForm* newform = new CatalogForm(ws,0, WDestructiveClose);
 		wl->insert( objid, newform );
 	}*/
-	CatalogForm* newform = new CatalogForm(ws,0, WDestructiveClose);
+	CatalogForm* newform = new CatalogForm(ws,0, Qt::WDestructiveClose);
 
-	connect( newform,	SIGNAL(selected(Q_ULLONG)),
-  		 this,		SLOT(on_selected( Q_ULLONG )));
+	connect( newform,	SIGNAL(selected(qulonglong)),
+  		 this,		SLOT(on_selected( qulonglong )));
 	connect( newform, 	SIGNAL(destroyed()),
   	  	 this,		SLOT(on_destroyed_form()));
 
 	aCatalogue *cat = new aCatalogue(md->find(catId),db);
 	int count=0;
 	bool est=true;
-	QMap<Q_ULLONG,QListViewItem*> map, map_el;
+	QMap<qulonglong,Q3ListViewItem*> map, map_el;
 	aCfgItem tmp, tmp_f,tmp_el,tmp_group, o;
-	QListViewItem * item;
-	QListViewItem * p_item;
-	Q_ULLONG idGrForm=0, idElForm=0;
+	Q3ListViewItem * item;
+	Q3ListViewItem * p_item;
+	qulonglong idGrForm=0, idElForm=0;
 	QStringList listPos, listPosGroup;
 	newform->ListHint->hide();
 	QPixmap pixmap(newform->getGroupPixmap());
@@ -236,11 +239,11 @@ wCatalogEditor::openForm(const bool toSelect)
 				if(map.contains(cat->GroupSysValue("idp").toULongLong()))
 				{
 					p_item = map[(cat->GroupSysValue("idp").toULongLong())];
-					item = new QListViewItem(p_item);
+					item = new Q3ListViewItem(p_item);
 				}
 				else
 				{
-					item = new QListViewItem(newform->ListView);
+					item = new Q3ListViewItem(newform->ListView);
 					newform->ListView->insertItem(item);
 				}
 				item->setText(0, displayString);
@@ -328,7 +331,7 @@ wCatalogEditor::checkUserFields( QStringList &lst)
 }
 
 void
-wCatalogEditor::on_selected( Q_ULLONG uid )
+wCatalogEditor::on_selected( qulonglong uid )
 {
 	emit( selected(uid) );
 }
@@ -363,7 +366,7 @@ wCatalogEditor::value() const
  * 				\ru уникальный идентификатор элемента или группы \_ru
  */
 QString
-wCatalogEditor::displayValue(Q_ULLONG id_element) const
+wCatalogEditor::displayValue(qulonglong id_element) const
 {
 const QString no_select = "  ";
 	if(md)
