@@ -1,7 +1,7 @@
 /****************************************************************************
 ** $Id: aootemplate.cpp,v 1.21 2006/06/19 10:42:33 gr Exp $
 **
-** Report metadata object header file of 
+** Report metadata object header file of
 ** Ananas application library
 **
 ** Created : 20050202
@@ -9,7 +9,7 @@
 ** Copyright (C) 2003 by HaPK, email : theHaPK@yandex.ru
 ** Copyright (C) 2003-2006 Grigory Panov <gr1313 at mail.ru>, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -40,17 +40,18 @@
 #include <qregexp.h>
 #include <qdatetime.h>
 #include <q3textstream.h>
+#include <QTextStream>
 
 
 aOOTemplate::aOOTemplate() : iTemplate()
 {
-	
+
 }
 
-aOOTemplate::~aOOTemplate() 
+aOOTemplate::~aOOTemplate()
 {
 }
-   
+
 /**
  * \en
  * Open pattern.
@@ -60,13 +61,13 @@ aOOTemplate::~aOOTemplate()
  * \_ru
  * \param fname \ru имя шаблона\_ru
  */
-bool 
+bool
 aOOTemplate::open( const QString &fname )
 {
 	QDir dir;
         QString temp;
- 
-#ifndef Q_OS_WIN32 
+
+#ifndef Q_OS_WIN32
 	temp = getenv("TMPDIR");
 	if(temp=="" || temp.isEmpty())
 		temp = P_tmpdir;
@@ -93,8 +94,8 @@ aOOTemplate::open( const QString &fname )
 	process.addArgument( "-d" );
 	process.addArgument( copyName );
 
-#else 
-	Q3Process process( QString("7z") );	
+#else
+	Q3Process process( QString("7z") );
 	process.setWorkingDirectory ( templateDir);
 	//printf("working dir = `%s'\n", QString(templateDir).ascii());
 	process.addArgument( "x" );
@@ -112,7 +113,7 @@ aOOTemplate::open( const QString &fname )
 
 	while( process.isRunning() );
 
-	if( !process.normalExit() ) 
+	if( !process.normalExit() )
 	{
 		aLog::print(aLog::ERROR, tr("aOOTemplate unzip dead"));
 		return false;
@@ -125,11 +126,11 @@ aOOTemplate::open( const QString &fname )
 	{
 		return false;
 	}
-	
-	QFile content (QDir::convertSeparators( copyName+"/content.xml") ); 
-	docTpl.setContent( &content, false ); 
-	
-	QFile style (QDir::convertSeparators( copyName+"/styles.xml") ); 
+
+	QFile content (QDir::convertSeparators( copyName+"/content.xml") );
+	docTpl.setContent( &content, false );
+
+	QFile style (QDir::convertSeparators( copyName+"/styles.xml") );
 	docStyle.setContent( &style, false );
 
 	aLog::print(aLog::INFO, tr("aOOTemplate open"));
@@ -137,16 +138,16 @@ return true;
 }
 /**
  * \en
- * Closes pattern. Deletes temporary files. 
+ * Closes pattern. Deletes temporary files.
  * \_en
- * 
+ *
  * \ru
  * Закрывает шаблон. Удаляет временные файлы.
  * \_ru
  */
 void
 aOOTemplate::close()
-{   
+{
 	values.clear();
 	//	QDir dir;
 	docTpl.clear();
@@ -158,7 +159,7 @@ aOOTemplate::close()
 #endif
 	QDir dir;
 	dir.rmdir(copyName);
-	
+
 }
 /**
  * \en
@@ -168,7 +169,7 @@ aOOTemplate::close()
  * Обнуляет внутренние переменные.
  * \_ru
  */
-void 
+void
 aOOTemplate::clear()
 {
 	values.clear();
@@ -211,17 +212,17 @@ aOOTemplate::setValue( const QString &name, const QString &value )
 }
 /**
  * \en
- * Execute replace tags to values. 
+ * Execute replace tags to values.
  * \_en
  * \ru
  * Выполняет подстановку значения параметра в шаблоне.
- * Есть 2 типа тегов 
- *  \arg обычные теги 
- *  \arg секции - могут находиться ТОЛЬКО в строках таблицы. 
+ * Есть 2 типа тегов
+ *  \arg обычные теги
+ *  \arg секции - могут находиться ТОЛЬКО в строках таблицы.
 
  * Для подстановки значений обычных тегов необходимо выполнить setValue() где name = PARAM (сейчас #define PARAM "param") а value - значение для подстановки. Потом выполнить exec() с параметром = имени тега.
  * Для подстановки секций необходимо задать нужные параметры, используя setValue()
- * а потом выполнить exec() с именем секции. 
+ * а потом выполнить exec() с именем секции.
  * exec может вызываться нужное число раз как для обычных тегов, так и для секций
  * \_ru
  */
@@ -231,27 +232,27 @@ aOOTemplate::exec( const QString &sname )
 	setValue(sname, getValue(PARAM));
 	//search tags in content
 	QDomNode n = docTpl.lastChild();
-	while( !n.isNull() ) 
+	while( !n.isNull() )
 	{
 		searchTags(n, sname);
 		n = n.previousSibling();
 	}
 	//search tags in colontituls
 	n = docStyle.lastChild();
-	while( !n.isNull() ) 
+	while( !n.isNull() )
 	{
 		searchTags(n, sname);
 		n = n.previousSibling();
 	}
 	return docTpl.toString();
-	
+
 }
-/** 
+/**
  *	\~english
- *	Added value to end tag with name `sname'. Don't deletes tag. 
+ *	Added value to end tag with name `sname'. Don't deletes tag.
  *	\~russian
  *	Рекурсивная функция поиска и замены тегов на их значения в node.
- *	Не заменяет теги, а дописывает значения в конец. 
+ *	Не заменяет теги, а дописывает значения в конец.
  *	Для удаления тэгов используйте функцию cleanUpTags()
  * 	\~
  *	\param node - \~english context for searching \~russian узел, с которого осуществляется поиск. \~
@@ -264,10 +265,10 @@ aOOTemplate::searchTags(QDomNode node, const QString &sname )
 QDomNode n = node.lastChild();
 	while( !n.isNull() )
 	{
-		
+
 	//	printf("n->name=%s\n",n.nodeName().ascii());
 		bool res = getNodeTags(n, sname, false);
-		if( res ) 
+		if( res )
 		{
 			insertRowValues(n);
 		}
@@ -294,7 +295,7 @@ QDomNode n = node.lastChild();
  *	\~
  *	\param node - \~english context for searching \~russian узел, с которого осуществляется поиск. \~
  *	\param sname - \~english tag name \~russian имя тега для поиска \~
- *	\param params - \~english true, if find simple tag and false, if section 
+ *	\param params - \~english true, if find simple tag and false, if section
  *			\~russian true, если ищется обычный тег и false, если ищется тег секции \~
  */
 bool
@@ -311,11 +312,11 @@ aOOTemplate::getNodeTags(QDomNode node, const QString &tagname, bool params )
 		}
 		else
 		{
-			re.setPattern(QString("%1.*%2").arg(open_token_section).arg(close_token_section));	
+			re.setPattern(QString("%1.*%2").arg(open_token_section).arg(close_token_section));
 		}
 		re.setMinimal(true);
 		int pos = re.search(str,0);
-		
+
 		while(pos != -1)
 		{
 	//		printf("find string =%s\n",str.mid(pos+2, re.matchedLength()-4).ascii());
@@ -327,30 +328,30 @@ aOOTemplate::getNodeTags(QDomNode node, const QString &tagname, bool params )
 			pos+= re.matchedLength();
 			pos = re.search(str,pos);
 		}
-		
+
 	}
- return false;	
+ return false;
 }
 
-/** 
+/**
  *	\~english
  *	insert new row in table and replace tag to value
  *	\~russian
  *	Вставляет новую строку в таблицу, заменяет теги на значения, удаляет тег секции из строки таблицы.
  *	Выполняет рекурсивный поиск узла, содержащего строку таблицы. У этого узла в OpenOffic'е есть
- *	специальное имя, которое распознается функцией. После того, как узел найден, строка строка дублируется, 
+ *	специальное имя, которое распознается функцией. После того, как узел найден, строка строка дублируется,
  *	а из текущей строки удаляются все теги секции, чтобы избежать мнократного размножения строк таблицы.
  *	\~
  *	\see searchTags()
  */
-void 
+void
 aOOTemplate::insertRowValues(QDomNode node)
 {
 	QDomNode n = node;
 	while(!n.parentNode().isNull())
 	{
 		n = n.parentNode();
-		if( n.nodeName()=="table:table-row" ) 
+		if( n.nodeName()=="table:table-row" )
 		{
 			n.parentNode().insertAfter(n.cloneNode(true),n);
 			clearTags(n,true);
@@ -359,7 +360,7 @@ aOOTemplate::insertRowValues(QDomNode node)
 			{
 				searchTags(n,it.key());
 			}
-			
+
 		}
 	}
 }
@@ -375,7 +376,7 @@ aOOTemplate::insertRowValues(QDomNode node)
  *	\param node - \~english context \~russian узел к которому добавляется значение \~
  *	\param sname - \~english tag name \~russian имя тега \~
  */
-void 
+void
 aOOTemplate::insertTagsValues(QDomNode node, const QString &tagName)
 {
 	QDomNode n = node;
@@ -393,33 +394,33 @@ aOOTemplate::insertTagsValues(QDomNode node, const QString &tagName)
 void
 aOOTemplate::cleanUpTags()
 {
-	
+
 	//clear tags in content
 	QDomNode n = docTpl.lastChild();
-	while( !n.isNull() ) 
+	while( !n.isNull() )
 	{
 		clearTags(n,false);
 	//	clearRow(n);
 		n = n.previousSibling();
 	}
 	n = docTpl.lastChild();
-	while( !n.isNull() ) 
+	while( !n.isNull() )
 	{
 	//	clearTags(n,false);
 		clearRow(n);
 		n = n.previousSibling();
 	}
-	
+
 	//clear tags in colontituls
 	n = docStyle.lastChild();
-	while( !n.isNull() ) 
+	while( !n.isNull() )
 	{
 		clearTags(n,false);
 	//	clearRow(n);
 		n = n.previousSibling();
 	}
 	n = docStyle.lastChild();
-	while( !n.isNull() ) 
+	while( !n.isNull() )
 	{
 	//	clearTags(n,false);
 		clearRow(n);
@@ -442,10 +443,10 @@ void
 aOOTemplate::clearTags(QDomNode node, bool section )
 {
 	if(node.isNull()) return;
-	
+
 	QDomNode n = node.lastChild();
 	while( !n.isNull() )
-	{	
+	{
 		if(n.isText())
 		{
 			QString str = n.nodeValue();
@@ -461,15 +462,15 @@ aOOTemplate::clearTags(QDomNode node, bool section )
 			}
 			re.setMinimal(true);
 			int pos = re.search(str,0);
-		
+
 			while(pos != -1)
 			{
 				str = str.remove(re);
 				//printf("str = %s\n",str.ascii());
 				pos = re.search(str,0);
 			}
-			n.setNodeValue(str);	
-		
+			n.setNodeValue(str);
+
 		}
 		else
 		{
@@ -477,7 +478,7 @@ aOOTemplate::clearTags(QDomNode node, bool section )
 		}
 		n = n.previousSibling();
 	}
-	
+
 }
 
 /**
@@ -493,7 +494,7 @@ aOOTemplate::clearRow(QDomNode node)
 {
 QDomNode n = node.lastChild();
 	while( !n.isNull() )
-	{	
+	{
 		if(n.isText())
 		{
 			QString str = n.nodeValue();
@@ -509,7 +510,7 @@ QDomNode n = node.lastChild();
 				while(!tmp.parentNode().isNull())
 				{
 					tmp = tmp.parentNode();
-					if( tmp.nodeName()=="table:table-row" ) 
+					if( tmp.nodeName()=="table:table-row" )
 					{
 	//					printf("row removed\n");
 						tmp.parentNode().removeChild(tmp);
@@ -517,8 +518,8 @@ QDomNode n = node.lastChild();
 					}
 				}
 			}
-			//n.setNodeValue(str);	
-		
+			//n.setNodeValue(str);
+
 		}
 		else
 		{
@@ -527,7 +528,7 @@ QDomNode n = node.lastChild();
 		}
 		n = n.previousSibling();
 	}
-	
+
 }
 /**
  * \en
@@ -550,50 +551,50 @@ aOOTemplate::result()
  * Сохраняет шаблон в файл с заданным именем. Перед сохранением необходимо выполнить функцию cleanUpTags() чтобы удалить тэги из сохраняемого документа.
  * \_ru
  */
-bool 
+bool
 aOOTemplate::save( const QString & fname )
 {
-	
-	QString homeDir = QString("%1").arg(QDir::convertSeparators(QDir::homeDirPath ())); 
+
+	QString homeDir = QString("%1").arg(QDir::convertSeparators(QDir::homeDirPath ()));
 	QFile fContent( QDir::convertSeparators(copyName+"/content.xml") );
-	if( !fContent.open( QIODevice::WriteOnly ) ) 
+	if( !fContent.open( QIODevice::WriteOnly ) )
 	{
 		aLog::print(aLog::ERROR, tr("aOOTemplate save %1 open for write").arg(fContent.name()));
 		return false;
 	}
-	Q3TextStream stream4content(&fContent);
+	QTextStream stream4content(&fContent);
 	docTpl.save(stream4content,2);
 	fContent.close();
-	
+
 	QFile fStyle( QDir::convertSeparators(copyName+"/styles.xml") );
 	if( !fStyle.open( QIODevice::WriteOnly ) )
 	{
 		aLog::print(aLog::ERROR, tr("aOOTemplate save %1 open for write").arg(fContent.name()));
 		return false;
 	}
-	Q3TextStream stream4styles(&fStyle);
+	QTextStream stream4styles(&fStyle);
 	docStyle.save(stream4styles,2);
 	fStyle.close();
-	
-	
-	
+
+
+
 	QString curDir;// = QDir::convertSeparators(QDir::irPath());
 	curDir = QDir::convertSeparators(templateDir);
 	aLog::print(aLog::DEBUG, tr("aOOTemplate save working dir =%1").arg(curDir));
-	
-#ifndef Q_OS_WIN32 
+
+#ifndef Q_OS_WIN32
 
 	Q3Process process( QString("zip") );
 	process.setWorkingDirectory(copyName);
 	process.addArgument( "-r" );
-	process.addArgument( fname );	
+	process.addArgument( fname );
 	process.addArgument(".");
 #else
 	Q3Process process( QString("7z") );
 	process.setWorkingDirectory(copyName);
 	process.addArgument( "a" );
 	process.addArgument( "-tzip" );
-	process.addArgument( fname );	
+	process.addArgument( fname );
 	process.addArgument( "-r" );
 	process.addArgument(".");
 #endif
@@ -608,7 +609,7 @@ aOOTemplate::save( const QString & fname )
 
 	while( process.isRunning() );
 
-	if( !process.normalExit() ) 
+	if( !process.normalExit() )
 	{
 		aLog::print(aLog::ERROR, tr("aOOTemplate zip dead"));
 		return false;
@@ -636,7 +637,7 @@ aOOTemplate::getDir()
 #ifdef Q_OS_WIN32
 	if(homeDir.right(1)!="\\") homeDir.append("\\");
 #else
-	
+
 	if(homeDir.right(1)!="/") homeDir.append("/");
 #endif
 	return QDir::convertSeparators(homeDir);

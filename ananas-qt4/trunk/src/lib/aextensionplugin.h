@@ -81,8 +81,8 @@ private:
  *
  *   Writing a Ananas extension plugin is achieved by subclassing this base class,
  *   reimplementing the pure virtual functions keys() and create(), and
- *   exporting the class with the \c Q_EXPORT_PLUGIN macro. See the 
- *   Ananas extensions plugins that come with Ananas for example 
+ *   exporting the class with the \c Q_EXPORT_PLUGIN macro. See the
+ *   Ananas extensions plugins that come with Ananas for example
  *   implementations (in the
  *   \c{extensions} subdirectory of the source
  *   distribution). Read the \link plugins-howto.html plugins
@@ -99,18 +99,18 @@ class  ANANAS_EXPORT AExtensionPlugin : public AExtensionPluginBase
 public:
 
     AExtensionPlugin()
-    { 
+    {
 	type o;
 	extName = o.name();
     };
     ~AExtensionPlugin(){};
-    QStringList keys() const 
+    QStringList keys() const
     {
         QStringList l;
 	l << extName;
 	return l;
     };
-    AExtension *create( const QString &key ) 
+    AExtension *create( const QString &key )
     {
         if (key == extName) return new type();
 	return 0;

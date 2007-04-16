@@ -59,7 +59,7 @@ class  ANANAS_EXPORT AMenuBar : public QMenuBar
 
 	int insertItem ( const QString & text, Q3PopupMenu * popup, int id = -1, int index = -1 );
 /*
-	int insertItem ( const QString & text, const QObject * receiver, const char * member, const QKeySequence & accel = 0, int id = -1, int index = -1 ); 
+	int insertItem ( const QString & text, const QObject * receiver, const char * member, const QKeySequence & accel = 0, int id = -1, int index = -1 );
 	int insertItem ( const QPixmap & pixmap, const QObject * receiver, const char * member, const QKeySequence & accel = 0, int id = -1, int index = -1 );
 	int insertItem ( const QIconSet & icon, const QPixmap & pixmap, const QObject * receiver, const char * member, const QKeySequence & accel = 0, int id = -1, int index = -1 );
 	int insertItem ( const QString & text, int id = -1, int index = -1 );
@@ -73,7 +73,7 @@ class  ANANAS_EXPORT AMenuBar : public QMenuBar
 	int insertItem ( const QIconSet & icon, QCustomMenuItem * custom, int id = -1, int index = -1 );
 	int insertItem ( QCustomMenuItem * custom, int id = -1, int index = -1 );
 	int insertSeparator ( int index = -1 );
-*/	
+*/
 private:
 	Q3IntDict <aCfgItem> cfgItems;
 };

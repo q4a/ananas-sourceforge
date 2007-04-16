@@ -35,7 +35,7 @@ dImportDB::~dImportDB()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void 
+void
 dImportDB::languageChange()
 {
 	dEditRC::languageChange();
@@ -57,7 +57,7 @@ dImportDB::onCFGFile()
 		{
 			eCfgName->setText(QDir::convertSeparators(fd.selectedFile()));
 		}
-		else 
+		else
 		{
 			return;
 		}

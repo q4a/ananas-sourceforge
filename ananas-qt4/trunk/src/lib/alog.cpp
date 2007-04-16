@@ -1,14 +1,14 @@
 /****************************************************************************
 ** $Id: alog.cpp,v 1.9 2006/08/23 07:57:21 app Exp $
 **
-** Log functions source file of 
+** Log functions source file of
 ** Ananas application library
 **
 ** Created : 20060402
 **
 ** Copyright (C) 2006 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -47,11 +47,11 @@ const int	aLog::DEBUG = 2;
  *\~english
  *	Writes text to log, if /a status less init status.
  *	\param status - message status  ( aLog::ERROR, aLog::INFO, aLog::DEBUG )
- *	\param text - message 
+ *	\param text - message
  *\~russian
  *	Пишет текст в лог, если статус сообщения меньше установленного при инициализации. К тексту добавляется дата и статус.
- *	\param status - статус сообщения  ( aLog::ERROR, aLog::INFO, aLog::DEBUG ). 
- *	\param text - сообщение 
+ *	\param status - статус сообщения  ( aLog::ERROR, aLog::INFO, aLog::DEBUG ).
+ *	\param text - сообщение
  *\~
 */
 void
@@ -61,20 +61,20 @@ aLog::print(	int status,
 	QString st;
 //	switch(status)
 //	{
-//		case aLog::ERROR: 
+//		case aLog::ERROR:
 		if(status == aLog::ERROR) st = "ERROR";
 //		break;
-//		case aLog::INFO: 
+//		case aLog::INFO:
 		else if(status == aLog::INFO) st = "INFO";
 //		break;
-//		default: 
+//		default:
 		else st = "DEBUG";
 //		break;
 //	}
 	if(status<=logLevel)
 	{
 	QString endline;
-	
+
 #ifdef Q_OS_WIN32
 	endline = "\r\n";
 #else
@@ -85,7 +85,7 @@ aLog::print(	int status,
 				  .arg(st)\
 				  .arg(text)\
 				  .arg(endline);
-		aLog::printr(toWrite);	
+		aLog::printr(toWrite);
 	}
 }
 
@@ -93,7 +93,7 @@ aLog::print(	int status,
  *\~english
  *	Writes raw text to log.
  *\~russian
- *	Пишет текст в лог без изменения.	
+ *	Пишет текст в лог без изменения.
  *\~
  *	\param text - \~english text \~russian текст \~
 */
@@ -132,23 +132,23 @@ aLog::init(const QString &log_name, int show_up)
 	QString log;
 	if(log_name =="" || logName==QString::null)
 	{
-		log = aService::readConfigVariable("log", &ok);	
+		log = aService::readConfigVariable("log", &ok);
 		if(!ok) log = QDir::homeDirPath()+"/.ananas/ananas.log";
 	}
 	else
 	{
 		log = log_name;
 	}
-	
+
 	aLog::logLevel = show_up;
 	const QString logLev = aService::readConfigVariable("logLevel", &ok);
-	
+
 	if(logLev=="ERROR") aLog::logLevel = aLog::ERROR;
 	if(logLev=="INFO") aLog::logLevel = aLog::INFO;
 	if(logLev=="DEBUG") aLog::logLevel = aLog::DEBUG;
-	
+
 	aLog::logName = log;
-		
+
 	aLog::f.setName(getLogName());
 	aLog::f.open( QIODevice::WriteOnly | QIODevice::Append );
 
@@ -160,7 +160,7 @@ aLog::getLogName()
 	return aLog::logName;
 }
 
-void 
+void
 aLog::close()
 {
 	aLog::f.close();

@@ -48,7 +48,7 @@ default-character-set=utf8
 #include <QSqlError>
 #include <Q3SqlRecordInfo>
 
-#include "alog.h" 
+#include "alog.h"
 
 #include "asqltable.h"
 #include "adatabase.h"
@@ -121,7 +121,7 @@ aDataDriver_PGSQL::~aDataDriver_PGSQL()
  */
 aDatabase::aDatabase() : QObject()
 {
-	ddb = 0;
+	//--ddb = 0;
 }
 
 
@@ -144,7 +144,7 @@ aDatabase::~aDatabase()
  *	Return current database driver name.
  *	Translate name for unicode MySQL driver to standart name.
  *	\~russian
- *	Возвращает имя драйвера базы данных. 
+ *	Возвращает имя драйвера базы данных.
  *	Переводит имя для драйвера MySQL с поддержкой utf8 в стандартное имя.
  *	\~
  *	\return \~english QT current Database driver name \~russian имя драйвера. \~
@@ -152,7 +152,7 @@ aDatabase::~aDatabase()
 QString
 aDatabase::driverName()
 {
-        QString name = db()->driverName();
+        QString name = db().driverName();
         if ( name == "QMYSQL3U" ) name = "QMYSQL3";
         return name;
 }
@@ -211,7 +211,7 @@ aDatabase::init( const QString &rcname, const QString &dbname )
  *	\~english
  *	Creates database on SQL server.
  *	Reads rc file and makes connection to database server. Then creates database with name obtained from rc file.
- *	\~russian 
+ *	\~russian
  *	Создает базу данных на SQL сервере.
  *	Читает переданный файл ресурса и создает соединение с сервером баз данных. После этого создает базу данных с параметрами, заданными в файле ресурса.
  *	\~
@@ -223,7 +223,7 @@ aDatabase::init( const QString &rcname, const QString &dbname )
 bool
 aDatabase::init( aCfgRc *rc, const QString &dbname )
 {
-	
+
 	fillFeatures();
 	QString driver = "UNKNOWN";
 	QString dbtype;
@@ -243,21 +243,22 @@ aDatabase::init( aCfgRc *rc, const QString &dbname )
 	}
 	//QSqlDatabase *
 	ddb = QSqlDatabase::addDatabase( driver );
-	if ( !ddb ) return false;
-	ddb->setDatabaseName( rc->value("dbname") );
-	ddb->setUserName( rc->value("dbuser") );
-	ddb->setPassword( rc->value("dbpass") );
-	ddb->setHostName( rc->value("dbhost") );
-	if ( !rc->value("dbport").isEmpty() ) ddb->setPort( rc->value("dbport").toInt() );
-	if ( driver == "QSQLITE" ) db()->exec( "PRAGMA encoding=\"UTF-8\"" );
+	//--if ( !ddb ) return false;
+	if ( !ddb.isOpen() ) return false;
+	ddb.setDatabaseName( rc->value("dbname") );
+	ddb.setUserName( rc->value("dbuser") );
+	ddb.setPassword( rc->value("dbpass") );
+	ddb.setHostName( rc->value("dbhost") );
+	if ( !rc->value("dbport").isEmpty() ) ddb.setPort( rc->value("dbport").toInt() );
+	if ( driver == "QSQLITE" ) db().exec( "PRAGMA encoding=\"UTF-8\"" );
 	aLog::print(aLog::DEBUG,tr("aDatabase prepared for open connection to %1").arg(rc->value("dbname")));
-	if ( !ddb->open() ) 
+	if ( !ddb.open() )
 	{
-		
+
 		aLog::print(aLog::INFO,tr("aDatabase open connection failed, try create %1").arg(rc->value("dbname")));
-		ddb->setDatabaseName(feature("systemDatabase"));
-		ddb->open();
-		if(ddb->isOpen())
+		ddb.setDatabaseName(feature("systemDatabase"));
+		ddb.open();
+		if(ddb.isOpen())
 		{
 			aLog::print(aLog::DEBUG,tr("aDatabase system database is open"));
 			QString query = QString("create database %1 %2").arg( rc->value("dbname") ).arg(feature("encoding"));
@@ -266,13 +267,13 @@ aDatabase::init( aCfgRc *rc, const QString &dbname )
 		//if ( driver == "QMYSQL3U" ) query.append( " character set utf8" );
 //#endif
 			printf("query = %s\n",query.ascii());
-			QSqlQuery q = ddb->exec( query );
-			if(ddb->lastError().type()!=QSqlError::NoError)
+			QSqlQuery q = ddb.exec( query );
+			if(ddb.lastError().type()!=QSqlError::NoError)
 			{
-				reportError(ddb->lastError(),query);
+				reportError(ddb.lastError(),query);
 			}
-			ddb->setDatabaseName( rc->value("dbname") );
-			if ( !ddb->open() ) {
+			ddb.setDatabaseName( rc->value("dbname") );
+			if ( !ddb.open() ) {
 				cfg_message(3, ( const char *) tr("Can't open database connection\n").utf8());
 				aLog::print(aLog::ERROR,tr("aDatabase open connection to %1").arg(rc->value("dbname")));
 				return false;
@@ -284,11 +285,11 @@ aDatabase::init( aCfgRc *rc, const QString &dbname )
 		}
 		else
 		{
-			cfg_message(3, ( const char *) tr("Can't create database\n").utf8());	
+			cfg_message(3, ( const char *) tr("Can't create database\n").utf8());
 			aLog::print(aLog::ERROR,tr("aDatabase create database %1").arg(rc->value("dbname")));
 			return false;
 		}
-		
+
 		aLog::print(aLog::INFO,tr("aDatabase open connection to %1 ok").arg(rc->value("dbname")));
 	}
 	return true;
@@ -298,7 +299,7 @@ aDatabase::init( aCfgRc *rc, const QString &dbname )
 void
 aDatabase::fillFeatures()
 {
-	featuresMySQL["autoincrement"] = "select last_insert_id()"; 	
+	featuresMySQL["autoincrement"] = "select last_insert_id()";
 	featuresMySQL["encoding"] = "character set utf8";
 	featuresMySQL["systemDatabase"] = "mysql";
 	featuresPostgreSQL["autoincrement"] = "select currval('uniques_id_seq')";
@@ -311,15 +312,15 @@ aDatabase::fillFeatures()
 /*!
  *	\~english
  *	Closes database connection.
- *	\~russian 
+ *	\~russian
  *	Закрывает соединение с базой данных и освобождает все занятые ресурсы.
  *	\~
  */
 void
 aDatabase::done()
 {
-	if ( db() ) {
-		db()->close();
+	if ( db().isOpen() ) {
+		db().close();
 	}
 }
 
@@ -328,14 +329,14 @@ aDatabase::done()
 /*!
  *	\~english
  *	Returns database connection.
- *	\~russian 
- *	Возвращает ссылку на соединение с базой данных. 
+ *	\~russian
+ *	Возвращает ссылку на соединение с базой данных.
  *	\~
  *	\param dbname (in) - 	\~english database connection name. Default value used if dbname is empty.
  *				\~russian имя базы данных. \~
  *	\return  \~english database connection. \~russian соединение с базой данных \~
  */
-QSqlDatabase*
+QSqlDatabase
 aDatabase::db(const QString &dbname )
 {
 	if ( dbname.isEmpty() ) return QSqlDatabase::database();
@@ -346,8 +347,8 @@ aDatabase::db(const QString &dbname )
 /*!
  *	\~english
  *	Check database structure. Don't implemented.
- *	\~russian 
- *	проверяет структуру базы данных. Не реализована. 
+ *	\~russian
+ *	проверяет структуру базы данных. Не реализована.
  *	\~
  *	\return  \~english true, if structure is valid. \~russian true, если база данных коррестна \~
  */
@@ -362,7 +363,7 @@ aDatabase::checkStructure()
 
 /*!
  *	\~english
- *	Helper method. 
+ *	Helper method.
  *	\~russian
  *	Вспомогательный метод. Создает новую базу данных.
  *	\~
@@ -379,8 +380,8 @@ aDatabase::drop(const QString& dbname)
 {
 
 	QString query = QString("drop database %1").arg(dbname);
-	if(!ddb) return true;
-	if(ddb->exec(query).lastError().type()==QSqlError::None)
+	if(!ddb.isOpen()) return true;
+	if(ddb.exec(query).lastError().type()==QSqlError::None)
 	{
 		aLog::print(aLog::ERROR,tr("aDatabase drop database %1").arg(dbname));
 	}
@@ -390,13 +391,13 @@ aDatabase::drop(const QString& dbname)
 			//if ( driverName() == "QMYSQL3" ) query.append( " character set utf8" );
 //#endif
 			//printf("query = %s\n",query.ascii());
-			QSqlQuery q = db()->exec( query );
-			if(db()->lastError().type()!=QSqlError::None)
+			QSqlQuery q = db().exec( query );
+			if(db().lastError().type()!=QSqlError::None)
 			{
-				reportError(db()->lastError(),query);
+				reportError(db().lastError(),query);
 			}
-			ddb->setDatabaseName( dbname );
-			if ( !ddb->open() ) {
+			ddb.setDatabaseName( dbname );
+			if ( !ddb.open() ) {
 				cfg_message(3, ( const char *) tr("Can't open database connection\n").utf8());
 				aLog::print(aLog::ERROR,tr("aDatabase open connection to %1").arg(dbname));
 				return false;
@@ -404,7 +405,7 @@ aDatabase::drop(const QString& dbname)
 			else
 			{
 				aLog::print(aLog::INFO,tr("aDatabase open connection to %1").arg(dbname));
-				
+
 			}
 	return false;
 }
@@ -412,7 +413,7 @@ aDatabase::drop(const QString& dbname)
 
 /*!
  *	\~english
- *	Helper method. 
+ *	Helper method.
  *	\~russian
  *	Вспомогательный метод. Обновляет структуру базы данных.
  *	\~
@@ -463,7 +464,7 @@ aDatabase::tableDbName( aCfg &md, aCfgItem context)
 	return tableDbName(md,context,&dummy);
 }
 
- 
+
  /*!
  *	\~english
  *	Returns sql table name for metadata object.
@@ -562,16 +563,16 @@ aDatabase::uid( int otype )
 	QString drv = driverName();
 //	printf("driver name =%s\n",drv.ascii());
 	query.sprintf("insert into uniques (otype) values (%d)", otype );
-	QSqlQuery q = db()->exec( query );
-	if(db()->lastError().type()!=QSqlError::None)
+	QSqlQuery q = db().exec( query );
+	if(db().lastError().type()!=QSqlError::None)
 	{
-		reportError(db()->lastError(),query);
+		reportError(db().lastError(),query);
 	}
 	query = feature("autoincrement");
-	q = db()->exec( query );
-	if(db()->lastError().type()!=QSqlError::None)
+	q = db().exec( query );
+	if(db().lastError().type()!=QSqlError::None)
 	{
-		reportError(db()->lastError(),query);
+		reportError(db().lastError(),query);
 	}
 	if ( q.first() )
 	{
@@ -601,7 +602,7 @@ aDatabase::uid( int otype )
 int
 aDatabase::uidType ( qulonglong uid )
 {
-	QSqlQuery q = db()->exec( QString("SELECT otype FROM uniques WHERE id=%1").arg(uid) );
+	QSqlQuery q = db().exec( QString("SELECT otype FROM uniques WHERE id=%1").arg(uid) );
 	if ( q.first() )
 		return q.value(0).toInt();
 	else
@@ -614,7 +615,7 @@ aDatabase::uidType ( qulonglong uid )
 /*!
  *	\~english
  *	Checks table existence.
- *	\~russian 
+ *	\~russian
  *	Проверяет, существует ли таблица в базе данных.
  *	\~
  *	\param name (in) - \~english table name to check for. \~russian имя проверяемой таблицы \~
@@ -623,9 +624,9 @@ aDatabase::uidType ( qulonglong uid )
 bool
 aDatabase::tableExists( const QString & name )
 {
-	QStringList list = db()->tables();
+	QStringList list = db().tables();
 	QStringList::Iterator it = list.begin();
-	while( it != list.end() ) 
+	while( it != list.end() )
 	{
 		if ( *it == name ) return true;
 		++it;
@@ -652,7 +653,7 @@ aDatabase::fieldtype( const QString &tdef )
 	st = tdef.section(" ", 0, 0).lower();
 	n1 = tdef.section(" ", 1, 1).toInt();
 	n2 = tdef.section(" ", 2, 2).toInt();
-	if(st)
+	if(!st.isEmpty())
 	{
 		t = (( const char *) st)[0];
 	}
@@ -813,10 +814,10 @@ aDatabase::createIndexes(const QString &table, const QString &indexl, const QStr
 	while ( !s.isEmpty() ) {
 		query = QString("create index %1_idx%2 on %3 %4").arg( table ).arg( idxcount ).arg( table ).arg( s );
 		aLog::print(aLog::DEBUG, QString("aDatabase ") + query);
-		q = db()->exec( query );
-		if(db()->lastError().type()!=QSqlError::None)
+		q = db().exec( query );
+		if(db().lastError().type()!=QSqlError::None)
 		{
-			reportError(db()->lastError(),query);
+			reportError(db().lastError(),query);
 		}
 		idxcount++; n++;
 		s = indexl.section(",", n, n);
@@ -826,12 +827,12 @@ aDatabase::createIndexes(const QString &table, const QString &indexl, const QStr
 	    QString idxname=table+"_uniq_"+uidc[i].left(uidc[i].find('%'));
 	    QString query=QString("create unique index %1_uniq_%2").arg(table).arg(uidc[i].arg(" on "+table));
 	    qWarning("Executing: %s",query.ascii());
-	    bool success=db()->exec(query).lastError().type()==QSqlError::None;
+	    bool success=db().exec(query).lastError().type()==QSqlError::None;
 	    if (success)
 	    {
 		query=QString("insert into %1 (tname,uindices,idxname) values ('%2','").arg(db_indices).arg(table)+uidc[i]+QString("','%1')").arg(idxname);
 		qWarning("Executing: %s",query.ascii());
-		db()->exec(query);
+		db().exec(query);
 	    }
 	}
 	return rc;
@@ -857,16 +858,16 @@ aDatabase::dropIndexes(const QString & table, const QStringList & indices)
 	    qWarning("Dropping index %s on table %s.",idxname.ascii(),table.ascii());
 	    bool success=false;
 	    if (drv=="QMYSQL3")
-		success=db()->exec(QString("drop index %1 on %2").arg(idxname).arg(table)).lastError().type()==QSqlError::None;
+		success=db().exec(QString("drop index %1 on %2").arg(idxname).arg(table)).lastError().type()==QSqlError::None;
 	    else if (drv=="QSQLITE")
-		success=db()->exec(QString("drop index %1.%2").arg(table).arg(idxname)).lastError().type()==QSqlError::None;
+		success=db().exec(QString("drop index %1.%2").arg(table).arg(idxname)).lastError().type()==QSqlError::None;
 	    else if (drv=="QPSQL7")
-		success=db()->exec(QString("drop index %2").arg(idxname)).lastError().type()==QSqlError::None;
+		success=db().exec(QString("drop index %2").arg(idxname)).lastError().type()==QSqlError::None;
 	    else
-		success=db()->exec(QString("drop index %2").arg(idxname)).lastError().type()==QSqlError::None;
+		success=db().exec(QString("drop index %2").arg(idxname)).lastError().type()==QSqlError::None;
 	    if (success)
 	    {
-		db()->exec(QString("delete from %1 where (tname='%2') and (uindices='%3')").arg(db_indices).arg(table).arg(sli[i]));
+		db().exec(QString("delete from %1 where (tname='%2') and (uindices='%3')").arg(db_indices).arg(table).arg(sli[i]));
 	    }
 	}
     }
@@ -893,7 +894,7 @@ aDatabase::verifyTable(
 	QStringList tfl;
 	QString drv = driverName();
 
-	ts = db()->recordInfo( table );
+	ts = db().recordInfo( table );
 	Q3SqlRecordInfo::Iterator it = ts.begin();
 	while( it != ts.end() ) {
 		f = *it;
@@ -1013,7 +1014,7 @@ aDatabase::verifyTable(
     }*/
     // Check indices
     checkIndices(table,flddef, ui_add, ui_drop);
-    
+
     return (    f_drop.isEmpty() && f_add.isEmpty() &&
             f_upd.isEmpty() && i_drop.isEmpty() &&
             i_add.isEmpty() && ui_add.size()==0 && ui_drop.size()==0);
@@ -1025,7 +1026,7 @@ aDatabase::checkIndices(const QString& table, const QString& flddef, QStringList
 {
     QStringList sli=getUniqueIndices(flddef);
     Q3SqlCursor indices(db_indices,true,db());
-    
+
 	aLog::print(aLog::INFO,tr("aDatabase check indices for %1").arg(table));
     //qWarning("Checking indices for table %s",table.ascii());
     if (true)
@@ -1036,7 +1037,7 @@ aDatabase::checkIndices(const QString& table, const QString& flddef, QStringList
 	for(uint i=0;i<sli.size();i++)
 	{
 	    mapIndices.insert(sli[i],&mark);
-	    
+
 		aLog::print(aLog::DEBUG,tr("aDatabase search index %1").arg(sli[i]));
 //	    qWarning("Searching for index %s...",sli[i].ascii());
 	    indices.select(QString("(tname='%1') and (uindices='%2')").arg(table).arg(sli[i]));
@@ -1062,7 +1063,7 @@ aDatabase::checkIndices(const QString& table, const QString& flddef, QStringList
 	    }
 	}
     }
-	
+
 }
 
 bool
@@ -1123,7 +1124,7 @@ aDatabase::fieldsDef( aCfgItem context, const QString & idx )
 				}
 			}
 		}
-		
+
 //	printf("flddef=%s\n", (const char *) flddef);
 	return flddef;
 }
@@ -1198,7 +1199,7 @@ aDatabase::createTable(int update, const QString table, QString flddef )
 			f = f_drop.section(",", n, n );
 			while ( !f.isEmpty() ) {
 				query = QString("alter table %1 drop column %2").arg( table ).arg( f );
-				q = db()->exec( query );
+				q = db().exec( query );
 				n++;
 				f = f_drop.section(",", n, n );
 			}
@@ -1210,7 +1211,7 @@ aDatabase::createTable(int update, const QString table, QString flddef )
 			f = f_add.section(",", n, n );
 			while ( !f.isEmpty() ) {
 				query = QString("alter table %1 add column %2").arg( table ).arg( convFieldsDef( f, ind, pkey ) );
-				q = db()->exec( query );
+				q = db().exec( query );
 				n++;
 				f = f_add.section(",", n, n );
 			}
@@ -1225,18 +1226,18 @@ aDatabase::createTable(int update, const QString table, QString flddef )
 				if ( drv == "QPSQL7" ) {
 //					db_transaction_begin();
 					query = QString("alter table %1 add column __%2").arg( table ).arg( convFieldsDef( f, ind, pkey ) );
-					q = db()->exec( query );
+					q = db().exec( query );
 					query = QString("update %1 set __%2=%3").arg( table ).arg( fn ).arg( fn );
-					q = db()->exec( query );
+					q = db().exec( query );
 					query = QString("alter table %1 drop column %2").arg( table ).arg( fn );
-					q = db()->exec( query );
+					q = db().exec( query );
 					query = QString("alter table %1 rename column __%2 to %3").arg( table ).arg( fn ).arg( fn );
-					q = db()->exec( query );
+					q = db().exec( query );
 //					db_transaction_commit();
 				}
 	        		if ( drv == "QMYSQL3" ) {
 					query = QString("alter table %1 modify column %2").arg( table ).arg( convFieldsDef( f, ind, pkey ) );
-					q = db()->exec( query );
+					q = db().exec( query );
 				}
 				n++;
 				f = f_upd.section(",", n, n );
@@ -1246,7 +1247,7 @@ aDatabase::createTable(int update, const QString table, QString flddef )
 		if ( drv == "QPSQL7" ) {
 			if ( tableExists( table ) ){
 				query = QString("drop table %1").arg( table );
-				q = db()->exec( query );
+				q = db().exec( query );
 			}
 			query = QString( "create table %1 (").arg( table );
 			if ( !flddef.isEmpty() )	{
@@ -1257,7 +1258,7 @@ aDatabase::createTable(int update, const QString table, QString flddef )
 			}
 			query.append( ")" );
 			printf("%s\n%s\n", (const char *) dquery, (const char *) query );
-			q = db()->exec( query );
+			q = db().exec( query );
 			rc = 1;
 			// Создадим индексы
 			if (rc) rc= createIndexes(table, tindex);
@@ -1273,8 +1274,8 @@ aDatabase::createTable(int update, const QString table, QString flddef )
 			}
 			query.append( ")" );
 			printf("%s\n%s\n", (const char *) dquery, (const char *) query );
-			q = db()->exec( dquery );
-			q = db()->exec( query );
+			q = db().exec( dquery );
+			q = db().exec( query );
 			rc = 1;
 			if (rc) rc= createIndexes( table, tindex );
 		}
@@ -1293,7 +1294,7 @@ aDatabase::createTable(int update, const QString table, QString flddef )
     if ( update && !tableExists( table ) ) update = false;
     if ( update ) {
         if ( verifyTable( table, flddef, f_drop, f_add, f_upd, i_drop, i_add, ui_drop, ui_add ) ) return true;
-   
+
 	if(!f_drop.isEmpty()) aLog::print(aLog::INFO,QObject::tr("aDatabase drop field(s) %1").arg(f_drop));
 	if(!f_add.isEmpty()) aLog::print(aLog::INFO,QObject::tr("aDatabase add field(s) %1").arg(f_add));
 	if(!f_upd.isEmpty()) aLog::print(aLog::INFO,QObject::tr("aDatabase update field(s) %1").arg(f_upd));
@@ -1337,18 +1338,18 @@ aDatabase::createTable(int update, const QString table, QString flddef )
                 fname=flddef.section(",",fldn,fldn).section(" ",0,0);
             };
             transfer.append(QString(" FROM %1").arg(table));
-            db()->exec(transfer);
-            QSqlError err=db()->lastError();
+            db().exec(transfer);
+            QSqlError err=db().lastError();
             if (err.type()!=QSqlError::None)
             { // There's error in data transer, abort operation.
                 return false;
             };
             // We have just transferred content of old table to temporary one.
-            db()->exec(QString("DROP TABLE %1").arg(table));
+            db().exec(QString("DROP TABLE %1").arg(table));
             createTable(false,table,flddef);
             // Transfer content from temp table to freshly created new table.
-            db()->exec(QString("INSERT INTO %1 SELECT * FROM %2").arg(table).arg(temptblname));
-            db()->exec(QString("DROP TABLE %1").arg(temptblname));
+            db().exec(QString("INSERT INTO %1 SELECT * FROM %2").arg(table).arg(temptblname));
+            db().exec(QString("DROP TABLE %1").arg(temptblname));
         }
         else
         {
@@ -1358,10 +1359,10 @@ aDatabase::createTable(int update, const QString table, QString flddef )
                 f = f_drop.section(",", n, n );
                 while ( !f.isEmpty() ) {
                     query = QString("alter table %1 drop column %2").arg( table ).arg( f );
-                    q = db()->exec( query );
-		    if(db()->lastError().type()!=QSqlError::None)
+                    q = db().exec( query );
+		    if(db().lastError().type()!=QSqlError::None)
 		    {
-			QSqlError er = db()->lastError();
+			QSqlError er = db().lastError();
 		    }
                     n++;
                     f = f_drop.section(",", n, n );
@@ -1374,10 +1375,10 @@ aDatabase::createTable(int update, const QString table, QString flddef )
                 f = f_add.section(",", n, n );
                 while ( !f.isEmpty() ) {
                     query = QString("alter table %1 add column %2").arg( table ).arg( convFieldsDef( f, ind, pkey ) );
-                    q = db()->exec( query );
-		    if(db()->lastError().type()!=QSqlError::None)
+                    q = db().exec( query );
+		    if(db().lastError().type()!=QSqlError::None)
 		    {
-			reportError(db()->lastError(),query);
+			reportError(db().lastError(),query);
 		    }
                     n++;
                     f = f_add.section(",", n, n );
@@ -1393,38 +1394,38 @@ aDatabase::createTable(int update, const QString table, QString flddef )
                     if ( drv == "QPSQL7" ) {
     //                  db_transaction_begin();
                         query = QString("alter table %1 add column __%2").arg( table ).arg( convFieldsDef( f, ind, pkey ) );
-                        q = db()->exec( query );
-			if(db()->lastError().type()!=QSqlError::None)
+                        q = db().exec( query );
+			if(db().lastError().type()!=QSqlError::None)
 			{
-				reportError(db()->lastError(),query);
+				reportError(db().lastError(),query);
 			}
 			query = QString("update %1 set __%2=%3").arg( table ).arg( fn ).arg( fn );
-                        q = db()->exec( query );
-			if(db()->lastError().type()!=QSqlError::None)
+                        q = db().exec( query );
+			if(db().lastError().type()!=QSqlError::None)
 			{
-				reportError(db()->lastError(),query);
+				reportError(db().lastError(),query);
 			}
                         query = QString("alter table %1 drop column %2").arg( table ).arg( fn );
-                        q = db()->exec( query );
-			if(db()->lastError().type()!=QSqlError::None)
+                        q = db().exec( query );
+			if(db().lastError().type()!=QSqlError::None)
 			{
-			reportError(db()->lastError(),query);
-				QSqlError er = db()->lastError();
+			reportError(db().lastError(),query);
+				QSqlError er = db().lastError();
 			}
                         query = QString("alter table %1 rename column __%2 to %3").arg( table ).arg( fn ).arg( fn );
-                        q = db()->exec( query );
-			if(db()->lastError().type()!=QSqlError::None)
+                        q = db().exec( query );
+			if(db().lastError().type()!=QSqlError::None)
 			{
-				reportError(db()->lastError(),query);
+				reportError(db().lastError(),query);
 			}
     //                  db_transaction_commit();
                     }
                         if ( drv == "QMYSQL3" ) {
                         query = QString("alter table %1 modify column %2").arg( table ).arg( convFieldsDef( f, ind, pkey ) );
-                        q = db()->exec( query );
-			if(db()->lastError().type()!=QSqlError::None)
+                        q = db().exec( query );
+			if(db().lastError().type()!=QSqlError::None)
 			{
-				reportError(db()->lastError(),query);
+				reportError(db().lastError(),query);
 			}
                     }
                     n++;
@@ -1444,15 +1445,15 @@ aDatabase::createTable(int update, const QString table, QString flddef )
             }
             query.append( ")" );
 //            printf("%s\n%s\n", (const char *) dquery, (const char *) query );
-            q = db()->exec( dquery );
-		if(db()->lastError().type()!=QSqlError::None)
+            q = db().exec( dquery );
+		if(db().lastError().type()!=QSqlError::None)
 		{
-			reportError(db()->lastError(),dquery);
+			reportError(db().lastError(),dquery);
 		}
-            q = db()->exec( query );
-		if(db()->lastError().type()!=QSqlError::None)
+            q = db().exec( query );
+		if(db().lastError().type()!=QSqlError::None)
 		{
-			reportError(db()->lastError(),query);
+			reportError(db().lastError(),query);
 		}
             rc = 1;
             if (rc) rc= createIndexes( table, tindex );
@@ -1460,10 +1461,10 @@ aDatabase::createTable(int update, const QString table, QString flddef )
         if ( drv == "QPSQL7" ) {
             if ( tableExists( table ) ){
                 query = QString("drop table %1").arg( table );
-                q = db()->exec( query );
-		if(db()->lastError().type()!=QSqlError::None)
+                q = db().exec( query );
+		if(db().lastError().type()!=QSqlError::None)
 		{
-			reportError(db()->lastError(),query);
+			reportError(db().lastError(),query);
 		}
             }
             query = QString( "create table %1 (").arg( table );
@@ -1475,10 +1476,10 @@ aDatabase::createTable(int update, const QString table, QString flddef )
             }
             query.append( ")" );
            // printf("%s\n", (const char *) query );
-            q = db()->exec( query );
-		if(db()->lastError().type()!=QSqlError::None)
+            q = db().exec( query );
+		if(db().lastError().type()!=QSqlError::None)
 		{
-			reportError(db()->lastError(),query);
+			reportError(db().lastError(),query);
 		}
             rc = 1;
             // Создадим индексы
@@ -1495,15 +1496,15 @@ aDatabase::createTable(int update, const QString table, QString flddef )
             }
             query.append( ")" );
             printf("%s\n%s\n", (const char *) dquery, (const char *) query );
-            q = db()->exec( dquery );	
-		if(db()->lastError().type()!=QSqlError::None)
+            q = db().exec( dquery );
+		if(db().lastError().type()!=QSqlError::None)
 		{
-			reportError(db()->lastError(),dquery);
+			reportError(db().lastError(),dquery);
 		}
-            q = db()->exec( query );
-		if(db()->lastError().type()!=QSqlError::None)
+            q = db().exec( query );
+		if(db().lastError().type()!=QSqlError::None)
 		{
-			reportError(db()->lastError(),query);
+			reportError(db().lastError(),query);
 		}
 		QSqlError r=q.lastError();
             rc = 1;
@@ -1795,7 +1796,7 @@ aDatabase::createAccumulationRegisters( bool update )
 //					flds+=(i==0?"":",")+ifld;
 //				}
 //				QString qry=QString("create unique index %1 on %2 (%3)").arg(tbl+"_idx_uniq").arg(tbl).arg(flds);
-//				QSqlError err=db()->exec(qry).lastError();
+//				QSqlError err=db().exec(qry).lastError();
 //				if (err.type()!=QSqlError::None)
 //				{
 //					qWarning("%s %s",err.driverText().ascii(),err.databaseText().ascii());
@@ -1831,7 +1832,7 @@ aDatabase::createAccumulationRegisters( bool update )
 void
 aDatabase::markDeleted(qulonglong uid)
 {
-	db()->exec(QString("UPDATE uniques SET df='1' WHERE id=%1").arg(uid));
+	db().exec(QString("UPDATE uniques SET df='1' WHERE id=%1").arg(uid));
 }
 
 
@@ -1846,7 +1847,7 @@ aDatabase::markDeleted(qulonglong uid)
 void
 aDatabase::deleteMarked()
 {
-	db()->exec("DELETE FROM uniques WHERE df='1'");
+	db().exec("DELETE FROM uniques WHERE df='1'");
 }
 
 
@@ -1863,13 +1864,13 @@ aDatabase::supportedDriverList()
 /*!
  *	getUniqueIndices procedure parses table definition and returns list of string in form 'U'<num>'%1('<field-list>')'
  *	Syntax of index field of table definition is extended to allow using of multicolumn indices.
- *	For each multicolumn index column 'U'<num> character sequence 
+ *	For each multicolumn index column 'U'<num> character sequence
  *	should be added to index field of column definition, where <num> is a number of multicolumn index.
- *	Example: Definition "a c 20 * pu1,b c 30 * iu1,c d * * u2,d n 10 3 u2" leads to creation of two 
+ *	Example: Definition "a c 20 * pu1,b c 30 * iu1,c d * * u2,d n 10 3 u2" leads to creation of two
  *	multicolumn indices: (a,b) and (c,d).
  *	\param flddefs (in) - database table definition
  *	\returns list of string in form 'U'<num>'%1('<field-list>')'
- *	
+ *
  *	returned strings can be easily used to create SQL-query for index creation as follows:
  *	query="create unique index "+tablename+"_uniq_"+retval.arg(" on "+tablename)
  */
@@ -1941,7 +1942,7 @@ aDatabase::exchangeDataSystables ( QDomDocument &xml, bool import)
 		res |= importTableData(xml,db_roles);
 		res |= importTableData(xml,db_right_roles);
 		res |= importTableData(xml,db_indices);
-		
+
 	}
 	else
 	{
@@ -1955,11 +1956,11 @@ aDatabase::exchangeDataSystables ( QDomDocument &xml, bool import)
 	return res;
 }
 
-bool 
+bool
 aDatabase::exchangeDataUniques ( QDomDocument &xml, bool import)
 {
 	bool res = false;
-	if(import) 
+	if(import)
 	{
 		res |= importTableData(xml,"uniques");
 	}
@@ -2039,7 +2040,7 @@ aDatabase::exchangeDataDocuments (QDomDocument &xml, bool import)
 	for (i = 0; i<n; i++ )
 	{
 		item = cfg.find( rcont, md_document, i );
-		if ( !item.isNull() ) 
+		if ( !item.isNull() )
 		{
 		//	printf("doc = %s\n", (const char *) cfg.attr( item, mda_name ) );
 			cont = cfg.findChild( item, md_header, 0 );
@@ -2108,7 +2109,7 @@ aDatabase::exchangeDataInfoRegisters (QDomDocument &xml, bool import)
 		item = cfg.find( rcont, md_iregister, i );
 		if ( !item.isNull() )
 		{
-			
+
 			if(import)
 			{
 				rc |= importTableData(xml, tableDbName( cfg, cont ));
@@ -2185,7 +2186,7 @@ aDatabase::exchangeDataAccumulationRegisters (QDomDocument &xml, bool import)
 	}
 	return rc;
 }
-	
+
 
 bool
 aDatabase::exportTableData(QDomDocument& xml, const QString &tableName)
@@ -2232,9 +2233,9 @@ aDatabase::importTableData( QDomDocument &xml, const QString &tableName)
 {
 //	printf("import table data %s\n",tableName.ascii());
 	QDomElement root = xml.documentElement();
-	if(root.nodeName() != "AnanasDump") 
+	if(root.nodeName() != "AnanasDump")
 	{
-		
+
 		aLog::print(aLog::ERROR,tr("aDatabase import table: invalid XML file"));
 		//printf("uncnown data format\n");
 		return true;
@@ -2259,7 +2260,7 @@ aDatabase::importTableData( QDomDocument &xml, const QString &tableName)
 			if(!tbl)
 			{
 				aLog::print(aLog::ERROR,tr("aDatabase import table: get table %1").arg(tableName));
-				//printf("table is NULL\n"); 
+				//printf("table is NULL\n");
 				return true;
 			}
 			QDomNodeList rows = tables.item(i).childNodes();
@@ -2271,7 +2272,7 @@ aDatabase::importTableData( QDomDocument &xml, const QString &tableName)
 			QString query = "delete from uniques";
 			if(tableName=="uniques")
 			{
-				db()->exec(query);
+				db().exec(query);
 			}
 			for( uint j=0; j<countRows; j++)
 			{
@@ -2283,12 +2284,12 @@ aDatabase::importTableData( QDomDocument &xml, const QString &tableName)
 					if(fields.item(0).toElement().hasChildNodes() && fields.item(1).toElement().hasChildNodes())
 					{
 						query = QString("INSERT INTO %1 (id,otype) values(%2,%3)")
-							.arg(tableName) 
-							.arg(fields.item(0).toElement().toElement().text()) 
+							.arg(tableName)
+							.arg(fields.item(0).toElement().toElement().text())
 							.arg(fields.item(1).toElement().toElement().text());
 				//		printf("query = %s\n",query.ascii());
 						// добавляем записи с правильными идентификатораи
-						db()->exec(query);
+						db().exec(query);
 
 					}
 				}
@@ -2301,8 +2302,8 @@ aDatabase::importTableData( QDomDocument &xml, const QString &tableName)
 						if(field.hasChildNodes())
 						{
 					//	printf("node have child\n");
-					
-							buffer->setValue(field.attribute("name"),field.toElement().text());		
+
+							buffer->setValue(field.attribute("name"),field.toElement().text());
 						}
 					}
 					tbl->insert();

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** $Id: areport.h,v 1.14 2007/03/05 09:28:09 app Exp $
 **
-** Report metadata object header file of 
+** Report metadata object header file of
 ** Ananas application library
 **
 ** Created : 20031201
@@ -9,7 +9,7 @@
 ** Copyright (C) 2003-2004 Leader InfoTech.  All rights reserved.
 ** Copyright (C) 2003-2005 Grigory Panov <gr1313 at mail.ru>, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -45,7 +45,7 @@ class aDatabase;
 /**
  * \ru
  * 	\brief Класс для показа отчета в формате HTML. Наследует QMainWindow.
- * 	
+ *
  * 	\see aTemplate aReport
  * \_ru
  */
@@ -54,7 +54,7 @@ class  ANANAS_EXPORT aReportBrowser :public Q3MainWindow
 	Q_OBJECT
 public:
 	QWorkspace *ws;
-	Q3TextBrowser *textBrowser;	    
+	Q3TextBrowser *textBrowser;
 	aReportBrowser(  QWidget *parent = 0, const char *name = 0, Qt::WFlags f = Qt::WDestructiveClose );
 	void append( const QString &text );
 	void clear();
@@ -67,10 +67,10 @@ protected slots:
 
 /**
  * \ru
- * 	\brief Определяет программный интерфейс для работы со всеми типами отчетов. 
+ * 	\brief Определяет программный интерфейс для работы со всеми типами отчетов.
  * 	Наследует aObject.
  *
- * 	Применяется для генерирования документов для печати в форматах OpenOffice *.odt,*ods и HTML. 
+ * 	Применяется для генерирования документов для печати в форматах OpenOffice *.odt,*ods и HTML.
  * 	\see aTemplate aOOTemplate
  * \_ru
  */
@@ -86,21 +86,21 @@ public:
  * \_ru
  */
 	enum RT_type 	{
-			RT_text/**отчет в формате HTML*/, 
+			RT_text/**отчет в формате HTML*/,
 			RT_office_writer/**отчет в формате OpenOffice Writer*/,
 			RT_office_calc/**отчет в формате OpenOffice Calc*/
 			};
-	
+
 	aEngine *engine;
        	iTemplate *tpl;
 	aReportBrowser *browser;
 	RT_type type;
-	    
+
 	aReport( aCfgItem context, RT_type r_type = RT_text, aEngine * e = 0 );
 	aReport( QString name, RT_type r_type = RT_text, aEngine * e = 0 );
 	virtual ~aReport();
 	virtual ERR_Code initObject();
-	
+
 	QString path2workdir();
 
 public slots:

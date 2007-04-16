@@ -1,7 +1,7 @@
 /****************************************************************************
 ** $Id: acalctemplate.cpp,v 1.2 2007/02/23 21:04:26 gr Exp $
 **
-** Report metadata object header file of 
+** Report metadata object header file of
 ** Ananas application library
 **
 ** Created : 20050202
@@ -9,7 +9,7 @@
 ** Copyright (C) 2003 by HaPK, email : theHaPK@yandex.ru
 ** Copyright (C) 2003-2006 Grigory Panov <gr1313 at mail.ru>, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -37,13 +37,13 @@
 
 aCalcTemplate::aCalcTemplate() : aOOTemplate()
 {
-	
+
 }
 
-aCalcTemplate::~aCalcTemplate() 
+aCalcTemplate::~aCalcTemplate()
 {
 }
-   
+
 
 /**
  *	\~english
@@ -53,7 +53,7 @@ aCalcTemplate::~aCalcTemplate()
  *	\~
  *	\param node - \~english context for searching \~russian узел, с которого осуществляется поиск. \~
  *	\param sname - \~english tag name \~russian имя тега для поиска \~
- *	\param params - \~english true, if find simple tag and false, if section 
+ *	\param params - \~english true, if find simple tag and false, if section
  *			\~russian true, если ищется обычный тег и false, если ищется тег секции \~
  */
 bool
@@ -70,11 +70,11 @@ aCalcTemplate::getNodeTags(QDomNode node, const QString &tagname, bool params )
 		}
 		else
 		{
-			re.setPattern(QString("%1.*%2").arg(open_token_section).arg(close_token_section));	
+			re.setPattern(QString("%1.*%2").arg(open_token_section).arg(close_token_section));
 		}
 		re.setMinimal(true);
 		int pos = re.search(str,0);
-		
+
 		while(pos != -1)
 		{
 	//		printf("find string =%s\n",str.mid(pos+2, re.matchedLength()-4).ascii());
@@ -86,9 +86,9 @@ aCalcTemplate::getNodeTags(QDomNode node, const QString &tagname, bool params )
 			pos+= re.matchedLength();
 			pos = re.search(str,pos);
 		}
-		
+
 	}
- return false;	
+ return false;
 }
 
 
@@ -120,7 +120,7 @@ aCalcTemplate::getCellNode(QDomNode node)
  *	\param node - \~english context \~russian узел к которому добавляется значение \~
  *	\param sname - \~english tag name \~russian имя тега \~
  */
-void 
+void
 aCalcTemplate::insertTagsValues(QDomNode node, const QString &tagName)
 {
 	QDomNode n = node;
@@ -131,7 +131,7 @@ aCalcTemplate::insertTagsValues(QDomNode node, const QString &tagName)
 	{
 		aLog::print(aLog::DEBUG, QString("aCalcTemplate  append  double value %1 to tag").arg(val));
 		QDomNode cellNode = getCellNode(n);
-		if(!cellNode.isNull())	
+		if(!cellNode.isNull())
 		{
 			cellNode.toElement().setAttribute("office:value-type", "float");
 			cellNode.toElement().setAttribute("office:value", val);

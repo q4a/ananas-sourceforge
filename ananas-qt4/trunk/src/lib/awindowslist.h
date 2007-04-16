@@ -43,7 +43,7 @@
  *	Наследует QWidget.
  *
  *	Объект класса содержит ссылки на все открытые окна. При открыти окна проверяется, есть ли оно в списке,
- *	и если есть, то ему просто передается фокус. 
+ *	и если есть, то ему просто передается фокус.
  * \~
  */
 class  ANANAS_EXPORT aWindowsList : public QWidget
@@ -52,18 +52,18 @@ class  ANANAS_EXPORT aWindowsList : public QWidget
 public:
     aWindowsList();
     virtual ~aWindowsList();
-    
+
     void insert( int id, QWidget *window, qulonglong ido = 0 );
     void remove( int id, qulonglong ido = 0 );
     void remove( QWidget *window );
-    bool find( int id, qulonglong ido = 0 ); 
+    bool find( int id, qulonglong ido = 0 );
     bool find( QWidget *window );
     QWidget *get( int id, qulonglong ido = 0 );
-    
+
 private:
     Q3Dict<QWidget> list;
     QString conv( int id, qulonglong ido );
 };
 
-	
+
 #endif //AWINDOWSLIST_H

@@ -61,7 +61,8 @@ MessagesWindow::MessagesWindow( QWidget* parent, Qt::WFlags fl )
 	languageChange();
 	setMinimumSize( QSize( 1, 1 ) );
 	msgBrowser->setMinimumSize( QSize( 1, 1 ) );
-	clearWState( WState_Polished );
+	//--clearWState( WState_Polished );
+	//--setWindowState( WState_Polished );
 	setResizeEnabled( TRUE );
 	setExpanded(false);
 	setCloseMode( Q3DockWindow::Always );
@@ -113,14 +114,14 @@ MessagesWindow::hideEvent ( QHideEvent *e )
 }
 
 
-void 
+void
 MessagesWindow::on_click()
 {
 	setExpanded(!expanded);
 }
 
 
-void 
+void
 MessagesWindow::setExpanded(bool exp)
 {
 	if(exp) setFixedExtentHeight ( 150 );

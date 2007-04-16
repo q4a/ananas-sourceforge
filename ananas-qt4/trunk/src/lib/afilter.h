@@ -35,7 +35,7 @@
 #include <q3valuelist.h>
 #include <qdatetime.h>
 #include "ananasglobal.h"
- 
+
 ANANAS_EXPORT enum OperationEnum{
 		OperationEnumEquals,
 		OperationEnumNotEquals,

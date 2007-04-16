@@ -1,14 +1,14 @@
 /****************************************************************************
 ** $Id: auser.h,v 1.3 2006/08/23 08:30:04 app Exp $
 **
-** User  object header file of 
+** User  object header file of
 ** Ananas application library
 **
 ** Created : 20050527
 **
 ** Copyright (C) 2003-2005 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -44,13 +44,13 @@
 /*!
  * \en
  *	Not visual object used for working with users in database.
- * \_en 
+ * \_en
  * \ru
  *	\brief Определяет программный интерфейс для управления пользователями. Не используется в настоящий момент.
  *	Наследует aObject.
  * \_ru
 */
-class  ANANAS_EXPORT aUser: public aObject 
+class  ANANAS_EXPORT aUser: public aObject
 {
 	Q_OBJECT
 public:
@@ -58,7 +58,7 @@ public:
 	aUser(qulonglong userId, aDatabase * adb);
 	aUser(aDatabase * adb);
 	virtual ERR_Code initObject();
-	
+
 //public slots:
 
 	virtual ERR_Code New(	const QString &login,
@@ -69,12 +69,12 @@ public:
 	virtual ERR_Code Delete();
 	virtual ERR_Code Update();
 	virtual ERR_Code Select();
-	virtual ERR_Code Select( qulonglong userId );	
+	virtual ERR_Code Select( qulonglong userId );
 
 	virtual ERR_Code addRole( qulonglong roleId );
 	virtual ERR_Code delRole( qulonglong roleId );
 	virtual ERR_Code UpdateRole();
-	
+
 	Q3ValueList< aRole *> getRoles( bool assigned);
 
 	bool hasRole( qulonglong roleId);
@@ -82,9 +82,9 @@ public:
 	//virtual ERR_Code setLogin( const QString & );
 	//virtual ERR_Code setFirstName( const QString & );
 	//virtual ERR_Code setLastName( const QString & );
-	
+
 	virtual qulonglong getUserId( const QString &login, const QString &password );
-	//virtual ERR_Code getRoles(QValueList<aRole> *lst); 
+	//virtual ERR_Code getRoles(QValueList<aRole> *lst);
 	bool First();
 	bool Next();
 	bool Last();

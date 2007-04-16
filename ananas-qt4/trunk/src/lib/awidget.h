@@ -44,9 +44,9 @@ class QWidget;
  *\~english
  *	Base visual object.
  *\~russian
- *	\brief Базовый класс для визуальных объектов. 
+ *	\brief Базовый класс для визуальных объектов.
  *	Наследует QWidget.
- *	
+ *
  *	От него наследуют свойства и методы такие визуальные объекты
  *	как контейнеры wDocument, wJournal, wCatalog, wDocument, wReport и виджеты wField, wDBField.\n
  *
@@ -138,7 +138,7 @@ signals:
 	void changeObj(const QString &);
 	void changeObjId(const qulonglong);
 	void keyPressed(QKeyEvent *e);
-	
+
 protected:
 	aObject *dbobj;
 	virtual void updateProp() {};

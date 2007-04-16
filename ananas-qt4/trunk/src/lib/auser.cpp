@@ -8,7 +8,7 @@
 **
 ** Copyright (C) 2003-2005 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -40,19 +40,19 @@
  */
 aUser::aUser( qulonglong userId, aDatabase * adb ):aObject("",adb)
 {
-	
+
 	initObject();
 	Select(userId);
 
 }
 /*!\en Constructor for abstract object class creating
- * \_en 
+ * \_en
  * \ru Конструктор для создания абстрактного объекта класса
  * \_ru
  */
 aUser::aUser( aDatabase * adb ):aObject("",adb)
 {
-	
+
 //	Select(userId);
 	initObject();
 }
@@ -61,31 +61,31 @@ aUser::aUser( aDatabase * adb ):aObject("",adb)
 
 
 /*!\en Reimplement base class function
- * \_en 
+ * \_en
  * \ru Переопределяет функцию базового класса
  * \_ru
  */
 ERR_Code
 aUser::initObject()
 {
-	ERR_Code err = aObject::initObject(); // don't handle errors 
+	ERR_Code err = aObject::initObject(); // don't handle errors
 	//if ( err ) return err;
 	//aCfgItem e;// = md->find( obj, md_group ), e = md->find( obj, md_element );
 	err = tableInsert( db_users, "");
-	
+
 	if(err) return err;
 	err = tableInsert( db_user_roles, md_user_roles );
 	return err;
 }
 
-/*!\en Returns list of roles, (un)assigned for this user. List elements must be deleted in called procedure. 
- * \_en 
+/*!\en Returns list of roles, (un)assigned for this user. List elements must be deleted in called procedure.
+ * \_en
  * \ru Возвращает список ролей, (не)назначенных данному пользователю. Элементы списка должны быть удалены в вызывающей процедуре
  * \_ru
- * \param assibned 	\en true for return assigned roles, false for retun unassigned roles\_en 
+ * \param assibned 	\en true for return assigned roles, false for retun unassigned roles\_en
  * 			\ru true для возврата назначенных ролей, false для возврата неназначенных ролей \_ru
  */
-Q3ValueList< aRole *> 
+Q3ValueList< aRole *>
 aUser::getRoles(bool assigned)
 {
 	Q3ValueList<aRole*> list;
@@ -96,7 +96,7 @@ aUser::getRoles(bool assigned)
 	{
 		do
 		{
-			rid = rl->sysValue("id").toULongLong();	
+			rid = rl->sysValue("id").toULongLong();
 			if(!(hasRole(rid) ^ assigned))// !XOR
 			{
 				aRole *r = new aRole(rid,db);
@@ -109,11 +109,11 @@ aUser::getRoles(bool assigned)
 }
 
 /*!\en Gets user id
- * \_en 
+ * \_en
  * \ru Получение id пользователя
  * \_ru
  * \param login \en user login \_en \ru логин пользователя\_ru
- * \param password \en user password \_en \ru пассворд пользователя\_ru 
+ * \param password \en user password \_en \ru пассворд пользователя\_ru
  * \return 	\en 0 if login and password has no match, user id otherwise \_en
  * 		\ru 0 если логин и пароль не совпадают, в противном случае id пользователя\_ru
  */
@@ -130,13 +130,13 @@ aUser::getUserId(const QString &login, const QString &password)
 	{
 		return 0;
 	}
-	
+
 }
 
 
 
 /*!\en Updates table values
- * \_en 
+ * \_en
  * \ru Обновляет значения таблиц
  * \_ru
  */
@@ -144,7 +144,7 @@ ERR_Code
 aUser::Update()
 {
 	ERR_Code err = aObject::Update();
-	if ( !err ){ 
+	if ( !err ){
 		err = TableUpdate( md_user_roles );
 	}
 	return err;
@@ -152,7 +152,7 @@ aUser::Update()
 
 
 /*!\en Selected table and clear filter
- * \_en 
+ * \_en
  * \ru Выбирает таблицу и сбрасывает фильтр
  * \_ru
  */
@@ -179,7 +179,7 @@ aUser::Select( )
  * \_en
  * \ru Выбирает таблицу и устанавлиет фильтр на пользователя с переданным в параметре id
  * \_ru
- * \param id -	\en user id \_en \ru id пользователя \_ru  
+ * \param id -	\en user id \_en \ru id пользователя \_ru
  */
 ERR_Code
 aUser::Select( qulonglong id)
@@ -201,7 +201,7 @@ aUser::Select( qulonglong id)
 	return err_noerror;
 }
 
-/*!\en Assign role to user 
+/*!\en Assign role to user
  * \_en
  * \ru Назначет пользователю роль
  * \_ru
@@ -226,12 +226,12 @@ aUser::addRole( qulonglong roleId )
 return  err_noerror;
 }
 
-/*!\en Drop role 
+/*!\en Drop role
  * \_en
  * \ru Сбрасывает назначение роли пользователю
  * \_ru
- * \param roleId - 	\en id role to drop \_en 
- * 			\ru id роли, назначение которой будет сброшено\_ru 
+ * \param roleId - 	\en id role to drop \_en
+ * 			\ru id роли, назначение которой будет сброшено\_ru
  */
 ERR_Code
 aUser::delRole( qulonglong roleId )
@@ -272,8 +272,8 @@ aUser::hasRole(qulonglong rid)
 	return true;
 	else return false;
 //	setSelected(true, md_user_roles);
-	
-	
+
+
 }
 
 /*!\en
@@ -341,8 +341,8 @@ aUser::Delete()
 }
 
 
-/*!\en Updates roles table values 
- *\_en 
+/*!\en Updates roles table values
+ *\_en
  * \ru Обновляет значение таблицы ролей
  *\_ru
  */
@@ -354,8 +354,8 @@ aUser::UpdateRole()
 
 
 /*!\en Next
- *\_en 
- * \ru 
+ *\_en
+ * \ru
  *\_ru
  */
 bool

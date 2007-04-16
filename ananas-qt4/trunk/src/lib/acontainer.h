@@ -47,7 +47,7 @@
  * \ru
  * \brief	Класс предназначен для работы с контейнерами данных.
  * 	Наследует QObject.
- * 
+ *
  * \_ru
  */
 class ANANAS_EXPORT aContainer: public QObject
@@ -58,23 +58,23 @@ public:
 	aContainer();
 	aContainer(const QString& name);
 	virtual ~aContainer();
-	
+
 	virtual bool open();
 	virtual bool open(const QString &name);
 	virtual void create();
 	virtual void close();
-	
+
 	virtual bool save();
 	virtual bool save(const QString& name);
 	virtual bool addFile(const QString& filename, const QString &newname, int type);
 	virtual QString realPath(const QString &fname) const;
-	
+
 	virtual QString lastError() const;
 	void	setLastError(const QString& errorText);
 
 //signals:
 	//void	progress(int,int);
-	
+
 protected:
 	void generateName4TmpDir();
 	bool createTmpDir();
@@ -82,12 +82,12 @@ protected:
 	bool extractData(const QString& archName);
 	bool compressFile(const QString& fileName);
 	void cleanupTmpFiles();
-	
+
 private:
 	QString txtError;
 	aCManifest *manifest;
 	QString tmpDirName;
-    
+
 };
 
 #endif //ACONTAINER_H

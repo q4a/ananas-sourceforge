@@ -1,12 +1,12 @@
 /****************************************************************************
 ** $Id: amoney.h,v 1.1 2007/03/31 13:12:27 app Exp $
 **
-** Service functions header file of 
+** Service functions header file of
 ** Ananas application library
 **
 ** Copyright (C) 2007 Andrey Paskal.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -36,7 +36,7 @@ class ANANAS_EXPORT AMoney{
 	public:
 		AMoney();
 		AMoney( double amount, QString currency = "RUR");
-		
+
 		double 	getAmount();
 		void 	setAmount( double );
 		void 	setAmount( double,  QString currency);
@@ -50,7 +50,7 @@ class ANANAS_EXPORT AMoney{
 		double 		amount;
 		Currency*	currency;
 		Degree* 	degree;
-		
+
 		QString degreeText( QString , int );
 		QString valueToText( qulonglong );
 		QString decimalValueToText( qulonglong );
@@ -60,7 +60,7 @@ class ANANAS_EXPORT AMoney{
 		QString integerCurrencyName( QString );
 		QString decimalCurrencyName( QString );
 		QString firstUp( QString );
-		
+
 };
 
 
@@ -68,7 +68,7 @@ class ANANAS_EXPORT AMoney{
 /**
  * \ru
  * 		\brief	содержит знания о роде (М/Ж) числовых порядков.
- * 			После задания порядка (сотни, тысячи, миллионы....)  можно узнать род 
+ * 			После задания порядка (сотни, тысячи, миллионы....)  можно узнать род
  * 			методом isMale()
  * \_ru
  */
@@ -78,7 +78,7 @@ class Degree {
 		int getValue();
 		void setValue( int value);
 		bool isMale();
-				
+
 	private:
 		int value;
 		bool male;
@@ -87,7 +87,7 @@ class Degree {
 /**
  * \ru
  * 		\brief	содержит знания о роде (М/Ж) валюты.
- * 			После задания одного из поддерживаемых типов валюты можно узнать род 
+ * 			После задания одного из поддерживаемых типов валюты можно узнать род
  * 			методом isMale()
  * 		Поддерживаемые типы валют можно увидеть в описании конструктора.
  * \_ru
@@ -95,12 +95,12 @@ class Degree {
 class Currency {
 	public:
 		Currency( QString currensyId = "RUR");
-		
+
 		QString	getId();
 		void 	setId( QString );
 		bool 	isMale();
 		bool	is( QString );
-				
+
 	private:
 		QString id;
 		bool 	male;

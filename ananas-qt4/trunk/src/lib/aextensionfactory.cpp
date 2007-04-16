@@ -56,7 +56,7 @@ AExtensionFactoryPrivate::AExtensionFactoryPrivate()
 #else
     manager = new QPluginManager<AExtensionFactoryInterface>( IID_AExtensionFactory, "/usr/share/ananas/extensions", QString::null, FALSE );
 #endif
-    
+
 }
 
 AExtensionFactoryPrivate::~AExtensionFactoryPrivate()

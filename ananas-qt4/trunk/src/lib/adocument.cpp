@@ -303,8 +303,8 @@ aDocument::TableSetValue( const QString & tablename, const QString & name, const
  *	New document also registred in system journal and make current
  * \_en
  * \ru
- *	\brief ScriptAPI. Создает и регистрирует в системном журнале объект aDocument. 
- *	
+ *	\brief ScriptAPI. Создает и регистрирует в системном журнале объект aDocument.
+ *
  *	Создает новую запись в  БД с данными из шапки документа. При этом резервируется уникальный Id записи таблицы.
  *	При этом документ регистрируется в системном журнале и получает следующий по порядку номер.
  * \_ru
@@ -357,7 +357,7 @@ aDocument::New()
  *	\_en
  *	\ru
  *	\brief ScriptAPI. Добавляет новую строку табличной части документа.
- *	
+ *
  *	Строка добавляется в таблицу текущего документа, если документ не выбран
  *	или не имеет таблицы с таким именем - возникает ошибка.
  *	При создании строки ей автоматически присваивается очередной номер.
@@ -384,7 +384,7 @@ aDocument::TableNewLine( const QString & tablename )
 		QString  query;
 		QVariant ln;
 		query = QString("SELECT MAX(ln)+1 FROM %1 WHERE idd=%2").arg( t->tableName ).arg(dUid);
-		QSqlQuery q = db->db()->exec( query );
+		QSqlQuery q = db->db().exec( query );
 		if ( q.first() )
 		{
 			ln = q.value( 0 );
@@ -414,7 +414,7 @@ aDocument::TableNewLine( const QString & tablename )
  *	\_en
  *	\ru
  *	\brief ScriptAPI. Удаляет текущий документ.
- *	
+ *
  *	Документ удаляется полностью вместе с табличными частями, также документ удаляется из системного журнала.
  *	Идентификатор документа не освободжается и повторно не используется.
  *	\_ru
@@ -428,7 +428,7 @@ aDocument::Delete()
 	if(IsConducted()) UnConduct();
 	qulonglong uid = getUid();
 	sysJournal->deleteDocument(uid);
-	
+
 	aLog::print(aLog::DEBUG, tr("aDocument delete from sysjournal"));
 	db->markDeleted( uid );
 	aLog::print(aLog::DEBUG, tr("aDocument delete from unicues"));
@@ -534,7 +534,7 @@ aDocument::tableDeleteLines( const QString & tablename )
 		aLog::print(aLog::ERROR, tr("aDocument table name is empty"));
 		return err_notable;
 	}
-	db->db()->exec(QString("DELETE FROM %1 WHERE idd=%2").arg(tdbname).arg(dUid));
+	db->db().exec(QString("DELETE FROM %1 WHERE idd=%2").arg(tdbname).arg(dUid));
 	return err_noerror;
 }
 
@@ -548,7 +548,7 @@ aDocument::tableDeleteLines( const QString & tablename )
  *	\_en
  *	\ru
  *	\brief ScriptAPI. Обновляет информацию в базе данных.
- *	
+ *
  *	Заносит запись из буфера ОЗУ в базу данных. Обновляется информация в шапке документа,
  *	табличных частях, журнале документов.
  *	Не работает для проведенных документов.
@@ -567,7 +567,7 @@ aDocument::Update()
 		return e;
 	}
 	e = sysJournal->Update();
-	//TODO: may be it fix bug with saving values in first line; 
+	//TODO: may be it fix bug with saving values in first line;
 	//e += TableUpdate();
 	return e;
 }
@@ -584,7 +584,7 @@ aDocument::Update()
  *\_en
  *\ru
  *	\brief SrciptAPI. Обновляет текущую запись табличной части документа.
- *	
+ *
  *	Копирует информацию из буфера в текущую строку таблицы.
  *	Если имя не указано или задана пустая строка, обновляются все таблицы документа.
  *	Не работает для проведенного досумента.
@@ -746,7 +746,7 @@ aDocument::Prefix()
  *	\_en
  *	\ru
  *	\brief ScriptAPI. Выбирает документы по интервалу времени.
- *	
+ *
  *	Выбирает из системного журнала документы, значение поля "дата" которых
  *	лежит в указанном диапазоне. Если объект настроен на конкретный тип документа из бизнес схемы,
  *	выбираются только документы этого типа, в противном случае - все документы журнала,
@@ -1246,7 +1246,7 @@ aDicument::TableClearFilter( const QString & tname )
  *	\ru
  *	Устанавливает флаг проведения для текущего документа. Не используйте эту функцию напрямую. Используйте Conduct() и UnConduct()
  *	\_ru
- *	\param cond - \en conducted flag, flag set on 1 if cond true adn 0 if cond false\_en \ru значение флага \_ru 
+ *	\param cond - \en conducted flag, flag set on 1 if cond true adn 0 if cond false\_en \ru значение флага \_ru
  *	\see Conduct() Unconduct() IsConducted()
  *	\return \en error code. \_en \ru код ошибки.\_ru
  */
@@ -1256,11 +1256,11 @@ aDocument::setConduct( bool cond )
 	qulonglong idd = getUid();
 
 	if (!idd) return err_nodocument;
-	QSqlDatabase *tdb = db->db();
+	QSqlDatabase tdb = db->db();
 	QString query;
 	query = QString("UPDATE a_journ SET cf='%1' WHERE idd=%2").arg( ( int ) cond).arg( idd );
-	tdb->exec(query);
-	if ( !tdb->lastError().type() )
+	tdb.exec(query);
+	if ( !tdb.lastError().type() )
 	{
 		aLog::print(aLog::DEBUG, tr("aDocument conduct"));
 		return err_noerror;
@@ -1374,7 +1374,7 @@ aDocument::IsSignedIn()
 {
 	qulonglong idd = getUid();
 	if (!idd) return false;
-	QSqlQuery q = db->db()->exec(QString("SELECT cf FROM a_journ WHERE idd=%1").arg(idd));
+	QSqlQuery q = db->db().exec(QString("SELECT cf FROM a_journ WHERE idd=%1").arg(idd));
 	if ( q.first() ) return q.value(0).toBool();
 	else return false;
 }
@@ -1408,7 +1408,7 @@ aDocument::select( qulonglong uid)
 		tableSelect(md->attr(tobj,mda_name), uid);
 //		aObject::select( QString("idd=%1").arg(uid), md->attr(tobj,mda_name) );
 	}
-	return res; 
+	return res;
 }
 
 /**
@@ -1432,7 +1432,7 @@ aDocument::SelectDocument( QVariant uid )
  *	\param pos - \en line number \_en \ru номер строки \_ru
  *	\param tname - \en table name \_en \ru имя таблицы \_ru
  */
-void 
+void
 aDocument::Seek(int pos, const QString &tname)
 {
 	aSQLTable * t = table(tname);
@@ -1444,7 +1444,7 @@ aDocument::Seek(int pos, const QString &tname)
 			if(t->next()) continue;
 			else break;
 		}
-	} 
+	}
 }
 
 /**
@@ -1459,10 +1459,10 @@ aDocument::Seek(int pos, const QString &tname)
  * 	Для получения значения атрибута текущего документа используйте метод Value(...),
  * 	унаследованный от aObject.
  * \_ru
- * 
+ *
  * \param docId - \en document id \_en \ru id документа \_ru
  * \param fname - \en md field name \_en \ru имя поля в метаданных \_ru
- * 
+ *
  * \return  \en value of field \_en \ru значение поля или строку "Unknown", в случае ошибки \_ru
  *
  */
@@ -1494,7 +1494,7 @@ aDocument::GetDocumentValue(QVariant docId, const QString &fname)
 		return "Unknown";
 	}
 	//}
-	
+
 }
 /*!
  *	\en
@@ -1504,7 +1504,7 @@ aDocument::GetDocumentValue(QVariant docId, const QString &fname)
  *	Возвращает значения поля с именем = \a name основг\ной таблицы объекта.
  *	\_ru
  *	\param name - \en field name \_en \ru имя поля \_ru
- *	\return \en field value \_en \ru значение поля. Поля типа Q_ULLONG и DateTime переводятся в строки. \_ru 
+ *	\return \en field value \_en \ru значение поля. Поля типа Q_ULLONG и DateTime переводятся в строки. \_ru
  */
 QVariant
 aDocument::Value( const QString & name, const QString &tableName )

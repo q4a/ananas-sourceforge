@@ -46,7 +46,7 @@ class aDatabase;
  * \ru
  * \brief	Класс aBackup определяет программный интерфейс для бэкапа и востановления базы данных.
  * 	Наследует QObject.
- * 
+ *
  * \_ru
  */
 class ANANAS_EXPORT aBackup: public QObject
@@ -56,14 +56,14 @@ public:
 
 	aBackup();
 	virtual ~aBackup();
-    
+
 	virtual bool importData(const QString& rcfile, const QString &archfile, bool dropDB, bool replaceTemplates=0);
 	virtual bool exportData(const QString& rcfile, const QString &archfile, bool withTemplates=0 );
 	virtual QString lastError() const;
 
 signals:
 	void	progress(int,int);
-	
+
 protected:
 	virtual void		setLastError(const QString & errorText);
 	virtual bool		unzipArchive(const QString& archName, const QString& tmpDirName);
@@ -74,11 +74,11 @@ protected:
 	virtual bool		dumpBase(const QString& rcfile, const QString& tmpDirName, int &progress, int totalSteps);
 	virtual bool 		writeXml(const QString & fileName, QDomDocument xml);
 	void			cleanupTmpFiles(const QString& tmpDirName, QStringList *files);
-	
+
 private:
 	QString txtError;
 //	QString tmpDirName;
-    
+
 };
 
 #endif //ADATEXCHANGE_H

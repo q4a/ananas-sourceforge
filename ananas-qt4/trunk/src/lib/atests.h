@@ -1,14 +1,14 @@
 /****************************************************************************
 ** $Id: atests.h,v 1.5 2006/08/23 08:30:04 app Exp $
 **
-** Tests functions header file of 
+** Tests functions header file of
 ** Ananas application library
 **
 ** Created : 20051024
 **
 ** Copyright (C) 2003-2005 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -38,24 +38,24 @@
  *	Class contain static functions for test utilites
  *	\~russian
  *		\brief Класс содержит статические функции для утилит тестирования.
- *		
+ *
  *		Предназначен для использования при отладке и тестировании кода.
  *	\~
 */
 class ANANAS_EXPORT aTests
 {
 	public:
-	
+
 	static QMap<QString, QString>	readConfig(const QString &cfg_name, const QString &log_name=QString::null);
 	static bool	writeConfig(const QString &cfg_name,QMap<QString, QString> cfg, const QString &log_name=QString::null);
-	static void 	print2log(	const QString &log_name, 
+	static void 	print2log(	const QString &log_name,
 					const QString &test_name,
 					const QString &status,
 					const QString &text="");
-	
+
 	static void	printline2log(const QString &log_name);
 	static QString 	parseCommandLine(int argc, char** argv, const QString requestedParam);
-	
+
 	private:
 	aTests();
 };

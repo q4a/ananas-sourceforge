@@ -196,12 +196,12 @@ aWidget::initObject( aDatabase *adb )
 	aLog::print(aLog::DEBUG, tr("aWidget init widget %1 form mode %2").arg(name()).arg(formMode()) );
 	// Init myself.
 	setInited( true );
-	
+
 	//<для чего?
 	Q3SqlPropertyMap *pm = new Q3SqlPropertyMap();
 	//>
-	
-	
+
+
 	db = adb;
 	md = 0;
 	if ( db )
@@ -213,39 +213,39 @@ aWidget::initObject( aDatabase *adb )
 		aLog::print(aLog::ERROR, tr("aWidget init: invalid database") );
 		return;
 	}
-	
+
 	if ( obj.isNull() )
 	{
 		obj = md->find( getId() );
 	}
 
-	
+
 	//<для чего?
 	form = new Q3SqlForm( this );
 	pm->insert("wDBField","value");
 	form->installPropertyMap( pm );
 	//>
-	
-	
+
+
 	if ( obj.isNull() )
 	{
 		aLog::print(aLog::ERROR, tr("aWidget init: invalid meta object") );
 		return;
 	}
 	dbobj = createDBObject( obj, adb );
-	QObjectList *l = this->queryList( "QWidget" );
-	QObjectListIt it( *l );
+	QObjectList l = this->queryList( "QWidget" );
+	QListIterator<QObject*>  it( l );
 	QObject *obj;
-	while ( (obj = it.current()) != 0 )
+	while ( it.hasNext() )
 	{
-		++it;
+		obj = it.next();
 		if ( parentContainer( ( QWidget *) obj ) != this ) continue;
-		
+
 		//debug_message("SCAN: Widget class name=%s\n", obj->className() );
 
 		if ( obj->className()==QString("wDBTable") )
 		{
-			
+
 			aLog::print(aLog::DEBUG, tr("aWidget init: connect signals wDBTable") );
 			connect( this, SIGNAL( changeObj(const QString &) ),
 				//(wDBTable*)
@@ -261,8 +261,8 @@ aWidget::initObject( aDatabase *adb )
 //				obj, SLOT( newFilter(const QString &) ));
 	//	}
 	}
-	delete l; // delete the list, not the objects
-	l=0;
+	//--delete l; // delete the list, not the objects
+	//--l=0;
 }
 
 
@@ -421,7 +421,7 @@ aWidget::getMd()
 {
 	aCfg *md = 0;
 	QWidget *mw = topLevelWidget();
-	if (mw->name() == QString("ananas-designer_mainwindow") ) 
+	if (mw->name() == QString("ananas-designer_mainwindow") )
 	{
 		connect( this, SIGNAL( getMd( aCfg ** ) ), mw, SLOT( getMd( aCfg ** ) ));
 		emit ( getMd( &md ) );
@@ -461,7 +461,7 @@ aWidget::uid()
 
 /*!
  *\~english
- *\~russian 
+ *\~russian
  *\~
  */
 void
@@ -519,7 +519,7 @@ aWidget::parentContainer( QWidget *w )
         while ( w )
 	{
                 w = w->parentWidget();
-                if ( w ) 
+                if ( w )
 		{
 			if ( w->inherits("aWidget") )
 			{
@@ -651,7 +651,7 @@ aWidget::New()
 	}
 	aLog::print(aLog::ERROR, tr("aWidget new: invalid data source object") );
 	return err_abstractobj;
-		
+
 }
 
 
@@ -677,7 +677,7 @@ aWidget::Select( qulonglong id )
 		else rc = err_selecterror;
 		//Refresh();
 		return rc;
-	} 
+	}
 	aLog::print(aLog::ERROR, tr("aWidget select: invalid data source object") );
 	return err_abstractobj;
 }
@@ -685,7 +685,7 @@ aWidget::Select( qulonglong id )
 
 
 /*!
- *\~english Update data 
+ *\~english Update data
  *\~russian Обновляет данные по данному виджету в базе
  *\~
  */
@@ -696,17 +696,17 @@ aWidget::Update()
 	if ( dbobj )
 	{
 
-		QObjectList *l = this->queryList( "wDBField" );
-		QObjectListIt it( *l );
+		QObjectList l = this->queryList( "wDBField" );
+		QListIterator<QObject*> it( l );
 		aWidget *obj;
-		while ( (obj = (aWidget*) it.current()) != 0 )
+		while ( it.hasNext() )
 		{
-			++it;
+			obj = qobject_cast<aWidget*>(it.next());
 			fname= obj->getFieldName();
 			dbobj->SetValue( fname,( ( aWidget *) obj )->value() );
 		}
-		delete l; // delete the list, not the objects
-		l=0;
+		//--delete l; // delete the list, not the objects
+		//--l=0;
 /*
 		while ( (obj = (aWidget*) tit.current()) != 0 ){
 			++tit;
@@ -731,25 +731,25 @@ ERR_Code
 aWidget::Refresh()
 {
 	QString fname;
-	QObjectList *l = this->queryList( "wDBField" );
-	QObjectListIt it( *l );
-	QObjectList *tl = this->queryList( "wDBTable" );
-	QObjectListIt tit( *tl );
+	QObjectList l = this->queryList( "wDBField" );
+	QListIterator<QObject*> it( l );
+	QObjectList tl = this->queryList( "wDBTable" );
+	QListIterator<QObject*> tit( tl );
 	aWidget *obj;
-	while ( (obj = (aWidget*) it.current()) != 0 ){
-		++it;
+	while ( it.hasNext() ){
+		obj = qobject_cast<aWidget*>(it.next());
 		if ( parentContainer( obj ) != this ) continue;
 		fname= obj->getFieldName();
 		obj->setValue(dbobj->Value(fname).toString());
 	}
-	delete l; // delete the list, not the objects
-	l=0;
+	//--delete l; // delete the list, not the objects
+	//--l=0;
 
-	while ( (obj = (aWidget*) tit.current()) != 0 ){
-		++tit;
+	while ( tit.hasNext() ){
+		obj = qobject_cast<aWidget*>(tit.next());
 		((Q3DataTable*)obj)->refresh();
 	}
-	delete tl; // delete the list, not the objects
+	//--delete tl; // delete the list, not the objects
 
 	return err_noerror;
 }
@@ -812,7 +812,7 @@ aWidget::value( const QString & nameWidget )
 		}
 	} else {
 	//	debug_message(tr("Error! Can't find widget by name==`%s`\n"),(const char*) name.local8Bit());
-		
+
 		aLog::print(aLog::ERROR, tr("aWidget value not fount widget with name %1").arg(nameWidget) );
 	}
 	return res;
@@ -949,28 +949,28 @@ void
 aWidget::SetReadOnly ( bool status )
 {
 //CHECK_POINT
-	QObjectList *l;// = this->queryList( "wField" );
+	QObjectList l;// = this->queryList( "wField" );
 	QObject *obj;
 	l = this->queryList( "aWidget" );
-	QObjectListIt itl( *l );
-	while ( (obj = itl.current()) != 0 )
+	QListIterator<QObject*> itl( l );
+	while ( itl.hasNext() )
 	{
 //	CHECK_POINT
-		++itl;
+		obj = itl.next();
 		(( aWidget *)obj)->SetReadOnly( status );
 	}
-	delete l; // delete the list, not the objects
+	//--delete l; // delete the list, not the objects
 	l = this->queryList( "QFrame" );
-	QObjectListIt tl( *l );
-	while ( (obj = tl.current()) != 0 )
+	QListIterator<QObject*> tl( l );
+	while ( tl.hasNext() )
 	{
 		//printf("QFrame classname '%s'\n", (const char*) obj->className() );
-		++tl;
+		obj = tl.next();
 		if (obj->inherits("QTable")) (( Q3Table * )obj)->setReadOnly(true);
 		//else (( QFrame *)obj)->setDisabled( status );
 	}
-	delete l; // delete the list, not the objects
-	l=0;
+	//--delete l; // delete the list, not the objects
+	//--l=0;
 }
 
 
@@ -999,7 +999,7 @@ aWidget::widgetName(QWidget *obj)
 		if (obj->inherits("wDBField"))
 		{
 			res= ((aWidget*)obj)->getFieldName();
-		} 
+		}
 		else
 		{
 			res=obj->name();
@@ -1022,11 +1022,11 @@ aWidget::Widget( QWidget *owner, QString name )
 {
 	QWidget *res = 0;
 	QWidget* obj;
-	QObjectList* list = owner->queryList("QWidget");
+	QObjectList list = owner->queryList("QWidget");
 
-	QObjectListIt it(*list);
-	while ( ( obj = ( QWidget *) it.current() ) !=0 ) {
-			++it;
+	QListIterator<QObject*> it(list);
+	while ( it.hasNext() ) {
+			obj = qobject_cast<QWidget*>(it.next());
 			if (!obj) continue;
 			if ( name == aWidget::widgetName( obj ) ) {
 				res = obj;

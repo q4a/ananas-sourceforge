@@ -1,14 +1,14 @@
 /****************************************************************************
 ** $Id: adocument.h,v 1.39 2006/09/28 13:04:13 gr Exp $
 **
-** Document metadata object header file of 
+** Document metadata object header file of
 ** Ananas application library
 **
 ** Created : 20031201
 **
 ** Copyright (C) 2003-2004 Leader InfoTech.  All rights reserved.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -49,12 +49,12 @@ class aDatabase;
  *	\ru
  *	\brief Определяет программный интерфейс для работы с бизнес объектами типа Документ и их атрибутами.
  *	Наследует aObject.
- *	
+ *
  *	Объект класса предоставляет навигационный доступ ко всем документам, имеющим тип, указанный при инициализации
  *	объекта. С помощью методов класса можно управлять как документом целиком, так и отдельными его реквизитами.
  *	В том числе табличными частями, если они определены в метаданных у документа.
  *	Обеспечивает единообразный доступ к полям и таблицам документов,
- *	хранимых в базе данных. Информация о составе и структуре полей и табличных частей документа 
+ *	хранимых в базе данных. Информация о составе и структуре полей и табличных частей документа
  *	храниться в метаданных.
  *	Позволяет создавать, удалять, изменять, копировать, проводить и распроводить документы.
  *	\_ru
@@ -69,7 +69,7 @@ public:
 	aDocument( aCfgItem context, aDatabase * adb = 0 );
 	aDocument( const QString & name, aDatabase * adb = 0 );
 	virtual ~aDocument();
-	
+
 	virtual ERR_Code select ( qulonglong uid );
 	virtual ERR_Code initObject();
 	virtual QString trSysName( const QString & sname );
@@ -78,7 +78,7 @@ public:
 
 	aSQLTable * getTable( const QString & tablename );
 public slots:
-	
+
 	virtual ERR_Code New();
 	virtual ERR_Code Delete();
 	virtual ERR_Code Update();
@@ -114,7 +114,7 @@ public slots:
 
 	void SetPrefix( const QString & pr );
 	QString Prefix();
-	
+
 	virtual QVariant Value( const QString & name, const QString &tableName = "" );
 
 	virtual ERR_Code SetFilter( const QString & valname, const QVariant & value );

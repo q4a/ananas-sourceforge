@@ -68,10 +68,10 @@ aARegister::aARegister( aCfgItem context, aDatabase * adb )
  *\param context -\en md name of register,\_en \ru
  	имя регистра, заданное в конфигурации через Ананас-Дизайнер,\_ru
  *\param adb -
- 	\en link on ananas database.\_en 
+ 	\en link on ananas database.\_en
 	\ru ссылка на базу данных. Необязательный параметр. Если не задан или задано нулевое
-	значение, создавамый объект для работы с регистром не будет связан с базой данный. 
-	То есть объект не будет заполнен данными из регистра, хранящимися в базе данных, 
+	значение, создавамый объект для работы с регистром не будет связан с базой данный.
+	То есть объект не будет заполнен данными из регистра, хранящимися в базе данных,
 	и все изменения, вносимые в него, не будут сохранены в базе данных.
 	\_ru
  */
@@ -114,13 +114,13 @@ aARegister::initObject()
 	int len_uf;
 	//resnames.clear();
 	ERR_Code err = aIRegister::initObject();
-	if ( err ) 
+	if ( err )
 	{
 		aLog::print(aLog::ERROR, tr("Accumulation Register init"));
 		return err;
 	}
 	err = tableInsert( db->tableDbName(*md,obj), obj );
-	if ( err ) 
+	if ( err )
 	{
 		aLog::print(aLog::ERROR, tr("Accumulation Register create main table"));
 		return err;
@@ -134,7 +134,7 @@ aARegister::initObject()
 	{
 		field = md->find( dims, md_field, i );
 		err = tableInsert( db->tableDbName(*md,field), field, md->attr(field,mda_name) );
-		if ( err ) 
+		if ( err )
 		{
 			aLog::print(aLog::ERROR, tr("Accumulation Register create saldo table"));
 			return err;
@@ -166,7 +166,7 @@ aARegister::initObject()
  *	\see SetTable( const QString & tblname )
  *\_en
  *\ru
- *	\brief Добавляет новую строку к таблице регистра. 
+ *	\brief Добавляет новую строку к таблице регистра.
  *
  *	\return Код ошибки
  *	\see SetDocument( aDocument * doc )
@@ -247,7 +247,7 @@ aARegister::deleteDocument( aDocument * doc )
 				resum( t, doc->Value("DocDate").toDateTime(), false );
 			}while(t->next());
 		}
-		db->db()->exec(QString("delete from %1 where idd=%2").arg(t->tableName).arg(idd));
+		db->db().exec(QString("delete from %1 where idd=%2").arg(t->tableName).arg(idd));
 		aLog::print(aLog::INFO, QString("Accumulation register delete document with idd=%1").arg(idd));
 	}
 	return true;
@@ -259,7 +259,7 @@ aARegister::deleteDocument( aDocument * doc )
 /*!
  *\en
  *	Gets saldo.
- *	Helper metod. 
+ *	Helper metod.
  *\_en
  * \see getSaldo(const QDateTime &date, const QString & dimfieldname, QVariant dimvalue, const QString &resname)
  *\ru
@@ -272,7 +272,7 @@ aARegister::deleteDocument( aDocument * doc )
  *\return  - \en Saldo value or QVariant::Invalid on error.\_en \ru
 	Значение остатка или QVariant::Invalid при ошибке или неправильных параметрах.\_ru
  */
-QVariant 
+QVariant
 aARegister::getSaldo(const QString & strdate, const QString & dimfieldname, QVariant  dimvalue, const QString &resname)
 {
 	QDateTime data = QDateTime::fromString(strdate,Qt::ISODate);
@@ -299,7 +299,7 @@ aARegister::getSaldo(const QString & strdate, const QString & dimfieldname, QVar
 }
 
 
-	
+
 /*!
  * \ru
  *  Выбирает остаток на заданную дату-время.
@@ -310,13 +310,13 @@ aARegister::getSaldo(const QString & strdate, const QString & dimfieldname, QVar
  *  указывается один дебетуемый и один кредитуемый счет.
  *  \param date - дата, на которую требуется получить остаток.
  *  \param dimfieldname - название аналитического разреза регистра.
- *  \param dimvalue - значение (точка) аналитического разреза, для которого требуется определить остаток. 
- *  Например для Аналитического разреза "Счет по дебету" значение может быть "41.1" или любой другой 
+ *  \param dimvalue - значение (точка) аналитического разреза, для которого требуется определить остаток.
+ *  Например для Аналитического разреза "Счет по дебету" значение может быть "41.1" или любой другой
  *  номер счета бухгалтерского плана счетов.
- *  \return возвращает значение остатка. 
+ *  \return возвращает значение остатка.
  * \_ru
  */
- 
+
 QVariant
 aARegister::getSaldo(const QDateTime &date, const QString & dimfieldname, QVariant dimvalue, const QString &resname)
 {
@@ -325,7 +325,7 @@ aARegister::getSaldo(const QDateTime &date, const QString & dimfieldname, QVaria
 	{
 		aLog::print(aLog::ERROR,QString(tr("Accumulation register not found table %1")).arg(dimfieldname));
 		return QVariant::Invalid;
-	} 
+	}
 	t_dim->clearFilter();
 	if(!t_dim->setFilter(dimfieldname,dimvalue))
 	{
@@ -333,12 +333,12 @@ aARegister::getSaldo(const QDateTime &date, const QString & dimfieldname, QVaria
 		return QVariant::Invalid;
 	}
 	QString flt = QString("date<='%1' and %2").arg(date.toString(Qt::ISODate)).arg(t_dim->getFilter());
-	
+
 	QString query = QString("select * from %1 where %2").arg(t_dim->tableName).arg(flt);
 	t_dim->clearFilter();
 	t_dim->select();
-	
-	QSqlQuery q = db->db()->exec(query);
+
+	QSqlQuery q = db->db().exec(query);
 	q.last();
 	if(q.isValid())
 	{
@@ -360,10 +360,10 @@ aARegister::getSaldo(const QDateTime &date, const QString & dimfieldname, QVaria
  *  \param from - дата начала периода.
  *  \param to - дата окончания периода.
  *  \param dimfieldname - название аналитического разреза регистра.
- *  \param dimvalue - значение (точка) аналитического разреза, для которого требуется определить остаток. 
- *  Например для Аналитического разреза "Счет по дебету" значение может быть "41.1" или любой другой 
+ *  \param dimvalue - значение (точка) аналитического разреза, для которого требуется определить остаток.
+ *  Например для Аналитического разреза "Счет по дебету" значение может быть "41.1" или любой другой
  *  номер счета бухгалтерского плана счетов.
- *  \return возвращает значение остатка. 
+ *  \return возвращает значение остатка.
  * \_ru
  */
 QVariant
@@ -374,7 +374,7 @@ aARegister::getSaldoByManyDimensions(const QString &from, const QString &to, con
 	{
 		aLog::print(aLog::ERROR,QString(tr("Accumulation register not found main table")));
 		return QVariant::Invalid;
-	} 
+	}
 //	t->clearFilter();
 	if(!t->setFilter(dimfieldname,dimvalue))
 	{
@@ -382,13 +382,13 @@ aARegister::getSaldoByManyDimensions(const QString &from, const QString &to, con
 		return QVariant::Invalid;
 	}
 	QString flt = QString("date>='%1' and date<='%2' and %3 ").arg(from).arg(to).arg(t->getFilter());
-	
+
 	QString query = QString("select sum(%1) from %2 where %3").arg(resSysNames[resname]).arg(t->tableName).arg(flt);
 //	t_dim->clearFilter();
 //	t_dim->select();
-	
+
 	aLog::print(aLog::INFO,QString("Accumulation register query %1").arg(query));
-	QSqlQuery q = db->db()->exec(query);
+	QSqlQuery q = db->db().exec(query);
 	q.last();
 	if(q.isValid())
 	{
@@ -399,7 +399,7 @@ aARegister::getSaldoByManyDimensions(const QString &from, const QString &to, con
 		aLog::print(aLog::DEBUG,"Accumulation register record empty");
 	}
 	return 0;// t_dim->value(resname);//QVariant::Invalid;
-	
+
 }
 /*!
  *\en
@@ -429,7 +429,7 @@ aARegister::resum( aSQLTable * t, const QDateTime & dd, bool plus )
 		long dimId = atoi(md->attr(dim,mda_id).ascii());
 		aSQLTable *t_dim = table(md->attr(dim,mda_name));
 		QVariant v = t->value(md->attr(dim,mda_name));
-		if(v.isValid() && !v.isNull() && v!=0 && v!=QString::null)
+		if(v.isValid() && !v.isNull() && v!=QString())
 		{
 			recalculate_saldo(t_dim, t, dd, plus, dimId, v );
 		}
@@ -454,16 +454,16 @@ void //protected
 aARegister::recalculate_saldo(aSQLTable *t_dim, aSQLTable *t, const QDateTime & dd, bool plus, long dimId, QVariant dimValue)
 {
 	QString query = QString("select * from %1 where date='%2' and uf%3='%4'").arg(t_dim->tableName).arg(dd.toString(Qt::ISODate)).arg(dimId).arg(dimValue.toString());
-	
-	QSqlQuery q =db->db()->exec(query);
+
+	QSqlQuery q =db->db().exec(query);
 	q.first();
 	if(!q.isValid())
 	{
 		t_dim->select();
-		QString where = QString("date<'%2' and uf%3='%4'").arg(dd.toString(Qt::ISODate)).arg(dimId).arg(dimValue.toString());		
+		QString where = QString("date<'%2' and uf%3='%4'").arg(dd.toString(Qt::ISODate)).arg(dimId).arg(dimValue.toString());
 		query = QString("select * from %1 where %2").arg(t_dim->tableName).arg(where);
 		QString values;
-		q = db->db()->exec(query);
+		q = db->db().exec(query);
 		q.last();
 		if(q.isValid())
 		{
@@ -515,7 +515,7 @@ aARegister::insert_values(QSqlQuery *q, aSQLTable *t_dim, const QDateTime & dd, 
 	ins_col.truncate(ins_col.length()-1);
 	ins_val.truncate(ins_val.length()-1);
 	QString query = QString("insert into %1 (%2) values(%3)").arg(t_dim->tableName).arg(ins_col).arg(ins_val);
-	db->db()->exec(query);
+	db->db().exec(query);
 	t_dim->select();
 	return res;
 }
@@ -558,8 +558,8 @@ aARegister::update_values(aSQLTable *t_dim, const QDateTime & dd, bool plus, lon
 	}
 	upd.truncate(upd.length()-1);
 	QString query = QString("update %1 set %2 where %3").arg(t_dim->tableName).arg(upd).arg(where);
-	db->db()->exec(query);
-	return 0;					
+	db->db().exec(query);
+	return 0;
 }
 
 

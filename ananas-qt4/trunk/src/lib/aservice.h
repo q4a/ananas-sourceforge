@@ -1,14 +1,14 @@
 /****************************************************************************
 ** $Id: aservice.h,v 1.7 2007/03/31 14:29:55 app Exp $
 **
-** Service functions header file of 
+** Service functions header file of
 ** Ananas application library
 **
 ** Created : 20050425
 **
 ** Copyright (C) 2003-2005 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -39,7 +39,7 @@
  * \~russian
  *	\brief Класс содержит статические методы различного назначения: конвертации, работы с конфигом и т.д.
  *	Не наследует свойства других классов.
- *	
+ *
  *	Врапперы для некоторых функций для работы со скриптами есть в классе aForm
  * \~
  *	\see aForm aTests
@@ -47,7 +47,7 @@
 class ANANAS_EXPORT aService
 {
 	public:
-	
+
 	static QString	number2money(	double rubli,
 					bool need_kopeyki=true,
 					bool male=true,
@@ -68,10 +68,10 @@ class ANANAS_EXPORT aService
 	static QRect	loadSizeFromConfig(const QString &mdname);
 	static QString	readConfigVariable(const QString &name, bool *ok);
 	static void	writeConfigVariable(const QString &name, const QString &value);
-	static QString  convertNumber2MoneyFormat(double number);	
+	static QString  convertNumber2MoneyFormat(double number);
 	static bool copyFile(const QString& srcFileName, const QString& destFileName, bool replaceIfExists=true);
 	protected:
-	
+
 	static QString part2string(	unsigned int st3,
 					unsigned int st2,
 					unsigned int st1,

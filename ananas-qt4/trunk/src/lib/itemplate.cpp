@@ -1,7 +1,7 @@
 /****************************************************************************
 ** $Id: itemplate.cpp,v 1.5 2005/07/04 10:23:51 red75 Exp $
 **
-** Report metadata object header file of 
+** Report metadata object header file of
 ** Ananas application library
 **
 ** Created : 20031201
@@ -9,7 +9,7 @@
 ** Copyright (C) 2003-2004 Leader InfoTech.  All rights reserved.
 ** Copyright (C) 2003-2005 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -51,12 +51,12 @@ iTemplate::open( const QString &)
 	return true;
 }
 
-void 
+void
 iTemplate::close()
 {
 }
 
-QString 
+QString
 iTemplate::getValue( const QString & )
 {
 	return "";
@@ -68,7 +68,7 @@ iTemplate::setValue( const QString &, const QString & )
 {
 }
 
-    
+
 bool
 iTemplate::save( const QString & )
 {
@@ -82,12 +82,12 @@ iTemplate::exec( const QString & )
 	return "";
 }
 
-void 
+void
 iTemplate::clear()
 {
 }
 
-QString 
+QString
 iTemplate::result()
 {
 	return "";

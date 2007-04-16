@@ -1,14 +1,14 @@
 /****************************************************************************
 ** $Id: acatalogue.h,v 1.32 2006/08/23 07:41:28 app Exp $
 **
-** Catalogue metadata object header file of 
+** Catalogue metadata object header file of
 ** Ananas application library
 **
 ** Created : 20031201
 **
 ** Copyright (C) 2003-2004 Leader InfoTech.  All rights reserved.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -44,7 +44,7 @@ class aCatGroup;
 /*!\en
  *	Not visual object used for working with catalogues in database.
  *	Used as interface between database and script or wObjects*
- *\_en 
+ *\_en
  *\ru
  *\brief Класс aCatalogue определяет программный интерфейс иерархических справочников.
  *	Наследует aObject.
@@ -96,22 +96,22 @@ public slots:
 	virtual int groupSelect ( qulonglong idg );
 
 	virtual QVariant GetElementValue(QVariant ide, const QString &fname);
-		
+
 	virtual qulonglong delElement();
 	virtual qulonglong delGroup(qulonglong idg, Q3ValueList<qulonglong> &listDelId);
-	
+
 	qulonglong setMarkDeletedElement(qulonglong el_id, bool del);
 	qulonglong setMarkDeletedGroup(qulonglong gr_id, bool del);
 	void getMarkDeletedList(qulonglong idg, Q3ValueList<qulonglong> &listDelId);
 
 	virtual bool isGroupMarkDeleted();
 	virtual bool isElementMarkDeleted();
-	
+
 	virtual bool Next();
 	virtual bool Prev();
 	virtual bool First();
 	virtual bool Last();
-	
+
 	virtual bool NextInGroupTable();
 	virtual bool PrevInGroupTable();
 	virtual bool FirstInGroupTable();
@@ -146,9 +146,9 @@ public:
  *\~english
  *	Object for work with catalogue group.
  *\~russian
- *\brief Класс aCatGroup определяет программный интерфейс для управления группами иерархических 
+ *\brief Класс aCatGroup определяет программный интерфейс для управления группами иерархических
  * 	справочников (каталогов). Наследует aObject.
- * 	
+ *
  *	Иерархический справочник может состоять из элементов и групп. Группы, в отличие от элементов
  *	предназначены не для хранения данных, а для группировки элементов.
  */

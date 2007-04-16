@@ -9,7 +9,7 @@
 ** Copyright (C) 2003-2004 Leader InfoTech.  All rights reserved.
 ** Copyright (C) 2003-2006 Grigory Panov <gr1313 at mail.ru>, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -52,7 +52,7 @@
 
 /*!
 *	\en
-*	Constuct object 
+*	Constuct object
 *	\_en
 *	\ru
 *	Создает объект
@@ -65,7 +65,8 @@ aReportBrowser::aReportBrowser(  QWidget *parent, const char *name, Qt::WFlags f
 
 	Q3ToolBar *t = new Q3ToolBar( this, "ReportTool" );
 	a = new QAction(
-	QPixmap::fromMimeSource("print.png"),
+	//QPixmap::fromMimeSource("print.png"),
+	QPixmap(":/images/print.png"),
 	tr("Print"),
 	QKeySequence("Ctrl+P"),
 	t,
@@ -76,7 +77,7 @@ aReportBrowser::aReportBrowser(  QWidget *parent, const char *name, Qt::WFlags f
 	t->show();
 
 	textBrowser = new Q3TextBrowser( this, "textBrowser" );
-	textBrowser->setTextFormat( Q3TextBrowser::RichText );
+	textBrowser->setTextFormat( Qt::RichText );
 	textBrowser->setFocus();
 //	textBrowser->showMaximized();
     	setCentralWidget( textBrowser );
@@ -113,7 +114,7 @@ aReportBrowser::append( const QString &text )
 *	Очищает браузер
 *	\_ru
 */
-void 
+void
 aReportBrowser::clear()
 {
 	textBrowser->clear();
@@ -129,7 +130,7 @@ aReportBrowser::clear()
 *	Печатает содержимое браузера.
 *	\_ru
 */
-void 
+void
 aReportBrowser::print()
 {
 	QPrinter printer;
@@ -178,7 +179,7 @@ void aReportBrowser::languageChange()
 
 /*!
 *	\en
-*	Constuct object 
+*	Constuct object
 *	\_en
 *	\ru
 *	Создает объект
@@ -212,7 +213,7 @@ aReport::aReport( aCfgItem context, RT_type report_type, aEngine * e )
 
 /*!
 *	\en
-*	Constuct object 
+*	Constuct object
 *	\_en
 *	\ru
 *	Создает объект
@@ -379,7 +380,7 @@ aReport::exec( const QString &section )
 */
 void
 aReport::show()
-{       
+{
 	if(type==RT_text)
 	{
 		browser->textBrowser->setText( tpl->result() );
@@ -449,7 +450,7 @@ aReport::show()
 			dlg.addFilter( filter );
 			dlg.setMode(Q3FileDialog::ExistingFile);
 			dlg.setDir(QDir(startCatalog));
-			dlg.setCaption("Для отображения отчета необходим OpenOffice. Укажите исполняемый файл OpenOffice"); 
+			dlg.setCaption("Для отображения отчета необходим OpenOffice. Укажите исполняемый файл OpenOffice");
 			if(dlg.exec()==QDialog::Accepted)
 			{
 				oowriter = dlg.selectedFile();
@@ -459,7 +460,7 @@ aReport::show()
 				process.addArgument( QDir::convertSeparators( fileName ) );
 				if( !process.start() )
 				{
-					QMessageBox::warning(0, tr("Warning"), tr("Unable to start OpenOffice (%1)").arg(oowriter), QMessageBox::Ok,QMessageBox::NoButton); 
+					QMessageBox::warning(0, tr("Warning"), tr("Unable to start OpenOffice (%1)").arg(oowriter), QMessageBox::Ok,QMessageBox::NoButton);
 //			 printf("Unable to start OpenOffice Writer\n");
 				}
 				else
@@ -471,13 +472,13 @@ aReport::show()
 		}
 		else
 		{
-			
+
 			Q3Process process( oowriter );
 			process.addArgument( "-n" );
 			process.addArgument( QDir::convertSeparators( fileName ) );
 			if( !process.start() )
 			{
-				QMessageBox::warning(0, tr("Warning"), tr("Unable to start OpenOffice (%1)").arg(oowriter), QMessageBox::Ok,QMessageBox::NoButton); 
+				QMessageBox::warning(0, tr("Warning"), tr("Unable to start OpenOffice (%1)").arg(oowriter), QMessageBox::Ok,QMessageBox::NoButton);
 //			 printf("Unable to start OpenOffice Writer\n");
 			}
 			else
@@ -486,7 +487,7 @@ aReport::show()
 				aLog::print(aLog::INFO,tr("aReport OpenOfficeExecutable set to %1").arg(oowriter));
 			}
 		}
-		
+
 		//tpl->open( tplName );
 	}
 }
@@ -509,7 +510,7 @@ aReport::path2workdir()
 #ifndef Q_OS_WIN32
 	res = "/usr/share/ananas/";
 #else
-	res = "";	
+	res = "";
 #endif
 	if(md!=NULL)
 	{

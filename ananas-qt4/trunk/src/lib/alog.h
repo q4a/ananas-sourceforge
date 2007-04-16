@@ -1,14 +1,14 @@
 /****************************************************************************
 ** $Id: alog.h,v 1.7 2006/08/23 07:57:21 app Exp $
 **
-** Log functions header file of 
+** Log functions header file of
 ** Ananas application library
 **
 ** Created : 20051024
 **
 ** Copyright (C) 2003-2005 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -36,8 +36,8 @@
 #include 	<qfile.h>
 
 
-// for bcc32.exe compatibility 
-// in file wingdi.h 
+// for bcc32.exe compatibility
+// in file wingdi.h
 // #define ERROR 0
 
 #ifdef Q_OS_WIN32
@@ -55,7 +55,7 @@ class ANANAS_EXPORT aLog
 {
 	public:
 
-//	enum status { 
+//	enum status {
 		/*!
 		 * \~english Error
 		 * \~russian Сообщение об ошибке
@@ -67,13 +67,13 @@ class ANANAS_EXPORT aLog
 	static const int ERROR;
 #endif
 		/*!
-		 * \~english Info 
+		 * \~english Info
 		 * \~russian Информационное сообщение
 		 * \~
 		 */
 	static const int INFO;//,
 		/*!
-		 * \~english Info 
+		 * \~english Info
 		 * \~russian Отладочное сообщение
 		 * \~
 		 */
@@ -84,14 +84,14 @@ class ANANAS_EXPORT aLog
 	static void	init( const QString &logname="", int loglevel=0);
 	static void 	close();
 	static QString 	getLogName();
-	
-	
+
+
 	private:
 	aLog();
 	static QString logName;
 	static int logLevel;
 	static QFile f;
 	static bool msg_was_show;
-	
+
 };
 #endif// ALOG_H

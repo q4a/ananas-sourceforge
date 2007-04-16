@@ -34,7 +34,7 @@
  *	Constructor
  *	\~russian
  *	Конструктор.
- *	\~	
+ *	\~
  */
 aWindowsList::aWindowsList()
     : QWidget()
@@ -47,7 +47,7 @@ aWindowsList::aWindowsList()
  *	Destructor
  *	\~russian
  *	Деструктор.
- *	\~	
+ *	\~
  */
 aWindowsList::~aWindowsList()
 {
@@ -62,7 +62,7 @@ aWindowsList::~aWindowsList()
  *	\~
  *	\param id - \~english object class id \~russian идентификатор класса объекта \~
  *	\param window - \~english link to form \~russian ссылка на форму \~
- *	\param ido - \~english object id (default 0) \~russian идентификатор объекта (по умолчанию 0) \~	
+ *	\param ido - \~english object id (default 0) \~russian идентификатор объекта (по умолчанию 0) \~
  */
 void
 aWindowsList::insert( int id, QWidget *window, qulonglong ido )
@@ -77,7 +77,7 @@ aWindowsList::insert( int id, QWidget *window, qulonglong ido )
  *	Удаляет окно из списка.
  *	\~
  *	\param id - \~english object class id \~russian идентификатор класса объекта \~
- *	\param ido - \~english object id (default 0) \~russian идентификатор объекта (по умолчанию 0) \~	
+ *	\param ido - \~english object id (default 0) \~russian идентификатор объекта (по умолчанию 0) \~
  */
 void
 aWindowsList::remove( int id, qulonglong ido )
@@ -97,7 +97,7 @@ void
 aWindowsList::remove( QWidget *window )
 {
     Q3DictIterator<QWidget> it( list );
-    for ( ; it.current(); ++it ) 
+    for ( ; it.current(); ++it )
     {
 	if ( it.current() == window ) {
 	    list.remove( it.currentKey() );
@@ -113,7 +113,7 @@ aWindowsList::remove( QWidget *window )
  *	Ищет окно по его \a id и \a ido
  *	\~
  *	\param id - \~english object class id \~russian идентификатор класса объекта \~
- *	\param ido - \~english object id (default 0) \~russian идентификатор объекта (по умолчанию 0) \~	
+ *	\param ido - \~english object id (default 0) \~russian идентификатор объекта (по умолчанию 0) \~
  *	\return \~english true, if window found \~russian true, если окно найдено. \~
  */
 bool
@@ -148,7 +148,7 @@ aWindowsList::find( QWidget *window )
  *	Функция получения ссылки на окно по его \a id и \a ido
  *	\~
  *	\param id - \~english object class id \~russian идентификатор класса объекта \~
- *	\param ido - \~english object id (default 0) \~russian идентификатор объекта (по умолчанию 0) \~	
+ *	\param ido - \~english object id (default 0) \~russian идентификатор объекта (по умолчанию 0) \~
  *	\return \~english link to window, or 0 if window not found \~russian ссылка на окно или 0\~
  */
 QWidget *
@@ -156,7 +156,7 @@ aWindowsList::get( int id, qulonglong ido )
 {
     return list.find( conv( id, ido ) );
 }
-	
+
 
 /*!
  *	\~english
@@ -165,7 +165,7 @@ aWindowsList::get( int id, qulonglong ido )
  *	Создает ключ из параметров \a id и \a ido
  *	\~
  *	\param id - \~english object class id \~russian идентификатор класса объекта \~
- *	\param ido - \~english object id (default 0) \~russian идентификатор объекта (по умолчанию 0) \~	
+ *	\param ido - \~english object id (default 0) \~russian идентификатор объекта (по умолчанию 0) \~
  *	\return \~english key \~russian ключ \~
  */
 QString
@@ -173,4 +173,4 @@ aWindowsList::conv( int id, qulonglong ido )
 {
     return QString("%1_%2").arg( id ).arg( ido );
 }
-	
+

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** $Id: adocjournal.h,v 1.31 2006/08/23 07:51:09 app Exp $
 **
-** Documents journal metadata object header file of 
+** Documents journal metadata object header file of
 ** Ananas application library
 **
 ** Created : 20040701
@@ -9,7 +9,7 @@
 ** Copyright (C) 2003-2004 Leader InfoTech.  All rights reserved.
 ** Copyright (C) Andrey Paskal <app at lrn dot ru>, Yoshkar-Ola
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -48,7 +48,7 @@ class aDatabase;
  *\~russian
  *	\brief Определяет программный интерфейс управления общим (системным) журналом документов.
  *	Наследует aObject.
- *	
+ *
  *	Невизуальный объект для работы с системным журналом документов базы данных.
  *	Все хранящиеся в базе данных Ананаса документы система регистрирует в журнале.
  *	Используется для доступа к системному журналу  скриптами и визуальными объектами.
@@ -74,14 +74,14 @@ public:
 	ERR_Code selectDocument( qulonglong idd );
 	virtual qulonglong docId();
 	int docType();
-	
+
 	/*!\ru	\return тип журнала. \n
 	 *	0 - общий, содержит список документов всех типовб. \n
 	 *	1 - специализированный журнал, содержит список документов одного типа,
 	 *	например  "Расходные накладные". \n
 	 * \_ru
 	 */
-	int type() { return journalType; } 
+	int type() { return journalType; }
 	QString nextNumber( const QString &prefix, int mdId );
 	QVariant getDate();
 	QString getNumber();

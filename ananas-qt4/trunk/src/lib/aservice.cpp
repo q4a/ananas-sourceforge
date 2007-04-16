@@ -1,14 +1,14 @@
 /****************************************************************************
 ** $Id: aservice.cpp,v 1.13 2007/03/31 14:23:38 app Exp $
 **
-** Service functions source file of 
+** Service functions source file of
 ** Ananas application library
 **
 ** Created : 20050425
 **
 ** Copyright (C) 2003-2006 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -39,9 +39,9 @@
  *\~english
  *	Converted double currency value to string representation (ru currency).
  *\~russian
- *	Конвертирует валюту, записанную в виде десятичного числа в ее текстовое представление.	
+ *	Конвертирует валюту, записанную в виде десятичного числа в ее текстовое представление.
  *\~
- *	\param rubli - \~english Value to convertions \~russian  Значение для конвертации \~ 
+ *	\param rubli - \~english Value to convertions \~russian  Значение для конвертации \~
  *	\return - \~english Converted value \~russian Сконвертированное значение \~
  *	\see parts2money(Q_ULLONG rubli, unsigned int kopeyki, bool positive)
  *	\see part2string(unsigned int st3, unsigned int st2, unsigned int st1, int stepen)
@@ -63,9 +63,9 @@ aService::number2money(	double rubli,
 	}
 	qulonglong r = QVariant(rubli).toULongLong();
 	double tmp = rubli-r;
-	
+
 	uint kop;
-#ifdef Q_OS_UNIX	
+#ifdef Q_OS_UNIX
 	kop = round(tmp*100.0);
 #else
 	kop = tmp * 100.0;
@@ -94,13 +94,13 @@ aService::number2money(	 QString currency, double amount ) {
  *\~english
  *	Converted currency value to string representation (ru currency).
  *\~russian
- *	Конвертирует валюту, записанную в виде рублей и копеек в ее текстовое представление.	
+ *	Конвертирует валюту, записанную в виде рублей и копеек в ее текстовое представление.
  *\~
  *	\return - \~english Converted value \~russian Сконвертированное значение \~
  *	\see number2money(double rubli)
  *	\see part2string(unsigned int st3, unsigned int st2, unsigned int st1, int stepen)
 */
-QString 
+QString
 aService::parts2money(qulonglong rubli,
 			 unsigned int kopeyki,
 			 bool need_kopeyki,
@@ -146,7 +146,7 @@ aService::parts2money(qulonglong rubli,
 		}
 //		printf("a=%d, b=%d, c=%d, stepen=%d\n",a,b,c,stepen);
 		if(a==0 && b==0 && c==0)
-		{	
+		{
 			if(stepen==0 && has_sum)
 			{
 				res+=part2string(a,b,c,stepen--,male,end1,end2,end3);
@@ -184,17 +184,17 @@ aService::parts2money(qulonglong rubli,
  *\~english
  *	Convertions implementation.
  *\~russian
- *	Реализует конвертацию в рубли и копейки. На вход подаются три числа и степень, 
- *	в которую необходимо их возвести. Поддерживается суммы до 999 миллиардов. 
- *	Для использования необходимо число разбить на группы чисел по 3 числа в группе и 
- *	передать их этой функции, после чего собрать результат в одну строку. 
- *	Функция добавляет в конце строки один пробел	
+ *	Реализует конвертацию в рубли и копейки. На вход подаются три числа и степень,
+ *	в которую необходимо их возвести. Поддерживается суммы до 999 миллиардов.
+ *	Для использования необходимо число разбить на группы чисел по 3 числа в группе и
+ *	передать их этой функции, после чего собрать результат в одну строку.
+ *	Функция добавляет в конце строки один пробел
  *\~
  *	\return - \~english Converted value \~russian Сконвертированное значение для переданных чисел\~
  *	\see number2money(double rubli)
  *	\see parts2money(Q_ULLONG rubli, unsigned int kopeyki, bool positive)
 */
-QString 
+QString
 aService::part2string(unsigned int st3,
 			 unsigned int st2,
 			 unsigned int st1,
@@ -209,7 +209,7 @@ aService::part2string(unsigned int st3,
 	QMap<int, QString> mapFeMaleCur;
 	QMap<int, QString> mapHungred;
 	QMap<int, QString> mapDec;
-	
+
 	mapFeMaleCur[0]="";
 	mapFeMaleCur[1]="одна";
 	mapFeMaleCur[2]="две";
@@ -220,17 +220,17 @@ aService::part2string(unsigned int st3,
 	mapFeMaleCur[7]="семь";
 	mapFeMaleCur[8]="восемь";
 	mapFeMaleCur[9]="девять";
-	
+
 	mapFeMaleCur[10]="копеек";
 	mapFeMaleCur[11]="копейка";
 	mapFeMaleCur[12]= mapFeMaleCur[13]= mapFeMaleCur[14]="копейки";
 	mapFeMaleCur[15]= mapFeMaleCur[16]= mapFeMaleCur[17]= mapFeMaleCur[18]=	mapFeMaleCur[19]="копеек";
-	
+
 	mapFeMaleCur[20]="тысяч";
 	mapFeMaleCur[21]="тысяча";
 	mapFeMaleCur[22]= mapFeMaleCur[23]= mapFeMaleCur[24]="тысячи";
 	mapFeMaleCur[25]= mapFeMaleCur[26]= mapFeMaleCur[27]= mapFeMaleCur[28]= mapFeMaleCur[29]="тысяч";
-	
+
 	mapMaleCur[0]="";
 	mapMaleCur[1]="один";
 	mapMaleCur[2]="два";
@@ -241,7 +241,7 @@ aService::part2string(unsigned int st3,
 	mapMaleCur[7]="семь";
 	mapMaleCur[8]="восемь";
 	mapMaleCur[9]="девять";
-	
+
 	if(male==true)
 	{
 		mapMaleCur[10]=end1; //"рублей";
@@ -274,7 +274,7 @@ aService::part2string(unsigned int st3,
 	mapHungred[7]="семьсот";
 	mapHungred[8]="восемьсот";
 	mapHungred[9]="девятьсот";
-	
+
 	mapDec[0]="десять";
 	mapDec[1]="одиннадцать";
 	mapDec[2]="двенадцать";
@@ -295,7 +295,7 @@ aService::part2string(unsigned int st3,
 	mapDec[17]="семьдесят";
 	mapDec[18]="восемьдесят";
 	mapDec[19]="девяносто";
-	
+
 
 	if(stepen==1 || stepen==-1 || stepen==0 && male==false)
 	{
@@ -362,10 +362,10 @@ return part1+" "+part2 +" "+part3+" "+suff+" ";
  *\~russian
  *	Конвертирует дату из ISO формата в локальный формат.
  *\~
- *	\param ISODate - \~english Date to convertion \~russian  Дата для конвертации \~ 
+ *	\param ISODate - \~english Date to convertion \~russian  Дата для конвертации \~
  *	\return - \~english Converted value \~russian Сконвертированное значение \~
 */
-QString 
+QString
 aService::Date2Print(const QString &ISODate)
 {
 	QString res;
@@ -379,13 +379,13 @@ aService::Date2Print(const QString &ISODate)
  *\~english
  *	Writes window size to config file.
  *\~russian
- *	Пишет размер окна в конфиг. 
+ *	Пишет размер окна в конфиг.
  *\~
- *	\param windowSize - \~english Rect of window geometry \~russian Прямоугольник, представляющий окно \~ 
- *	\param mdname - \~english Unical name \~russian Имя окна (должно быть уникальным) \~ 
+ *	\param windowSize - \~english Rect of window geometry \~russian Прямоугольник, представляющий окно \~
+ *	\param mdname - \~english Unical name \~russian Имя окна (должно быть уникальным) \~
  *	\see loadSizeFromConfig(const QString &mdname)
 */
-void 
+void
 aService::saveSize2Config(QRect windowSize, const QString &mdname)
 {
 	QSettings settings;
@@ -403,7 +403,7 @@ aService::saveSize2Config(QRect windowSize, const QString &mdname)
  *\~english
  *	Reads window size from config file.
  *\~russian
- *	Читает размер окна из конфиг. 
+ *	Читает размер окна из конфиг.
  *\~
  *	\param mdname - \~english 	Window name.
  *					If config not contains info about mdname,
@@ -411,9 +411,9 @@ aService::saveSize2Config(QRect windowSize, const QString &mdname)
  *			\~russian 	Имя окна.
  *					Если конфиг не содержит информации об окне с таким именем,
  *					возвращает значение по умолчанию (400x300) \~
- *	\return - \~english Window size \~russian Размер окна \~ 
+ *	\return - \~english Window size \~russian Размер окна \~
  *	\see saveSize2Config(QRect windowSize, const QString &mdname)
- *	
+ *
 */
 QRect
 aService::loadSizeFromConfig(const QString &mdname)
@@ -434,12 +434,12 @@ aService::loadSizeFromConfig(const QString &mdname)
  *\~english
  *	Reads variable from config file.
  *\~russian
- *	Читает переменную из конфига. 
+ *	Читает переменную из конфига.
  *\~
- *	\param name - \~english variable name to read \~russian Имя переменной для чтения \~ 
- *	\param ok (out) -	\~english true if success, false otherwise 
- 				\~russian true если успешно иначе false \~ 
- *	\return - \~english Variable value \~russian Значение переменной \~ 
+ *	\param name - \~english variable name to read \~russian Имя переменной для чтения \~
+ *	\param ok (out) -	\~english true if success, false otherwise
+ 				\~russian true если успешно иначе false \~
+ *	\return - \~english Variable value \~russian Значение переменной \~
  *	\see writeConfigVariable(const QString &name, const QString &value)
  *	\see loadSizeFromConfig(const QString &mdname)
  *	\see saveSize2Config(QRect windowSize, const QString &mdname)
@@ -459,10 +459,10 @@ aService::readConfigVariable(const QString &name, bool *ok)
  *\~english
  *	Writes variable to config file.
  *\~russian
- *	Пишет переменную в конфиг. 
+ *	Пишет переменную в конфиг.
  *\~
- *	\param name - \~english Variable name \~russian Имя переменной \~ 
- *	\param value - \~english Variable value \~russian Значение переменной \~ 
+ *	\param name - \~english Variable name \~russian Имя переменной \~
+ *	\param value - \~english Variable value \~russian Значение переменной \~
  *	\see loadSizeFromConfig(const QString &mdname)
  *	\see saveSize2Config(QRect windowSize, const QString &mdname)
  *	\see readConfigVariable(const QString &name, bool *ok)
@@ -483,10 +483,10 @@ aService::writeConfigVariable(const QString &name, const QString &value)
  *\~russian
  *	Конвертирует число с плавающей точкой в числовой денежный формат (рубли.кк)
  *\~
- *	\param number - \~english number to convertion \~russian число для конвертации \~ 
+ *	\param number - \~english number to convertion \~russian число для конвертации \~
  *	\return - \~english Converted value \~russian Сконвертированное значение \~
 */
-QString 
+QString
 aService::convertNumber2MoneyFormat(double number)
 {
 	return QString("%1").arg(number,0,'f',2);
@@ -495,10 +495,10 @@ aService::convertNumber2MoneyFormat(double number)
 bool
 aService::copyFile(const QString& srcFileName, const QString& destFileName, bool replaceIfExists)
 {
-	
+
 	QFile srcFile(srcFileName);
 	QFile destFile(destFileName);
-	
+
 	if(!srcFile.exists())
 	{
 		aLog::print(aLog::ERROR, QObject::tr("aService copy: source file %1 not exist").arg(srcFileName));
@@ -520,7 +520,7 @@ aService::copyFile(const QString& srcFileName, const QString& destFileName, bool
 		aLog::print(aLog::ERROR, QObject::tr("aService copy: destination file %1 open for write error").arg(destFileName));
 		return false;
 	}
-	
+
 	const int BUFFER_SIZE = 1024;
 	Q_INT8 buffer[BUFFER_SIZE];
 	QDataStream srcStream(&srcFile);

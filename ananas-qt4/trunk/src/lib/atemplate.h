@@ -48,9 +48,9 @@
  * \ru
  * 	\brief Класс для работы с шаблонами в HTML формате.
  * 	Наследует iTemplate.
- * 	
+ *
  * Приведенный пример показывает создание таблицы размеров 10х10.
- *	\code	
+ *	\code
  *	function printreport()
  *	{
  *		p = new Report("Report1");
@@ -70,7 +70,7 @@
  *		}
  *		p.exec("endmain");
  *		p.show();
- *		delete p;	
+ *		delete p;
  *	}
  *	\endcode
  *	Шаблон:

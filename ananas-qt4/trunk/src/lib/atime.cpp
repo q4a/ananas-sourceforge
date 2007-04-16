@@ -43,7 +43,7 @@
 aTime::aTime(): QObject()
 {
  	time = new QTime;
-	
+
 }
 
 /*!
@@ -67,7 +67,7 @@ aTime::~aTime()
  *	Запускает таймер.
  *\_ru
  */
-void 
+void
 aTime::start()
 {
 	time->start();
@@ -82,7 +82,7 @@ aTime::start()
  *	Перезапускает таймер.
  *\_ru
  */
-int 
+int
 aTime::restart()
 {
 	time->restart();
@@ -97,7 +97,7 @@ aTime::restart()
  *	Возвращает количество миллисекунд с последнего запуска таймера.
  *\_ru
  */
-int 
+int
 aTime::elapsed()
 {
 	return time->elapsed();
@@ -111,7 +111,7 @@ aTime::elapsed()
  *	Возвращает текущую дату в ISO формате. Используется для работы с Ананас.Скриптом
  *\_ru
  */
-QString 
+QString
 aTime::CurrentDate()
 {
 	return QDate::currentDate().toString(Qt::ISODate);

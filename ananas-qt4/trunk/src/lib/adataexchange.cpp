@@ -34,6 +34,7 @@
 #include <qfile.h>
 #include <qdir.h>
 #include <q3process.h>
+#include <QTextStream>
 #include <stdio.h>
 
 //#define ERROR true
@@ -50,17 +51,17 @@ aBackup::~aBackup()
 bool
 aBackup::importData(const QString& rcfile, const QString &archfile, bool dropBase, bool replaceTemplates)
 {
-	
-	
+
+
 	int prg=0;
 	int totalSteps=10;
 	QString tmpDirName;
 	QString filename = archfile;
-	
+
 	QDir dir;
         QString temp;
 	QStringList templatesName;
-	
+
 #ifndef _Windows
 	temp = getenv("TMPDIR");
 	if(temp=="" || temp.isEmpty())
@@ -72,7 +73,7 @@ aBackup::importData(const QString& rcfile, const QString &archfile, bool dropBas
 	tmpDirName = QDir::convertSeparators(tmpDirName);
 	//printf("tmp dir name = %s\n",tmpDirName.ascii());
 	if(!dir.mkdir(tmpDirName))
-	{	
+	{
 		setLastError(tr("Can't create temporary directory"));
 		aLog::print(aLog::ERROR, "aBackup create temporary directory %1");
 		return true;
@@ -93,22 +94,22 @@ aBackup::importData(const QString& rcfile, const QString &archfile, bool dropBas
 	{
 		aLog::print(aLog::DEBUG, tr("aBackup unzip"));
 	}
-	
-	
+
+
 	QString srcDirName = QDir::convertSeparators(tmpDirName + "/templates/");
 	dir.setPath(srcDirName);
 	templatesName = dir.entryList("templ_*.odt;templ_*.ods");
-	
-	
+
+
 	qApp->processEvents();
 	emit(progress(++prg,totalSteps));
-	
+
 	filename.truncate( filename.length() - QString(".bsa").length() );
 	aLog::print(aLog::DEBUG, tr("aBackup filename = %1").arg(filename));
 
 	//printf("filename = %s\n",filename.ascii());
 	changeRC(rcfile, tmpDirName + "/busines-schema.cfg");
-	
+
 	QFile f(tmpDirName+"/content.xml");
 	QDomDocument xml;
 	xml.setContent(&f);
@@ -126,9 +127,9 @@ aBackup::importData(const QString& rcfile, const QString &archfile, bool dropBas
 		db.drop(db.cfg.rc.value("dbname"));
 		emit(progress(++prg,totalSteps));
 		db.create();
-		
+
 		emit(progress(++prg,totalSteps));
-		
+
 		db.exchangeDataSystables ( xml, true);
 		emit(progress(++prg,totalSteps));
 		db.exchangeDataCatalogues( xml, true );
@@ -149,13 +150,13 @@ aBackup::importData(const QString& rcfile, const QString &archfile, bool dropBas
 		return true;
 	}
 	qApp->processEvents();
-	
+
 	QString destDirName = QDir::convertSeparators(db.cfg.rc.value("workdir"));
 
 	//create template directory
 	QDir destDir;
 //	destDir.setPath(destDirName);
-	if(!destDir.exists(destDirName,true))
+	if(!destDir.exists(destDirName))
 	{
 		aLog::print(aLog::DEBUG, tr("aBackup template dir `%1' not exists, try create").arg(destDirName));
 		if(!destDir.mkdir(destDirName,true))
@@ -165,7 +166,7 @@ aBackup::importData(const QString& rcfile, const QString &archfile, bool dropBas
 		else
 		{
 			aLog::print(aLog::DEBUG, tr("aBackup create template dir `%1'").arg(destDirName));
-		}	
+		}
 	}
 	else
 	{
@@ -177,9 +178,9 @@ aBackup::importData(const QString& rcfile, const QString &archfile, bool dropBas
 	//	aTests::print2log("f:\\ERROR.log", "aBackup", tmpDirName + "/templates/"+templatesName[i]);
 		aService::copyFile(QDir::convertSeparators(srcDirName+templatesName[i]), QDir::convertSeparators(destDirName +"/"+templatesName[i]), replaceTemplates);
 	}
-	
+
 	db.done();
-	
+
 //	printf("copy %s to %s\n", QDir::convertSeparators(tmpDirName+"/busines-schema.cfg").ascii(), QDir::convertSeparators(filename+".cfg").ascii());
 	if(!aService::copyFile( QDir::convertSeparators(tmpDirName+"/busines-schema.cfg"), QDir::convertSeparators(filename+".cfg"), true))
 	{
@@ -213,7 +214,7 @@ aBackup::exportData(const QString& rcfile, const QString &archfile, bool withTem
 	QString tmpDirName;
 	QString srcDirName;
 	QStringList templatesName;
- 
+
 #ifndef _Windows
 	temp = getenv("TMPDIR");
 	if(temp=="" || temp.isEmpty())
@@ -233,7 +234,7 @@ aBackup::exportData(const QString& rcfile, const QString &archfile, bool withTem
 	else
 	{
 		aLog::print(aLog::DEBUG, tr("aBackup create temporary directory %1").arg(tmpDirName));
-		
+
 	}
 	if(!dir.mkdir(tmpDirName+"/META-INF"))
 	{
@@ -260,7 +261,7 @@ aBackup::exportData(const QString& rcfile, const QString &archfile, bool withTem
 		aLog::print(aLog::DEBUG, tr("aBackup valid *.rc file"));
 	}
 	qApp->processEvents();
-	
+
 	if(withTemplates)
 	{
 		srcDirName = QDir::convertSeparators(cfg.rc.value("workdir"));
@@ -274,10 +275,10 @@ aBackup::exportData(const QString& rcfile, const QString &archfile, bool withTem
 //			file.remove();
 		}
 	}
-	
-	
+
+
 	emit(progress(++prg,totalSteps));
-	if(cfg.write( tmpDirName+"/busines-schema.cfg" )) 
+	if(cfg.write( tmpDirName+"/busines-schema.cfg" ))
 	{
 		setLastError(tr("Can't write resource file"));
 		aLog::print(aLog::ERROR, tr("aBackup write %1 file").arg(tmpDirName+"/busines-schema.cfg"));
@@ -302,7 +303,7 @@ aBackup::exportData(const QString& rcfile, const QString &archfile, bool withTem
 	{
 		aLog::print(aLog::DEBUG, tr("aBackup bump base"));
 	}
-	
+
 	if(writeXml(QDir::convertSeparators(tmpDirName+"/META-INF/manifest.xml"), createManifest(templatesName))==true)
 	{
 		setLastError(tr("Can't write file META-INF/manifest.xml"));
@@ -328,10 +329,10 @@ aBackup::exportData(const QString& rcfile, const QString &archfile, bool withTem
 				setLastError(tr("Can't copy template file"));
 				res&=true;
 			}
-			
+
 		}
 	}
-		
+
 	if(zipArchive(archfile + ".bsa", tmpDirName)==true)
 	{
 //		setLastError(tr("Can't zip archive"));
@@ -348,11 +349,11 @@ aBackup::exportData(const QString& rcfile, const QString &archfile, bool withTem
 	emit (progress(++prg,totalSteps));
 	setLastError(tr("Data export done without errors"));
 	aLog::print(aLog::DEBUG, tr("aBackup export data ok"));
-	
+
 	return false;
 }
 
-bool 
+bool
 aBackup::unzipArchive(const QString& archName, const QString& dir)
 {
 #ifndef _Windows
@@ -362,8 +363,8 @@ aBackup::unzipArchive(const QString& archName, const QString& dir)
 	process.addArgument( "-d" );
 	process.addArgument( dir );
 
-#else 
-	Q3Process process( QString("7z") );	
+#else
+	Q3Process process( QString("7z") );
 //	process.setWorkingDirectory ( templateDir);
 //	printf("working dir = `%s'\n", QString(templateDir).ascii());
 	process.addArgument( "x" );
@@ -379,13 +380,13 @@ aBackup::unzipArchive(const QString& archName, const QString& dir)
 		//qWarning("FormTemplate::unzip(): failed to start unzip");
 		setLastError(tr("Can't start zip"));
 		aLog::print(aLog::ERROR, tr("aBackup start unzip"));
-		
+
 		return true;
 	}
 
 	while( process.isRunning() );
 
-	if( !process.normalExit() ) 
+	if( !process.normalExit() )
 	{
 	//	qWarning("FormTemplate::unzip(): error extracting document content");
 		setLastError(tr("Zip ended anormal"));
@@ -406,11 +407,11 @@ aBackup::unzipArchive(const QString& archName, const QString& dir)
 	return false;
 }
 
-bool 
+bool
 aBackup::zipArchive(const QString& archName, const QString& dir)
 {
 
-	
+
 #ifndef _Windows
 
 	Q3Process processUpdate( QString("zip") );
@@ -424,7 +425,7 @@ aBackup::zipArchive(const QString& archName, const QString& dir)
 	processUpdate.setWorkingDirectory(dir);
 	processUpdate.addArgument( "a" );
 	processUpdate.addArgument( "-tzip" );
-	processUpdate.addArgument( archName );	
+	processUpdate.addArgument( archName );
 	processUpdate.addArgument( "-r" );
 	processUpdate.addArgument(".");
 #endif
@@ -450,7 +451,7 @@ aBackup::zipArchive(const QString& archName, const QString& dir)
 		setLastError(tr("Zip ended with code %1").arg(processUpdate.exitStatus()));
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -477,9 +478,9 @@ aBackup::dumpBase(const QString& rcfile, const QString& tmpDirName, int& prg, in
 		db.exchangeDataInfoRegisters ( xml, false );
 		emit (progress(++prg,totalSteps));
 		db.exchangeDataAccumulationRegisters ( xml, false );
-		
+
 		db.exchangeDataUniques ( xml, true );
-				
+
 		aLog::print(aLog::DEBUG, tr("aBackup dump tables ok"));
 	}
 	else
@@ -512,8 +513,8 @@ aBackup::writeXml(const QString & name2Save, QDomDocument xml)
 	QByteArray buf( xml.toString(4).utf8() );
 	if ( file.open( QIODevice::WriteOnly ) )
 	{
-		Q3TextStream ts( &file );
-		ts.setEncoding(Q3TextStream::UnicodeUTF8);
+		QTextStream ts( &file );
+		//--ts.setEncoding(Q3TextStream::UnicodeUTF8);
 		xml.save(ts, 4);
 		file.close();
 	}
@@ -522,24 +523,24 @@ aBackup::writeXml(const QString & name2Save, QDomDocument xml)
 		aLog::print(aLog::ERROR, tr("aBackup save xml %1").arg(name2Save));
 		return true;
 	}
-	return false;	
+	return false;
 }
 
-bool 
+bool
 aBackup::checkStructure()
 {
 	return false;
 }
 
-QDomDocument 
+QDomDocument
 aBackup::createManifest(const QStringList& templates)
 {
 	QDomDocument manifest;
 	manifest.setContent(QString("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"));
-	
+
 	QDomElement root = manifest.createElement("manifest:manifest");
 	manifest.appendChild(root);
-	
+
 	QDomElement entry = manifest.createElement("manifest:file-entry");
 	entry.setAttribute("manifest:full-path","business-schema.cfg");
 	root.appendChild(entry);
@@ -551,7 +552,7 @@ aBackup::createManifest(const QStringList& templates)
 	{
 		QDomElement templatesDir = manifest.createElement("manifest:file-entry");
 		templatesDir.setAttribute("manifest:full-path","templates/");
-		
+
 		for(uint i=0; i<templates.count();i++)
 		{
 			entry = manifest.createElement("manifest:file-entry");
@@ -560,9 +561,9 @@ aBackup::createManifest(const QStringList& templates)
 		}
 		root.appendChild(templatesDir);
 	}
-	
+
 	aLog::print(aLog::DEBUG, tr("aBackup create manifest.xml"));
-	return manifest;	
+	return manifest;
 }
 
 
@@ -571,33 +572,33 @@ aBackup::changeRC(const QString& nameRC, const QString& newConfigName)
 {
 	QMap<QString,QString> cfg;
 //	QString configFileName;
-	
+
 	cfg = aTests::readConfig(QDir::convertSeparators(nameRC));
-	
+
 //	configFileName = cfg["configfile"];
-//	configFileName.truncate( configFileName.length() - QString(".bsa").length() ); 
+//	configFileName.truncate( configFileName.length() - QString(".bsa").length() );
 //	cfg["configfile"] = configFileName + ".cfg";
 
 	cfg["configfile"] = newConfigName;
-	
+
 	aTests::writeConfig(QDir::convertSeparators(nameRC), cfg);
 }
 
 
-void 
+void
 aBackup::setLastError(const QString& errorText)
 {
 	txtError = errorText;
 }
 
 
-QString 
+QString
 aBackup::lastError() const
 {
 	return txtError;
 }
 
-void 
+void
 aBackup::cleanupTmpFiles(const QString& tmpDirName, QStringList *files)
 {
 	QFile file;
@@ -624,6 +625,6 @@ aBackup::cleanupTmpFiles(const QString& tmpDirName, QStringList *files)
 	aLog::print(aLog::DEBUG, tr("aBackup delete directory %1").arg(tmpDirName));
 	dir.rmdir(QDir::convertSeparators(tmpDirName));
 	aLog::print(aLog::INFO, tr("aBackup cleanup temporary files"));
-	
+
 }
 

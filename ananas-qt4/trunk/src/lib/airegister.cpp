@@ -70,7 +70,7 @@ aIRegister::aIRegister( aCfgItem context, aDatabase * adb )
  *	\param type - ananas database for working
  *\_en
  *\ru
- *	\brief Создает новый экземпляр объекта информационного регистра по имени. 
+ *	\brief Создает новый экземпляр объекта информационного регистра по имени.
  *
  *	Новый объект создается по описанию объекта с таким именем, хранимом в бизнес схеме.
  *	\param name - Имя Регистра в бизнес схеме
@@ -134,8 +134,8 @@ aIRegister::initObject()
  *\en
  *	\brief Sets filter.
  *
- *	\param name - Field name. 
- *	\param value - Field value. 
+ *	\param name - Field name.
+ *	\param value - Field value.
  *	\return Error code
  *\_en
  */
@@ -152,9 +152,9 @@ aIRegister::SetFilter( const QString & name, const QVariant & value )
 /*!
  *\ru
  *	\brief Отфильтровывает записи регистра, принадлежащие документу. Подготовливает регистр для добавления записи
- *	функцией New. 
+ *	функцией New.
  *
- *	
+ *
  *	Задав документ для регистра, получаем возможность работать только с записями регистра, указывающими на этот документом.
  *
  *	\param - Ссылка на существующий документ
@@ -165,7 +165,7 @@ aIRegister::SetFilter( const QString & name, const QVariant & value )
  *\en
  *	\brief Sets document.
  *
- *	\param doc -  Reference to documetn.  
+ *	\param doc -  Reference to documetn.
  *	\return Error code
  *	\see New()
  *\_en
@@ -184,7 +184,7 @@ aIRegister::SetDocument( aDocument * doc )
  *\ru
  *	\brief Возвращает документ, на основании которого была сделана текущая запись регистра.
  *
- *	Возвращяет хранящийся в текущей записи регистра указатель на документ (не идентификатор, а объект), 
+ *	Возвращяет хранящийся в текущей записи регистра указатель на документ (не идентификатор, а объект),
  *	позволяющий обратиться к реквизитам документа.
  *	\return Указатель на документ, если текущая запись регистра имеет ссылку на документ и этот докуменрт существует.
  *	Возврат ошибки будет свидетельствовать, что с данными не все в порядке, т.е. нарушена ссылочная целостность.
@@ -192,7 +192,7 @@ aIRegister::SetDocument( aDocument * doc )
  *\en
  *	\brief Gets document.
  *
- *	\return Document pointer 
+ *	\return Document pointer
  *\_en
  */
 aDocument*
@@ -258,12 +258,12 @@ aIRegister::SetTable( const QString & tblname )
  *	\see SetTable( const QString & tblname )
  *\_en
  *\ru
- *	\brief Добавляет новую строку к таблице информационного регистра. 
+ *	\brief Добавляет новую строку к таблице информационного регистра.
  *
  * 	Для каждой строки информационного регистра обязательным является указание того, какая строка
  * 	табличной части какого документа с ней связана. То есть каждая запись в регистре обязательно связана
- * 	ровно с одной строкой табличной части какого-либо документа. И если при редактировании документа 
- * 	пользователем удаляется строка 	в его табличной части, то происходит автоматическое удаление соответствующих 
+ * 	ровно с одной строкой табличной части какого-либо документа. И если при редактировании документа
+ * 	пользователем удаляется строка 	в его табличной части, то происходит автоматическое удаление соответствующих
  * 	строк регистра.
  * 	Перед вызовом необходимо указать ссылку на документ и на одну из его (возможно нескольких) табличных частей.
  * 	Важно чтобы в табличной части документа была задана требуемая текущая запись (строка). Именно с ней будет связана
@@ -334,9 +334,9 @@ aIRegister::deleteDocument( aDocument * doc )
 	{
 		iReg = md->find( iRegs, md_iregister, i );
 		if ( iReg.isNull() ) continue;
-		if ( md->attr( iReg, mda_no_unconduct)=="1") continue; 
+		if ( md->attr( iReg, mda_no_unconduct)=="1") continue;
 		tdbname = db->tableDbName( db->cfg, iReg );
-		db->db()->exec(QString("DELETE FROM %1 WHERE idd=%2").arg(tdbname).arg(idd));
+		db->db().exec(QString("DELETE FROM %1 WHERE idd=%2").arg(tdbname).arg(idd));
 	}
 	return true;
 }
@@ -372,9 +372,9 @@ aIRegister::deleteTable( qulonglong iddt)
 	{
 		iReg = md->find( iRegs, md_iregister, i );
 		if ( iReg.isNull() ) continue;
-		if ( md->attr( iReg, mda_no_unconduct)=="1") continue; 
+		if ( md->attr( iReg, mda_no_unconduct)=="1") continue;
 		tdbname = db->tableDbName( db->cfg, iReg );
-		db->db()->exec(QString("DELETE FROM %1 WHERE iddt=%2").arg(tdbname).arg(iddt));
+		db->db().exec(QString("DELETE FROM %1 WHERE iddt=%2").arg(tdbname).arg(iddt));
 	}
 	return true;
 }
@@ -389,8 +389,8 @@ aIRegister::deleteTable( qulonglong iddt)
  *	\see Select( QDateTime from, QDateTime to )
  *\_en
  *\ru
- *	\brief Выбирает записи в информационном регистре за заданный период. 
- *	
+ *	\brief Выбирает записи в информационном регистре за заданный период.
+ *
  *	Вспомогательный метод для скриптов.
  *	\param from - дата начала периода в строке в фрмате ISO 8601 (ГГГГ-ММ-ДД)
  *	\param to - дата окончания периода в строке в формате ISO 8601 (ГГГГ-ММ-ДД)
@@ -398,7 +398,7 @@ aIRegister::deleteTable( qulonglong iddt)
  *	\see Select( QDateTime from, QDateTime to )
  *\_ru
  */
-int 
+int
 aIRegister::Select( const QString &from, const QString &to)
 {
 	//printf("from %s, to %s\n",from.ascii(),to.ascii() );
@@ -416,10 +416,10 @@ aIRegister::Select( const QString &from, const QString &to)
  *	\return Error code
  *\_en
  *\ru
- *	\brief Выбирает записи в информационном регистре за заданный период. 
+ *	\brief Выбирает записи в информационном регистре за заданный период.
  *
- *	\param from - Дата начала периода 
- *	\param to - Дата окончания периода 
+ *	\param from - Дата начала периода
+ *	\param to - Дата окончания периода
  *	\return Код ошибки
  *\_ru
  */
@@ -453,11 +453,11 @@ aIRegister::Select( QDateTime from, QDateTime to )
 
 /*!
  *\en
- *	
+ *
  *	\return Error code
  *\_en
  *\ru
- *	\brief Выбирает первую запись регистра по документу, установленному перед этим функцией SetDocument( aDocument * doc ). 
+ *	\brief Выбирает первую запись регистра по документу, установленному перед этим функцией SetDocument( aDocument * doc ).
  *
  *	\return Код ошибки
  *	\see SetDocument( aDocument * doc )
@@ -481,14 +481,14 @@ aIRegister::SelectByDoc()
  *\en
  *	\brief Return field value with name = name of the primary object database table.
  *
- *	\param name - field name 
- *	\return  field value  
+ *	\param name - field name
+ *	\return  field value
  *\_en
  *\ru
  *	\brief Возвращает значения поля с именем =  name основной таблицы объекта.
  *
- *	\param name - имя поля 
- *	\return  значение поля. Поля типа Q_ULLONG и DateTime переводятся в строки.  
+ *	\param name - имя поля
+ *	\return  значение поля. Поля типа Q_ULLONG и DateTime переводятся в строки.
  *\_ru
  */
 QVariant
@@ -511,7 +511,7 @@ aIRegister::Value( const QString & name, const QString &tableName )
  * 	\brief Переход к следующей записи регистра.
  * \_ru
  */
-bool 
+bool
 aIRegister::Next()
 {
 	return aObject::Next();
@@ -535,7 +535,7 @@ aIRegister::Prev()
  * 	\brief Переход к первой записи регистра.
  * \_ru
  */
-bool 
+bool
 aIRegister::First()
 {
 	return aObject::First();
@@ -547,7 +547,7 @@ aIRegister::First()
  * 	\brief Переход к последней записи регистра.
  * \_ru
  */
-bool 
+bool
 aIRegister::Last()
 {
 	return aObject::Last();

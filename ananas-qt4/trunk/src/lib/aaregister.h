@@ -48,8 +48,8 @@
  *
  * 	Накопительный регистр расширяет функциональность информационного регистра aIRegister,
  * 	автоматически расчитывая остатки по каждому измерению.
- *	В базе данных хранятся остатки по каждому измерению и на каждое время изменения значения ресурсов. 
- *	Реквизиты накопительного регистра деляться на три вида: измерения, ресурсы, примечания. 
+ *	В базе данных хранятся остатки по каждому измерению и на каждое время изменения значения ресурсов.
+ *	Реквизиты накопительного регистра деляться на три вида: измерения, ресурсы, примечания.
  *	\see aIRegister
  *\_ru
  */
@@ -60,7 +60,7 @@ public:
 	aARegister(aCfgItem context, aDatabase * adb = 0);
 	aARegister(QString name, aDatabase * adb = 0);
 	virtual ~aARegister();
-	
+
 	virtual ERR_Code initObject();
 
 	virtual bool deleteDocument( aDocument * doc );
@@ -90,7 +90,7 @@ protected:
 	int insert_values(QSqlQuery *q, aSQLTable *t_dim, const QDateTime & dd, bool plus, long dimId, QVariant dimValue);
 	int update_values(aSQLTable *t_dim, const QDateTime & dd, bool plus, long dimId, QVariant dimValue, aSQLTable *t=0);
 private:
-	
+
 	void resum( aSQLTable * t, const QDateTime & dd, bool plus );
 	QString tablename;
 	QSqlQuery sumQuery;

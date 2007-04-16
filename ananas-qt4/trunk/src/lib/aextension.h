@@ -52,10 +52,10 @@ public:
     AExtension( const char *name = 0 );
     ~AExtension();
     int init(aDatabase* dbo);
-    
+
 signals:
     void event( const QString &data );
-    
+
 };
 
 #endif //AEXTENSION_H

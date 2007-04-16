@@ -1,14 +1,14 @@
 /****************************************************************************
 ** $Id: acalctemplate.h,v 1.2 2007/02/23 21:04:26 gr Exp $
 **
-** Report metadata object header file of 
+** Report metadata object header file of
 ** Ananas application library
 **
 ** Created : 20050202
 **
 ** Copyright (C) 2003-2005 Grigory Panov <gr1313 at mail.ru>, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the

@@ -140,7 +140,7 @@ int
 AMenuBar::insertItem ( const QString & text, const QObject * receiver, const char * member, const QKeySequence & accel, int id , int index ) {
 	return QMenuBar::insertItem( text, receiver, member, accel, id, index);
 }
-int 
+int
 AMenuBar::insertItem ( const QPixmap & pixmap, const QObject * receiver, const char * member, const QKeySequence & accel , int id , int index ) {
 	return QMenuBar::insertItem ( pixmap, receiver, member, accel,  id, index);
 }
@@ -179,5 +179,5 @@ int AMenuBar::insertItem ( QCustomMenuItem * custom, int id , int index ) {
 };
 int AMenuBar::insertSeparator ( int index ) {
 	return QMenuBar::insertSeparator ( index);
-};	
+};
 */

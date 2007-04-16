@@ -1,12 +1,12 @@
 /****************************************************************************
 ** $Id: amoney.cpp,v 1.2 2007/04/01 07:58:53 app Exp $
 **
-** Service functions header file of 
+** Service functions header file of
 ** Ananas application library
 **
 ** Copyright (C) 2007 Andrey Paskal.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -31,33 +31,33 @@
  */
 AMoney::AMoney(){
 	this->amount = 0.0;
-	this->degree = new Degree();	
-	this->currency = new Currency("RUR");	
+	this->degree = new Degree();
+	this->currency = new Currency("RUR");
 }
 
 
 /**
  * \ru
  *		\brief Конструктор
- * 		\param initialValue - первоначальное количество денег 
+ * 		\param initialValue - первоначальное количество денег
  * 		\param currency - тип валюты. По умолчанию "RUR". Допустимые значения: "RUR" - рубль, "EUR" - евро, "USD" - доллары США
  * \_ru
  */
 AMoney::AMoney(double initialValue, QString currency){
 	this->amount = initialValue;
-	this->degree = new Degree();		
-	this->currency = new Currency( currency );	
+	this->degree = new Degree();
+	this->currency = new Currency( currency );
 }
 
 
 /**
  * \ru
  *		\brief Конвертор в строку
- * 		Периводит числовое значение к значению типа QString. Для преобразования числа в текст (пропись) 
+ * 		Периводит числовое значение к значению типа QString. Для преобразования числа в текст (пропись)
  * 		используйте метод toText()
  * \_ru
  */
-QString 
+QString
 AMoney::toString(){
 	return QString::number( this->amount );
 }
@@ -66,10 +66,10 @@ AMoney::toString(){
 /**
  * \ru
  *		\brief Сравнивает два экземпляра объектов данного класса.
- * 
+ *
  * \_ru
  */
-bool 
+bool
 AMoney::equal( AMoney &money){
 	return this->amount == money.getAmount();
 }
@@ -78,10 +78,10 @@ AMoney::equal( AMoney &money){
 /**
  * \ru
  *		\brief Возвращает количество денег.
- * 
+ *
  * \_ru
  */
-double 
+double
 AMoney::getAmount() {
 	return this->amount;
 }
@@ -115,7 +115,7 @@ AMoney::setAmount(double val, QString cur) {
  * 		Возможные значения смотри в описании конструктора.
  * \_ru
  */
-QString 
+QString
 AMoney::getCurrency(){
 	return this->currency->getId();
 }
@@ -140,15 +140,15 @@ AMoney::setCurrency(QString cur) {
  */
 QString
 AMoney::toText(){
-	
+
 	uint integerKopeiki;
 	qulonglong integerRubli;
-	
+
 	integerRubli = QVariant( this->amount).toULongLong();
 
 	double decimal = this->amount-integerRubli;
-	
-#ifdef Q_OS_UNIX	
+
+#ifdef Q_OS_UNIX
 	integerKopeiki = round( decimal*100.0 );
 #else
 	integerKopeiki = decimal * 100.0;
@@ -160,15 +160,15 @@ AMoney::toText(){
 	} else {
 		rubliText = "Ноль";
 	}
-		
-	QString kopeikiText;	
+
+	QString kopeikiText;
 	if ( integerKopeiki > 0 ) {
-		kopeikiText = decimalValueToText( integerKopeiki );	
+		kopeikiText = decimalValueToText( integerKopeiki );
 	} else {
 		kopeikiText = "ноль";
 	}
-	return this->firstUp( 
-			rubliText + " " + this->integerCurrencyName( rubliText ) + " " + 
+	return this->firstUp(
+			rubliText + " " + this->integerCurrencyName( rubliText ) + " " +
 			QString::number( integerKopeiki ) + " " + this->decimalCurrencyName( kopeikiText )
 		);
 }
@@ -177,13 +177,13 @@ AMoney::toText(){
 /**
  * \ru
  *  	\brief Собирает строку из текстовых троек, вставляя между ними слова "сотен", "тысяч", "миллионов", ...
- * 
+ *
  * 		Внутренний метод. Не предназнвчен для внешнего использования.
  * 		\param  value - числовое значение целого типа, которое необходимо перевести в пропись.
  * 		\return возвращает пропись для заданного числа без валюты
  * \_ru
  */
-QString 
+QString
 AMoney::valueToText( qulonglong value ){
 	QString sValue = QString::number( value);
 	QString tripleText;
@@ -191,7 +191,7 @@ AMoney::valueToText( qulonglong value ){
 	QString degreeText;
 	QString result;
 	this->degree->setValue(0);
-	
+
 	while ( sValue.length() >= 3 ) {
 		if ( !sValue.endsWith("000")) {
 			tripleText = tripleToText( sValue.right(3) );
@@ -199,8 +199,8 @@ AMoney::valueToText( qulonglong value ){
 		}
 		sValue = sValue.left( sValue.length() - 3);
 		this->degree->setValue( this->degree->getValue() +1);
-		
-	}	
+
+	}
 	if (sValue.length() > 0) {
 		if (sValue.length() == 2) {
 			coupleSingleText = coupleToText( sValue );
@@ -221,14 +221,14 @@ AMoney::valueToText( qulonglong value ){
 /**
  * \ru
  *  	\brief Вспомогательная функция для копеек, центов....
- * 
+ *
  * 		Используется для перевода цифры в пропись для дробной части суммы.
  * 		Эта функция необходима, так как дробная часть может имерь род отличный от целой части суммы.
- * 		Например, рубль - муж.род, копейка - жен.род. 
- * 
+ * 		Например, рубль - муж.род, копейка - жен.род.
+ *
  * \_ru
  */
-QString 
+QString
 AMoney::decimalValueToText( qulonglong value ){
 	QString currencyId = this->currency->getId();
 	this->currency->setId( "d"+ currencyId);
@@ -240,24 +240,24 @@ AMoney::decimalValueToText( qulonglong value ){
 /**
  * \ru
  *  	\brief Преобразует однозначное число в текст.
- * 
+ *
  * 		Учитывается род Муж. или Жен. преобразуемого числа
  * 		\param string - строка, содержащая один символ [0-9]
  * 		\return  возвращает "один" или "одна" или "два" или "две" или "три" ..."девять".
- * 
+ *
  * \_ru
  */
-QString 
+QString
 AMoney::singleToText( QString string ) {
-	
+
 	bool male;
-	
+
 	if ( this->degree->getValue() > 0 ) {
 		male = this->degree->isMale();
 	} else {
 		male = this->currency->isMale();
 	}
-	
+
 	if ( male ) {
 		if (string == "1") return "один";
 		if (string == "2") return "два";
@@ -273,26 +273,26 @@ AMoney::singleToText( QString string ) {
 	if (string == "7") return "семь";
 	if (string == "8") return "восемь";
 	if (string == "9") return "девять";
-	
+
 	return "undefinded";
 }
 
 /**
  * \ru
  *  	\brief Преобразует двузначное число в текст.
- * 
+ *
  * 		\param string - строка, содержащая два символа [0-9][0-9]
  * 		\return  возвращает пропись двузначного числа.
- * 
+ *
  * \_ru
  */
-QString 
+QString
 AMoney::coupleToText( QString string ) {
-	
+
 	QString result = "";
 
 	if (string.left(1) == "0") return singleToText( string.right(1) );
-	
+
 	if (string == "10") return "десять";
 	if (string == "11") return "одинадцать";
 	if (string == "12") return "двенадцать";
@@ -303,7 +303,7 @@ AMoney::coupleToText( QString string ) {
 	if (string == "17") return "семьнадцать";
 	if (string == "18") return "восемьнадцать";
 	if (string == "19") return "девятьнадцать";
-	
+
 	if (string.left(1) == "2" ) result = "двадцать";
 	if (string.left(1) == "3" ) result = "тридцать";
 	if (string.left(1) == "4" ) result = "сорок";
@@ -324,18 +324,18 @@ AMoney::coupleToText( QString string ) {
 /**
  * \ru
  *  	\brief Преобразует трехначное число в текст.
- * 
+ *
  * 		\param string - строка, содержащая три символа [0-9][0-9][0-9]
  * 		\return  возвращает пропись трехзначного числа.
- * 
+ *
  * \_ru
  */
-QString 
+QString
 AMoney::tripleToText( QString string ) {
 	QString result = "";
-	
+
 	if ( string.left(1) == "0" ) return coupleToText( string.right(2) );
-	
+
 	if ( string.left(1) == "1" ) result = "сто";
 	if ( string.left(1) == "2" ) result = "двести";
 	if ( string.left(1) == "3" ) result = "триста";
@@ -345,7 +345,7 @@ AMoney::tripleToText( QString string ) {
 	if ( string.left(1) == "7" ) result = "семьсот";
 	if ( string.left(1) == "8" ) result = "восемьсот";
 	if ( string.left(1) == "9" ) result = "девятьсот";
-	
+
 	return result + coupleToText( string.right(2) );
 }
 
@@ -356,12 +356,12 @@ AMoney::tripleToText( QString string ) {
  * 		\param 	degreeLevel - значение порядка. 1 - тысячи, 2 - миллионы, 3 - миллиарды, 4 - триллионы.
  * \_ru
  */
-QString 
+QString
 AMoney::degreeText( QString string, int degreeLevel) {
 	QString result = "";
-	
+
 	if ( degreeLevel < 1 ) return result;
-	
+
 	if (degreeLevel == 1) {
 		if ( string.endsWith("одна") ) {
 			result = " тысяча";
@@ -395,7 +395,7 @@ AMoney::degreeText( QString string, int degreeLevel) {
 			result = " триллионов";
 		}
 	}
-	
+
 	return result;
 }
 
@@ -403,15 +403,15 @@ AMoney::degreeText( QString string, int degreeLevel) {
  * 	\ru
  *		\brief Возвращает прописью название валюты для целой части числа.
  * 		\param  string - пропись числа, для которого нужно вернуть название валюты прописью.
- * 
+ *
  * 	\_ru
  */
 QString
 AMoney::integerCurrencyName( QString string ){
 	QString result = "";
-	
+
 	if (string == "") return "";
-	
+
 	if ( this->currency->is("USD") ) {
 		if ( string.endsWith("один") ) {
 			result = "доллар США";
@@ -431,7 +431,7 @@ AMoney::integerCurrencyName( QString string ){
 			result = "рублей";
 		}
 	}
-	
+
 	return result;
 }
 
@@ -439,15 +439,15 @@ AMoney::integerCurrencyName( QString string ){
  * 	\ru
  *		\brief Возвращает прописью название валюты для дробной части числа.
  * 		\param  string - пропись числа, для которого нужно вернуть название валюты прописью.
- * 
+ *
  * 	\_ru
  */
 QString
 AMoney::decimalCurrencyName(QString string ){
 	QString result = "";
-	
+
 	if (string == "") return "";
-	
+
 	if ( this->currency->is("USD") || this->currency->is("EUR") ) {
 		if ( string.endsWith("один") ) {
 			result = "цент";
@@ -465,7 +465,7 @@ AMoney::decimalCurrencyName(QString string ){
 			result = "копеек";
 		}
 	}
-	
+
 	return result;
 }
 
@@ -494,25 +494,25 @@ Degree::Degree( int val) {
 
 /**
  * \ru
- * 		\brief Возвращает значение порядок. 
+ * 		\brief Возвращает значение порядок.
  * 		Возможные значения смотри в описании конструктора.
  * \_ru
  */
-int 
+int
 Degree::getValue() {
 	return this->value;
 }
 
 /**
  * \ru
- * 		\brief Задает значение порядка. 
+ * 		\brief Задает значение порядка.
  * 		Допустимые значения смотри в описании конструктора.
  * \_ru
  */
 void
 Degree::setValue( int val ) {
 	this->value = val;
-	if (this->value == 1) { 
+	if (this->value == 1) {
 		this->male = false;
 	} else {
 		this->male = true;
@@ -522,9 +522,9 @@ Degree::setValue( int val ) {
 /**
  * \ru
  * 		\brief Возвращает true, если текущий порядок имеет мужской род.
- * 
+ *
  * 		Например, миллион, миллиард.
- * 		Возвращает false, если текущий порядок имеет женский род 
+ * 		Возвращает false, если текущий порядок имеет женский род
  * 		Например, тысяча
  * \_ru
  */
@@ -556,7 +556,7 @@ Currency::Currency( QString newId) {
  * \ru
  *  	\brief Возвращает истину, если текущая валюта равна значению, указанному в рараметре.
  * 		Допустимые значения параметра смотри в описании конструктора.
- * \_ru 
+ * \_ru
  */
 bool
 Currency::is( QString str ){
@@ -567,7 +567,7 @@ Currency::is( QString str ){
  * \ru
  *  	\brief Возвращает истину, если текущая валюта имеет мужской род.
  * 		Например, копейка.
- * \_ru 
+ * \_ru
  */
 bool
 Currency::isMale( ){
@@ -578,8 +578,8 @@ Currency::isMale( ){
 /**
  * \ru
  *  	\brief Возвращает символьное обозначение, идентификатор валюты.
- * 		Допустимые значения смотри в описании конструктора. 
- * \_ru 
+ * 		Допустимые значения смотри в описании конструктора.
+ * \_ru
  */
 QString
 Currency::getId() {
@@ -589,12 +589,12 @@ Currency::getId() {
 /**
  * \ru
  *  	\brief Установка типа валюты.
- * 		Допустимые значения смотри в описании конструктора. 
+ * 		Допустимые значения смотри в описании конструктора.
  * \_ru
  */
 void
 Currency::setId(QString newId) {
-	
+
 	if ( newId == "dRUR") {
 		this->male = false;
 	} else {

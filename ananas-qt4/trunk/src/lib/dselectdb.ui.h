@@ -58,16 +58,16 @@ void dSelectDB::init()
 	aLog::init();
 	createMenu();
 	progressBar1->hide();
-	QString fname;	
+	QString fname;
 	withgroups = 1;
 	settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
 	settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
-	
+
 	local = settings.entryList("/groups").count();
-	changes = false;	
+	changes = false;
 	if(!local)
 	{
-		
+
 		aLog::print(aLog::DEBUG, tr("dSelectDB local settings not found"));
 //		settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas/globalsettings");
 #ifdef Q_OS_WIN32
@@ -83,7 +83,7 @@ void dSelectDB::init()
 			readSettings(entryGroup);
 			settings.endGroup();
 		}
-			
+
 #else
 		QString suff = "*_grouprc";
 		QDir dir("/etc/ananas",suff,QDir::Name | QDir::IgnoreCase, QDir::Files | QDir::Readable);
@@ -96,7 +96,7 @@ void dSelectDB::init()
 			str = str.left(str.length()-2); // length("rc")=2
 			entryGroup =settings.entryList("/"+str);
 			settings.beginGroup("/"+str);
-			readSettings(entryGroup);	
+			readSettings(entryGroup);
 			settings.endGroup();
 		}
 #endif
@@ -113,7 +113,7 @@ void dSelectDB::init()
 	listDBRC->setSorting( -1 );
 	listDBRC->header()->hide();
 	listDBRC->setRootIsDecorated(1);
-	buttonOk->setEnabled( FALSE ); 
+	buttonOk->setEnabled( FALSE );
 	return;
 }
 
@@ -148,7 +148,7 @@ void dSelectDB::readSettings(QStringList entryGroup)
 		}
 //		withgroups=1;
 		QMap<QString,QString> cfg;
-		for(int k = eitems.count()-1; k>=0; k--) 
+		for(int k = eitems.count()-1; k>=0; k--)
 		{
 			if(k<0) break;
 			rc = settings.readEntry(entryGroup[j]+"/"+eitems[k]);
@@ -165,7 +165,7 @@ void dSelectDB::itemSelect( Q3ListViewItem *item )
 {
 	if (! item ) return;
 	rcListViewItem *i = ( rcListViewItem *) item ;
-	buttonOk->setEnabled( !i->group ); 
+	buttonOk->setEnabled( !i->group );
 }
 
 
@@ -207,17 +207,17 @@ void dSelectDB::newItem()
 void dSelectDB::editItem()
 {
 	rcListViewItem *item;
-	dEditRC *d = new dEditRC(this);	
+	dEditRC *d = new dEditRC(this);
 
 	item = ( rcListViewItem *) listDBRC->selectedItem();
 	if (!item) return;
-	if ( item->group ) 
+	if ( item->group )
 	{
 	// Group
 		item->setRenameEnabled(0, true);
 		item->startRename(0);
 		changes = true;
-	} 
+	}
 	else
 	{
 	// Resource
@@ -235,19 +235,19 @@ void dSelectDB::deleteItem()
 {
 	Q3ListViewItem *item;
 	item=listDBRC->selectedItem();
-	if (item) 
+	if (item)
 	{
-		QString msg = tr("Delete item?"); 
+		QString msg = tr("Delete item?");
 		if(QMessageBox::question(this,tr("confirm delete"),msg,QMessageBox::Ok,QMessageBox::Cancel)!=QMessageBox::Ok)
 		{
 			return;
 		}
-		
+
 		delete item;
 		if (listDBRC->childCount()==0) withgroups=0;
 		changes = true;
 	}
-}              
+}
 
 
 void dSelectDB::saveRC()
@@ -260,7 +260,7 @@ void dSelectDB::saveRC()
 		if(!changes) return;
 		QString home = QDir::homeDirPath();
 #ifndef Q_OS_WIN32
-		QString msg = QString("Все внесенные изменения будут сохранены локально в вашем домашнем каталоге.\nПри очередном запуске программы будут использованы локальные настройки из каталога\n%1/.ananas.\nЕсли Вы хотите использовать глобальные настройки, вам следует удалить каталог\n%2/.ananas").arg(home).arg(home); 
+		QString msg = QString("Все внесенные изменения будут сохранены локально в вашем домашнем каталоге.\nПри очередном запуске программы будут использованы локальные настройки из каталога\n%1/.ananas.\nЕсли Вы хотите использовать глобальные настройки, вам следует удалить каталог\n%2/.ananas").arg(home).arg(home);
 #else
 		QString msg = tr("save settings local?");
 #endif
@@ -271,15 +271,15 @@ void dSelectDB::saveRC()
 	}
 		settings.removeSearchPath( QSettings::Unix, "/etc/ananas" );
 		settings.removeSearchPath( QSettings::Windows, "/ananasgroup/ananas/globalsettings");
-		
-	
+
+
 		gitem= ( rcListViewItem *) listDBRC->firstChild();
 		uint gcount=0;
 		uint ecount=0;
 		clearSettings();
 
 		settings.beginGroup("/groups");
-		
+
 		while (gitem)
 		{
 			if (withgroups)
@@ -288,7 +288,7 @@ void dSelectDB::saveRC()
 				if(gitem->childCount())
 				{
 					item = ( rcListViewItem *) gitem->firstChild();
-					while (item) 
+					while (item)
 					{
 						settings.writeEntry(QString::number(gcount)+"/"+QString::number(ecount),item->rcfile);
 						item =  ( rcListViewItem *) item->nextSibling();
@@ -340,8 +340,8 @@ void dSelectDB::clearSettings()
 	for(uint j=0; j<entryGroup.count();j++)
 	{
 		eitems = settings.entryList(entryGroup[j]);
-		settings.removeEntry(entryGroup[j]);	
-		for(int k = eitems.count()-1; k>=0; k--) 
+		settings.removeEntry(entryGroup[j]);
+		for(int k = eitems.count()-1; k>=0; k--)
 		{
 			if(k<0) break;
 			settings.removeEntry(entryGroup[j]+"/"+eitems[k]);
@@ -359,11 +359,11 @@ void dSelectDB::onHelp()
 
 void dSelectDB::createMenu()
 {
-	
+
 	menuBar = new QMenuBar(this);
 	Q3PopupMenu *menuFile = new Q3PopupMenu(this);
 	menuFile->insertItem(tr("E&xit"), this, SLOT(onCancel()));
-	
+
 	Q3PopupMenu *menuEdit = new Q3PopupMenu(this);
 	menuEdit->insertItem(tr("New &group"), this, SLOT(newGroup()));
 	menuEdit->insertItem(tr("&New shema"), this, SLOT(newItem()));
@@ -371,11 +371,11 @@ void dSelectDB::createMenu()
 	menuEdit->insertItem(tr("Edi&t"),  this, SLOT(editItem()));
 	menuEdit->insertSeparator();
 	menuEdit->insertItem(tr("&Delete"),  this, SLOT(deleteItem()));
-	
+
 	Q3PopupMenu *menuAction = new Q3PopupMenu(this);
 	menuAction->insertItem(tr("&Import"),  this, SLOT(importItem()));
 	menuAction->insertItem(tr("&Export"),  this, SLOT(exportItem()));
-	
+
 	menuBar->insertItem(tr("Program"), menuFile);
 	menuBar->insertItem(tr("Actions"), menuEdit);
 	menuBar->insertItem(tr("Service"), menuAction);
@@ -387,7 +387,7 @@ void dSelectDB::createMenu()
 void dSelectDB::importItem()
 {
 	rcListViewItem *item,*gitem;
-	dImportDB *d = new dImportDB(this);	
+	dImportDB *d = new dImportDB(this);
 	item = (rcListViewItem *)listDBRC->selectedItem();
 	if (!item) return;
 	if (withgroups)
@@ -428,9 +428,9 @@ void dSelectDB::importItem()
 			item =0;
 			return;
 		}
-		
-		
-	
+
+
+
 		changes = true;
 	}
 	else
@@ -446,7 +446,7 @@ void dSelectDB::exportItem()
 {
 //	progressBar1->setTotalSteps(10);
 	QString dir,rcfile,filename;
-#ifndef Q_OS_WIN32 
+#ifndef Q_OS_WIN32
 	dir = "/home";
 #endif
 
@@ -464,7 +464,7 @@ void dSelectDB::exportItem()
 		}
 
 		Q3FileDialog *fdlg = new Q3FileDialog(this, "fileDialog",true); // create modal dialog
-		fdlg->setMode ( Q3FileDialog::AnyFile ); 
+		fdlg->setMode ( Q3FileDialog::AnyFile );
 		if(fdlg->exec()==QDialog::Accepted)
 		{
 			filename = fdlg->selectedFile();
@@ -475,7 +475,7 @@ void dSelectDB::exportItem()
 		}
 		delete fdlg;
 		fdlg = 0;
-		
+
 		aBackup backupBase;
 		progressBar1->show();
 		progressBar1->reset();
@@ -485,7 +485,7 @@ void dSelectDB::exportItem()
 			aLog::print(aLog::INFO, tr("dSelectDB backup ok"));
 			QMessageBox::information(this,tr("Backup"),backupBase.lastError(),Qt::NoButton);
 			progressBar1->hide();
-			
+
 		}
 		else
 		{
@@ -500,16 +500,16 @@ void dSelectDB::exportItem()
 		QMessageBox::information(this,tr("Select item"),tr("Please, select item for export"),Qt::NoButton);
 		return;
 	}
-    
+
 }
 
 
 void dSelectDB::onDblClick( Q3ListViewItem *item)
 {
-	
+
 	if (! (( rcListViewItem *)item)->group )
 	{
-		onOK();	
-	
+		onOK();
+
 	}
 }

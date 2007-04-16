@@ -53,13 +53,13 @@ aContainer::~aContainer()
 	manifest = 0;
 }
 
-bool 
+bool
 aContainer::open()
 {
 	return open(name());
 }
 
-bool 
+bool
 aContainer::open(const QString& name)
 {
 	close();
@@ -79,25 +79,25 @@ aContainer::open(const QString& name)
 		cleanupTmpFiles();
 	}
 	aLog::print(aLog::ERROR, tr("aContainer unzip"));
-	return false;	
+	return false;
 }
 
 
-void 
+void
 aContainer::create()
 {
 	generateName4TmpDir();
 	createTmpDir();
-	manifest->create(); 
+	manifest->create();
 }
 
-void 
+void
 aContainer::close()
 {
 	cleanupTmpFiles();
 }
 
-void 
+void
 aContainer::generateName4TmpDir()
 {
 	QString temp;
@@ -110,15 +110,15 @@ aContainer::generateName4TmpDir()
 #endif
 	tmpDirName = QString(temp+"/%1").arg(QDateTime::currentDateTime().toTime_t());
 	tmpDirName = QDir::convertSeparators(tmpDirName);
-	
+
 }
 
 bool
 aContainer::createTmpDir()
 {
-	QDir dir;	
+	QDir dir;
 	if(!dir.mkdir(tmpDirName))
-	{	
+	{
 		setLastError(tr("Can't create temporary directory"));
 		aLog::print(aLog::ERROR, "aContainer create temporary directory %1");
 		return false;
@@ -131,10 +131,10 @@ aContainer::createTmpDir()
 
 }
 
-bool 
+bool
 aContainer::save(const QString& name)
 {
-	setName(name);	
+	setName(name);
 	if(manifest)
 	{
 		aCManifest::record rec;
@@ -154,11 +154,11 @@ aContainer::save(const QString& name)
 	return true;
 }
 
-bool 
+bool
 aContainer::save()
 {
 	return save(name());
-	
+
 }
 
 bool
@@ -187,7 +187,7 @@ aContainer::addFile(const QString& filename, const QString &newname, int type)
 QString
 aContainer::realPath(const QString &fname) const
 {
-	return "";	
+	return "";
 }
 
 
@@ -203,8 +203,8 @@ aContainer::extractManifest(const QString& archName, aCManifest *mf)
 	process.addArgument( "-d" );
 	process.addArgument( tmpDirName );
 
-#else 
-	Q3Process process( QString("7z") );	
+#else
+	Q3Process process( QString("7z") );
 //	process.setWorkingDirectory ( templateDir);
 //	printf("working dir = `%s'\n", QString(templateDir).ascii());
 	process.addArgument( "x" );
@@ -223,7 +223,7 @@ aContainer::extractManifest(const QString& archName, aCManifest *mf)
 
 	while( process.isRunning() );
 
-	if( !process.normalExit() ) 
+	if( !process.normalExit() )
 	{
 		setLastError(tr("Unzip ended anormal"));
 		aLog::print(aLog::ERROR, tr("aContainer unzip dead"));
@@ -256,8 +256,8 @@ aContainer::extractData(const QString& archName)
 	process.addArgument( "-d" );
 	process.addArgument( tmpDirName );
 
-#else 
-	Q3Process process( QString("7z") );	
+#else
+	Q3Process process( QString("7z") );
 //	process.setWorkingDirectory ( templateDir);
 //	printf("working dir = `%s'\n", QString(templateDir).ascii());
 	process.addArgument( "x" );
@@ -276,7 +276,7 @@ aContainer::extractData(const QString& archName)
 
 	while( process.isRunning() );
 
-	if( !process.normalExit() ) 
+	if( !process.normalExit() )
 	{
 		setLastError(tr("Unzip ended anormal"));
 		aLog::print(aLog::ERROR, tr("aContainer unzip dead"));
@@ -294,7 +294,7 @@ aContainer::extractData(const QString& archName)
 	return true;
 }
 
-bool 
+bool
 aContainer::compressFile(const QString& fileName)
 {
 
@@ -313,7 +313,7 @@ aContainer::compressFile(const QString& fileName)
 	processUpdate.setWorkingDirectory(tmpDirName);
 	processUpdate.addArgument( "a" );
 	processUpdate.addArgument( "-tzip" );
-	processUpdate.addArgument( fileName );	
+	processUpdate.addArgument( fileName );
 	processUpdate.addArgument( "-r" );
 	processUpdate.addArgument(".");
 #endif
@@ -339,32 +339,32 @@ aContainer::compressFile(const QString& fileName)
 		setLastError(tr("Zip ended with code %1").arg(processUpdate.exitStatus()));
 		return false;
 	}
-	
+
 	return true;
 }
 
 
 
 
-void 
+void
 aContainer::setLastError(const QString& errorText)
 {
 	txtError = errorText;
 }
 
 
-QString 
+QString
 aContainer::lastError() const
 {
 	return txtError;
 }
 
-void 
+void
 aContainer::cleanupTmpFiles()
 {
 	QFile file;
 	QDir dir;
-	
+
 	if(manifest && tmpDirName!="")
 	{
 		aCManifest::record rec;
@@ -390,12 +390,12 @@ aContainer::cleanupTmpFiles()
 			rec = manifest->next();
 		}
 	}
-	
-	
+
+
 	file.setName(QDir::convertSeparators(tmpDirName+"/META-INF/manifest.xml"));
 	if(file.remove()) aLog::print(aLog::DEBUG, tr("aContainer delete file %1").arg(file.name()));
 	if(dir.rmdir(QDir::convertSeparators(tmpDirName))) aLog::print(aLog::DEBUG, tr("aContainer delete directory %1").arg(tmpDirName + "/META-INF"));
 	//aLog::print(aLog::INFO, tr("aContainer cleanup temporary files"));
-	
+
 }
 

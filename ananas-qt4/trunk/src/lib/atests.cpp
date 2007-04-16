@@ -1,14 +1,14 @@
 /****************************************************************************
 ** $Id: atests.cpp,v 1.6 2006/04/04 10:59:55 gr Exp $
 **
-** Tests functions source file of 
+** Tests functions source file of
 ** Ananas application library
 **
 ** Created : 20051024
 **
 ** Copyright (C) 2003-2005 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -37,15 +37,15 @@
  *\~english
  *	Writes text to log.
  *\~russian
- *	Пишет текст в лог.	
+ *	Пишет текст в лог.
  *\~
- *	\param log_name - \~english Full path to logfile \~russian Полный путь к лог файлу \~ 
+ *	\param log_name - \~english Full path to logfile \~russian Полный путь к лог файлу \~
  *	\param test_name - \~english Test name \~russian Имя теста \~
  *	\param status - \~english OK, ERROR or SKIP \~russian OK, ОШИБКА или ПРОПУЩЕН \~
  *	\param text - \~english Comment \~russian Комментарий \~
 */
 void
-aTests::print2log(	const QString &log_name, 
+aTests::print2log(	const QString &log_name,
 			const QString &test_name,
 			const QString &status,
 			const QString &text)
@@ -55,7 +55,7 @@ aTests::print2log(	const QString &log_name,
 			  .arg(test_name)\
 			  .arg(status)\
 			  .arg(text);
-	
+
 	QFile f;
 	if(log_name==QString::null)
 	{
@@ -70,7 +70,7 @@ aTests::print2log(	const QString &log_name,
 		f.flush();
 	}
 	f.close();
-	
+
 //	else printf("error write to log\n");
 }
 
@@ -79,13 +79,13 @@ aTests::print2log(	const QString &log_name,
  *\~english
  *	Reads config into QMap object.
  *\~russian
- *	Считывает конфиг в объект QMap.	
+ *	Считывает конфиг в объект QMap.
  *\~
- *	\param conf_name - \~english configfile name \~russian Путь к конфигу \~ 
+ *	\param conf_name - \~english configfile name \~russian Путь к конфигу \~
  *	\param log_name - \~english logfile name \~russian Путь к логу (не обязательно) \~
  *	\return - \~english map with config values \~russian map со значениями конфига \~
 */
-QMap<QString,QString> 
+QMap<QString,QString>
 aTests::readConfig(const QString &conf_name,const QString &log_name)
 {
 	QMap<QString,QString> map;
@@ -106,8 +106,9 @@ aTests::readConfig(const QString &conf_name,const QString &log_name)
 		{
 			while(!f.atEnd())
 			{
-				str=QString::null;
-				if(f.readLine(str,1024)!=-1)
+				str=f.readLine(1024);
+				if(!str.isEmpty())
+				//--if(f.readLine(str,1024)!=-1)
 				{
 					if(str==QString::null || str[0]=='#' || str[0]=='\n') continue;
 					QString s = str.section("=",0,0);
@@ -130,9 +131,9 @@ aTests::readConfig(const QString &conf_name,const QString &log_name)
  *\~english
  *	Writes config.
  *\~russian
- *	Пишет конфиг из объекта QMap.	
+ *	Пишет конфиг из объекта QMap.
  *\~
- *	\param conf_name - \~english configfile name \~russian Путь к конфигу \~ 
+ *	\param conf_name - \~english configfile name \~russian Путь к конфигу \~
  *	\param log_name - \~english logfile name \~russian Путь к логу (не обязательно) \~
  *	\return - \~english true, if successful \~russian true - успех \~
 */
@@ -183,7 +184,7 @@ aTests::printline2log(const QString &log_name)
 {
 	QString toWrite;
 	toWrite.fill('=',60);
-	toWrite+="\n";	
+	toWrite+="\n";
 	QFile f;
 	if(log_name==QString::null)
 	{
@@ -204,15 +205,15 @@ aTests::printline2log(const QString &log_name)
  *\~english
  *	Find parament in command line.
  *\~russian
- *	Ищет параметр с именем \a requestedParam в коммандной строке и если находит, то возвращает его 
+ *	Ищет параметр с именем \a requestedParam в коммандной строке и если находит, то возвращает его
  *	значение (то, что идет после знака = до первого пробела). Заменяет знак ~ на $(HOME)
  *\~
- *	\param argc - \~english parametr command line count \~russian число параметров коммандной строки \~ 
+ *	\param argc - \~english parametr command line count \~russian число параметров коммандной строки \~
  *	\param argv - \~english command line paraments \~russian параметры коммандной строки \~
  *	\param requestedParam - \~english param for search \~russian параметр для поиска \~
  *	\return - \~english parametr value \~russian значение параметра \~
 */
-QString 
+QString
 aTests::parseCommandLine(int argc, char** argv, const QString requestedParam)
 {
 

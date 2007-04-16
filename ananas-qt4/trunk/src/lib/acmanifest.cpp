@@ -31,6 +31,7 @@
 #include "alog.h"
 #include "acmanifest.h"
 #include <qfile.h>
+#include <QTextStream>
 
 //#define ERROR true
 
@@ -43,10 +44,10 @@ aCManifest::~aCManifest()
 {
 }
 
-	
+
 	// place your castom types before mf_other
     //	enum type{ mf_metadata, mf_template, mf_dir, mf_script, mf_form, mf_picture, mf_other=100 };
-	
+
 void
 aCManifest::create()
 {
@@ -58,7 +59,7 @@ aCManifest::create()
 	return;
 }
 
-QString 
+QString
 aCManifest::toString()
 {
 	return manifest.toString(4); //indent - 4 space
@@ -71,8 +72,8 @@ aCManifest::write(const QString& fname)
 	QByteArray buf( manifest.toString(4).utf8() );
 	if ( file.open( QIODevice::WriteOnly ) )
 	{
-		Q3TextStream ts( &file );
-		ts.setEncoding(Q3TextStream::UnicodeUTF8);
+		QTextStream ts( &file );
+		//--ts.setEncoding(Q3TextStream::UnicodeUTF8);
 		manifest.save(ts, 4);
 		file.close();
 	}
@@ -82,11 +83,11 @@ aCManifest::write(const QString& fname)
 		txtError = QString("aCManifest save xml %1").arg(fname);
 		return false;
 	}
-	return true;	
+	return true;
 }
 
 
-bool 
+bool
 aCManifest::read(const QString& fname)
 {
 	QFile file( fname );
@@ -96,12 +97,12 @@ aCManifest::read(const QString& fname)
 	if ( !file.open( QIODevice::ReadOnly ) )
 	{
 		aLog::print(aLog::ERROR, tr("aCManifest read file `%1'").arg(fname));
-		return false; 
+		return false;
 	}
 	buf = file.readAll();
 	file.close();
 	manifest.setContent( QString("") );
-	if ( !manifest.setContent( buf, false, &err, &errLine, &errColumn ) ) 
+	if ( !manifest.setContent( buf, false, &err, &errLine, &errColumn ) )
 	{
 		aLog::print(aLog::ERROR, tr("aCManifest read line: %1 column: %2").arg(errLine).arg(errColumn));
 		txtError = err;
@@ -127,7 +128,7 @@ aCManifest::clear()
 }
 
 
-bool 
+bool
 aCManifest::isExists( const QString &fname )
 {
 	//TODO implement this!
@@ -137,7 +138,7 @@ aCManifest::isExists( const QString &fname )
 bool
 aCManifest::addEntry( const QString &fname, int type)
 {
-	if(isValid()) 
+	if(isValid())
 	{
 		QDomElement entry = manifest.createElement("manifest:file-entry");
 		entry.setAttribute("manifest:full-path",fname);
@@ -151,10 +152,10 @@ aCManifest::addEntry( const QString &fname, int type)
 	}
 }
 
-bool 
+bool
 aCManifest::removeEntry( const QString &fname, bool withChilds )
 {
-	
+
 	bool res = false;
 	if(isValid())
 	{
@@ -182,13 +183,13 @@ aCManifest::removeEntry( const QString &fname, bool withChilds )
 				}
 			}
 			el = root.nextSibling().toElement();
-		
+
 		}
 	}
 	return res;
 }
 
-bool 
+bool
 aCManifest::isValid()
 {
 	if(rootNode.isNull())
@@ -199,7 +200,7 @@ aCManifest::isValid()
 	}
 	return true;
 }
-	
+
 
 aCManifest::record
 aCManifest::first()
@@ -234,10 +235,10 @@ aCManifest::next()
 		}
 	}
 	return rec;
-	
+
 }
 
-QString 
+QString
 aCManifest::lastError() const
 {
 	return txtError;

@@ -1,14 +1,14 @@
 /****************************************************************************
 ** $Id: aootemplate.h,v 1.9 2007/02/23 21:04:26 gr Exp $
 **
-** Report metadata object header file of 
+** Report metadata object header file of
 ** Ananas application library
 **
 ** Created : 20050202
 **
 ** Copyright (C) 2003-2005 Grigory Panov <gr1313 at mail.ru>, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -33,6 +33,7 @@
 #include <q3ptrlist.h>
 #include <q3valuestack.h>
 #include <qdom.h>
+#include <QMap>
 
 #define open_token "<:"
 #define close_token ":>"
@@ -52,25 +53,25 @@
  *
  * Описание шаблона: \n
  * Шаблон представляет собой обычный документ OpenOffice.
- * Он предназначен для того, чтобы быстро создавать отчеты. 
- * Внешне шаблон отличается от того документа, который необходимо сгенерировать 
- * только наличием специальных тегов. 
+ * Он предназначен для того, чтобы быстро создавать отчеты.
+ * Внешне шаблон отличается от того документа, который необходимо сгенерировать
+ * только наличием специальных тегов.
  * Эти теги при генерации заменяются на конкретные значения. \n
  * Предусмотрено два типа тегов: \n
  * 1) Тег секции \n
- * С помощью него можно размножать строки таблицы. 
+ * С помощью него можно размножать строки таблицы.
  * Для этого надо просто записать его в любую ячейку строки. \n
  * Формат тега [:имя тега:] \n
  * В имени допустимы любые символы. \n
  * При вызове exec() с параметром = имени этого тега к таблице будет добавлена еще
- * одна строка. Если в этой строке есть простые теги, 
+ * одна строка. Если в этой строке есть простые теги,
  * то произойдет замена тега на значение, заданное с помощью функции setValue() \n
  * 2) Простой тег. \n
  * С помощью него можно вставлять в документ обычный текст, дату, и т.п. \n
  * формат тега <:имя тега:> \n
- * При вызове exec() с параметром = имени этого тега, рядом допишется значение, 
+ * При вызове exec() с параметром = имени этого тега, рядом допишется значение,
  * предварительно заданное с помощью функции setValue() \n
- * Функция setValue() задает значения для подстановки. 
+ * Функция setValue() задает значения для подстановки.
  * Для прстых тегов надо задавать setValue("param",значение для подстановки);
  * после чего надо выполнить exec(имя простого тега) \n
  * Для тегов секции setValue(имя простого тега, значение для подстановки);
@@ -111,11 +112,11 @@ protected:
  * \ru
  * Имя директории шаблонов
  * \_ru
- */	
+ */
 	QString templateDir;
 
 	QMap<QString,QString> values;
-	
+
 	void searchTags(QDomNode node, const QString &sname );
 	virtual bool getNodeTags(QDomNode node, const QString &tagname, bool params );
 	void insertRowValues(QDomNode node);
@@ -131,7 +132,7 @@ protected:
  * \_ru
  */
 	QDomDocument docTpl;
-	
+
 /**
  * \en
  * 	Variable for store unpacking teplate stales

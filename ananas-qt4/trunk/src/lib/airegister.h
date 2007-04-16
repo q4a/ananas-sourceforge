@@ -45,14 +45,14 @@ class aDocument;
 
 
 /*!
- * \en	
+ * \en
  *	Object for working with information register in database.
  *	Using for provide between database tables and wobjects or ananas scripts
  * \_en
  * \ru
  * \class aIRegister aIRegister.h
  * \brief Класс aIRegister определяет программный интерфейс Информационных регистров.
- * 
+ *
  *	Информационный регистр служит для хронологической записи данных.
  *	Для хранения остатков следует использовать Накопительные регистры aARegister
  *	\see aARegister

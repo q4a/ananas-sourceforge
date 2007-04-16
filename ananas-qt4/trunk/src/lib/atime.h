@@ -30,8 +30,8 @@
 #ifndef ATIME_H
 #define ATIME_H
 
-#include	<qobject.h>	
-#include	<qdatetime.h> 
+#include	<qobject.h>
+#include	<qdatetime.h>
 //#include	"airegister.h"
 #include "ananas.h"
 
@@ -48,13 +48,13 @@
 class ANANAS_EXPORT aTime : public QObject
 {
 	Q_OBJECT
-public: 		
+public:
 	aTime();
 	~aTime();
 protected:
 	QTime *time;
 public slots:
-	
+
 	virtual void start();
 	virtual int restart();
 	virtual int elapsed();

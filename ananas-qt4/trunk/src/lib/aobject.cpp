@@ -217,7 +217,7 @@ aObject::table( const QString &name )
 			aLog::print(aLog::ERROR, tr("aObject table with name %1 not found").arg(name));
 			cfg_message(1, tr("Table `%s' not found.\n").utf8(),(const char*) name);
 		}
-	//	else 
+	//	else
 	//	{
 	//		cfg_message(1, tr("Table name is empty.\n").utf8());
 	//	}
@@ -355,7 +355,7 @@ aObject::Value( const QString & name, const QString &tableName )
 	QString trName = trSysName(name);
 
 	if ( trName != "" ) return sysValue( trName );
-	else 
+	else
 	{
 	        if ( t ) return t->value( name );
 	}
@@ -599,7 +599,7 @@ aObject::Update()
 	if ( t->lastError().type() )
 	{
 		//debug_message("update error %i %s\n",t->lastError().type(), ( const char *)t->lastError().text());
-		
+
 		aLog::print(aLog::ERROR, tr("aObject update error. Driver message: %1").arg(t->lastError().text()));
 		return err_updateerror;
 	}
@@ -776,7 +776,7 @@ aObject::setTValue( const QString & tablename, const QString & name, const QVari
 ERR_Code
 aObject::decodeDocNum( QString nm, QString & pref, int & num)
 {
-	
+
 	aLog::print(aLog::DEBUG, tr("aObject decode doc number %1").arg(nm));
 	int pos = -1;
 	for ( uint i = nm.length(); i > 0; i-- )
@@ -1052,15 +1052,15 @@ aObject::TableUpdate( const QString & tablename )
 	aDataTable *t = table( tablename );
 	if ( !t )
 	{
-		
+
 		aLog::print(aLog::ERROR, tr("aObject table update: no table found with name %1").arg(tablename));
 		return err_notable;
 	}
 //	t->primeUpdate();
 	t->Update();
-	if (t->lastError().type()) 
+	if (t->lastError().type())
 	{
-		
+
 		aLog::print(aLog::ERROR, tr("aObject update error. Driver message: %1").arg(t->lastError().text()));
 		return err_updateerror;
 	}

@@ -1,14 +1,14 @@
 /****************************************************************************
 ** $Id: arole.h,v 1.3 2006/08/23 08:24:50 app Exp $
 **
-** Role object header file of 
+** Role object header file of
 ** Ananas application library
 **
 ** Created : 20050527
 **
 ** Copyright (C) 2003-2005 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -30,7 +30,7 @@
 #ifndef AROLE_H
 #define AROLE_H
 
-#include 	"aobject.h"	
+#include 	"aobject.h"
 #include 	"adatabase.h"
 #include 	"acfg.h"
 //#include 	"auser.h"
@@ -49,10 +49,10 @@
  * \ru
  *	\brief Класс предоставляет методы управления ролями. Не используется в настоящее время.
  *	Наследует aObject.
- *	
+ *
  * \_ru
 */
-class  ANANAS_EXPORT aRole: public aObject 
+class  ANANAS_EXPORT aRole: public aObject
 {
 	Q_OBJECT
 public:
@@ -61,7 +61,7 @@ public:
 	aRole(qulonglong roleId, aDatabase * adb);
 	aRole(aDatabase * adb);
 	virtual ERR_Code initObject();
-	
+
 //public slots:
 
 	virtual ERR_Code New(const QString &name);
@@ -70,27 +70,27 @@ public:
 	virtual ERR_Code Update();
 	virtual ERR_Code Select();
 	virtual ERR_Code Select(qulonglong id);
-	
+
 	virtual ERR_Code addPermission( aPermission );
 	virtual ERR_Code delPermission( aPermission );
 	virtual bool hasPermission( aPermission );
 
 	virtual ERR_Code addUser( qulonglong userId );
 	virtual ERR_Code delUser( qulonglong userId );
-	
+
 //	QValueList< aUser *> getUsers( bool assigned);
 
 	bool hasUser( qulonglong userId);
-	
+
 	virtual ERR_Code SetName( const QString & );
 	virtual QString GetName();
-	
+
 	//virtual ERR_Code setLogin( const QString & );
 	//virtual ERR_Code setFirstName( const QString & );
 	//virtual ERR_Code setLastName( const QString & );
-	
+
 //irtual Q_ULLONG getUserId( const QString &login, const QString &password );
-//irtual ERR_Code getRoles(QValueList<aRole> *lst); 
+//irtual ERR_Code getRoles(QValueList<aRole> *lst);
 	bool First();
 	bool Next();
 	bool Last();

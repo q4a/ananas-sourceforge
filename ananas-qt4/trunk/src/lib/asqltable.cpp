@@ -34,6 +34,7 @@
 #include <QSqlError>
 #include "adatabase.h"
 #include <q3sqlcursor.h>
+#include <Q3SqlFieldInfo>
 
 #include "acatalogue.h"
 #include "adocument.h"
@@ -80,7 +81,7 @@ aDataTable::aDataTable( aCfgItem context, aDatabase *adb )
  *	\param adb - ссылка на объект базы данных, которой
  *	принадлежит sql таблица.
  *	\~
- * 
+ *
  */
 aDataTable::aDataTable( const QString &tname, aDatabase *adb )
 :Q3SqlCursor( tname, true, adb->db() )
@@ -93,7 +94,7 @@ aDataTable::aDataTable( const QString &tname, aDatabase *adb )
 	p_cat.setAutoDelete ( true );
 	p_reg.setAutoDelete ( true );
 	p_doc.setAutoDelete ( true );
-	
+
 }
 
 /*!
@@ -102,7 +103,7 @@ aDataTable::aDataTable( const QString &tname, aDatabase *adb )
  *	\~russian
  *	Деструктор
  *	\~
- * 
+ *
  */
 aSQLTable::~aSQLTable()
 {
@@ -143,10 +144,10 @@ aDataTable::init( aCfgItem context, aDatabase *adb )
  *	Sets md object to table.
  *	\~russian
  *	Задает объект метаданных для таблицы.
- *	Заполняет внутренние объекты именами полей для последующего использования в 
+ *	Заполняет внутренние объекты именами полей для последующего использования в
  *	функциях SetValue() и Value(), добавляет информацию о них в sql курсор.
  *	В случае, если добавляется накопительный регистр, к объетку добавляются также виртуальные поля - ресурсы регистра
- *	После вызова этой функции с таблицей можно начинать работу. 
+ *	После вызова этой функции с таблицей можно начинать работу.
  *	\param context - объект метаданных, который описывает таблицу.
  *	\~
  */
@@ -156,7 +157,7 @@ aDataTable::setObject( aCfgItem context )
 	aCfgItem cobj, parent;
 	parent = obj = context;
 
-	
+
 	mdobjId = md->id(obj);
 	while ( !mdobjId )
 	{
@@ -180,7 +181,7 @@ aDataTable::setObject( aCfgItem context )
 //	printf("before delete p_cat\n");
 //	if(p_cat)
 	//delete p_cat;
-	
+
 //	p_cat.clear();
 //	printf("after delete p_cat\n");
 //	if(p_reg)
@@ -197,7 +198,7 @@ aDataTable::setObject( aCfgItem context )
 			res = md->find( ress, md_field, i );
 			insertFieldInfo(res,false);
 		}
-	}   
+	}
 	uint n = md->count( context, md_field );
 	for ( uint i = 0; i < n; i++ )
 	{
@@ -205,7 +206,7 @@ aDataTable::setObject( aCfgItem context )
 		insertFieldInfo(cobj);
 
 	}
-		
+
 //	r = *this;
 }
 
@@ -219,12 +220,12 @@ aDataTable::setObject( aCfgItem context )
  *	\param calculatd - указывает будет ли поле вычисляемым.
  *	\~
  */
-void 
+void
 aSQLTable::insertFieldInfo(aCfgItem cobj, bool calculated)
 {
 	QString fname, fdbname, objt;//, fid;
 	int fid ;
-	
+
 	if ( !cobj.isNull() )
 	{
 		fid = md->id(cobj);
@@ -244,11 +245,11 @@ aSQLTable::insertFieldInfo(aCfgItem cobj, bool calculated)
 				{
 					if ( md->objClass( fto ) == md_catalogue )
 					{
-						mapCat[fid] = fto; 
+						mapCat[fid] = fto;
 					}
 					if ( md->objClass( fto ) == md_document )
 					{
-						mapDoc[fid] = fto; 
+						mapDoc[fid] = fto;
 					}
 				}
                         }
@@ -291,7 +292,7 @@ aSQLTable::insertFieldInfo(aCfgItem cobj, bool calculated)
 						}
 					}
 				}
-			
+
                         }
 			else
 			{
@@ -428,7 +429,7 @@ aDataTable::value ( int i )
  *	Return field falue.
  *	\~russian
  *	Возвращает значение поля с именем \a name.
- *	Для получения значения необходимо указывать имя поля в метаданных	
+ *	Для получения значения необходимо указывать имя поля в метаданных
  *	\param name - имя поля в метаданных.
  *	\return значение поля или QVariant::Invalid, если поля не существует.
  *	\~
@@ -447,7 +448,7 @@ aDataTable::value ( const QString & name )
 	fname = * fnames[ name ];
 
         //v = QSqlCursor::value( fname );
-        
+
 	return sysValue(fname);
 }
 
@@ -622,7 +623,7 @@ aDataTable::clearFilter()
 bool
 aDataTable::setFilter( const QString& name, const QVariant& value )
 {
-	
+
 	aLog::print(aLog::DEBUG, QObject::tr("aDataTable set filter %1='%2'").arg(name).arg(value.toString()));
 	if ( !fnames[name] )
 	{
@@ -730,7 +731,7 @@ aDataTable::printRecord(){
 
 	for (i=0; i< count(); i++){
 		fname = "";
-		sname = field( i )->name();
+		sname = field( i ).name();
 		it.toFirst();
 	        for( ; it.current(); ++it ){
 		    if ( *it.current() == sname ) {
@@ -818,8 +819,8 @@ aDataTable::calc_obj(int fid, qulonglong idd)
 			pCat = (aCatalogue*)p_cat[QString("%1").arg(fid)];
 		}
 		pCat->select( idd );
-		
-		if ( pCat->selected() ) 
+
+		if ( pCat->selected() )
 		{
 //			printf("select ok\n");
 			v = QVariant( pCat->displayString() );
@@ -838,13 +839,13 @@ aDataTable::calc_obj(int fid, qulonglong idd)
 				pDoc = (aDocument*)p_doc[QString("%1").arg(fid)];
 			}
 			pDoc->select( idd );
-			if ( pDoc->selected() ) 
+			if ( pDoc->selected() )
 			{
 				v = QVariant( pDoc->displayString() );
 			}
 		}
 	}
-	
+
 	return v;
 }
 
@@ -1014,7 +1015,7 @@ aDataTable::New()
 	bool res = false;
 
 	rec = Q3SqlCursor::primeInsert();
-	if ( sysFieldExists("id") ) 
+	if ( sysFieldExists("id") )
 	{
 		Uid = db->uid( mdobjId );
 		aLog::print(aLog::DEBUG, QString("aDataTable new record with id=%1 for meta object with id=%2").arg(Uid).arg(mdobjId));
@@ -1043,9 +1044,9 @@ aDataTable::Copy()
 	QSqlRecord *rec = new QSqlRecord( *editBuffer(true) );
 	if ( New() )
 	{
-		for ( unsigned int i=0; i<rec->count(); i++ ) 
+		for ( unsigned int i=0; i<rec->count(); i++ )
 		{
-			if ( rec->field( i )->name() != QString("id")  )
+			if ( rec->field( i ).name() != QString("id")  )
 			{
 				setValue( i, rec->value( i ) );
 //				printf("field %s, before %s, after %s\n",rec->field( i )->name().ascii(), rec->value( i ).toString().ascii(), value( i ).toString().ascii());
@@ -1084,7 +1085,7 @@ aDataTable::Update()
 	QSqlError err = lastError();
 	if(!err.type() == QSqlError::None)
 	{
-		aLog::print(aLog::ERROR, QString("%1 %2").arg(err.text()).arg(err.driverText()) );	
+		aLog::print(aLog::ERROR, QString("%1 %2").arg(err.text()).arg(err.driverText()) );
 	}
 	return true;
 }

@@ -56,7 +56,7 @@ class  ANANAS_EXPORT aDataTable : public Q3SqlCursor
 public:
 	aDatabase *db;
 	QString tableName;
-	
+
 
 	bool selected;
 	aSQLTable( aCfgItem context, aDatabase *adb );

@@ -8,7 +8,7 @@
 **
 ** Copyright (C) 2003-2005 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -41,7 +41,7 @@
  */
 aRole::aRole( qulonglong roleId, aDatabase * adb ):aObject("",adb)
 {
-	
+
 	initObject();
 	Select(roleId);
 }
@@ -58,7 +58,7 @@ aRole::aRole( qulonglong roleId, aDatabase * adb ):aObject("",adb)
  */
 aRole::aRole( aDatabase * adb ):aObject("",adb)
 {
-	
+
 	initObject();
 }
 
@@ -78,10 +78,10 @@ aRole::initObject()
 
 
 /*!
- *	\en 
+ *	\en
  *	Sets role name.
  *	\_en
- *	\ru 
+ *	\ru
  *	Устанавливает имя роли.
  *	\_ru
  *	\param rname - \en role name \_en \ru имя роли \_ru
@@ -96,10 +96,10 @@ aRole::SetName( const QString &rname )
 
 
 /*!
- *	\en 
+ *	\en
  *	Gets role name.
  *	\_en
- *	\ru 
+ *	\ru
  *	Функция получения имени роли.
  *	\_ru
  *	\return \en role name \_en \ru имя роли \_ru
@@ -116,7 +116,7 @@ ERR_Code
 aRole::Update()
 {
 	ERR_Code err = aObject::Update();
-	if ( !err ){ 
+	if ( !err ){
 		err = TableUpdate( md_right_roles );
 	}
 	return err;
@@ -125,10 +125,10 @@ aRole::Update()
 
 
 /*!
- *	\en  
+ *	\en
  *	Sets primary table selected.
  *	\_en
- *	\ru 
+ *	\ru
  *	Устанавливает основную таблицу выбранной.
  *	\_ru
  *	\return \en error code \_en \ru код ошибки \_ru
@@ -151,10 +151,10 @@ aRole::Select(  )
 
 
 /*!
- *	\en 
+ *	\en
  *	Select role.
  *	\_en
- *	\ru 
+ *	\ru
  *	Выбирает роль с заданным идентификатором.
  *	\_ru
  *	\param id - \en role id \_en \ru id роли \_ru
@@ -179,10 +179,10 @@ aRole::Select( qulonglong id )
 
 
 /*!
- *	\en 
+ *	\en
  *	Adds permission to role
  *	\_en
- *	\ru 
+ *	\ru
  *	Добавляет к роли право \a p
  *	\_ru
  *	\param p - \en permission \_en \ru право \_ru
@@ -206,10 +206,10 @@ return  err_noerror;
 
 
 /*!
- *	\en 
+ *	\en
  *	Removs permission from role
  *	\_en
- *	\ru 
+ *	\ru
  *	Убирает у роли право \a p
  *	\_ru
  *	\param p - \en permission \_en \ru право \_ru
@@ -236,10 +236,10 @@ return  err_noerror;
 
 
 /*!
- *	\en 
+ *	\en
  *	Check permission \a p.
  *	\_en
- *	\ru 
+ *	\ru
  *	Проверяет, есть ли у роли право \a p
  *	\_ru
  *	\param p - \en permission \_en \ru право \_ru
@@ -255,7 +255,7 @@ aRole::hasPermission( aPermission p )
 	{
 		return true;
 	}
-	else 
+	else
 	{
 		return false;
 	}
@@ -265,10 +265,10 @@ aRole::hasPermission( aPermission p )
 
 
 /*!
- *	\en 
+ *	\en
  *	Adds user to role
  *	\_en
- *	\ru 
+ *	\ru
  *	Добавляет к пользователю данную роль.
  *	\_ru
  *	\param userId - \en user id \_en \ru идентификатор пользовыателя \_ru
@@ -286,10 +286,10 @@ return  err_noerror;
 
 
 /*!
- *	\en 
+ *	\en
  *	Delete user from role
  *	\_en
- *	\ru 
+ *	\ru
  *	Удаляет у пользователя данную роль
  *	\_ru
  *	\param userId - \en user id \_en \ru идентификатор пользовыателя \_ru
@@ -306,10 +306,10 @@ return  err_noerror;
 
 
 /*!
- *	\en 
+ *	\en
  *	Check user have role.
  *	\_en
- *	\ru 
+ *	\ru
  *	Проверяет, принадлежит ли пользователь к данной роли.
  *	\_ru
  *	\param userId - \en user id \_en \ru id пользователя \_ru
@@ -368,7 +368,7 @@ aRole::New(const QString &rname)
  *	Delete this role.
  *	\_en
  *	\ru
- *	Удаляет эту роль. Не удаляет роль у пользователей. 
+ *	Удаляет эту роль. Не удаляет роль у пользователей.
  *	\_ru
  */
 ERR_Code

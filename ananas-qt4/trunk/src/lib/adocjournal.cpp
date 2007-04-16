@@ -8,7 +8,7 @@
 **
 ** Copyright (C) 2003-2004 Leader InfoTech.  All rights reserved.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -94,8 +94,8 @@ aDocJournal::initObject()
 {
 	ERR_Code err;
 	aCfgItem mditem, docitem, header;
-	
-	
+
+
 	journalType=0;
 
 	setInited( true );
@@ -133,7 +133,7 @@ aDocJournal::initObject()
 	//table for common journal
 		err = tableInsert( "a_journ" );
 	}
-	
+
 	return err;
 }
 
@@ -268,7 +268,7 @@ aDocJournal::New( qulonglong idd, const QString & docPrefix, int type )
 	rec->setValue("num",nextNumber(docPrefix,type));
 	rec->setValue("pnum",docPrefix);
 	rec->setValue("ddate",QDateTime::currentDateTime());
-	
+
 	t->insert(); // insert edit buffer as new line in table
 //TODO: error handle
 	aLog::print(aLog::INFO, tr("aDocJournal new document with idd=%1").arg(idd));
@@ -284,7 +284,7 @@ aDocJournal::New( qulonglong idd, const QString & docPrefix, int type )
 	Update();
 	t->exec("UNLOCK TABLE");
 	*/
-	
+
 	int err = selectDocument( idd );
 	setSelected(!err);
 	return err;
@@ -341,7 +341,7 @@ aDocJournal::nextNumber( const QString &prefix, int mdId )
 {
 	QString num="0", query;
 	query = QString("SELECT MAX(num)+1 FROM a_journ where pnum='%1' AND typed=%2").arg( prefix ).arg(mdId);
-	QSqlQuery q = db->db()->exec( query );
+	QSqlQuery q = db->db().exec( query );
 	if ( q.first() ) num = q.value( 0 ).toString();
         if ( num == "0" ) num = "1";
 	aLog::print(aLog::INFO, tr("aDocJournal generated next number for %1 is %2").arg(prefix).arg(num));
@@ -462,11 +462,11 @@ aDocJournal::setNumber( QVariant number  )
  *\~english
  *	Find document by id.
  *\~russian
- *	Ищет документ в системном журнале по его идентификатору. 
+ *	Ищет документ в системном журнале по его идентификатору.
  *\~
  *\see findDoc( const QString & number, int type ) selectDocument( Q_ULLONG idd )
  *\param idd - \~english document number \~russian номер документа \~
- *\return 	\~english document id or 0 if document not found 
+ *\return 	\~english document id or 0 if document not found
  *		\~russian id документа или 0, если документ не найден.\~
  */
 qulonglong
@@ -493,12 +493,12 @@ aDocJournal::findDocument( qulonglong idd )
  *\~english
  *	Find document by number and type.
  *\~russian
- *	Ищет документ по его номеру и типу. 
+ *	Ищет документ по его номеру и типу.
  *\~
  *\see findDocument( Q_ULLONG idd )
  *\param number - \~english document number \~russian номер документа, состоящий из префикса и номера \~
  *\param type - \~english document type \~russian тип документа \~
- *\return 	\~english document id or 0 if document not found 
+ *\return 	\~english document id or 0 if document not found
  *		\~russian id документа или 0, если документ не найден.\~
  */
 qulonglong
@@ -534,7 +534,7 @@ aDocJournal::findDoc( const QString & number, int type )
  *	doc=0;
  *	\endcode
  *\~
- *\return 	\~english current document 
+ *\return 	\~english current document
  *		\~russian текущий документ \~
  */
 aDocument*
@@ -552,7 +552,7 @@ aDocJournal::CurrentDocument()
  *\~english
  *	Select documents at some period.
  *\~russian
- *	Выбирает документы определенного типа за некоторый период. 
+ *	Выбирает документы определенного типа за некоторый период.
  *\~
  *\param from - \~english begin date \~russian дата начала периода \~
  *\param to - \~english end date \~russian дата окончания периода \~
@@ -602,7 +602,7 @@ aDocJournal::Select( QDateTime from, QDateTime to, const QString & mdName )
  *\~english
  *	Select document by number and type.
  *\~russian
- *	Выбирает документ определенного типа и номера. 
+ *	Выбирает документ определенного типа и номера.
  *\~
  *\param number - \~english document number \~russian составной номер документа \~
  *\param nmName - \~english document type \~russian тип документа \~
@@ -628,7 +628,7 @@ aDocJournal::Select( const QString & number, const QString & mdName )
 		if ( t->first() )
 		{
 //			printf(">document selected!\n");
-				
+
 			aLog::print(aLog::DEBUG, tr("aDocJournal select document with number=%1 and md name=%2").arg(number).arg(mdName));
 			setSelected(true);
 			return err_noerror;
@@ -656,7 +656,7 @@ aDocJournal::getPrefix()
 	qulonglong dUid = docId();
 	if ( dUid )
 	{
-		QSqlQuery q = db->db()->exec(QString("SELECT pnum FROM a_journ WHERE idd=%1").arg(dUid));
+		QSqlQuery q = db->db().exec(QString("SELECT pnum FROM a_journ WHERE idd=%1").arg(dUid));
 		if ( q.first() ) pref = q.value(0).toString();
 	}
 	return pref;

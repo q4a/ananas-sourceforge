@@ -75,7 +75,7 @@ aFilter::Dump() const
  *	Переводит фильтр в его sql представление. Параметр \a removeFirst отвечает за удаление ведущего оператора AND или OR
  *	\~
  */
-QString 
+QString
 aFilter::toString(bool removeFirst) const
 {
 	QString str = QString::null;
@@ -191,7 +191,7 @@ aFilter::AddHelper(const QString& fname, const QString& value, OperationEnum op,
 		break;
 
 	}
-	if(replace) // replace all entries, append to end list of conditions, if nothing found 
+	if(replace) // replace all entries, append to end list of conditions, if nothing found
 	{
 		Q3ValueList<filterCondition>::iterator it;
 		bool isFound = false;

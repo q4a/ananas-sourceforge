@@ -31,8 +31,10 @@
 #include <qfile.h>
 #include <qstringlist.h>
 #include <q3textstream.h>
+//#include <QTextStream>
 #include <qpixmap.h>
 #include <q3dragobject.h>
+#include <Q3MimeSourceFactory>
 
 #include "acfg.h"
 #include "acfgrc.h"

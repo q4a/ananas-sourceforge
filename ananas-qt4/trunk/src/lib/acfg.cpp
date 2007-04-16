@@ -40,7 +40,8 @@
 #include <qdom.h>
 #include <qfile.h>
 #include <qstringlist.h>
-#include <q3textstream.h>
+//--#include <q3textstream.h>
+#include <QTextStream>
 
 #include "acfg.h"
 #include "alog.h"
@@ -220,8 +221,8 @@ aCfg::write(QDomDocument doc, const QString &fname)
     QFile file( fname );
     QByteArray buf( xml.toString(4).utf8() );
     if ( file.open( QIODevice::WriteOnly ) ) {
-	Q3TextStream ts( &file );
-	ts.setEncoding(Q3TextStream::UnicodeUTF8);
+	QTextStream ts( &file );
+	//--ts.setEncoding(Q3TextStream::UnicodeUTF8);
 	doc.save(ts, 4);
 	//ts <<  toString(4);
 	file.close();

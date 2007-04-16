@@ -33,6 +33,7 @@
 #include <stdlib.h>
 #include <qfile.h>
 #include <qdir.h>
+#include <QTextStream>
 
 #include "atemplate.h"
 #include "alog.h"
@@ -57,7 +58,7 @@ aTemplate::open( const QString &fname )
 	QFile file( QDir::convertSeparators(QDir::currentDirPath()+"/"+templateDir+"/"+fname) );
     if ( file.open( QIODevice::ReadOnly ) )
     {
-        Q3TextStream stream( &file );
+        QTextStream stream( &file );
         tpl = stream.read();
         file.close();
 	return true;
@@ -169,7 +170,7 @@ aTemplate::save( const QString & fname)
 	QFile file( QDir::convertSeparators(QDir::currentDirPath()+"/"+templateDir+"/"+fname) );
 	if ( file.open( QIODevice::WriteOnly ) )
 	{
-		Q3TextStream stream( &file );
+		QTextStream stream( &file );
 		stream << result();
 		file.close();
 		aLog::print(aLog::INFO, tr("aTemplate save file %1").arg(file.name()));

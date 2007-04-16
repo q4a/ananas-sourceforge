@@ -9,7 +9,7 @@
 ** Copyright (C) 2003-2004 Leader InfoTech.  All rights reserved.
 ** Copyright (C) 2003-2004 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -189,8 +189,8 @@ aCatalogue::Update()
 {
 	ERR_Code err = aObject::Update();
 	if ( !err )
-	{ 
-		
+	{
+
 		aLog::print(aLog::DEBUG, tr("aCatalogue update"));
 		err = TableUpdate( md_group );
 		if(err)
@@ -231,7 +231,7 @@ aCatalogue::Select( bool grouponly )
 		{
 			setSelected(true);
 			qulonglong newidg = t->sysValue("idg").toULongLong();
-			
+
 			aLog::print(aLog::DEBUG, tr("aCatalogue select group id=%1").arg(idg));
 			if ( newidg != idg ) groupSelect( newidg );
 			return err_noerror;
@@ -249,7 +249,7 @@ aCatalogue::Select( bool grouponly )
  *\~
  * \return \~english Error code \~russian \~
  */
-int 
+int
 aCatalogue::GroupSelect()
 {
 	aSQLTable * t = table();
@@ -298,7 +298,7 @@ ERR_Code
 aCatalogue::selectByOwner ( qulonglong ido )
 {
 	aSQLTable * t = table();
-	
+
 	if ( !t ) return err_notable;
 	if ( t->select(QString("ido=%1").arg(ido),false) )
 		if ( t->first() )
@@ -339,7 +339,7 @@ aCatalogue::groupByParent(qulonglong idp )
 			setSelected(true,md_group);
 			return err_noerror;
 		}
-		else 
+		else
 		{
 			return err_notselected;
 		}
@@ -365,7 +365,7 @@ aCatalogue::selectByLevel(int level )
 	if ( t->select(QString("level=%1").arg(level),false) )
 		if ( t->first() )
 		{
-			
+
 			setSelected(true, md_group);
 			return err_noerror;
 		}
@@ -373,11 +373,11 @@ aCatalogue::selectByLevel(int level )
 		{
 			return err_notselected;
 		}
-	else 
+	else
 	{
 		return err_selecterror;
 	}
-		
+
 }
 
 
@@ -403,7 +403,7 @@ aCatalogue::idGroupByElement(qulonglong ide )
 		setSelected(true);
 		return sysValue("idg").toLongLong();
 	}
-	else return 0;	
+	else return 0;
 }
 
 ERR_Code
@@ -566,7 +566,7 @@ aCatalogue::delElement()
  \_en \ru
  * Выделяет удаляемую группу с дочерними элементами и группами.
  * При первом вызове параметр listDelId должен быть пустой, он не обнуляется
- * автоматически при вызове этой функции. 
+ * автоматически при вызове этой функции.
  * Функция рекурсивно вызывает сама себя для всех дочерних подгрупп и
  * добавляет их id в список. Также туда добавляются и id элементов,
  * содержащихся в этих группах. Для изменения атрибута удаления используте функции
@@ -660,7 +660,7 @@ aCatalogue::delGroup(qulonglong idg, Q3ValueList<qulonglong> &listDelId)
 				listDelId << delElement();
 			}
 			while (groupByParent(idg)==err_noerror)
-			{ 
+			{
 				delGroup(GroupSysValue("id").toULongLong(), listDelId);
 				//printf(">>>idg=%lu\n",tmp);
 			}
@@ -681,14 +681,14 @@ aCatalogue::GroupDelete()
 	aSQLTable * tg = table ( md_group );
 	if ( !tg ) return err_notable;
 	getGroup();
-	if ( !selected( md_group ) ) 
+	if ( !selected( md_group ) )
 	{
-		
+
 		aLog::print(aLog::INFO,tr("aCatalogue delete without selection"));
 		//debug_message(">>not seletc in delete\n");
 		return err_notselected;
 	}
-		
+
 	qulonglong idg = tg->sysValue("id").toULongLong();
 	if ( idg )
 	{
@@ -806,7 +806,7 @@ aCatalogue::GetElementValue(QVariant ide, const QString &fname)
 	if ( !t->first() ) return "";
 	else return t->value( fname );
 
-	
+
 }
 bool
 aCatalogue::Next()
@@ -857,7 +857,7 @@ aCatalogue::FirstInGroupTable()
 bool
 aCatalogue::LastInGroupTable()
 {
-	return  aObject::Last(md_group); 
+	return  aObject::Last(md_group);
 }
 
 
@@ -870,7 +870,7 @@ aCatalogue::LastInGroupTable()
 QStringList
 aCatalogue::getUserFields()
 {
-	QStringList l=0;
+	QStringList l;
 	aSQLTable *t = table();
 	if(t) l = t->getUserFields();
 	return l;
@@ -886,7 +886,7 @@ aCatalogue::getUserFields()
 QStringList
 aCatalogue::getGroupUserFields()
 {
-	QStringList l=0;
+	QStringList l;
 	aSQLTable *t = table( md_group );
 	if(t) l = t->getUserFields();
 	return l;
@@ -944,7 +944,7 @@ aCatGroup::setLevel( qulonglong newLevel )
 	query = QString("UPDATE %1 SET level=%2 WHERE id=%3")\
 					.arg(t->tableName).arg(newLevel).arg(getUid());
 //	printf("%s\n",(const char*) query);
-	db->db()->exec(query);
+	db->db().exec(query);
 	if ( !tgr.SelectChild( this ));
 		do
 		{
@@ -1016,7 +1016,7 @@ aCatGroup::New(aCatGroup *group)
  *\en
  *	Create new group in table.
  *	New group added in root group and have level 0.
- *	\return Error code. 
+ *	\return Error code.
  *\_en
  *\ru
  *	\brief Добавляет группу в справочник.
@@ -1127,9 +1127,9 @@ aCatGroup::SetParent( aCatGroup * parent )
 	query = QString("UPDATE %1 SET idp=%2 WHERE id=%3").arg(t->tableName).arg(idp).arg(uid);
 	level = parent->Value("Level").toULongLong();
 //	printf("%s\n",(const char*)query);
-	QSqlDatabase * tdb = db->db();
-	tdb->exec(query);
-	if ( !tdb->lastError().type() )
+	QSqlDatabase tdb = db->db();
+	tdb.exec(query);
+	if ( !tdb.lastError().type() )
 	{
 		if (idp) setLevel(level+1);
 		else setLevel(0);

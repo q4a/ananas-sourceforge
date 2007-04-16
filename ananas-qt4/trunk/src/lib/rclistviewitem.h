@@ -47,25 +47,25 @@ class rcListViewItem : public Q3ListViewItem
 public:
 	QString rcfile;
 	bool group;
-	
+
 	rcListViewItem( Q3ListView *parent,
-			const QString &name = QString::null, 
+			const QString &name = QString::null,
 			const QString &rc = QString::null,
 			bool fgroup = false );
 
 	rcListViewItem( Q3ListView *parent,
 			rcListViewItem* after,
-			const QString &name = QString::null, 
+			const QString &name = QString::null,
 			const QString &rc = QString::null,
 			bool fgroup = false );
-	
+
 	rcListViewItem( rcListViewItem *parent,
-			const QString &name = QString::null, 
+			const QString &name = QString::null,
 			const QString &rc = QString::null,
 			bool fgroup = false );
-	
+
 	virtual ~rcListViewItem();
 	void init( const QString &rc = QString::null, bool fgroup = false );
 };
-#endif 
+#endif
 

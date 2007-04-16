@@ -38,6 +38,7 @@
 #include <QSqlError>
 #include "acfg.h"
 #include <qwidget.h>
+#include <QMap>
 
 
 #define db_document_header	"dh%1"
@@ -67,7 +68,7 @@ class aDataTable;
  *\~russian
  *	\brief Базовый класс для драйверов баз данных.
  *	Наследует QObject.
- *	
+ *
  *	Используется для абстрагирования доступа к базе данных в
  *	терминах типов данных Ананаса.
  *\~
@@ -117,7 +118,7 @@ public:
  *\~russian
  *	\brief Класс для работы с СУБД. Ananas Data Abstraction Layer.
  *	Наследует QObject.
- *	
+ *
  *	Обеспечивает унифицированный программный интерфейс доступа к данным, независимый от используемой СУБД.
  *	Используется для работы с базой данных в контексте бизнес схемы.
  *\~
@@ -146,7 +147,7 @@ public:
 	/*!	\~english Sybase driver (not supported)\~russian Sybase драйвер (не поддерживается) \~ */
 	sybase };
 	/*! \~english link to database \~russian ссылка на базу данных \~ */
-	QSqlDatabase *ddb;
+	QSqlDatabase ddb;
 	/*! \~english metadata object \~russian метаданные \~ */
 	aCfg cfg;
 
@@ -155,7 +156,7 @@ public:
 	bool init( aCfgRc *rc, const QString &dbname = QString::null );
 	bool init( const QString &rcname, const QString &dbname = QString::null );
 	void done();
-	QSqlDatabase* db(const QString &dbname = QString::null );
+	QSqlDatabase db(const QString &dbname = QString() );
 	bool checkStructure();
 	bool create();
 	bool drop( const QString &);
@@ -189,7 +190,7 @@ private:
 	bool exportTableData(QDomDocument& xml, const QString &tableName);
 	bool importTableData(QDomDocument& xml, const QString &tableName);
 	void reportError(QSqlError er, const QString &query);
-	
+
 	QString fieldtype( const QString &tdef );
 	void checkIndices(const QString &table, const QString &flddef, QStringList &ui_add, QStringList &ui_drop);
 	bool isExists(const QString fname, QStringList *f_lst, QString &match);
@@ -212,7 +213,7 @@ private:
 	bool dumpTable( QDomDocument& xml, const QString &tableName);
 	void fillFeatures();
 	QString feature(const QString& fetureName);
-	
+
 	QMap<QString, QString> featuresMySQL, featuresSQLite, featuresPostgreSQL;
 
 };

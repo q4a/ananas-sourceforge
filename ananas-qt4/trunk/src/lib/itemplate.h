@@ -1,7 +1,7 @@
 /****************************************************************************
 ** $Id: itemplate.h,v 1.7 2006/08/23 08:30:04 app Exp $
 **
-** Report metadata object header file of 
+** Report metadata object header file of
 ** Ananas application library
 **
 ** Created : 20031201
@@ -9,7 +9,7 @@
 ** Copyright (C) 2003-2004 Leader InfoTech.  All rights reserved.
 ** Copyright (C) 2003-2005 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -43,7 +43,7 @@
  * \~russian
  * \brief Интерфейс для работы с отчетами. Наследует QObject.
  *
- * Классы, генерирующие отчеты, должны использовать этот интерфейс. 
+ * Классы, генерирующие отчеты, должны использовать этот интерфейс.
  * Содержит чистые виртуальные функции, не допускается создание объектов этого класса напрямую.
  * Пример:
  * \code
@@ -67,7 +67,7 @@ public:
  * \_ru
  */
     iTemplate();
-/** 
+/**
  * \en
  * Destructor
  * \_en
@@ -76,8 +76,8 @@ public:
  * \_ru
  */
     virtual ~iTemplate();
-   
-/** 
+
+/**
  * \en
  * Opens pattern
  * \_en
@@ -127,7 +127,7 @@ public:
  * Replaces tads to values
  * \_en
  * \ru
- * Выполняет подстановку значения параметра в шаблоне. 
+ * Выполняет подстановку значения параметра в шаблоне.
  * Может вызываться несколько раз.
  * \_ru
  */
@@ -151,33 +151,33 @@ public:
  */
     virtual bool save( const QString & fname );
 /**
- * \en 
+ * \en
  * Clears all tags
  * \_en
  * \ru
  * Очищает все теги
  * \_ru
  */
-    
-    virtual void cleanUpTags();    
+
+    virtual void cleanUpTags();
 /**
- * \en 
+ * \en
  * Sets  working directory
  * \_en
  * \ru
  * Устанавливает рабочую директорию
  * \_ru
- */    
+ */
     virtual void setDir(const QString &dir);
- 
+
  /**
- * \en 
+ * \en
  * Gets  working directory
  * \_en
  * \ru
  * Возвращает рабочую директорию
  * \_ru
- */    
+ */
     virtual QString getDir();
 };
 

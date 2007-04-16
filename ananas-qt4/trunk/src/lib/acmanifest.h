@@ -45,11 +45,11 @@
  * \ru
  * \brief	Класс aCManifest предназначен для работы с файлом manifest.xml
  * 	Наследует QObject.
- * 
+ *
  * \_ru
  */
 #define mf_invalid 0
-#define mf_metadata 1 
+#define mf_metadata 1
 #define mf_template 2
 #define mf_dir 3
 #define mf_script 4
@@ -71,7 +71,7 @@ public:
 		int type;
 	};
 	// place your castom types before mf_other
-	
+
 	virtual void create();
 	virtual QString toString();
 	virtual bool write(const QString& fname);
@@ -86,12 +86,12 @@ public:
 	virtual bool addEntry( const QString &fname, int type);
 	virtual bool removeEntry( const QString &fname, bool withChilds );
 	virtual QString lastError() const;
-	
+
 private:
 	QString txtError;
 	QDomDocument manifest;
 	QDomElement rootNode, currentNode;
-    
+
 };
 
 
