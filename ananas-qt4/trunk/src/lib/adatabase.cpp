@@ -252,10 +252,11 @@ aDatabase::init( aCfgRc *rc, const QString &dbname )
 	ddb.setHostName( rc->value("dbhost") );
 	if ( !rc->value("dbport").isEmpty() ) ddb.setPort( rc->value("dbport").toInt() );
 	if ( driver == "QSQLITE" ) db().exec( "PRAGMA encoding=\"UTF-8\"" );
+	//if ( driver == "QMYSQL" ) db().exec( "SET NAMES utf8" );
+	//if ( driver == "QMYSQL" ) db().exec( "SET collation_connection = 'utf8_general_ci'" );
 	aLog::print(aLog::DEBUG,tr("aDatabase prepared for open connection to %1").arg(rc->value("dbname")));
 	if ( !ddb.open() )
 	{
-
 		aLog::print(aLog::INFO,tr("aDatabase open connection failed, try create %1").arg(rc->value("dbname")));
 		ddb.setDatabaseName(feature("systemDatabase"));
 		ddb.open();
@@ -290,9 +291,13 @@ aDatabase::init( aCfgRc *rc, const QString &dbname )
 			aLog::print(aLog::ERROR,tr("aDatabase create database %1").arg(rc->value("dbname")));
 			return false;
 		}
-
 		aLog::print(aLog::INFO,tr("aDatabase open connection to %1 ok").arg(rc->value("dbname")));
 	}
+	if ( driver == "QMYSQL" )
+    {
+        ddb.exec( "SET NAMES utf8;" );
+        ddb.exec( "SET collation_connection = 'utf8_general_ci';" );
+    }
 	return true;
 }
 

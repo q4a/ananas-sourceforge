@@ -85,10 +85,10 @@ void
 MessagesWindow::message( int msgtype, const QString &msg)
 {
 	char st[4][50]={
-			"<img src=\"msg_info.png\" width=12>",
-			"<img src=\"msg_warning.png\" width=12>",
-			"<img src=\"msg_error.png\" width=12>",
-			"<img src=\"msg_fatal.png\" width=12>"};
+			"<img src=\"msg_info.png\" width=12 height=12>",
+			"<img src=\"msg_warning.png\" width=12 height=12>",
+			"<img src=\"msg_error.png\" width=12 height=12>",
+			"<img src=\"msg_fatal.png\" width=12 height=12>"};
 	if (msgtype<0) msgtype=0;
 	if (msgtype>3) msgtype=3;
 	msgBrowser->append( tr( st[ msgtype ] )+msg );

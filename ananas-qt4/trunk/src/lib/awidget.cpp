@@ -745,9 +745,10 @@ aWidget::Refresh()
 	//--delete l; // delete the list, not the objects
 	//--l=0;
 
+    Q3DataTable* obj2;
 	while ( tit.hasNext() ){
-		obj = qobject_cast<aWidget*>(tit.next());
-		((Q3DataTable*)obj)->refresh();
+		obj2 = qobject_cast<Q3DataTable*>(tit.next());
+		obj2->refresh();
 	}
 	//--delete tl; // delete the list, not the objects
 

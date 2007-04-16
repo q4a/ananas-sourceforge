@@ -31,6 +31,8 @@
 
 //--#include <qwidgetfactory.h>
 #include <QFormBuilder>
+#include <QDesignerCustomWidgetInterface>
+#include <QCoreApplication>
 #include <qdialog.h>
 #include <qobject.h>
 #include <qdialog.h>
@@ -238,18 +240,27 @@ aForm::init()
 	static QMutex mutex;
 	mainWidget = 0;
 	if ( !mdObj.isNull() && md ) {
-		ui = ( const char * ) md->sText( mdObj, md_formdesign );
+		ui = md->sText( mdObj, md_formdesign );
 		sModule = md->sText( mdObj, md_sourcecode );
 		if ( !ui.isEmpty() ) {
-			QBuffer b;
-			b.open(QIODevice::WriteOnly);
+		    //aLog::print(aLog::DEBUG, ui);
+		    QByteArray buf = ui.toUtf8();
+			QBuffer b(&buf);
+			//--b.open(QIODevice::WriteOnly);
 
-			b.writeBlock( ( const char *) ui, strlen( ( const char *) ui) );
-			b.close();
+			//--b.writeBlock( ( const char *) ui, strlen( ( const char *) ui) );
+			//--b.close();
 			b.open(QIODevice::ReadOnly );
 			aLog::print(aLog::INFO, tr("aForm creating form from ui"));
 			//--form = QWidgetFactory::create( &b );
 			QFormBuilder fb;
+			fb.addPluginPath(QCoreApplication::applicationDirPath() /*"/plugins/designer"*/);
+			/*QList<QDesignerCustomWidgetInterface*> l = fb.customWidgets();
+			int i;
+			for (i=0; i<l.size(); i++)
+			{
+			    aLog::print(aLog::INFO, l[i]->name());
+			}*/
             form = fb.load(&b);
 			aLog::print(aLog::INFO, tr("aForm form create from ui ok"));
 			b.close();
@@ -318,6 +329,9 @@ aForm::init()
 			form = mw;
 			mw->setFocusPolicy( Qt::NoFocus );
                 }
+            //--
+            ((QWorkspace*)engine->ws)->addWindow(form);
+            form->show();
 
 		connectSlots();
 		if ( !sModule.isEmpty() )

@@ -173,7 +173,8 @@ int main( int argc, char ** argv )
 		splash->message( QObject::tr("Init forms designer"), Qt::AlignBottom, Qt::white  );
    		formdesigner = new aFormDesigner();
 
-		formdesigner->reparent( mainformws, 0, QPoint( 5, 5 ), false );
+		//--formdesigner->reparent( mainformws, 0, QPoint( 5, 5 ), false );
+		mainformws->addWindow(formdesigner);
 		formdesigner->setCaption( QObject::tr("Dialog forms designer") );
 		formdesigner->hide();
 		w->show();
