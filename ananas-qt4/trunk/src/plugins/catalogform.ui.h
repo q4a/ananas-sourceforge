@@ -16,7 +16,7 @@
 **
 ** Copyright (C) 2003-2005 Grigory Panov <gr1313 at mail.ru>, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -55,15 +55,15 @@ CatalogForm::getId()
 /*!
  * Function set initial data. Adds one element in each group.
  * \param catalog (in) - object catalog for edit or select.
- * \param mg (in) - map of catalog groups. Key - group id. 
- * \param Fname (in) - list of field names of elements. 
+ * \param mg (in) - map of catalog groups. Key - group id.
+ * \param Fname (in) - list of field names of elements.
  * \param FnameGroup (in) - list of field names of groups.
  */
-void 
+void
 CatalogForm::setData( aCatalogue* catalog,
-   QMap<qulonglong, Q3ListViewItem*> mg, 
+   QMap<qulonglong, Q3ListViewItem*> mg,
    //QMap<Q_ULLONG, bool> map_d,
-   const QStringList & Fname, 
+   const QStringList & Fname,
    const QStringList & FnameGroup,
    qulonglong idElForm,
    qulonglong idGrForm,
@@ -85,11 +85,11 @@ CatalogForm::setData( aCatalogue* catalog,
 	ListView->setAllColumnsShowFocus ( true );
 	QMap<qulonglong, Q3ListViewItem *>::Iterator it = map_gr.begin();
 	cat->Select();
-  	// added one element in each group 
+  	// added one element in each group
 	while(it!=map_gr.end())
 	{
 		cat->selectByGroup(it.key());// select elements in each group
-		if(cat->First()) // if group have elements 
+		if(cat->First()) // if group have elements
 		{
 			item = new Q3ListViewItem(map_gr[it.key()]);
 			aLog::print(aLog::DEBUG, tr("CatalogForm add first element in group"));
@@ -103,14 +103,14 @@ CatalogForm::setData( aCatalogue* catalog,
 				item->setText(i,cat->sysValue(fieldList[i]).toString());
 			}
 			 map_el.insert(cat->sysValue("id").toULongLong(),item);
-		} 
+		}
 	 ++it;
 	}
 
 	cat->selectByGroup(0);// select elements without group
 	if(cat->First())
 	{
-		
+
 		aLog::print(aLog::DEBUG, tr("CatalogForm add elements into root"));
 		do
 		{
@@ -124,7 +124,7 @@ CatalogForm::setData( aCatalogue* catalog,
 				item->setText(i,cat->sysValue(fieldList[i]).toString());
 			}
 			map_el.insert(cat->sysValue("id").toULongLong(),item);
-			
+
 		}while(cat->Next());
 	}
 	cat->Select();
@@ -135,9 +135,9 @@ CatalogForm::setData( aCatalogue* catalog,
 
 /*!
  * Function set id, returned getId().
- * \param idx (in) - id. 
+ * \param idx (in) - id.
  */
-void 
+void
 CatalogForm::setId(qulonglong idx )
 {
 	id = idx;
@@ -148,7 +148,7 @@ CatalogForm::setId(qulonglong idx )
  * Displaing <= VISIBLE_ROWS lines.
  * \param s (in) - string for search.
  */
-void 
+void
 CatalogForm::find(const QString& s )
 {
 	int count=0;//,rows=0;
@@ -159,9 +159,9 @@ CatalogForm::find(const QString& s )
 
 	tmp = aService::readConfigVariable("VisibleRows",&ok).toInt();
 	if(!ok) tmp = 50;
-   
+
 	const int VISIBLE_ROWS = tmp;
-  
+
 	setId(0);
 	ListHint->clear();
 	if(s.length()>=LENGTH_NO_FIND) // show list hint
@@ -171,7 +171,7 @@ CatalogForm::find(const QString& s )
 			ListHint->show(LineEdit, StatusFrame);
 			StatusFrame->show();
 		}
-	
+
 		cat->select(fieldName + " like '%"+s+"%'");// AND df<>'1'");
 		if(cat->First())
 		{
@@ -187,14 +187,14 @@ CatalogForm::find(const QString& s )
 		{
 			ListHint->hide();
 			StatusFrame->hide();
-		
+
 		}
 		else
 		{
 			StatusFrame->repaint();
 			StatusFrame->drawText(	5, StatusFrame->size().height()-3, QString(tr("displaying %1 from %2")).arg(ListHint->count()).arg(count) );
 		}
-			
+
 	}
 	else // length < LENGTH_NO_FIND, don't show list hint
 	{
@@ -204,16 +204,16 @@ CatalogForm::find(const QString& s )
 			StatusFrame->hide();
 		}
 	}
-	    
+
 }
 
-/*! 
+/*!
  * Handler signal press arrow for line edit
  */
-void 
+void
 CatalogForm::pressArrow()
 {
-	
+
 	if(ListHint->isVisible())
 	{
 		ListHint->setFocus();
@@ -228,12 +228,12 @@ CatalogForm::pressArrow()
 			ListHint->setFocus();
 			ListHint->setSelected(ListHint->currentItem(),true);
 		}
-		 
+
 	}
 }
 
 
-void 
+void
 CatalogForm::isPressArrow()
 {
 
@@ -242,7 +242,7 @@ CatalogForm::isPressArrow()
 /*!
  * Function create visual objects and connect slots.
  */
-void 
+void
 CatalogForm::init()
 {
 
@@ -252,14 +252,14 @@ CatalogForm::init()
 	LineEdit = new aLineEdit(centralWidget(), "lineEdit");
 	ListHint = new aListBox(centralWidget(), "listBox");
 	StatusFrame = new Q3Frame(centralWidget(), "statusFrame");
-	
+
 	ListView->setRootIsDecorated( true );
-	
+
 	StatusFrame->setGeometry( QRect( 0, 0, 50,5 ) );
 	StatusFrame->setFrameShape( Q3Frame::StyledPanel );
 	StatusFrame->setFrameShadow( Q3Frame::Raised );
 	StatusFrame->hide();
-    	
+
 	GridLayout = new Q3GridLayout(centralWidget(), 1, 1, 11, 6, "GridLayout");
 	GridLayout->addMultiCellWidget( ListView, 2,3, 0 , 0 );
 	GridLayout->addWidget( LineEdit, 1, 0 );
@@ -269,7 +269,7 @@ CatalogForm::init()
 	GridLayout->addWidget( lb ,0,0);
 	QSpacerItem* spacer = new QSpacerItem( 20, 390, QSizePolicy::Minimum, QSizePolicy::Expanding );
 	GridLayout->addMultiCell( spacer, 0,2,1, 1);
-	
+
  	QPixmap  pix= qPixmapFromMimeSource("cat.png");
 	if(pix.isNull())
 	{
@@ -282,58 +282,58 @@ CatalogForm::init()
  	//setFocusPolicy();
   //  connect(this, 	SIGNAL	(destoyed()),
 //	    this,	SLOT	(close());
-    
+
     connect(ListView, 	SIGNAL	(newItemRequest(Q3ListViewItem*)),
 	    this,	SLOT	(new_item(Q3ListViewItem*)));
-    
-    connect(ListView, 	SIGNAL	(newGroupRequest(Q3ListViewItem*)), 
+
+    connect(ListView, 	SIGNAL	(newGroupRequest(Q3ListViewItem*)),
 	    this, 	SLOT	(new_group(Q3ListViewItem*)));
-    
-    connect(ListView, 	SIGNAL	(delItemRequest(Q3ListViewItem*)), 
+
+    connect(ListView, 	SIGNAL	(delItemRequest(Q3ListViewItem*)),
 	    this, 	SLOT	(del_item(Q3ListViewItem*)));
-    
-    connect(ListView, 	SIGNAL	(markDeletedRequest(Q3ListViewItem*)), 
+
+    connect(ListView, 	SIGNAL	(markDeletedRequest(Q3ListViewItem*)),
 	    this, 	SLOT	(mark_deleted(Q3ListViewItem*)));
-    
-    connect(ListView, 	SIGNAL	(undoMarkDeletedRequest(Q3ListViewItem*)), 
+
+    connect(ListView, 	SIGNAL	(undoMarkDeletedRequest(Q3ListViewItem*)),
 	    this, 	SLOT	(undo_mark_deleted(Q3ListViewItem*)));
-    
-    connect(ListView, 	SIGNAL	(editRequest(Q3ListViewItem*, int)), 
+
+    connect(ListView, 	SIGNAL	(editRequest(Q3ListViewItem*, int)),
 	    this, 	SLOT	(edit(Q3ListViewItem*, int)));
-    
-    connect(ListView, 	SIGNAL	(selectRequest(Q3ListViewItem*)), 
+
+    connect(ListView, 	SIGNAL	(selectRequest(Q3ListViewItem*)),
 	    this, 	SLOT	(select(Q3ListViewItem*)));
-    
+
     connect(LineEdit, 	SIGNAL	(delayTextChanged(const QString&)),
-	    this, 	SLOT	(find(const QString&))); 
-    
+	    this, 	SLOT	(find(const QString&)));
+
     connect(LineEdit, 	SIGNAL	(keyArrowPressed()),
 	    this, 	SLOT	(pressArrow()));
-    
+
     connect(LineEdit, 	SIGNAL	(keyEnterPressed()),
 	    this, 	SLOT	(go()));
-    
+
     connect(ListView,	SIGNAL	(expanded ( Q3ListViewItem *)),
 	    this,	SLOT	(onLoadElements( Q3ListViewItem *)));
-    
+
     connect(ListHint, 	SIGNAL	(lostFocus()),
 	    LineEdit, 	SLOT	(setFocus()));
-    
+
     connect(ListHint, 	SIGNAL	(lostFocus()),
-	   StatusFrame,	SLOT	(hide()));	
-    
+	   StatusFrame,	SLOT	(hide()));
+
     connect(ListHint, 	SIGNAL	(lostFocus()),
-     ListHint,  SLOT (hide())); 
-    
-    connect(ListHint,  SIGNAL (keyArrowLRPressed()), 
+     ListHint,  SLOT (hide()));
+
+    connect(ListHint,  SIGNAL (keyArrowLRPressed()),
      LineEdit,  SLOT (setFocus()));
-    
+
     connect(ListHint,  SIGNAL (keyArrowLRPressed(const QString&)),
      this,  SLOT (setText(const QString&)));
-    
+
     connect(ListHint,  SIGNAL (keyEnterPressed()),
      this,  SLOT (go()));
-    
+
     connect(ListHint,  SIGNAL (sendMessage(const QString &)),
      this->statusBar(),  SLOT (message( const QString &)));
 
@@ -342,17 +342,17 @@ CatalogForm::init()
 
     connect(LineEdit,  SIGNAL (sendMessage(const QString &)),
      this->statusBar(),  SLOT (message( const QString &)));
-    
+
     LineEdit->setFocus();
 }
 
 /*!
  * Function delete objects, which were created in function init()
  */
-void 
+void
 CatalogForm::destroy()
 {
-	aService::saveSize2Config(this->rect(),QString("%1_embedded editor").arg(cat->md->attr(cat->obj, mda_name)));	
+	aService::saveSize2Config(this->rect(),QString("%1_embedded editor").arg(cat->md->attr(cat->obj, mda_name)));
 	delete cat;
 	cat = 0;
 }
@@ -360,7 +360,7 @@ CatalogForm::destroy()
 /*!
  * Function set text for line edit. Don't emit signals.
  */
-void 
+void
 CatalogForm::setText( const QString & s )
 {
     LineEdit->blockSignals ( true );
@@ -370,9 +370,9 @@ CatalogForm::setText( const QString & s )
 }
 
 /*!
- * Handler bGo::onClick() event. 
+ * Handler bGo::onClick() event.
  */
-void 
+void
 CatalogForm::go()
 {
 	qulonglong ide=getId(), idg;
@@ -392,11 +392,11 @@ CatalogForm::go()
 /*!
  * Ensures that item is visible, scrolling the list view vertically if necessary and opening (expanding) any parent items if this is required to show the item.
  */
-void 
+void
 CatalogForm::goToItem( Q3ListViewItem *item)
 {
 	ListView->setSelected(item, true);
-	ListView->ensureItemVisible(item); 
+	ListView->ensureItemVisible(item);
 	ListView->setFocus();
 }
 
@@ -405,10 +405,10 @@ CatalogForm::goToItem( Q3ListViewItem *item)
  * \param s (in) - stirng for search.
  * \return id first founding line.
  */
-long 
+long
 CatalogForm::findFirst( const QString &s )
 {
-	qulonglong res=0;		
+	qulonglong res=0;
 	cat->select(fieldName + " like '%"+s+"%'");// AND df<>'1'");
 	//Cat->Select();
 	if(cat->First())
@@ -420,10 +420,10 @@ CatalogForm::findFirst( const QString &s )
 }
 
 /*!
- * Loads elements in group, if then don't loaded. 
+ * Loads elements in group, if then don't loaded.
  * \param idGroup (in) - id group for load.
  */
-void 
+void
 CatalogForm::loadElements( qulonglong idGroup )
 {
   Q3ListViewItem * item;
@@ -465,7 +465,7 @@ CatalogForm::loadElements( qulonglong idGroup )
  * Loads elemens in group, if then don't loaded.
  * \param item (in) - group for load.
  */
-void 
+void
 CatalogForm::onLoadElements( Q3ListViewItem *item )
 {
 	Q3ValueList<Q3ListViewItem*> lst = map_gr.values();
@@ -484,7 +484,7 @@ CatalogForm::onLoadElements( Q3ListViewItem *item )
  * \param ide (in) - id of element.
  * \return id of group or 0 if no group.
  */
-qulonglong 
+qulonglong
 CatalogForm::getIdg( qulonglong ide )
 {
     return cat->idGroupByElement(ide);
@@ -495,12 +495,12 @@ CatalogForm::getIdg( qulonglong ide )
  * Adds new element.
  * \param parentItem (in) - parent group. If parent group == 0, element not added.
  */
-void 
+void
 CatalogForm::new_item( Q3ListViewItem * parentItem )
 {
 	if(!parentItem)
 	{
-		//cat->groupSelect(0);	
+		//cat->groupSelect(0);
 		cat->newElement(0);
 		//printf("id = %llu\n",id);
 		Q3ListViewItem* item = new Q3ListViewItem(ListView);
@@ -523,13 +523,13 @@ CatalogForm::new_item( Q3ListViewItem * parentItem )
 			Q3ListViewItem* item = new Q3ListViewItem(map_gr[id]);
 			item->setPixmap(0,pixmap);
 			map_el.insert(cat->sysValue("id").toULongLong(),item);
-			edit(item,true); 
+			edit(item,true);
 			ListView->ensureItemVisible(item);
 			//ListView->setFocus();
 		}
 		else cfg_message(0,tr("Can't added new element to mark deleted group"));
 	}
-	else 
+	else
 	{
 		new_item(parentItem->parent());
 	}//cfg_message(0,tr("Can't added element to element"));
@@ -537,9 +537,9 @@ CatalogForm::new_item( Q3ListViewItem * parentItem )
 
 /*!
  * Gets group id.
- * \param item (in) - group item. 
+ * \param item (in) - group item.
  */
-long 
+long
 CatalogForm::getGroupId( Q3ListViewItem * item )
 {
 	Q3ValueList<Q3ListViewItem*> lst = map_gr.values();
@@ -557,7 +557,7 @@ return key;
  * Adds new group.
  * \param parentItem (in) - parent group. If parent group == 0, group adds in root.
  */
-void 
+void
 CatalogForm::new_group( Q3ListViewItem * parentItem )
 {
 	qulonglong id = getGroupId(parentItem);
@@ -567,7 +567,7 @@ CatalogForm::new_group( Q3ListViewItem * parentItem )
 	if(!id)
 	{
 		id = getElementId(parentItem);
-		if(id) 
+		if(id)
 		{
 			cfg_message(0,tr("Can't added group to element"));
 			return;
@@ -599,14 +599,14 @@ CatalogForm::new_group( Q3ListViewItem * parentItem )
 	ListView->setCurrentItem(item);
 	ListView->setSelected(item,true);
 	//ListView->setFocus();
-	
+
 }
 
 /*!
  * Gets pixmap for group.
  * \return pixmap.
  */
-QPixmap 
+QPixmap
 CatalogForm::getGroupPixmap()
 {
  QPixmap  pixmap = qPixmapFromMimeSource("group2.png");
@@ -623,7 +623,7 @@ return pixmap;
  * Gets pixmap for element.
  * \return pixmap.
  */
-QPixmap 
+QPixmap
 CatalogForm::getElementPixmap()
 {
 	QPixmap  pixmap= qPixmapFromMimeSource("field2.png");
@@ -638,7 +638,7 @@ return pixmap;
  * Gets pixmap for mark deleted element or group.
  * \return pixmap.
  */
-QPixmap 
+QPixmap
 CatalogForm::getMarkDeletedPixmap()
 {
 	QPixmap  pixmap = qPixmapFromMimeSource("editdelete2.png");
@@ -662,7 +662,7 @@ void CatalogForm::del_item( Q3ListViewItem * item )
 		cat->select(id);
 		if(cat->First())
 		{
-			cat->delElement();    
+			cat->delElement();
 			map_el.remove(id);
 			delete item;
 			item = 0;
@@ -675,7 +675,7 @@ void CatalogForm::del_item( Q3ListViewItem * item )
 		{
 			Q3ValueList<qulonglong> listDeletedId;
 			cat->delGroup(id, listDeletedId);
-			Q3ValueList<qulonglong>::iterator it = listDeletedId.begin(); 
+			Q3ValueList<qulonglong>::iterator it = listDeletedId.begin();
 			while(it!= listDeletedId.end())
 			{
 				if(map_el.contains(*it)) map_el.remove(*it);
@@ -702,7 +702,7 @@ void CatalogForm::mark_deleted( Q3ListViewItem * item )
 //	cat->setSelected(true);
 	if(cat->First())
 	{
-		cat->setMarkDeletedElement(id,true);    
+		cat->setMarkDeletedElement(id,true);
 		item->setPixmap(0,getMarkDeletedPixmap());
 	}
    }
@@ -714,7 +714,7 @@ void CatalogForm::mark_deleted( Q3ListViewItem * item )
 		loadElements(id); // populate items in group
 		Q3ValueList<qulonglong> listDeletedId;
 		cat->getMarkDeletedList(id,listDeletedId);
-		Q3ValueList<qulonglong>::iterator it = listDeletedId.begin(); 
+		Q3ValueList<qulonglong>::iterator it = listDeletedId.begin();
 		while(it != listDeletedId.end()) //first delete elements in this group
 		{
 			if(map_el.contains(*it))
@@ -731,7 +731,7 @@ void CatalogForm::mark_deleted( Q3ListViewItem * item )
 		it = listDeletedId.begin();
 		while(it != listDeletedId.end()) //second delete groups
 		{
-			if(map_gr.contains(*it)) 
+			if(map_gr.contains(*it))
 			{
 				map_gr[*it]->setPixmap(0, getMarkDeletedPixmap());
 				cat->setMarkDeletedGroup(*it,true);
@@ -759,7 +759,7 @@ void CatalogForm::undo_mark_deleted( Q3ListViewItem * item )
 	  	cat->select(id);
 		if(cat->First())
 		{
-			cat->setMarkDeletedElement(id,false);    
+			cat->setMarkDeletedElement(id,false);
 			item->setPixmap(0,getElementPixmap());
 		}
    	}
@@ -773,7 +773,7 @@ void CatalogForm::undo_mark_deleted( Q3ListViewItem * item )
 			Q3ValueList<qulonglong> listDeletedId;
 		   //	cat->setMarkDeletedGroup(id, listDeletedId,false);
 	   		cat->getMarkDeletedList(id, listDeletedId);
-			Q3ValueList<qulonglong>::iterator it = listDeletedId.begin(); 
+			Q3ValueList<qulonglong>::iterator it = listDeletedId.begin();
 			while(it != listDeletedId.end()) //first delete elements in this group
 			{
 				if(map_el.contains(*it))
@@ -790,7 +790,7 @@ void CatalogForm::undo_mark_deleted( Q3ListViewItem * item )
 			it = listDeletedId.begin();
 			while(it != listDeletedId.end()) //second delete groups
 			{
-				if(map_gr.contains(*it)) 
+				if(map_gr.contains(*it))
 				{
 					map_gr[*it]->setPixmap(0, getGroupPixmap());
 					cat->setMarkDeletedGroup(*it,false);
@@ -814,7 +814,7 @@ void CatalogForm::edit( Q3ListViewItem * item, int)
 void CatalogForm::edit( Q3ListViewItem * item, bool afterNew)
 {
 //	QWidget *wd = topLevelWidget();
-	aLog::print(aLog::DEBUG, tr("Catalog Form edit element start"));	
+	aLog::print(aLog::DEBUG, tr("Catalog Form edit element start"));
    MainForm * mw = (MainForm*) topLevelWidget();
    if(mw)
    {
@@ -823,7 +823,7 @@ void CatalogForm::edit( Q3ListViewItem * item, bool afterNew)
   	{
 		aLog::print(aLog::DEBUG, tr("Catalog Form edit element with id=%1").arg(id));
 		cat->select(id);
-		if(idElementForm) 
+		if(idElementForm)
 		{
 			if(!cat->isElementMarkDeleted())
 			{
@@ -851,7 +851,7 @@ void CatalogForm::edit( Q3ListViewItem * item, bool afterNew)
 		aLog::print(aLog::DEBUG, tr("Catalog Form edit group with id = %1").arg(id));
 		if(id)
 		{
-			
+
 			cat->groupSelect(id);
 			if(idGroupForm)
 			{
@@ -881,7 +881,7 @@ void CatalogForm::edit( Q3ListViewItem * item, bool afterNew)
   else
   {
 	aLog::print(aLog::ERROR, tr("Catalog Form main widget is not 'MainForm'"));
-  } 
+  }
 
 }
 
@@ -896,7 +896,7 @@ void CatalogForm::select( Q3ListViewItem * item )
 	{
 		res = getElementId(item);
 		cat->select(res);
-		if(!cat->isElementMarkDeleted()) 
+		if(!cat->isElementMarkDeleted())
 		{
 			setId(res);
 			doOk();
@@ -905,7 +905,7 @@ void CatalogForm::select( Q3ListViewItem * item )
 	else
 	{
 		cat->groupSelect(res);
-		if(!cat->isGroupMarkDeleted()) 
+		if(!cat->isGroupMarkDeleted())
 		{
 			setId(res);
 			doOk();
@@ -917,7 +917,7 @@ void CatalogForm::select( Q3ListViewItem * item )
 
 /*!
  * Gets element id.
- * \param item (in) - element item. 
+ * \param item (in) - element item.
  */
 qulonglong CatalogForm::getElementId( Q3ListViewItem * item )
 {
@@ -962,7 +962,7 @@ void CatalogForm::Refresh( qulonglong id )
 		cat->select( id );
 		for(uint i=0; i<fieldList.count(); i++)
 		{
-			
+
 			item->setText(i,cat->sysValue(fieldList[i]).toString());
 			ListView->setFocus();
 		}

@@ -39,9 +39,9 @@
 
 void eField::init()
 {
-	
 
-	
+
+
 }
 
 
@@ -49,26 +49,26 @@ void eField::init()
 void eField::setData( QWidget *o, aCfg *cfg )
 {
 	md = cfg;
-	if(!o) 
+	if(!o)
 	{
 		reject();
 		return;
-	} 
+	}
 	if ( o->className() != QString("wField") || !md ) {
 	    reject();
 	    return;
-	} 
+	}
     wField *f = ( wField*) o;
     QString ts = f->getFieldType();
 //    printf(">>> fieldType = %s;\n", ts.ascii() );
     char t=' ';
     int w=0, d=0, oid, idx=0;
     unsigned int i;
-    
+
 //    eName->setText(f->getName());
     otypes.clear();
     eType->clear();
-    
+
     QStringList tlist = md->types();
     otypes.clear();
     eType->clear();
@@ -111,10 +111,10 @@ void eField::getData( QWidget *o )
     if ( !o ) return;
     if ( o->className() != QString("wField") ) return;
     wField *f = ( wField*) o;
-    wField::tEditorType type;	
+    wField::tEditorType type;
     char ntype[40]="";
     int idx=eType->currentItem();
-    
+
     if (f) {
 	//f->setName(eName->text());
 	sprintf(ntype, (const char *) otypes[idx], eWidth->value(), eDec->value());

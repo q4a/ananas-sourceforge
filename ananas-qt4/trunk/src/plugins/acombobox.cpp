@@ -35,37 +35,37 @@ AComboBox::AComboBox(  bool rw, QWidget* parent, const char* name ):QComboBox( r
 AComboBox::~AComboBox(){
 }
 
-int		
-AComboBox::count() const { 
+int
+AComboBox::count() const {
 	return QComboBox::count();
 }
 
 void
-AComboBox::insertStringList( const QStringList &list, int index ) { 
+AComboBox::insertStringList( const QStringList &list, int index ) {
 	QComboBox::insertStringList( list, index );
 };
 
-void
+/*--void
 AComboBox::insertStrList( const Q3StrList &list, int index ){
 	QComboBox::insertStrList( list, index );
 };
-    
+
 void
 AComboBox::insertStrList( const Q3StrList *list, int index ){
 	QComboBox::insertStrList( list, index );
 };
-    
-void	
+
+void
 AComboBox::insertStrList( const char **str, int numStrings, int index){
 	QComboBox::insertStrList( str, numStrings, index );
-};
+};*/
 
-void	
+void
 AComboBox::insertItem( const QString &text, int index ){
 	QComboBox::insertItem( text, index);
 };
-    
-void	
+
+void
 AComboBox::insertItem( const QPixmap &pixmap, int index ){
 	QComboBox::insertItem( pixmap, index);
 };
@@ -82,189 +82,189 @@ AComboBox::removeItem( int index ){
 };
 
 
-int		
+int
 AComboBox::currentItem() {
 	return QComboBox::currentItem();
 };
 
-void 
+void
 AComboBox::setCurrentItem( int index ){
 	QComboBox::setCurrentItem( index );
 };
 
 
-QString 	
+QString
 AComboBox::currentText() const {
 	return QComboBox::currentText();
 };
 
-void 
+void
 AComboBox::setCurrentText( const QString& string){
 	QComboBox::setCurrentText( string );
 };
 
 
-QString 	
-AComboBox::text( int index ) const { 
+QString
+AComboBox::text( int index ) const {
 	return QComboBox::text( index );
 };
 
-const QPixmap *
-AComboBox::pixmap( int index ) const { 
+const QPixmap
+AComboBox::pixmap( int index ) const {
 	return QComboBox::pixmap( index );
 };
 
-void	
+void
 AComboBox::changeItem( const QString &text, int index ){
 	QComboBox::changeItem( text, index );
 };
 
-void	
+void
 AComboBox::changeItem( const QPixmap &pixmap, int index ){
 	QComboBox::changeItem( pixmap, index );
 };
 
-void	
+void
 AComboBox::changeItem( const QPixmap &pixmap, const QString &text, int index ){
 	QComboBox::changeItem( pixmap, text, index );
 };
 
 
-bool	
+/*--bool
 AComboBox::autoResize() const {
 	return QComboBox::autoResize();
 };
 
-void 
+void
 AComboBox::setAutoResize( bool val){
 	QComboBox::setAutoResize( val );
-};
+};*/
 
-QSize	
-AComboBox::sizeHint() const { 
+QSize
+AComboBox::sizeHint() const {
 	return QComboBox::sizeHint();
 };
 
-void	
+void
 AComboBox::setPalette( const QPalette &pal ){
 	QComboBox::setPalette( pal );
 };
 
-void	
+void
 AComboBox::setFont( const QFont & font) {
 	QComboBox::setFont( font );
 };
 
-void	
+void
 AComboBox::setEnabled( bool val){
 	QComboBox::setEnabled( val);
 };
 
 
-void 
+/*--void
 AComboBox::setSizeLimit( int size ){
 	QComboBox::setSizeLimit( size );
 };
 
-int		
+int
 AComboBox::sizeLimit() const {
 	return QComboBox::sizeLimit();
-};
+};*/
 
-void 
+void
 AComboBox::setMaxCount( int cnt ){
 	QComboBox::setMaxCount( cnt );
 }
 
-int	
+int
 AComboBox::maxCount() const {
 	return QComboBox::maxCount();
 }
 
-void 
+void
 AComboBox::setInsertionPolicy(QComboBox::Policy policy ){
 	QComboBox::setInsertionPolicy(policy );
 }
 
-QComboBox::Policy	
+QComboBox::Policy
 AComboBox::insertionPolicy() const{
 	return QComboBox::insertionPolicy() ;
 }
 
 
-void 
+void
 AComboBox::setValidator( const QValidator * v){
 	QComboBox::setValidator( v );
 }
 
-const QValidator * 
+const QValidator *
 AComboBox::validator() const{
 	return QComboBox::validator();
 }
 
-void 
+/*--void
 AComboBox::setListBox( Q3ListBox * lb){
 	QComboBox::setListBox( lb );
 }
 
-Q3ListBox *	
+Q3ListBox *
 AComboBox::listBox() const {
 	return QComboBox::listBox();
-}
-    
-void 
+}*/
+
+void
 AComboBox::setLineEdit( QLineEdit *edit ){
 	QComboBox::setLineEdit( edit );
 }
-    
-QLineEdit*	
+
+QLineEdit*
 AComboBox::lineEdit() const{
 	return QComboBox::lineEdit();
 }
 
 
-void 
+void
 AComboBox::setAutoCompletion( bool val ){
 	QComboBox::setAutoCompletion( val );
 }
 
-bool	
+bool
 AComboBox::autoCompletion() const{
 	return QComboBox::autoCompletion();
 }
 
-bool	
+bool
 AComboBox::eventFilter( QObject *object, QEvent *event ){
 	return QComboBox::eventFilter( object, event );
 }
 
-void	
+void
 AComboBox::setDuplicatesEnabled( bool enable ){
 	QComboBox::setDuplicatesEnabled( enable );
 }
 
-bool	
+bool
 AComboBox::duplicatesEnabled() const{
 	return QComboBox::duplicatesEnabled();
 }
 
-bool	
+bool
 AComboBox::editable() const{
 	return QComboBox::editable();
 }
 
-void	
+void
 AComboBox::setEditable( bool val ){
 	QComboBox::setEditable( val );
 }
 
-void 
+void
 AComboBox::popup(){
 	QComboBox::popup();
 }
 
 
-void	
+void
 AComboBox::hide(){
 	QComboBox::hide();
 }

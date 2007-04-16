@@ -73,10 +73,10 @@ private:
 
 /*!
  * \en	Class for editing documents tables. \_en
- * \ru 	
+ * \ru
  * 	\brief Визуальный класс для редактирования табличных частей документа.
  * 	Наследует QDataTable.
- * 	
+ *
  * 	Поддерживает редактирование журнала документов
  * 	и таблицы элементов каталога.
  * \_ru
@@ -120,7 +120,7 @@ public:
 	QString		getFieldType(long idField); // return attribute `type' value
 	int		getTableInd(int id);
 	int		getTableId(int ind);
-	
+
 	//	void 	init( aDatabase *adb );
 	void		init();
 	void		init(aDatabase *adb, aEngine *e = 0 ); // call in ananas engine
@@ -149,7 +149,7 @@ public:
 
 	QString	getEditFormName() const	{ return vEditFormName;};
 	void 	setEditFormName( QString name)	{ vEditFormName = name;	};
-	
+
 	QString	containerType()	const { return container_type;};
 	void 	setContainerType( QString name)	{ container_type = name; };
 	QPixmap systemIcon();
@@ -166,7 +166,7 @@ public slots:
 	bool searchColumn( const QString &text, bool FromCurrent = FALSE, bool Forward = TRUE );
 	void searchOpen( const QString &text = "" );
 	void searchClose();
-	
+
 protected slots:
 	void doubleClickEventHandler(int , int , int, const QPoint& ); //parametrs not used
 	virtual void updateTableCellHandler(int, int);
@@ -187,7 +187,7 @@ signals:
  *	\~russian
  *	Сигнал испускается после удаления строки таблицы.
  *	\~
- */	
+ */
 	void deleteLine(QSqlRecord *rec);
 /*!
  *	\~english
@@ -219,7 +219,7 @@ signals:
 	//if container has another type, then do QDataTable context menu
 	//and this signal no emitted
 //=======
-	
+
 /*!
  *	\~english
  *	signals from context menu for connecting to wJournal
@@ -231,13 +231,13 @@ signals:
  *	и эти сигналы не испускаются.
  *	\~
  *	\see updateRequest(); deleteRequest(); viewRequest();
- *	
+ *
 */
 //>>>>>>> 1.45.2.4
 	void insertRequest();
 /*!
  *	\see insertRequest();
-*/	
+*/
 	void updateRequest();
 /*!
  *	\see insertRequest();
@@ -245,7 +245,7 @@ signals:
 	void deleteRequest();
 /*!
  *	\see insertRequest();
-*/	
+*/
 	void viewRequest();
 	// end
 
@@ -280,10 +280,10 @@ private:
 	QPixmap t_cat_ed;
 	QPixmap t_cat_g;
 	QPixmap t_cat_gd;
-	
+
 	int lastEditedRow;
 	int lastEditedCol;
-	
+
 	QString container_type;
 	qulonglong	doc_id;
 	qulonglong	cat_group_id;
@@ -302,8 +302,8 @@ private:
 
 /*!
  * \en	Class for support custom editor in wDBTable. \_en
- * \ru 	
- * 	\brief Класс для поддержки собственного редактора поля в wDBTable. 
+ * \ru
+ * 	\brief Класс для поддержки собственного редактора поля в wDBTable.
  * 	Наследует QSqlEditorFactory.
  * \_ru
  */
@@ -311,10 +311,10 @@ class aEditorFactory: public Q3SqlEditorFactory
 {
 public:
 /*!
- * \~english	Constructor 
+ * \~english	Constructor
  * \~russian 	Конструктор \~
  */
-	aEditorFactory(QObject * parent = 0, const char * name = 0):Q3SqlEditorFactory(parent,name) {};
+	aEditorFactory(QObject * parent = 0, const char * name = 0):Q3SqlEditorFactory(parent/*--,name*/) {};
 	QWidget * createEditor (QWidget * parent, const QSqlField * field);
 	void setMd(aCfg *md);
 private:

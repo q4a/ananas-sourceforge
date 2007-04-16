@@ -40,13 +40,15 @@
 #include "wdbtable.h"
 //Added by qt3to4:
 #include <Q3ValueList>
+#include <Q3SqlFieldInfo>
+
 
 void eDBTable::init()
 {
 }
 
 
-void 
+void
 eDBTable::destroy()
 {
 //	tablerow_free( r );
@@ -57,7 +59,7 @@ eDBTable::destroy()
 void eDBTable::insertColumn(const char *Header, const char *Name,
 int idxt, int cw, int tw, int td)
 {
-    
+
 tablefield *f;
 char s[30];
 
@@ -80,7 +82,7 @@ ListCol->insertItem(trUtf8(Header));
 //	eColTDec->setValue(td);
 //	blockSignals( false );
 if (ListCol->count()) ListCol->setCurrentItem(ListCol->count()-1);
-	
+
 }
 */
 
@@ -115,23 +117,29 @@ void eDBTable::ColumnL()
 	if(idx>0)
 	{
 		str = fname[idx];
-		it = fname.at(idx);
-		fname.remove(it);
-		it = fname.at(idx-1);
-		fname.insert(it,str);
-		
+		//--it = fname.at(idx);
+		//--fname.remove(it);
+		fname.removeAt(idx);
+		//--it = fname.at(idx-1);
+		//--fname.insert(it,str);
+		fname.insert(idx-1,str);
+
 		str = idlist[idx];
-		it = idlist.at(idx);
-		idlist.remove(it);
-		it = idlist.at(idx-1);
-		idlist.insert(it,str);
-		
+		//--it = idlist.at(idx);
+		//--idlist.remove(it);
+		idlist.removeAt(idx);
+		//--it = idlist.at(idx-1);
+		//--idlist.insert(it,str);
+		idlist.insert(idx-1,str);
+
 		str = cwidth[idx];
-		it = cwidth.at(idx);
-		cwidth.remove(it);
-		it = cwidth.at(idx-1);
-		cwidth.insert(it,str);
-		
+		//--it = cwidth.at(idx);
+		//--cwidth.remove(it);
+		cwidth.removeAt(idx);
+		//--it = cwidth.at(idx-1);
+		//--cwidth.insert(it,str);
+		cwidth.insert(idx-1,str);
+
 	 	str = ListCol->currentText();
 		ListCol->removeItem(idx);
 		ListCol->insertItem(str,idx-1);
@@ -149,23 +157,29 @@ void eDBTable::ColumnR()
 	if(idx<ListCol->count()-1)
 	{
 		str = fname[idx];
-		it = fname.at(idx);
-		fname.remove(it);
-		it = fname.at(idx+1);
-		fname.insert(it,str);
-		
+		//--it = fname.at(idx);
+		//--fname.remove(it);
+		fname.removeAt(idx);
+		//--it = fname.at(idx+1);
+		//--fname.insert(it,str);
+		fname.insert(idx+1,str);
+
 		str = idlist[idx];
-		it = idlist.at(idx);
-		idlist.remove(it);
-		it = idlist.at(idx+1);
-		idlist.insert(it,str);
-		
+		//--it = idlist.at(idx);
+		//--idlist.remove(it);
+		idlist.removeAt(idx);
+		//--it = idlist.at(idx+1);
+		//--idlist.insert(it,str);
+		idlist.insert(idx+1,str);
+
 		str = cwidth[idx];
-		it = cwidth.at(idx);
-		cwidth.remove(it);
-		it = cwidth.at(idx+1);
-		cwidth.insert(it,str);
-	 	
+		//--it = cwidth.at(idx);
+		//--cwidth.remove(it);
+		cwidth.removeAt(idx);
+		//--it = cwidth.at(idx+1);
+		//--cwidth.insert(it,str);
+		cwidth.insert(idx+1,str);
+
 		str = ListCol->currentText();
 		ListCol->removeItem(idx);
 		ListCol->insertItem(str,idx+1);
@@ -178,8 +192,8 @@ void eDBTable::ColumnSel(int col)
 QString str,s;
 int ind = 0;
 QStringList lst;
-	eColHeader->blockSignals(true);	
-	eColWidth->blockSignals(true);	
+	eColHeader->blockSignals(true);
+	eColWidth->blockSignals(true);
 	eType->clear();
 	eColTWidth->setValue(0);
 	eColTDec->setValue(0);
@@ -192,14 +206,14 @@ QStringList lst;
 	//ListCol->changeItem(s, ListCol->currentItem());
 
 //	printf(">>>read property DefHeaders in %s\n", table->name());
-//	lst = table->property("DefHeaders").toStringList();	
+//	lst = table->property("DefHeaders").toStringList();
 //	printf(">>>ok!\n");
 //	ListCol->clear();
 //	printf(">>>insert str list\n");
 //	ListCol->insertStringList(lst);
 //	ListCol->setCurrentItem(col);
 //	ListCol->blockSignals( FALSE );
-	if(col==-1 || ListCol->count()==0) return;	
+	if(col==-1 || ListCol->count()==0) return;
 //	printf(">>>set text in eColHeader\n");
 	eColHeader->setText(ListCol->currentText());
 	eColHeader->blockSignals(false);
@@ -212,9 +226,9 @@ QStringList lst;
 //	eType->clear();
 //	printf(">>>get fields type\n");
 //	str = eColName->text();
-	
+
 	str = table->getFieldType(idlist[ind].toInt());
-//	parse string with type, num, numdec 
+//	parse string with type, num, numdec
 	if(!str.isEmpty())
 	{
 		eType->setText(str.left(1));
@@ -240,7 +254,7 @@ QStringList lst;
 	{
 //		printf(">>>unknown field\n");
 	}
-	/*    
+	/*
 	tablefield *f;
 
 	if (col >= 0 && col < tablerow_columns( r )) {
@@ -254,7 +268,7 @@ QStringList lst;
 		eColTDec->setValue(f->decimals);
 		blockSignals( false );
 	}
-*/	
+*/
 }
 
 
@@ -272,7 +286,7 @@ Q3ValueList<int> listTableId;
 		ListCol->clear();
 		ListCol->insertItem("table in use!");
 		ListCol->setEnabled(false);
-		bOK->setEnabled(false);		
+		bOK->setEnabled(false);
 		ColumnSel(-1); // clear all line edit and labels
 		return;
 	}
@@ -288,7 +302,7 @@ Q3ValueList<int> listTableId;
 	{
 		cwidth << table->property("DefaultColWidth").toString();
 	}
-	//fname = table->fname;	
+	//fname = table->fname;
 	findDeletedFields(id,idlist);
 
 }
@@ -320,7 +334,7 @@ const Q3SqlFieldInfo *f;
 			t->cur->append(*f);
 			t->setSqlCursor(t->cur);
 			t->addColumn(f->name(),str,atoi(cwidth[j].ascii()));
-			t->refresh(Q3DataTable::RefreshColumns); 
+			t->refresh(Q3DataTable::RefreshColumns);
 		}
 		t->setProperty("DefHeaders",lst);
 		t->setProperty("DefFields",fname);
@@ -346,7 +360,7 @@ aCfgItem own;
 aWidget *wo;
          table = t;
 //        md->print();
-//		own = 
+//		own =
 	//	wo = aWidget::parentContainer( t );
 	//	if ( !wo ) return;
 	//	tables = md->objTables( wo->getId() );
@@ -361,7 +375,7 @@ aWidget *wo;
 	ComboBoxTable->insertStringList(table->list_available_tables, 1);
 	idTable = table->property("TableInd").toInt(&ok);
         //    printf("table ind = %i, id table =%i\n", t->getTableInd(idTable), idTable );
-        
+
         	ComboBoxTable->setCurrentItem(1+t->getTableInd(idTable));
 	if(ok && idTable>-1)
 	{
@@ -379,9 +393,9 @@ aWidget *wo;
 	//ComboBoxTable->setFocus();
 //       	tmp_table = *t;
 		lst = table->property("DefHeaders").toStringList();
-		ListCol->insertStringList(lst,0);  
+		ListCol->insertStringList(lst,0);
 		cwidth = table->property("ColWidth").toStringList();
-		fname = table->property("DefFields").toStringList();	
+		fname = table->property("DefFields").toStringList();
 		idlist = table->property("DefIdList").toStringList();
 		findDeletedFields(idTable,idlist);
 	}
@@ -481,7 +495,7 @@ void eDBTable::ColWidthChange( int value )
 }
 
 
-QStringList 
+QStringList
 eDBTable::findDeletedFields( int t_num ,QStringList idls)
 {
 	QStringList lst_full;
@@ -490,14 +504,14 @@ eDBTable::findDeletedFields( int t_num ,QStringList idls)
 	lst_full = table->getFields(t_num,true);
 	for(unsigned int i=0;i<lst_full.count();i++)
 	{
-//		printf(">>>field '%s'\n",lst_full[i].ascii());	
+//		printf(">>>field '%s'\n",lst_full[i].ascii());
 		if(idls.find(lst_full[i])==idls.end())
 		{
 			deletedFieldsId << lst_full[i];
 			deletedFields << table->getFieldName(lst_full[i].toInt());
 		}
-	}		
-return deletedFields;	
+	}
+return deletedFields;
 }
 
 

@@ -20,7 +20,7 @@ void eSelectDocType::setJournal( aCfg *md, int id )
     aCfgItem obj, dobj;
     int i, cnt, t, did;
     QString name;
-    
+
     listDocs->clear();
     dlist.clear();
     obj = md->find( id );

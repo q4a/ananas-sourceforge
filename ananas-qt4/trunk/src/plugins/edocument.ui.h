@@ -41,7 +41,7 @@
 
 void eDocument::init()
 {
-/*    
+/*
 	int oc, i, f, idx=0;
 	char *id, *name, *ot;
 	cfg_objptr o;
@@ -81,7 +81,7 @@ void eDocument::init()
 			eType->insertItem(named, idx++);
 		}
 	}
-*/	
+*/
 }
 
 
@@ -93,7 +93,7 @@ void eDocument::setData( QWidget *o, aCfg *md )
 	    if ( o->className() != QString("wDocument") || !md ) {
 		reject();
 		return;
-	    } 
+	    }
 	}
 	else {
 		reject();
@@ -137,7 +137,7 @@ void eDocument::getData( QWidget *o )
             if ( !o ) return;
 	if ( o->className() != QString("wDocument") ) return;
 	wDocument *f = ( wDocument*) o;
-   
+
 	int idx=eType->currentItem();
 	int oid = 0;
 
@@ -149,6 +149,6 @@ void eDocument::getData( QWidget *o )
 //			f->setId( oid );
 		}
 	}
-	
+
 }
 

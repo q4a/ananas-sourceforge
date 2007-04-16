@@ -8,7 +8,7 @@
 **
 ** Copyright (C) 2003-2004 Grigory Panov, Yoshkar-Ola.
 **
-** This file is part of the Designer application of the Ananas 
+** This file is part of the Designer application of the Ananas
 ** automation accounting system.
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -35,9 +35,9 @@
 #include <q3listbox.h>
 #include <qlineedit.h>
 #include <q3listview.h>
-#include <qlayout.h> 
+#include <qlayout.h>
 #include <qlabel.h>
-#include <qevent.h> 
+#include <qevent.h>
 #include <q3popupmenu.h>
 //Added by qt3to4:
 #include <Q3Frame>
@@ -53,22 +53,22 @@ public:
 	~aListBox();
 	void insertItem(const QString &s, long idx, int index = -1);
 	void show(QWidget *w, Q3Frame *fr);//, QLabel *lb);
-		
+
 	long getId(int ind) { return atol(listPrivate->text(ind).ascii()); };
-	
+
 	void clear();
 	//void setId(long idx) {id = idx;};
 public slots:
 	virtual void setFocus();
 
 protected:
-	
-	virtual void keyPressEvent ( QKeyEvent *e );	
-	void focusOutEvent ( QFocusEvent *e ); 
+
+	virtual void keyPressEvent ( QKeyEvent *e );
+	void focusOutEvent ( QFocusEvent *e );
 protected slots:
 	void doubleClickHandler(Q3ListBoxItem *i);
 	//	QVBoxLayout* layout1;
-//	QLabel * statusBar;	
+//	QLabel * statusBar;
 signals:
 	void keyArrowLRPressed();
 	void keyArrowLRPressed(const QString&);
@@ -86,20 +86,20 @@ class aLineEdit:public QLineEdit
 public:
 	aLineEdit( QWidget* parent, const char* name = 0 );
 	~aLineEdit();
-	
+
 protected:
-	virtual void keyPressEvent ( QKeyEvent *e );	
-	
+	virtual void keyPressEvent ( QKeyEvent *e );
+
 private:
 	QTimer *timer;
-	
+
 public slots:
 	void	stopTimer();
 	virtual void 	setFocus();
 protected slots:
 	void	timerDone();
 	void	timerRestart(const QString & s);
-		
+
 signals:
 	void 	keyArrowPressed();
 	void 	delayTextChanged(const QString &);
@@ -113,15 +113,15 @@ class aListView : public Q3ListView
 public:
 	aListView(QWidget* parent = 0, const char* name = 0, Qt::WFlags f = 0);
 	~aListView();
-	
+
 	Q3PopupMenu *menu;
 	void setDestination(const bool dest);
 	bool getDestination();
 protected:
-	virtual void keyPressEvent ( QKeyEvent *e );	
-	
+	virtual void keyPressEvent ( QKeyEvent *e );
+
 public slots:
-	
+
 	void 	showMenu( Q3ListViewItem* item, const QPoint& p, int);
 	void 	newItem();
 	void 	newGroup();
@@ -131,12 +131,12 @@ public slots:
 	void	edit();
 	void	select();
 	virtual void 	setFocus();
-	
+
 protected slots:
-	void 	doubleClickHandler( Q3ListViewItem *, const QPoint&, int col);	
-	
+	void 	doubleClickHandler( Q3ListViewItem *, const QPoint&, int col);
+
 signals:
-	
+
 	void	sendMessage(const QString &);
  	void	newItemRequest(Q3ListViewItem* parentItem);
 	void	newGroupRequest(Q3ListViewItem* parentItem);
@@ -150,5 +150,5 @@ private:
 	int columnClicked;
 	bool toSelect;
 };
-#endif 
+#endif
 

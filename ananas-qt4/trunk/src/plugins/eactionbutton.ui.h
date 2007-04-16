@@ -39,7 +39,7 @@
 void eActionButton::Action_toggled( bool o )
 {
     Script->setChecked( !o );
-    //else 
+    //else
 }
 
 
@@ -64,7 +64,7 @@ void eActionButton::setData(  wActionButton *b )
     {
 	    cbTurnon->setChecked( false );
 	    cbTurnon->setHidden( TRUE );
-	
+
 //	b->setActionTurnOn( FALSE );
     }
     aCfg *md = wd->getMd();
@@ -75,7 +75,7 @@ void eActionButton::setData(  wActionButton *b )
     cbAction->clear();
     cbAction->insertStringList(l_name);
     cbAction->setCurrentItem( l_id.findIndex( QString("%1").arg(b->getActionId()) ) );
-    
+
 }
 
 
@@ -90,10 +90,10 @@ void eActionButton::getData( wActionButton *button)
     button->setActionUpdate( cbUpdate->isChecked() );
     if(cbAction->isEnabled())
     {
-	    
+
     	button->setActionId ( atoi(l_id[cbAction->currentItem()].ascii()));
     }
-    else 
+    else
     {
 	    button->setActionId(0);
     }
@@ -106,7 +106,7 @@ void eActionButton::destroy()
 }
 
 
-void 
+void
 eActionButton::loadActions( QStringList *lst, QStringList *id,  aCfgItem p, aCfg *md )
 {
 	aCfgItem cobj;
@@ -116,7 +116,7 @@ eActionButton::loadActions( QStringList *lst, QStringList *id,  aCfgItem p, aCfg
 		p = md->find(mdc_actions);
 	//	printf("parent were NULL, set parent to %s\n",md->objClass(p).ascii());
 	}
-	
+
 	if(p.isNull()) return;
 	cobj = md->firstChild ( p );
 	while ( !cobj.isNull() )

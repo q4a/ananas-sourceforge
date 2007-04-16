@@ -45,14 +45,14 @@ class  ANANAS_EXPORT aToolBar : public Q3ToolBar
 private:
     aCfg	*md;
     aEngine *en;
-    Q3IntDict<QAction> actions;    
-    
+    Q3IntDict<QAction> actions;
+
 public:
 	aToolBar( aCfg *cfg, aCfgItem &obj, aEngine *e, Q3MainWindow* parent = 0, const char* name = 0 );
 	~aToolBar();
-	
+
 	void ReadTool( aCfgItem &obj );
-	
+
 public slots:
 	void on_Item();
 };

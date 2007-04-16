@@ -43,7 +43,7 @@
 
 #define FA_FIELD 		"wField"
 #define FA_DBFIELD 		"wDBField"
-#define FA_TABLE 		"wTable" 
+#define FA_TABLE 		"wTable"
 #define FA_DBTABLE 		"wDBTable"
 #define FA_CATALOGUE 		"wCatalogue"
 #define FA_GROUPTREE		"wGroupTree"
@@ -114,8 +114,8 @@ aPlugins::iconSet( const QString& feature) const
 {
 	if ( feature == FA_FIELD ) return QIcon( QPixmap::fromMimeSource( "wfield.png" ) );
     	if ( feature == FA_DBFIELD ) return QIcon( QPixmap::fromMimeSource( "wdbfield.png" ) );
-    	if ( feature == FA_TABLE ) return QIcon( QPixmap::fromMimeSource( "wtable.png" ) ); 
-    	if ( feature == FA_DBTABLE ) return QIcon( QPixmap::fromMimeSource( "wdbtable.png" ) ); 
+    	if ( feature == FA_TABLE ) return QIcon( QPixmap::fromMimeSource( "wtable.png" ) );
+    	if ( feature == FA_DBTABLE ) return QIcon( QPixmap::fromMimeSource( "wdbtable.png" ) );
     	if ( feature == FA_CATALOGUE ) return QIcon( QPixmap::fromMimeSource( "wcatalogue.png" ) );
     	if ( feature == FA_DOCUMENT ) return QIcon( QPixmap::fromMimeSource( "wdocument.png" ) );
     	if ( feature == FA_JOURNAL ) return QIcon( QPixmap::fromMimeSource( "wjournal.png" ) );

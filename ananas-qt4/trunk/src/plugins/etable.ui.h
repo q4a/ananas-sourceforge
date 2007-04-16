@@ -40,7 +40,7 @@
 
 void eTable::init()
 {
-/*    
+/*
 	int oc, i, f, idx=0;
 	char *id, *name, *ot;
 	cfg_objptr o;
@@ -86,11 +86,11 @@ void eTable::init()
 		}
 	}
 	CHECK_POINT
-*/	
+*/
 }
 
 
-void 
+void
 eTable::destroy()
 {
 //	tablerow_free( r );
@@ -101,7 +101,7 @@ eTable::destroy()
 void eTable::insertColumn(const char *Header, const char *Name,
 int idxt, int cw, int tw, int td)
 {
-/*    
+/*
 	tablefield *f;
 	char s[30];
 
@@ -124,7 +124,7 @@ int idxt, int cw, int tw, int td)
 //	eColTDec->setValue(td);
 //	blockSignals( false );
 	if (ListCol->count()) ListCol->setCurrentItem(ListCol->count()-1);
-*/	
+*/
 }
 
 
@@ -137,14 +137,14 @@ void eTable::ColumnAdd()
 
 void eTable::ColumnDel()
 {
-/*    
+/*
 	int idx;
 	idx = ListCol->currentItem();
 	if (ListCol->count() && idx != -1) {
 		tablerow_removecolumn( r, idx );
 		ListCol->removeItem(idx);
 	}
-*/	
+*/
 }
 
 
@@ -162,7 +162,7 @@ void eTable::ColumnR()
 
 void eTable::ColumnSel(int col)
 {
-/*    
+/*
 	tablefield *f;
 
 	if (col >= 0 && col < tablerow_columns( r )) {
@@ -176,13 +176,13 @@ void eTable::ColumnSel(int col)
 		eColTDec->setValue(f->decimals);
 		blockSignals( false );
 	}
-*/	
+*/
 }
 
 
 void eTable::ColumnUpd()
 {
-/*    
+/*
 	tablefield *f;
 
 	if (signalsBlocked()) return;
@@ -205,21 +205,22 @@ void eTable::ColumnUpd()
 		ListCol->blockSignals( FALSE );
 	}
 	CHECK_POINT
-*/	
+*/
 }
 
 
 void eTable::setData( QWidget *o, aCfg *md )
 {
-    
-	QStringList sl;	
+
+	QStringList sl;
 	unsigned int i;
 	QString ft,h,n;
 	int w=0, l=0, d=0, idxt=0;
 	char st[20];
 
 	wTable *t = (wTable *) o;
-	eTabName->setText(t->getName());
+	//--eTabName->setText(t->getName());
+	eTabName->setText(t->objectName());
 /*
 	if (!t->getDefineCols().isEmpty()) {
 		sl = QStringList::split("\n",t->getDefineCols());
@@ -234,19 +235,19 @@ void eTable::setData( QWidget *o, aCfg *md )
 				if (ft[0]=='O' && otypes[idxt]==ft) break;
 				else if (otypes[idxt][0]==ft[0]) break;
 			}
-			printf("set data %i = %s %s %i %i %i\n", i, 
+			printf("set data %i = %s %s %i %i %i\n", i,
 			(const char *)h, (const char *)n, idxt, w, l);
 			insertColumn(h,n,idxt,w,l,d);
-		}	
+		}
 	}
-*/	
+*/
 }
 
 
 void eTable::getData( QWidget *o )
 {
 	wTable *t = (wTable *) o;
-/*    
+/*
 	int i;
 	QStringList sl;
 	QString cdef, ft, s;
@@ -266,14 +267,14 @@ void eTable::getData( QWidget *o )
 	CHECK_POINT
 	printf("getData defs = %s\n",(const char *)s.utf8());
 	t->setDefineCols(s);
-*/	
+*/
 	t->setName(eTabName->text());
 }
 
 
 void eTable::ColumnTextUpd( const QString &s )
 {
-/*    
+/*
 	int idx;
 	idx = ListCol->currentItem();
 	if (idx == -1) return;
@@ -281,7 +282,7 @@ void eTable::ColumnTextUpd( const QString &s )
 	ListCol->changeItem(s, ListCol->currentItem());
 	ListCol->blockSignals( FALSE );
 	CHECK_POINT
-*/	
+*/
 }
 
 

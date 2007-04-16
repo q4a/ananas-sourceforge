@@ -77,14 +77,14 @@ wActionButton::openEditor()
 
 
 
-void 
+void
 wActionButton::onClick()
 {
-//CHECK_POINT   
+//CHECK_POINT
 }
 
 void
-wActionButton::keyPressHandler ( QKeyEvent * e )	
+wActionButton::keyPressHandler ( QKeyEvent * e )
 {
 	CHECK_POINT
 	switch(e->key())
@@ -98,7 +98,7 @@ wActionButton::keyPressHandler ( QKeyEvent * e )
 				e->accept();
 			}
 		break;
-	
+
 	}
 	//printf("key pressed %c",e->ascii());
 	//QWidget::keyPressEvent ( e );

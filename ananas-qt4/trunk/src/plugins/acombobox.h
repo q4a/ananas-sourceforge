@@ -29,6 +29,7 @@
 #include <QPixmap>
 #include <Q3StrList>
 #include <QEvent>
+#include <Q3ListBox>
 
 
 /*!
@@ -40,7 +41,7 @@
  * 	последнего.
  * 	Наследует QComboBox.
  *
- * 	Смотрите документацию на QComboBox, поставляемую вместе с библиотекой QT компании TrollTech или на сайте 
+ * 	Смотрите документацию на QComboBox, поставляемую вместе с библиотекой QT компании TrollTech или на сайте
  * 	http://trolltech.com
  *
  * 	Все публичные методы QComboBox доступны как публичные слоты AComboBox.
@@ -53,7 +54,7 @@
  *	myBox.insertItem("Третий пункт");
  *	myBox.setCurrentItem(1); // Порядковые номера наченаются с нуля, так что текущим делаем второй пункт.
  *	\endcode
- * 	
+ *
  * \_ru
  */
 class QT_WIDGET_PLUGIN_EXPORT AComboBox : public QComboBox
@@ -64,13 +65,13 @@ class QT_WIDGET_PLUGIN_EXPORT AComboBox : public QComboBox
 		AComboBox( bool rw, QWidget* parent=0, const char* name=0 );
 		~AComboBox();
 public slots:
-	
+
     int		count() const;
 
     void	insertStringList( const QStringList &, int index=-1 );
-    void	insertStrList( const Q3StrList &, int index=-1 );
-    void	insertStrList( const Q3StrList *, int index=-1 );
-    void	insertStrList( const char **, int numStrings=-1, int index=-1);
+    //--void	insertStrList( const Q3StrList &, int index=-1 );
+    //--void	insertStrList( const Q3StrList *, int index=-1 );
+    //--void	insertStrList( const char **, int numStrings=-1, int index=-1);
 
     void	insertItem( const QString &text, int index=-1 );
     void	insertItem( const QPixmap &pixmap, int index=-1 );
@@ -85,24 +86,24 @@ public slots:
     virtual void setCurrentText( const QString& );
 
     QString 	text( int index ) const;
-    const QPixmap *pixmap( int index ) const;
+    const QPixmap pixmap( int index ) const;
 
     void	changeItem( const QString &text, int index );
     void	changeItem( const QPixmap &pixmap, int index );
     void	changeItem( const QPixmap &pixmap, const QString &text, int index );
 
-    bool	autoResize()	const;
-    virtual void setAutoResize( bool );
+    //--bool	autoResize()	const;
+    //--virtual void setAutoResize( bool );
     QSize	sizeHint() const;
 
     void	setPalette( const QPalette & );
     void	setFont( const QFont & );
     void	setEnabled( bool );
 
-    virtual void setSizeLimit( int );
-    int		sizeLimit() const;
+    //--virtual void setSizeLimit( int );
+    //--int		sizeLimit() const;
 
-    
+
     virtual void setMaxCount( int );
     int		maxCount() const;
 
@@ -112,8 +113,8 @@ public slots:
     virtual void setValidator( const QValidator * );
     const QValidator * validator() const;
 
-    virtual void setListBox( Q3ListBox * );
-    Q3ListBox *	listBox() const;
+    //--virtual void setListBox( Q3ListBox * );
+    //--Q3ListBox *	listBox() const;
 
     virtual void setLineEdit( QLineEdit *edit );
     QLineEdit*	lineEdit() const;
@@ -132,7 +133,7 @@ public slots:
     virtual void popup();
 
     void	hide();
-    
+
 };
 
 

@@ -39,7 +39,7 @@
 
 void eReport::init()
 {
-/*    
+/*
 	int oc, i, f, idx=0;
 	char *id, *name, *ot;
 	cfg_objptr o;
@@ -79,7 +79,7 @@ void eReport::init()
 			eType->insertItem(named, idx++);
 		}
 	}
-*/	
+*/
 }
 
 
@@ -128,7 +128,7 @@ void eReport::init()
 }
 */
 
-void 
+void
 eReport::setData( QWidget *o, aCfg *md )
 {
 //    const QObject *o = sender();
@@ -136,7 +136,7 @@ eReport::setData( QWidget *o, aCfg *md )
 	if ( o->className() != QString("wReport") || !md ) {
 	    reject();
 	    return;
-	} 
+	}
     }
     else {
 	reject();
@@ -146,9 +146,9 @@ eReport::setData( QWidget *o, aCfg *md )
     int w=0, d=0, idx=0;
     unsigned int i;
     long oid , id;
-    
+
     id = f->getId();
-        
+
     QStringList tlist = md->types( md_journal );
     otypes.clear();
     eType->clear();
@@ -171,7 +171,7 @@ eReport::setData( QWidget *o, aCfg *md )
 
 void eReport::getData( QWidget * o )
 {
-    
+
 /*	int idx=eType->currentItem();
 	long oid = 0;
 
@@ -186,16 +186,16 @@ void eReport::getData( QWidget * o )
     if ( !o ) return;
     if ( o->className() != QString("wReport") ) return;
     wReport *f = ( wReport*) o;
-    
+
     int idx=eType->currentItem();
     long oid = 0;
-    
+
     if (f) {
 	if( otypes[idx][0] == 'O' ) {
 	    sscanf( (const char *)otypes[ idx ], "O %d", &oid );
 	    f->setId( oid );
 	}
     }
-    
+
 }
 

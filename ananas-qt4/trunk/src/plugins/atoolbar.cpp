@@ -52,19 +52,19 @@ aToolBar::ReadTool( aCfgItem &obj )
     aCfgItem aobj, apix;	// action and pixmap XML data
     QString aKey;	// key sequence
     long pid;	// action id
-    
+
     aobj = md->firstChild( obj );	//from first child action
     while ( !aobj.isNull() ) {		// foreach not null
 	aKey = md->sText ( aobj, md_key );	//key sequence
 	pid = md->id( aobj );	// action id
-	apix = md->findChild( 
-		md->find( 
-			md->text( md->findChild( aobj, md_comaction, 0 ) ).toLong() ), 
-		            md_active_picture, 
-                  		0 
+	apix = md->findChild(
+		md->find(
+			md->text( md->findChild( aobj, md_comaction, 0 ) ).toLong() ),
+		            md_active_picture,
+                  		0
 		);	// first action pixmap cfg object
 	QPixmap pix( md->binary( apix ) );	// pixmap
-	QAction *a = new QAction( 
+	QAction *a = new QAction(
 		QIcon(pix), // pixmap
 		md->attr( aobj, mda_name), // name
 		aKey, // key sequence
@@ -77,7 +77,7 @@ aToolBar::ReadTool( aCfgItem &obj )
 	aobj = md->nextSibling( aobj );	// get next action
     }
 }
-	
+
 void
 aToolBar::on_Item()
 {

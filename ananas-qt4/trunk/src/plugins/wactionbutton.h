@@ -50,18 +50,18 @@ class QT_WIDGET_PLUGIN_EXPORT wActionButton : public QPushButton
     Q_PROPERTY( bool script READ isScript WRITE setScript DESIGNABLE true)
 //    Q_PROPERTY( QString scriptCode READ getScriptCode WRITE setScriptCode DESIGNABLE false)
 public:
-    
+
     wActionButton( QWidget *parent = 0, const char *name = 0 );
     virtual ~wActionButton();
-    
+
     void openEditor();
 
 
 public slots:
-    
+
     void onClick();
     void keyPressHandler ( QKeyEvent * e );
-    
+
     bool getOpenEditor() const { return false; };
     void setOpenEditor( bool b ) { if( b ) openEditor(); };
     bool isAction() 		const 	{ return action; 	};
@@ -71,7 +71,7 @@ public slots:
     int	 getActionId()	 	const 	{ return actionId; 	};
     bool isScript() 		const 	{ return !action; 	};
     QString getScriptCode() 	const 	{ return scriptCode; 	};
-    
+
     void setAction( bool a ) 		{ action = a; 		};
     void setActionUpdate( bool a ) 	{ actionUpdate = a; 	};
     void setActionTurnOn( bool a ) 	{ actionTurnOn = a; 	};
@@ -80,7 +80,7 @@ public slots:
     void setScript( bool a ) 		{ action = !a;		};
     void setScriptCode( QString a ) 	{ scriptCode = a; 	};
 private:
-   
+
     bool action, actionUpdate, actionTurnOn, actionClose;
     int actionId;
     QString scriptCode;

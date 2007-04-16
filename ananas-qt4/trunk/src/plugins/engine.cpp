@@ -37,7 +37,7 @@
 #include <qsproject.h>
 #include <qsscript.h>
 #include <qdialog.h>
-#include <qwidgetfactory.h>
+//--#include <qwidgetfactory.h>
 #include <qobject.h>
 #include <qsutilfactory.h>
 #include <qsinputdialogfactory.h>
@@ -74,19 +74,19 @@ aObjectsFactory::aObjectsFactory( aEngine *e )
         if ( ! engine ) return;
         db = &e->db;
         if ( ! db ) return;
-	registerClass("PopupMenu","QPopupMenu");
+	registerClass("PopupMenu",&Q3PopupMenu::staticMetaObject);
 //	registerClass("PopupMenu","QApopupmenu");
-	registerClass("Document","aDocument");
-	registerClass("Catalogue","aCatalogue");
-	registerClass("CatalogEditor","wCatalogEditor");
-	registerClass("Report","aReport");
-	registerClass("ARegister","aARegister");
-	registerClass("IRegister","aIRegister");
-	registerClass("ATime","aTime");
-	registerClass("DataField","aDataField");
+	registerClass("Document",&aDocument::staticMetaObject);
+	registerClass("Catalogue",&aCatalogue::staticMetaObject);
+	registerClass("CatalogEditor",&wCatalogEditor::staticMetaObject);
+	registerClass("Report",&aReport::staticMetaObject);
+	registerClass("ARegister",&aARegister::staticMetaObject);
+	registerClass("IRegister",&aIRegister::staticMetaObject);
+	registerClass("ATime",&aTime::staticMetaObject);
+	registerClass("DataField",&aDataField::staticMetaObject);
 //	registerClass("reg","QAreg");
-	registerClass("Journal","aDocJournal");
-	registerClass("ComboBox","AComboBox");
+	registerClass("Journal",&aDocJournal::staticMetaObject);
+	registerClass("ComboBox",&AComboBox::staticMetaObject);
 //registerClass("djournalview","QAjournview");
 //	registerClass("djournalview","QAdocjournal");
 //	registerClass("form","AForms");
@@ -94,9 +94,9 @@ aObjectsFactory::aObjectsFactory( aEngine *e )
 //	registerClass("table","QAnanasTable");
 
 //Register extensions classes
-	QStringList extlist = AExtensionFactory::keys();
-	for ( int i=0; i<extlist.count(); i++) 
-	    registerClass(extlist[i],extlist[i]);
+	/*--QStringList extlist = AExtensionFactory::keys();
+	for ( int i=0; i<extlist.count(); i++)
+	    registerClass(extlist[i],extlist[i]);*/
 }
 
 
@@ -104,7 +104,7 @@ aObjectsFactory::aObjectsFactory( aEngine *e )
 
 /*!
  *	\~english
- *	Creates script object. Mapping Script name to real name. 
+ *	Creates script object. Mapping Script name to real name.
  *	\~russian
  *	Создает объект. Отображает имена из скрипта в имена объектов библиотеки.
  *	\param className - \~english scripn object name \~russian имя объекта в скрипте \~
@@ -114,7 +114,7 @@ aObjectsFactory::aObjectsFactory( aEngine *e )
  */
 QObject *
 aObjectsFactory::create( const QString &className,
-                     const QSArgumentList &arguments, QObject *context )
+                     const QVariantList &arguments, QObject *context )
 {
 	QObject * res = 0;
 //	context=context;
@@ -123,25 +123,25 @@ aObjectsFactory::create( const QString &className,
 			res = new Q3PopupMenu();
 	}else if (className=="Document") {
 		if (arguments.size()>0) {
-			res = new aDocument(arguments[0].variant().toString(), db );
+			res = new aDocument(arguments[0].toString(), db );
 		}
 	}else if (className=="Catalogue") {
 		if (arguments.size()>0) {
-			res = new aCatalogue( arguments[0].variant().toString(), db );
+			res = new aCatalogue( arguments[0].toString(), db );
 		}
 	}else if ( className=="Report" ) {
 		if ( arguments.size()>0 )
 		{
 			if(arguments.size()==2) {
-				res = new aReport( arguments[0].variant().toString(),(aReport::RT_type)arguments[1].variant().toInt(), engine );
+				res = new aReport( arguments[0].toString(),(aReport::RT_type)arguments[1].toInt(), engine );
 			}else{
-				res = new aReport( arguments[0].variant().toString(),aReport::RT_text, engine );
+				res = new aReport( arguments[0].toString(),aReport::RT_text, engine );
 			}
  		}
 	}else if (className =="CatalogEditor") {
 		if (arguments.size()>0) {
 			aCfgItem it;
-			it = db->cfg.find(QString("Catalogue.%1").arg(arguments[0].variant().toString()));
+			it = db->cfg.find(QString("Catalogue.%1").arg(arguments[0].toString()));
 			if(!it.isNull()) {
 				wCatalogEditor * w = new wCatalogEditor(engine->ws,db->cfg.id(it));
 				w->initCat(db);
@@ -150,17 +150,17 @@ aObjectsFactory::create( const QString &className,
 		}
 	}else if (className == "ARegister") {
 		if (arguments.size() > 0) {
-			res = new aARegister(arguments[0].variant().toString(), db);
+			res = new aARegister(arguments[0].toString(), db);
 		}
 
 	}else if (className == "IRegister") {
 		if (arguments.size() > 0) {
-			res = new aIRegister(arguments[0].variant().toString(), db);
+			res = new aIRegister(arguments[0].toString(), db);
 		}
 
 	}else if (className == "Journal") {
 		if (arguments.size() > 0) {
-			res = new aDocJournal(arguments[0].variant().toString(), db);
+			res = new aDocJournal(arguments[0].toString(), db);
 		}
 
 	}else if (className == "ATime") {
@@ -177,12 +177,12 @@ aObjectsFactory::create( const QString &className,
 		res = obj;
 	}else if ( className == "ComboBox" ) {
 		if (arguments.size() == 1) {
-			res = new AComboBox( 0, arguments[0].variant().toString());
+			res = new AComboBox( 0, arguments[0].toString());
 		} else {
 			res = new AComboBox();
 		}
 	}
-	if(!res) aLog::print(aLog::ERROR,QObject::tr("Unknown classname '%1' or metaobject '%2'").arg(className).arg(arguments[0].variant().toString()));
+	if(!res) aLog::print(aLog::ERROR,QObject::tr("Unknown classname '%1' or metaobject '%2'").arg(className).arg(arguments[0].toString()));
 	return res;
 }
 
@@ -193,7 +193,7 @@ aObjectsFactory::create( const QString &className,
  *	Constructor.
  *\_en
  *\ru
- *	Конструктор. Создает новый объект с именем "sys". Доступ к функциям этого объекта из Ананас.Скрипта возможен примерно так: 
+ *	Конструктор. Создает новый объект с именем "sys". Доступ к функциям этого объекта из Ананас.Скрипта возможен примерно так:
  *	\code
  *	sys.Date(); // текущая дата
  *	sys.OpenForm("DocJournal.Системный журнал.Form.Список документов"); // открывает форму "Список Документов" журнала "Системный журнал"
@@ -209,7 +209,7 @@ aEngine::aEngine():QObject(0,"sys")
 
 
 /*!
- *\en 
+ *\en
  *	Destructor
  *\_en \ru
  *	Деструктор.
@@ -236,7 +236,7 @@ aEngine::init( const QString &rcfile )
 {
 //	QString mGlobal;
 	aCfgItem gobj, obj, obj0;
-	QString sysf = 
+	QString sysf =
 //	"function Message( t, msg ){ sys.Message( t, msg );}"
 //	"function StatusMessage( msg ){ sys.StatusMessage( msg );}"
 //	"function Date(){ return sys.Date();}"
@@ -302,7 +302,7 @@ int
 aEngine::on_systemstart(){
 
 	if (project.interpreter()->functions().findIndex("on_systemstart")!=-1) {
-		project.interpreter()->call("on_systemstart",QSArgumentList());
+		project.interpreter()->call("on_systemstart",QVariantList());
 	}
 	return 0;
 }
@@ -315,7 +315,7 @@ aEngine::on_event( const QString &data )
 	lst <<  sender()->name();
 	lst << data;
 	if (project.interpreter()->functions().findIndex("on_event")!=-1) {
-		project.interpreter()->call("on_event", QSArgumentList(lst));
+		project.interpreter()->call("on_event", QVariantList(lst));
 	}
 	emit event( sender()->name(), data );
 }
@@ -335,7 +335,7 @@ aEngine::on_event( const QString &data )
 int
 aEngine::on_systemstop(){
 	if (project.interpreter()->functions().findIndex("on_systemstop")!=-1) {
-		project.interpreter()->call("on_systemstop",QSArgumentList());
+		project.interpreter()->call("on_systemstop",QVariantList());
 	}
 	return 0;
 }
@@ -444,7 +444,8 @@ aEngine::StatusMessage( const QString &msg )
  */
 void
 aEngine::settimer(int sec, QString proc){
-	killTimers();
+    // TODO Need id timer - get from startTimer
+	//--killTimers();
 	if (sec) {
 		pr_timer=proc;
 		startTimer(sec*1000);
@@ -489,7 +490,7 @@ aEngine::on_MenuBar( int id )
  *\en
  *\_en \ru
  *	Вспомогательный метод.
- *	Запускает действие в указанном контексте. Правильная работа не гарантируется (где-то там ошибки есть). 
+ *	Запускает действие в указанном контексте. Правильная работа не гарантируется (где-то там ошибки есть).
  *	\param act - ссылка на объект метаданных, описывающий действие
  *	\param context - контекст выполнения действия.
  *\_ru
@@ -523,7 +524,7 @@ void aEngine::execAction( aCfgItem &act, QObject *context )
 				openEmbedCatalogueEditor(oid, NULL, false); //open to edit
 				break;
 			}
-			
+
 			openForm(oid, foid, satype, 0, 0, 0 );
 			break;
 /*			if ( !arg.isEmpty() ) {
@@ -538,7 +539,7 @@ void aEngine::execAction( aCfgItem &act, QObject *context )
 				printf("form already exist,set focus \n");
 				wl->get( foid )->setFocus();
 			}
-			else 
+			else
 			{
 				printf("execute action\n");
 			if ( oid )
@@ -599,7 +600,7 @@ aForm*
 aEngine::OpenForm(QString fname, int mode, aObject* selecter)//Q_ULLONG ido)
 {
 	aCfgItem object, form;
-	
+
 	form = md->find(fname);
 	if(!form.isNull())
 	{
@@ -699,7 +700,7 @@ aEngine::openForm(int oid, int fid, int defaultfor, int mode, ANANAS_UID id, aWi
 				//printf("open form for edit %llu\n ",id);
 				break;
 			default:
-				aLog::print(aLog::ERROR, tr("aEngine open form mode %1 not supported").arg(defaultfor)); 
+				aLog::print(aLog::ERROR, tr("aEngine open form mode %1 not supported").arg(defaultfor));
 			}
 			connect( this, SIGNAL( event(const QString &, const QString&)),
 				 form, SLOT( on_event(const QString &, const QString&)));
@@ -762,7 +763,7 @@ aEngine::openEmbedCatalogueEditor(int oid, QWidget* parent,const bool toSelect)
 void
 aEngine::error ( const QString & message, QObject * context, const QString & scriptName, int lineNumber )
 {
-	Message( 2, tr("Line:%1 Message:%2 Stack:(%3)").arg(lineNumber).arg(message).arg(code->stackTrace().toString()) );
+	Message( 2, tr("Line:%1 Message:%2 Stack:(%3)").arg(lineNumber).arg(message).arg(code->stackTraceString()) );
 }
 
 

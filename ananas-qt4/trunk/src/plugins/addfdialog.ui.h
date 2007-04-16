@@ -44,7 +44,7 @@
 
 void addfdialog::doOk()
 {
-	int idx; 
+	int idx;
 	idx = ListBox->currentItem();
 	if(idx>=0)
 	{
@@ -65,7 +65,7 @@ void addfdialog::init()
 
 void addfdialog::destroy()
 {
- 
+
 }
 
 
@@ -96,7 +96,7 @@ void addfdialog::setData( QStringList displst, QStringList flst, QStringList ild
 
 void addfdialog::setData( QWidget *o, aCfg *md )
 {
-	
+
 	wDBField *w = (wDBField *)o;
 	w->getFields();
 	setData( w->defDisplayFields, w->defFields,w->defId);

@@ -81,7 +81,7 @@ void eDBField::setData( QWidget *o, aCfg *md )
     widgetId = widget->getId();
     //fieldId = field->getId();
     if ( widgetId ) widget->setMDObject( md->find( widgetId ) );
-    
+
 //    printf( "parent widget id = %i\n", widgetId );
 //    printf( "field id = %i\n", fieldId );
 //    printf( "metadata id = %i\n", md->id( *widget->getMDObject() ) );
@@ -112,7 +112,7 @@ void eDBField::getData( QWidget *o )
     if ( !o ) return;
     if ( o->className() != QString("wDBField") ) return;
     wDBField *f = ( wDBField*) o;
-    
+
     int idx=eName->currentItem();
     long oid = 0;
     if (f) {
