@@ -44,9 +44,9 @@
 #include <Q3Frame>
 #include <QKeyEvent>
 
-#include "command.h"
-#include "mainwindow.h"
-#include "formwindow.h"
+//--#include "command.h"
+//--#include "mainwindow.h"
+//--#include "formwindow.h"
 
 #include "ananas.h"
 #include "wfield.h"
@@ -149,13 +149,13 @@ wField::widgetInit()
     checkBox->hide();
 	disconnect( checkBox, SIGNAL( valueChanged ( const QString & ) ),
 				this, SLOT( setValue( const QString & ) ) );
-		
+
 	disconnect( checkBox, SIGNAL( toggled (bool) ), checkBox, SLOT( on_toggled() ) );
 //     checkBox->disconnect();
     layout()->remove(checkBox);
     //TODO: need rewrite
     if (!vFieldType.isEmpty()) sscanf((const char *)vFieldType,"%s %i %i", s1, &n1, &n2);
-    
+
     switch (vEditorType)
     {
     case Numberic:
@@ -164,7 +164,7 @@ wField::widgetInit()
 		{
 		// set validator for numeric type
 			QString str = tr("^\\-{0,1}\\d{0,%1}\\.{1}\\d{0,%2}$").arg(3).arg(3);
-			QRegExp rexp = str;
+			QRegExp rexp( str );
 			lineEdit->setValidator(new QRegExpValidator(rexp,lineEdit));
 		}
 		else
@@ -173,26 +173,26 @@ wField::widgetInit()
 			{
 			   // set default validator for integer type
 			   QString str = tr("^\\-{0,1}\\d{0,%1}$").arg(n1);
-			   QRegExp rexp = str;
+			   QRegExp rexp( str );
 			   lineEdit->setValidator(new QRegExpValidator(rexp,lineEdit));
 			}
 			else
 			{
 				// set default validator for float type
 				QString str = tr("^\\-{0,1}\\d{0,%1}\\.{1}\\d{0,%2}$").arg(n1).arg(n2);
-				QRegExp rexp = str;
+				QRegExp rexp( str );
 				lineEdit->setValidator(new QRegExpValidator(rexp,lineEdit));
 			}
 		}
 		connect( lineEdit, SIGNAL( textChanged( const QString & ) ),
 				this, SLOT( setValue( const QString & ) ) );
 		connect( lineEdit, SIGNAL( lostFocus() ), this, SLOT( focusOutEvent()) );
-		
+
 		setFocusProxy(lineEdit);
 		layout()->add( lineEdit );
 		lineEdit->show();
 		break;
-	
+
 	case String:
 		if(vFieldType.isEmpty())
 		{
@@ -207,12 +207,12 @@ wField::widgetInit()
 		connect( lineEdit, SIGNAL( textChanged( const QString & ) ),
 				this, SLOT( setValue( const QString & ) ) );
 		connect( lineEdit, SIGNAL( lostFocus() ), this, SLOT( focusOutEvent()) );
-		
+
 		setFocusProxy(lineEdit);
 		layout()->add( lineEdit );
 		lineEdit->show();
 		break;
-		
+
 	case Date:
 	case DateTime:
 	// used object wDateTime, inherits QDateTime
@@ -222,12 +222,12 @@ wField::widgetInit()
 				this, SLOT( setValue( const QDate & ) ) );
 		connect(dateEdit, SIGNAL( lostFocus() ),
 			 	this, SLOT( focusOutEvent() ) );
-		
+
 		setFocusProxy( dateEdit );
 		layout()->add( dateEdit );
 		dateEdit->show();
 		break;
-		
+
 	case Catalogue:
 		md_oid = n1;
 		objLabel->setFrameShape( Q3Frame::Box );
@@ -237,7 +237,7 @@ wField::widgetInit()
 		objButton->setFocusPolicy(Qt::StrongFocus);
 		connect( objButton,	SIGNAL( clicked() ),
 			 this, SLOT( fieldSelect() ) );
-		
+
 		setFocusProxy(objButton);
 		layout()->add( objLabel );
 		layout()->add( objButton );
@@ -263,18 +263,18 @@ wField::widgetInit()
 		objLabel->show();
 		objButton->show();
 		break;
-		
+
 	case Boolean:
 //		connect( checkBox, SIGNAL( lostFocus() ), this, SLOT( focusOutEvent()) );
 		connect( checkBox, SIGNAL( valueChanged ( const QString & ) ),
 				this, SLOT( setValue( const QString & ) ) );
-		
+
 		connect( checkBox, SIGNAL( toggled (bool) ), checkBox, SLOT( on_toggled() ) );
 		setFocusProxy(checkBox);
 		layout()->add(checkBox);
 		checkBox->show();
 		break;
-		
+
     default:
 		objLabel->setText("UnknownField");
 		objLabel->setFrameShape(Q3Frame::Box);
@@ -392,7 +392,7 @@ wField::setValue(const QString &newvalue)
 	// conventering date-time to date, and if new value is NULL set up current locale date.
 	// date must be stored in server in format ISO
 	 str = newvalue;
-	 if(newvalue.isEmpty()) 
+	 if(newvalue.isEmpty())
 	 {
 		 str= QDateTime::currentDateTime(Qt::LocalTime).toString(Qt::ISODate);
 	 }
@@ -407,11 +407,11 @@ wField::setValue(const QString &newvalue)
 	break;
     case Boolean:
 	vValue = newvalue;
-	if(newvalue == "1") 
+	if(newvalue == "1")
 	{
 		checkBox->setChecked(true);
 	}
-	else 
+	else
 	{
 		checkBox->setChecked(false);
 	}
@@ -485,7 +485,7 @@ wField::fieldSelect()
 	{
 		case Catalogue:
 			//printf("select catalogue\n");
-		if ( engine ) 
+		if ( engine )
 		{
 			int fid = md->getDefaultFormId( md->find( md_oid ), md_action_view);
 			if ( !fid )
@@ -494,7 +494,7 @@ wField::fieldSelect()
 				return;
 			}
 			f = engine->openForm( md_oid, 0, md_action_view, 0, false );
-			if ( f ) 
+			if ( f )
 			{
 				connect(f, SIGNAL(selected( qulonglong )), this, SLOT(on_selected( qulonglong )));
 				f->closeAfterSelect = true;
@@ -521,7 +521,7 @@ wField::fieldSelect()
 				connect(f, SIGNAL(selected( qulonglong )), this, SLOT(on_selected( qulonglong )));
 				f->closeAfterSelect = true;
 			}
-			
+
 		}
 		else printf("No engine\n");
 //		printf("select document!\n");
@@ -613,7 +613,7 @@ wField::SetReadOnly(bool fl)
 	case Document:
 		objButton->setDisabled( fl );
 		break;
-	case Boolean: 
+	case Boolean:
 		checkBox->setDisabled( fl );
 		break;
 	default:

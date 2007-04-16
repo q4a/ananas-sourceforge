@@ -30,7 +30,7 @@
 #include <qobject.h>
 #include <q3sqlcursor.h>
 #include <q3sqlpropertymap.h>
-#include <qfocusdata.h> 
+//--#include <qfocusdata.h>
 #include <q3toolbar.h>
 #include "adatabase.h"
 #include "wreport.h"
@@ -126,7 +126,7 @@ wReport::TurnOn()
 }
 
 
-ERR_Code	
+ERR_Code
 wReport::Select( qulonglong id )
 {
 	return err_abstractobj;

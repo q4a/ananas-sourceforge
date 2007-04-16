@@ -147,7 +147,7 @@ void
 wCatalogEditor::openForm(const bool toSelect)
 {
 
-	
+
 	aLog::print(aLog::DEBUG, tr("wCatalog Editor open form for select=%1 ").arg((int)toSelect));
 	MainForm *mainform;
 	if(parent())
@@ -284,8 +284,8 @@ wCatalogEditor::openForm(const bool toSelect)
 	listPos.clear();
 	listPos = cat->getUserFields();
 	checkUserFields(listPos);
-  	//Q_ULLONG res = 0;		
-   	// cat deleted in function catalogform::destroy(); 
+  	//Q_ULLONG res = 0;
+   	// cat deleted in function catalogform::destroy();
 
  	 newform->setData(	cat,
 		   		map,
@@ -312,22 +312,24 @@ wCatalogEditor::checkUserFields( QStringList &lst)
 		int ind = lst.findIndex(QString("uf%1").arg(md->attr(mdi,mda_id)));
 		if(ind!=-1)
 		{
-			lst.insert(lst.at(i),lst[ind]);
+			//--lst.insert(lst.at(i),lst[ind]);
+			lst.insert(i,lst[ind]);
 			lst.remove(lst.at(ind+1));
-			
+
 		}
 		else
 		{
 			ind = lst.findIndex(QString("text_uf%1").arg(md->attr(mdi,mda_id)));
 			if(ind!=-1)
 			{
-				lst.insert(lst.at(i),lst[ind]);
+				//--lst.insert(lst.at(i),lst[ind]);
+				lst.insert(i,lst[ind]);
 				lst.remove(lst.at(ind+1));
-			
+
 			}
 		}
   	}
-	
+
 }
 
 void

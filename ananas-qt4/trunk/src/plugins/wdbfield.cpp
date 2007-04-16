@@ -38,7 +38,7 @@
 #include "edbfield.h"
 #include "wdbfield.h"
 #include "addfdialog.h"
-#include "mainform.h"
+//--#include "mainform.h"
 
 
 
@@ -141,7 +141,7 @@ wDBField::setFieldName( QString n )
 /*!
  * \en 	Gets field name in metadata. \_en
  * \ru	Получение имени поля в метаданных, на которое настроен виджет. \_ru
- * return - \en Field name. \_en \ru Имя поля в метаданных.\_ru 
+ * return - \en Field name. \_en \ru Имя поля в метаданных.\_ru
  */
 /*
 QString
@@ -201,12 +201,12 @@ wDBField::getFields()
   defFields.clear();
   defDisplayFields.clear();
   if(!head.isNull())
-  { 
+  {
 	if(md->objClass(head) == md_catalogue)
 	{
 //		printf("getting fields from metadata\n");
-		o = md->findChild(head,md_element); //object element 
-	    	res = md->countChild(o,md_field); 
+		o = md->findChild(head,md_element); //object element
+	    	res = md->countChild(o,md_field);
 //		printf("find elements\n");
 	    	for( i = 0; i < res; i++ )
 	    	{
@@ -225,13 +225,14 @@ wDBField::getFields()
 			}
 	    	}
 		o = md->findChild(head,md_group); // object group
-	    	res = md->countChild(o,md_field); 
+	    	res = md->countChild(o,md_field);
 //		printf("find groups\n");
 	    	for( i = 0; i < res; i++ )
 	    	{
 //			printf("find %d group\n",i);
 			o_head = md->findChild(o,md_field,i);
-			if(md->attr(o,mda_type).left(1)!=' ')
+			//--if(md->attr(o,mda_type).left(1)!=' ')
+			if(md->attr(o,mda_type).at(0)!=' ')
 			{
 				lst << md->attr(o_head,mda_name);
 				dlst << md->attr(o_head,mda_name) + " (group)";
@@ -390,18 +391,18 @@ Q3ValueList<qulonglong>
 wDBField::getBindList()
 {
 aCfgItem obj;
-QObjectList *wList;
+QObjectList wList;
 int id;
 Q3ValueList<qulonglong> listBindings;
 wDBField* wfield;
 QObject* wd = aWidget::parentContainer (this);
 	listBindings.clear();
     	wList = wd->queryList( "wDBField" );
-	QObjectListIt it( *wList ); // iterate over the wDBTable
-	while (it.current() != 0 )
+	QListIterator<QObject*> it( wList ); // iterate over the wDBTable
+	while ( it.hasNext() )
 	{
-		wfield = (wDBField*) it.current();
-		++it;
+		wfield = qobject_cast<wDBField*>( it.next() );
+
 		if(strcmp(wfield->name(),this->name())) // don't added current id
 		{
 		//don.t added deleted widgets
@@ -416,7 +417,7 @@ QObject* wd = aWidget::parentContainer (this);
 		   }
 		}
 	}
-	delete wList;
+	//--delete wList;
 return listBindings;
 }
 

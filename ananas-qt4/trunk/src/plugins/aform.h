@@ -73,7 +73,7 @@ class aWidget;
  *	Полный список этих событий и функций можно посмотеть на сайте Ананаса в разделе руководства по Ананас.Дизайнеру.
  *\~
  */
-class  ANANAS_EXPORT aForm : public QObject
+class  QT_WIDGET_PLUGIN_EXPORT aForm : public QObject
 {
 	Q_OBJECT
 public:

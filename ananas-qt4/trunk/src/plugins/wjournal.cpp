@@ -32,7 +32,7 @@
 #include <q3sqlpropertymap.h>
 #include <qmessagebox.h>
 #include <qaction.h>
-#include <q3datetimeedit.h> 
+#include <q3datetimeedit.h>
 //Added by qt3to4:
 #include <q3mimefactory.h>
 #include "adatabase.h"
@@ -68,8 +68,8 @@ wJournal::initObject( aDatabase *adb )
 	eSelectDocType *d = ( eSelectDocType *)dSelectType;
 	aWidget::initObject( adb );
 	d->setJournal( &adb->cfg, getId() );
-	
-	
+
+
 	if(((aDocJournal*)dbobj)->type()==0 && toolbar)
 	{
 		date_from = new Q3DateEdit(toolbar);
@@ -89,12 +89,12 @@ wJournal::initObject( aDatabase *adb )
 	setFilterByDate();
 	QObject *obj;
 	uint i = 0;
-	QObjectList *lb = this->queryList( "wDBTable", 0, false, false );
-	QObjectListIt itb( *lb ); // iterate over the buttons
+	QObjectList lb = this->queryList( "wDBTable", 0, false, false );
+	QListIterator<QObject*> itb( lb ); // iterate over the buttons
 	i = 0;
-	while ( (obj = itb.current()) != 0 )
+	while ( itb.hasNext() )
 	{
-		++itb;
+		obj = itb.next();
 		//printf("wDBTable #%u found\n",++i);
 		aLog::print(aLog::INFO, tr("wDBTable #%1 found ").arg(++i));
 		connect( (wDBTable *)obj, SIGNAL(selectRecord( qulonglong )),
@@ -112,11 +112,11 @@ wJournal::initObject( aDatabase *adb )
 
 //=======
 		//((QWidget *)obj)->setFocus(); // set focus to wDBTable
-		
+
 //>>>>>>> 1.15.2.6
 	}
-	delete lb; // delete the list, not the objects
-	lb=0;
+	//--delete lb; // delete the list, not the objects
+	//--lb=0;
 
 }
 
@@ -177,7 +177,7 @@ wJournal::createToolBar( Q3MainWindow * owner )
 	d->setToolTip(tr("Delete document <Delete>"));
 	d->addTo( toolbar );
 	connect( d, SIGNAL( activated() ), this, SLOT( markDelete() ) );
-	
+
 	e = new QAction(
 	qPixmapFromMimeSource("doc_copy.png"),
 	tr("Copy"),
@@ -188,7 +188,7 @@ wJournal::createToolBar( Q3MainWindow * owner )
 	e->setToolTip(tr("Duplicate document <Ctrl+D>"));
 	e->addTo( toolbar );
 	connect( e, SIGNAL( activated() ), this, SLOT( copy() ) );
-	
+
 	return toolbar;
 }
 
@@ -294,7 +294,7 @@ wJournal::view()
 
 
 
-int 
+int
 wJournal::markDelete()
 {
 	if ( !dbobj ) return err_abstractobj;
@@ -338,14 +338,14 @@ wJournal::setFilterByDate()
 	if(date_from && date_to)
 	{
 		QObject *obj;
-		QObjectList *lb = this->queryList( "wDBTable" );
-		QObjectListIt itb( *lb ); // iterate over the buttons
-		while ( (obj = itb.current()) != 0 )
+		QObjectList lb = this->queryList( "wDBTable" );
+		QListIterator<QObject*> itb( lb ); // iterate over the buttons
+		while ( itb.hasNext() )
 		{
-			++itb;
-			((wDBTable *)obj)->setFilter(QString("ddate>='%1T00:00:00' AND ddate<='%2T23:59:59'").arg(date_from->date().toString(Qt::ISODate)).arg(date_to->date().toString(Qt::ISODate))); 
+			obj = itb.next();
+			((wDBTable *)obj)->setFilter(QString("ddate>='%1T00:00:00' AND ddate<='%2T23:59:59'").arg(date_from->date().toString(Qt::ISODate)).arg(date_to->date().toString(Qt::ISODate)));
 		}
-		delete lb; // delete the list, not the objects
+		//--delete lb; // delete the list, not the objects
 	}
 	Refresh();
 }

@@ -50,12 +50,12 @@
  * \ru
  * 	\brief Плагин - виджет для редактирования табличных данных, не хранящихся в бизнес объектах Ананаса.
  *	Наследует QTable.
- * 	
- * 	В отличие от wDBTable wTable не сохряняет редактируемые в нем данные автоматически 
+ *
+ * 	В отличие от wDBTable wTable не сохряняет редактируемые в нем данные автоматически
  * 	в persistent бизнес объектах Ананаса. Программист самостоятельно
  * 	должен закодировать на Ананас.Скрипте логику заполнения виджета данными и использования данных, вводимых
  * 	пользователем.
- * 	
+ *
  * \_ru
  */
 
@@ -63,9 +63,9 @@
 class QT_WIDGET_PLUGIN_EXPORT wTable : public Q3Table
 {
 	Q_OBJECT
-	
+
 public:
-		
+
 	wTable(QWidget* parent, const char * name);
 	virtual ~wTable();
 public slots:
@@ -77,7 +77,7 @@ public slots:
 	virtual void sortColumn ( int col, bool ascending = TRUE, bool wholeRows = TRUE );
 	virtual void setColumnWidth(int col, int width);
 	virtual int columnWidth(int col);
-	virtual void setNumCols ( int r ); 	
+	virtual void setNumCols ( int r );
 	virtual int numCols () const ;
 	virtual void hideColumn ( int col );
 	virtual void showColumn ( int col );
@@ -109,7 +109,7 @@ private slots:
 //	void on_valueChanged ( int row, int col );
 protected:
 	virtual void activateNextCell () {} ;
-	
+
 };
 
 #endif

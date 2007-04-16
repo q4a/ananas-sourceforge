@@ -31,14 +31,14 @@
 #define WDATEEDIT_H
 
 #include <qlabel.h>
-#include <q3datetimeedit.h> 	
+#include <q3datetimeedit.h>
 //Added by qt3to4:
 #include <QFocusEvent>
 
 /*!
  * \en Unknown field editor. \_en
- * \ru 
- * 	\brief Плагин-виджет для отображения в экранной форме поля типа Unknown. 
+ * \ru
+ * 	\brief Плагин-виджет для отображения в экранной форме поля типа Unknown.
  * 	Наследует QLabel.
  * \_ru
  */
@@ -53,11 +53,11 @@ public:
 
 /*!
  * \en DateEdit field editor. \_en
- * \ru 
- * 	\brief Плагин -- виджет используется в экранных формах в качестве поля ввода/редактирования 
- * 	атрибута типа Дата бизнес объекта Ананаса. 
+ * \ru
+ * 	\brief Плагин -- виджет используется в экранных формах в качестве поля ввода/редактирования
+ * 	атрибута типа Дата бизнес объекта Ананаса.
  * 	Наследует QDateEdit.
- * 	
+ *
  * \_ru
  */
 class wDateEdit : public Q3DateEdit
@@ -74,5 +74,5 @@ protected:
 signals:
 	void lostFocus();
 };
-		
+
 #endif

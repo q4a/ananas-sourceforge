@@ -61,7 +61,7 @@ public slots:
 	int markDelete();
 
 private:
-    
+
 };
 
 

@@ -172,7 +172,7 @@ MainForm::helpAbout()
 			   "Web sites:<br>"
 			   "<a href=\"http://ananas.lrn.ru\">http://ananas.lrn.ru</a><br>"
 			   "<a href=\"http://www.leaderit.ru\">http://www.leaderit.ru</a>"
-			   "<br><br>Avalable extensions:<br>%2").arg(ananas_libversion()).arg( AExtensionFactory::keys().join(", ")) );
+			   "<br><br>Avalable extensions:<br>%2").arg(ananas_libversion()).arg( ""/*--AExtensionFactory::keys().join(", ")*/) );
 }
 
 void MainForm::InsertMainMenu(QString text, QObject *pop){

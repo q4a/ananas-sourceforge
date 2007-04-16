@@ -41,7 +41,7 @@ class QWidget;
  *\ru
  *	\brief Визуальный объект - контейнер для работы с Журналами документов.
  *	Наследует aWidget.
- *	
+ *
  *	При создании диалогов - экранных форм журналов все элементы диалога
  *	(в том числе wDBField, wDBTable) располагаются в этом контейнере.
  *	В свойстве aObject *dbobj, унаследованном от aWidget, этого класса хранится объект доступа к данным
@@ -79,7 +79,7 @@ public slots:
 
 protected slots:
 	void		setFilterByDate();
-	
+
 private:
 	QDialog *dSelectType;
 	Q3ToolBar *toolbar;

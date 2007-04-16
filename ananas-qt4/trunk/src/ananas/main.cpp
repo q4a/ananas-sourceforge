@@ -145,7 +145,7 @@ int main( int argc, char ** argv )
 	pixmap = qPixmapFromMimeSource( "/usr/share/ananas/designer/locale/engine-splash-"+lang+".png" );
 	qApp->addLibraryPath( "/usr/lib/ananas/" );
 #endif
-	printf("extensions: \n%s\n",( const char *) AExtensionFactory::keys().join("\n") );
+	//--printf("extensions: \n%s\n",( const char *) AExtensionFactory::keys().join("\n") );
 // Test create extension
 //	AExtension *e = AExtensionFactory::create("AExtTest");
 //	if (e) printf("EXT OK\n"); else printf("NO EXT OK\n");

@@ -78,12 +78,12 @@ wTable::setHeaderText(int col, const QString& text)
 }
 
 
-QString 
+QString
 wTable::textHeader(int col)
 {
 	return Q3Table::horizontalHeader()->label(col);
 }
-		
+
 void
 wTable::sortColumn ( int col, bool ascending, bool wholeRows )
 {
@@ -112,7 +112,7 @@ wTable::setNumCols ( int r )
 }
 
 int
-wTable::numCols () const 
+wTable::numCols () const
 {
 	int res = Q3Table::numCols();// - 1;
 	return res;
@@ -129,7 +129,7 @@ wTable::showColumn ( int col )
 	Q3Table::showColumn ( col );
 }
 /*
-bool 
+bool
 wTable::isColumnHidden ( int col ) const
 {
 //	int i = -2;
@@ -137,7 +137,7 @@ wTable::isColumnHidden ( int col ) const
 	return QTable::isColumnHidden ( col );
 }
 */
-void 
+void
 wTable::adjustColumn ( int col )
 {
 	return Q3Table::adjustColumn  ( col );
@@ -156,11 +156,11 @@ wTable::isColumnStretchable ( int col ) const
 }
 
 
-void 
+void
 wTable::swapColumns ( int col1, int col2, bool swapHeader )
 {
 	Q3Table::swapColumns( col1, col2, swapHeader );
-	
+
 }
 
 void
@@ -175,13 +175,13 @@ wTable::setCurrentCell ( int row, int col )
 	Q3Table::setCurrentCell( row, col );
 }
 
-void 
+void
 wTable::setColumnReadOnly ( int col, bool ro )
 {
 	Q3Table::setColumnReadOnly( col, ro );
 }
 
-void 
+void
 wTable::insertColumns ( int col, int count )
 {
 	Q3Table::insertColumns( col, count );
@@ -199,18 +199,18 @@ wTable::editCell ( int row, int col, bool replace )
 	Q3Table::editCell( row, col, replace );
 }
 
-void 
+void
 wTable::columnClicked ( int col )
 {
 //	int i = -2;
 //	if(col>=0) i=col;
-	Q3Table::columnClicked ( col );//i-1 ); 
+	Q3Table::columnClicked ( col );//i-1 );
 }
 void
 wTable::swapRows ( int row1, int row2, bool swapHeader )
 {
-	Q3Table::swapRows (  row1, row2,swapHeader ); 
+	Q3Table::swapRows (  row1, row2,swapHeader );
 }
 
 
-	
+

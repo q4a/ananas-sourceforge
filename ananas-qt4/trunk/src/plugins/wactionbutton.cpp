@@ -37,10 +37,10 @@
 //Added by qt3to4:
 #include <QKeyEvent>
 
-#include "command.h"
-#include "formwindow.h"
-#include "mainwindow.h"
-#include "mainform.h"
+//--#include "command.h"
+//--#include "formwindow.h"
+//--#include "mainwindow.h"
+//--#include "mainform.h"
 
 #include "adatabase.h"
 

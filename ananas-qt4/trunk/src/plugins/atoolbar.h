@@ -39,7 +39,7 @@
 #include "acfg.h"
 #include "ananas.h"
 
-class  ANANAS_EXPORT aToolBar : public Q3ToolBar
+class  QT_WIDGET_PLUGIN_EXPORT aToolBar : public Q3ToolBar
 {
     Q_OBJECT
 private:

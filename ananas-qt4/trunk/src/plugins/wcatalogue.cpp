@@ -33,7 +33,7 @@
 #include <q3sqlpropertymap.h>
 #include <q3toolbar.h>
 #include <qaction.h>
-#include <qfocusdata.h> 
+//--#include <qfocusdata.h>
 #include "adatabase.h"
 #include "wcatalogue.h"
 #include "ecatalogue.h"
@@ -68,11 +68,11 @@ wCatalogue::initObject( aDatabase *adb )
 {
 	aWidget::initObject( adb );
 	QObject *obj;
-	QObjectList *lb = this->queryList( "QWidget" );
-	QObjectListIt itb( *lb ); // iterate over all wDBFields
-	while ( (obj = itb.current()) != 0 )
+	QObjectList lb = this->queryList( "QWidget" );
+	QListIterator<QObject*> itb( lb ); // iterate over all wDBFields
+	while ( itb.hasNext() )
 	{
-		++itb;
+		obj = itb.next();
 		if(obj->inherits("wDBField"))
 		{
 //		if ( (wActionButtton*) obj )->isActionUpdate() )
@@ -84,7 +84,7 @@ wCatalogue::initObject( aDatabase *adb )
 			((wGroupTree*)obj)->setId(getId());
 			connect( (wGroupTree *)obj, SIGNAL(selectionChanged( const qulonglong )),
 				this, SLOT(selectionChanged( const qulonglong )) );
-			
+
 		}
 		if(obj->inherits("wDBTable"))
 		{
@@ -92,12 +92,13 @@ wCatalogue::initObject( aDatabase *adb )
 				(wDBTable*)obj, SLOT(newFilter( const QString& )) );
 			connect( this, SIGNAL(newSelectionGroupId( const qulonglong  )),
 				(wDBTable*)obj, SLOT(newDataId( const qulonglong )) );
-			
+
 		}
-			
+
 	}
-	delete lb; // delete the list, not the objects
-	focusData()->next()->setFocus();
+	//--delete lb; // delete the list, not the objects
+	//--focusData()->next()->setFocus();
+	focusNextChild();
 
 }
 
@@ -174,7 +175,7 @@ wCatalogue::checkStructure()
 QVariant
 wCatalogue::value( const QString &name )
 {
-	
+
 	aLog::print(aLog::ERROR, tr("wCatalogue value for name %1 ").arg(name));
 	return QVariant("");
 }
@@ -264,23 +265,23 @@ wCatalogue::Select( qulonglong id )
 	//if ( formMode()==0 ) {
 
 	QObject *obj;
-	QObjectList *lb = this->queryList( "wDBTable" );
-	QObjectListIt itb( *lb ); // iterate over all wDBTable
-	while ( (obj = itb.current()) != 0 )
+	QObjectList lb = this->queryList( "wDBTable" );
+	QListIterator<QObject*> itb( lb ); // iterate over all wDBTable
+	while ( itb.hasNext() )
 	{
-		++itb;
+		obj = itb.next();
 		( (wDBTable *)obj )->setFocus();
 		( (wDBTable *)obj )->Select( id );
 //		if ( (wActionButtton*) obj )->isActionUpdate() )
 //		connect( (wDBTable *)obj, SIGNAL(valueChanged( const QVariant & )),
 //				this, SLOT(valueChanged( const QVariant & )) );
 	}
-	delete lb; // delete the list, not the objects
-	lb=0;
+	//--delete lb; // delete the list, not the objects
+	//--lb=0;
 //	return 0;
 
 
-	
+
 //}
 //
 //
@@ -328,17 +329,17 @@ wCatalogue::NewValues()
 {
 	aLog::print(aLog::DEBUG, tr("wCatalogue set new values for all fields"));
 	QString fname;
-	QObjectList *l = this->queryList( "wDBField" );
-	QObjectListIt it( *l );
+	QObjectList l = this->queryList( "wDBField" );
+	QListIterator<QObject*> it( l );
 	QObject *obj;
-	obj = it.toFirst();
+	//--obj = it.toFirst();
 	aCfgItem o_field,o_parent;
 	QString parent_name;
-	while ( (obj= it.current()) != 0 )
+	while ( it.hasNext() )
 	{
 		//++it;
 		//obj = it.current();
-		++it;
+		obj= it.next();
 		fname=((wDBField *)obj)->getFieldName();
 		o_field = md->find(((wDBField *)obj)->getId());
 		o_parent = md->parent(o_field);
@@ -362,8 +363,8 @@ wCatalogue::NewValues()
 			((wDBField*)obj)->setValue(dbobj->Value(fname).toString());
 		}
 	}
-	delete l; // delete the list, not the objects
-	l=0;
+	//--delete l; // delete the list, not the objects
+	//--l=0;
 }
 
 

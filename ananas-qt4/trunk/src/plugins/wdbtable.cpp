@@ -29,9 +29,9 @@
 **
 **********************************************************************/
 
-#include <qfocusdata.h>
+//--#include <qfocusdata.h>
 #include <qpainter.h>
-#include <qmessagebox.h> 
+#include <qmessagebox.h>
 //Added by qt3to4:
 #include <QContextMenuEvent>
 #include <Q3HBoxLayout>
@@ -44,11 +44,13 @@
 #include <q3mimefactory.h>
 #include <Q3PopupMenu>
 #include <QEvent>
-#include "propertyeditor.h"
-#include "command.h"
-#include "formwindow.h"
-#include "mainwindow.h"
-#include "mainform.h"
+#include <Q3SqlFieldInfo>
+#include <QPointer>
+//--#include "propertyeditor.h"
+//--#include "command.h"
+//--#include "formwindow.h"
+//--#include "mainwindow.h"
+//--#include "mainform.h"
 #include "adocjournal.h"
 #include "alog.h"
 
@@ -74,15 +76,15 @@ wDBTable::wDBTable( QString objtype,  QWidget *parent, const char *name )
 	inEditMode = false;
 	searchWidget = 0;
 	searchMode = false;
-	searchString = ""; 
+	searchString = "";
 	connect( this, SIGNAL(cursorChanged ( QSql::Op ) ), this, SLOT(lineUpdate( QSql::Op ) ) );
 	connect( this, SIGNAL(currentChanged ( int, int ) ), this, SLOT(lineChange( int, int ) ) );
 	connect( this, SIGNAL(beforeInsert ( QSqlRecord* ) ), this, SLOT(lineInsert( QSqlRecord* ) ) );
 	connect( this, SIGNAL(valueChanged ( int, int )  ), this, SLOT(updateTableCellHandler(int, int ) ) );
 	connect( this, SIGNAL(doubleClicked ( int, int, int, const QPoint&) ), this, SLOT(doubleClickEventHandler(int,int,int, const QPoint&)));
 	init();
-	
-	
+
+
 	aLog::print(aLog::DEBUG, tr("wDBTable init ok"));
 //	printf("ok init wdbtable\n");
 
@@ -103,7 +105,7 @@ wDBTable::setOpenEditor( bool fn )
 
 /*!
  *	\~english
- *	Gets list of defined fields. 
+ *	Gets list of defined fields.
  *	\~russian
  *	Получение списка заданных полей.
  *	\~
@@ -117,7 +119,7 @@ wDBTable::getDefFields() const
 
 /*!
  *	\~english
- *	Gets list of defined headers. 
+ *	Gets list of defined headers.
  *	\~russian
  *	Получение списка заданных заголовков.
  *	\~
@@ -131,13 +133,13 @@ wDBTable::getDefHeaders() const
 
 /*!
  *	\~english
- *	Gets list of defined column width. 
+ *	Gets list of defined column width.
  *	\~russian
  *	Получение списка заданных размеров столбцов.
  *	\~
  */
 QStringList
-wDBTable::getColWidth() const 
+wDBTable::getColWidth() const
 {
 	return colWidth;
 }
@@ -145,11 +147,11 @@ wDBTable::getColWidth() const
 
 /*!
  *	\~english
- *	Gets list of defined column id. 
+ *	Gets list of defined column id.
  *	\~russian
  *	Получение списка заданных идентификаторов столбцов.
  *	\~
- */	
+ */
 QStringList
 wDBTable::getDefIdList() const
 {
@@ -158,7 +160,7 @@ wDBTable::getDefIdList() const
 
 /*!
  *	\~english
- *	Gets metadata document id. 
+ *	Gets metadata document id.
  *	\~russian
  *	Получение идентификатора документа метаданных, которому принадлежит виджет.
  *	\~
@@ -166,31 +168,31 @@ wDBTable::getDefIdList() const
 qulonglong
 wDBTable::getId() const
 {
-	return doc_id;		
+	return doc_id;
 }
 
 /*!
  *	\~english
- *	Gets current table id. 
+ *	Gets current table id.
  *	\~russian
  *	Получение идентификатора текущей таблицы.
  *	\~
  */
 int
-wDBTable::getTblInd() const 
-{ 
+wDBTable::getTblInd() const
+{
 	return tableInd;
 }
 
 /*!
  *	\~english
- *	Olways return false. 
+ *	Olways return false.
  *	\~russian
  *	Всегда возвращает false.
  *	\~
  *	\return false
  */
-bool 
+bool
 wDBTable::getOpenEditor() const
 {
 	return false;
@@ -198,12 +200,12 @@ wDBTable::getOpenEditor() const
 
 /*!
  *	\~english
- *	Gets default column width. 
+ *	Gets default column width.
  *	\~russian
  *	Получение размера столбца по умолчанию.
  *	\~
  */
-int 
+int
 wDBTable::getDefColWidth() const
 {
 	return defColWidth;
@@ -211,7 +213,7 @@ wDBTable::getDefColWidth() const
 
 /*!
  *	\~english
- *	Sets list of field names. 
+ *	Sets list of field names.
  *	\~russian
  *	Установка списка имен полей.
  *	\~
@@ -224,7 +226,7 @@ wDBTable::setDefFields(QStringList lst)
 
 /*!
  *	\~english
- *	Sets list of field headers. 
+ *	Sets list of field headers.
  *	\~russian
  *	Установка списка заголовков полей.
  *	\~
@@ -237,7 +239,7 @@ wDBTable::setDefHeaders(QStringList lst)
 
 /*!
  *	\~english
- *	Sets list of columns width. 
+ *	Sets list of columns width.
  *	\~russian
  *	Установка списка размеров столбцов.
  *	\~
@@ -250,7 +252,7 @@ wDBTable::setColWidth(QStringList lst)
 
 /*!
  *	\~english
- *	Gets list of column id. 
+ *	Gets list of column id.
  *	\~russian
  *	Установка списка идентификаторов столбцов.
  *	\~
@@ -263,7 +265,7 @@ wDBTable::setDefIdList(QStringList lst)
 
 /*!
  *	\~english
- *	Sets metadata document id. 
+ *	Sets metadata document id.
  *	\~russian
  *	Установка идентификатора документа метаданных, которому принадлежит виджет.
  *	\~
@@ -277,7 +279,7 @@ wDBTable::setId( qulonglong fn )
 
 /*!
  *	\~english
- *	Gets current table id. 
+ *	Gets current table id.
  *	\~russian
  *	Установка идентификатора текущей таблицы.
  *	\~
@@ -291,11 +293,11 @@ wDBTable::setTblInd( int ind )
 
 /*!
  *	\~english
- *	Sets default columns width. 
+ *	Sets default columns width.
  *	\~russian
  *	Установка размера столбцов по умолчанию.
  *	\~
- */	
+ */
 void
 wDBTable::setDefColWidth( int fn )
 {
@@ -327,7 +329,7 @@ wDBTable::OpenEditor()
 
 /*!
  *	\~endlish
- *	Destructor. 
+ *	Destructor.
  *	\~russian
  *	Деструктор.
  *	\~
@@ -335,7 +337,7 @@ wDBTable::OpenEditor()
 wDBTable::~wDBTable()
 {
 	delete cur;
-	cur=0;	
+	cur=0;
 }
 
 
@@ -354,7 +356,7 @@ wDBTable::init()// aDatabase *adb )
 	int id=0;
 	aCfgItem o, o_table;
 	aCfgItem mditem, docitem;
-        
+
 	// set up pixmap for calculated fields
 
 	cur = new Q3SqlCursor("cur",false);
@@ -480,11 +482,11 @@ QSqlRecord *rec = sqlCursor()->editBuffer();//currentRecord();
 
 /*!
  *	\~english
- *	Function paint field in table. 
+ *	Function paint field in table.
  *	\~russian
  *	Переопределенная функция рисования поля таблицы.
  *	В типе DateTime не отображает время.
- *	Поддерживает вычисляемые поля. 
+ *	Поддерживает вычисляемые поля.
  *	\~
  */
 void
@@ -517,7 +519,7 @@ wDBTable::paintField ( QPainter * p, const QSqlField * field, const QRect & cr, 
 
 /*!
  *	\~english
- *	Return system icon for display object record state. 
+ *	Return system icon for display object record state.
  *	\russian
  *	Возвращает иконку для отображения состояния строки.
  *	\~
@@ -534,19 +536,19 @@ wDBTable::systemIcon()
         if ( container ) ctype = container->className();
         if ( r )
 	{
-                if ( r->contains("df") ) df = r->field("df")->value().toInt();
-                if ( r->contains("cf") ) cf = r->field("cf")->value().toInt();
+                if ( r->contains("df") ) df = r->field("df").value().toInt();
+                if ( r->contains("cf") ) cf = r->field("cf").value().toInt();
 		else
 		{
 			if(ctype=="wJournal")
 			{
-				
+
 				aDocJournal* sysObj = new aDocJournal(db);
 				if(sysObj)
 				{
 //for(int i=0; i<r->count(); i++)
 //	printf("f[%d]=%s, %s\n",i, r->fieldName(i).ascii(), r->field(i)->value().toString().ascii());
-					if(sysObj->findDocument(r->field("id")->value().toULongLong()))
+					if(sysObj->findDocument(r->field("id").value().toULongLong()))
 					{
 						aDocument *doc = sysObj->CurrentDocument();
 						cf = doc->IsConducted();
@@ -558,15 +560,15 @@ wDBTable::systemIcon()
 					}
 					//doc = 0;
 					//cf = sysObj->sysValue("cf").toInt();
-				} 
-				
-				delete sysObj; 
-				
-				
+				}
+
+				delete sysObj;
+
+
 			}
 //>>>>>>> 1.71.2.13
 		}
-                if ( r->contains("mf") ) mf = r->field("mf")->value().toInt();
+                if ( r->contains("mf") ) mf = r->field("mf").value().toInt();
 		if(ctype=="wJournal")
 		{
                         pm = t_doc;
@@ -596,13 +598,13 @@ wDBTable::systemIcon()
 /*!
  * \~english
  *	Sets property `DefFields', `DefHeaders', `ColWidth', `DefIdList' to
- *	values from metadata. 
+ *	values from metadata.
  * \~russian
  *	Устанавливает свойства `DefFields', `DefHeaders', `ColWidth', `DefIdList'
  *	в значения, определенные в метаданных. Старые значения не сохраняются.
  *	Для документа используется idTable.
  *	\~
- *	\param idTable (in) - 	\~english table id 
+ *	\param idTable (in) - 	\~english table id
  *				\~russian id таблицы документа.  Не используется для каталогов и журналов.
  *	\~
  */
@@ -819,11 +821,11 @@ return lst;
 /*!
  *	\~english
  *	Gets field type.
- *	\~russian 
+ *	\~russian
  *	Получение типа поля.
  *	\~
  *	\param id - \~english field id \~russian идентификатор поля \~
- *	\return \~english field type \~russian тип поля \~ 
+ *	\return \~english field type \~russian тип поля \~
  */
 QString
 wDBTable::getFieldType(long id)
@@ -848,11 +850,11 @@ return str;
 /*!
  *	\~english
  *	Gets field name.
- *	\~russian 
+ *	\~russian
  *	Получение имени поля.
  *	\~
  *	\param id - \~english field id \~russian идентификатор поля \~
- *	\return \~english field name \~russian имя поля \~ 
+ *	\return \~english field name \~russian имя поля \~
  */
 QString
 wDBTable::getFieldName(long id)
@@ -874,7 +876,7 @@ return str;
  *	function check property name, id, header and width.
  *	If have incorrect field name or id, then print message and all.
  *	If have less or more items in DefHeaders or ColWidth, then set them normal.
- *\~russian 
+ *\~russian
  *	Функция проверяет свойства name, id, DefHeaders и ColWidth.
  *	Если находит ошибки в свойствах name или id, она выводит сообщение об этом, но не исправляет ошибки.
  *	Если находит ошибки в свойствах DefHeaders или ColWidth, то исправляет.
@@ -958,7 +960,7 @@ wDBTable::init(aDatabase *adb, aEngine *e )
         t_cat_ed = qPixmapFromMimeSource( "t_cat_ed.png" );
 	t_cat_g = qPixmapFromMimeSource( "t_cat_g.png" );
 	t_cat_gd = qPixmapFromMimeSource( "t_cat_gd.png" );
-	
+
 	engine = e;
 	setConfirmDelete(true);
 	db = adb;
@@ -966,21 +968,21 @@ wDBTable::init(aDatabase *adb, aEngine *e )
 	tid = property("TableInd").toInt();
 	container = aWidget::parentContainer( this );
 	if ( !container )
-	{	
+	{
 		aLog::print(aLog::ERROR, tr("wDBTable not in Ananas object container "));
 		return; //printf("!no wDBTable parent container\n");
 	}
-	else 
+	else
 	{
 		o = md->objTable( container->getId(), tid );
-		if ( o.isNull() ) 
+		if ( o.isNull() )
 		{
 			//debug_message("Table not found\n");
 			aLog::print(aLog::ERROR, tr("wDBTable init meta object not found "));
 		}
 		ctype = container->className();
 		aLog::print(aLog::INFO, tr("wDBTable container type is %1 ").arg(ctype));
-		
+
 		setContainerType(ctype);
 	}
 
@@ -1007,7 +1009,7 @@ wDBTable::init(aDatabase *adb, aEngine *e )
 		tbl = new aSQLTable( o, adb );
 //		printf("new table ok\n");
 	//	tbl->first();
-	
+
 	}
 	if ( containerType() == "wCatalogue" ) {
                 tbl = container->table(); //new aSQLTable( o, adb );
@@ -1048,7 +1050,7 @@ wDBTable::init(aDatabase *adb, aEngine *e )
 //				continue;
 //			}
 			// not calculate field, if is not contents in wDBTable
-//			sqlCursor()->setCalculated(sqlCursor()->fieldName(i),false); 
+//			sqlCursor()->setCalculated(sqlCursor()->fieldName(i),false);
 //		}
 	}
 	if ( containerType() == "wJournal" ) {
@@ -1067,11 +1069,11 @@ wDBTable::init(aDatabase *adb, aEngine *e )
 	//	printf("set column ro\n");
 		setColumnReadOnly( 0, true );
 	}
-	
+
 	if ( containerType() == "wDocument" || containerType() == "wCatalogue" ) {
-	
+
 	// Задаем сортировку по индентификатору в обратном порядке для
-	// табличной части документа 
+	// табличной части документа
 	// чтобы при добавлении новых позиций в список строки не скакали
 	    QSqlIndex pk = sqlCursor()->primaryIndex();
 	    pk.setDescending( 0, false);
@@ -1080,7 +1082,7 @@ wDBTable::init(aDatabase *adb, aEngine *e )
 	    sqlCursor()->first();
 	    refresh();
 	}
-	
+
 
 	//refresh(RefreshColumns);
 	if (md->objClass(*(container->getMDObject()))!=md_journal || ((aDocJournal*) container->dataObject())->type() ) {
@@ -1088,14 +1090,14 @@ wDBTable::init(aDatabase *adb, aEngine *e )
 		for(i=0; i<lst.count();i++)
 		{
 			// assemble sql table field names
-			if ( containerType() == "wJournal" ) 
+			if ( containerType() == "wJournal" )
 			{
 //				str = journalFieldName(lst[i].toLong());
-				
+
 				str = "uf"+QString::number(journalFieldId(lst[i].toLong()));
 				//printf(">>>>>>ss=%s\n",str.ascii());
 			}
-			else 
+			else
 			{
 				str = "uf"+lst[i];
 			}
@@ -1111,7 +1113,7 @@ wDBTable::init(aDatabase *adb, aEngine *e )
 
 
 /*!
- *	
+ *
  */
 /*!
  *	\~english
@@ -1143,7 +1145,7 @@ wDBTable::setWFieldEditor()
 QWidget*
 aEditorFactory::createEditor(QWidget * parent, const QSqlField * field)
 {
-WFlags fl=0;
+//--WFlags fl=0;
 wField * tmp;
 wDBTable *t=0;
 QString str,stmp;
@@ -1152,7 +1154,7 @@ wField::tEditorType type = wField::Unknown;
 	{
 		t = (wDBTable*)parent->parent()->parent();
 
-		tmp  = new wField((QWidget*)(parent->parent()),"",fl);
+		tmp  = new wField((QWidget*)(parent->parent()),""/*--,fl*/);
 		if(t)
 		{
 			str = field->name();
@@ -1165,7 +1167,7 @@ wField::tEditorType type = wField::Unknown;
 			if(stmp=="N") type = wField::Numberic;
 			if(stmp=="D") type = wField::Date;
 			if(stmp=="B") type = wField::Boolean;
-			if(stmp=="O") 
+			if(stmp=="O")
 			{
 				int tid;
 				//gets object id.
@@ -1224,17 +1226,17 @@ Q3ValueList<int>
 wDBTable::getBindList()
 {
 aCfgItem obj;
-QObjectList *wList;
+QObjectList wList;
 int id;
 wDBTable* wtable;
 QObject* wd = aWidget::parentContainer( this );
 	listBindings.clear();
     	wList = wd->queryList( "wDBTable" );
-	QObjectListIt it( *wList ); // iterate over the wDBTable
-	while (it.current() != 0 )
+	QListIterator<QObject*> it( wList ); // iterate over the wDBTable
+	while ( it.hasNext() )
 	{
-		wtable = (wDBTable*) it.current();
-		++it;
+		wtable = qobject_cast<wDBTable*>( it.next() );
+
 		if(strcmp(wtable->name(),this->name())) // don't added current id
 		{
 		//don.t added deleted widgets
@@ -1248,7 +1250,7 @@ QObject* wd = aWidget::parentContainer( this );
 		   }
 		}
 	}
-	delete wList;
+	//--delete wList;
 return listBindings;
 }
 
@@ -1332,7 +1334,7 @@ wDBTable::deleteCurrent()
 	res = Q3DataTable::deleteCurrent();
 	emit(updateCurr(currentRow(),currentColumn()));
 	return res;
-	
+
 }
 
 
@@ -1349,11 +1351,11 @@ wDBTable::keyPressEvent ( QKeyEvent *e )
 	qulonglong id;
 
 	aWidget *container = NULL;
-	if ( searchMode == FALSE && e->text().at( 0 ).isPrint() ) 
+	if ( searchMode == FALSE && e->text().at( 0 ).isPrint() )
 	{
 		searchOpen( e->text() );
-	} 
-	else 
+	}
+	else
 	{
 		searchClose();
 	}
@@ -1373,11 +1375,11 @@ wDBTable::keyPressEvent ( QKeyEvent *e )
 			if(currentRecord())
 			{
 				id = currentRecord()->value(0).toLongLong();
-				if ( e->state() == Qt::ShiftModifier ) 
+				if ( e->state() == Qt::ShiftModifier )
 				{
 					//printf("Shift+Return pressed %Ld\n", id);
 					EditElement();
-				} else 
+				} else
 				{
 					//printf("Return pressed %Ld\n", id );
 					emit( selected( id ) );
@@ -1537,7 +1539,7 @@ return res;
  *	\~english
  *	Reimplemented QDataTable function.
  *	\~russian
- *	Переопределяет функцию QDataTable. Отрабатывет после нажатия Enter в редактируемой ячейке. 
+ *	Переопределяет функцию QDataTable. Отрабатывет после нажатия Enter в редактируемой ячейке.
  *	Перемещает фокус ввода на следующую ячейку.
  *	\~
  */
@@ -1596,7 +1598,7 @@ wDBTable::doubleClickEventHandler(int /*rol*/, int /*col*/, int /*button*/, cons
  * \_ru
  */
 
-QSql::Confirm 
+QSql::Confirm
 wDBTable::confirmEdit( QSql::Op m ) {
 	if ( m == QSql::Delete ) {
 		if ( 0 == QMessageBox::question(
@@ -1606,15 +1608,15 @@ wDBTable::confirmEdit( QSql::Op m ) {
                 "Are you sure?"),
             tr("&Yes, remove"), tr("&No"),
             QString::null, 0, 1 ) ) {
-            	return QSql::Yes; 
+            	return QSql::Yes;
         } else {
-            	return QSql::No; 
+            	return QSql::No;
         }
 	} else {
 		return Q3DataTable::confirmEdit( m );
 	}
 }
-		
+
 /**
  * \ru
  * 		\brief Переопределяем метод базового класса, осуществляющий вставку новой строки в таблицу.
@@ -1622,17 +1624,17 @@ wDBTable::confirmEdit( QSql::Op m ) {
  * \_ru
  */
 
-bool 
+bool
 wDBTable::beginInsert() {
 	if ( !sqlCursor() || isReadOnly() || !numCols() )
 		return FALSE;
     if ( !sqlCursor()->canInsert() )
 		return FALSE;
-	
+
 	bool result = Q3DataTable::beginInsert();
 	endEdit( currentRow(), currentColumn(), false, false);
 	setCurrentCell( numRows(), 0 );
-	return result; 	
+	return result;
 
 }
 
@@ -1649,7 +1651,7 @@ wDBTable::contentsContextMenuEvent ( QContextMenuEvent * e )
 {
 	Q3Table::contentsContextMenuEvent( e );
 	QString str, ctype;
-	
+
 	if ( containerType() == "wDocument" || containerType() == "wCatalogue" ) {
    	// Переопределяем всплывающее по правой кнопке мыши меню для табличной части документа
    	// Во-первых, для его локализации
@@ -1659,7 +1661,7 @@ wDBTable::contentsContextMenuEvent ( QContextMenuEvent * e )
    			IdUpdate,
     		IdDelete,
 		};
-		
+
 		QPointer<Q3PopupMenu> popupForDoc = new Q3PopupMenu( this );
 		int id[ 3 ];
 		id[ IdInsert ] 	= popupForDoc->insertItem( tr( "New" ) );
@@ -1674,7 +1676,7 @@ wDBTable::contentsContextMenuEvent ( QContextMenuEvent * e )
 
 		int r = popupForDoc->exec( e->globalPos() );
 		delete (Q3PopupMenu*) popupForDoc;
-		if(r==id[IdInsert]) { 
+		if(r==id[IdInsert]) {
 			beginInsert();
 		} else if(r==id[IdUpdate]) {
 			keyPressEvent( new QKeyEvent( QEvent::KeyPress, Qt::Key_F2, 0, Qt::NoButton));
@@ -1682,8 +1684,8 @@ wDBTable::contentsContextMenuEvent ( QContextMenuEvent * e )
 			Q3DataTable::deleteCurrent();
 		}
 	}
-	
-	
+
+
 	if ( containerType() == "wJournal" )
 	{
 		//id = currentRecord()->value(0).toLongLong();
@@ -1702,7 +1704,7 @@ wDBTable::contentsContextMenuEvent ( QContextMenuEvent * e )
 		id[ IdRefresh ] = popup->insertItem( tr( "Refresh" ) );
 		int r = popup->exec( e->globalPos() );
 		delete (Q3PopupMenu*) popup;
-		if(r==id[IdInsert]) 
+		if(r==id[IdInsert])
 			emit(insertRequest());
 		else
 			if(r==id[IdUpdate])
@@ -1827,7 +1829,7 @@ aSearchWidget::aSearchWidget( QWidget *parent, wDBTable *table )
 	t = table;
 	ftext = "";
 	setFrameStyle( Q3Frame::PopupPanel | Q3Frame::Raised );
-	setFocusPolicy( StrongFocus );
+	setFocusPolicy( Qt::StrongFocus );
 	new Q3HBoxLayout( this, 0, 0 );
 	l = new QLineEdit( this );
         l->installEventFilter( this );

@@ -28,7 +28,7 @@
 **********************************************************************/
 
 #include <qobject.h>
-#include <qfocusdata.h> 
+//--#include <qfocusdata.h>
 #include "adatabase.h"
 #include "adocument.h"
 #include "asqltable.h"
@@ -100,29 +100,30 @@ wDocument::initObject( aDatabase *adb )
 {
 	aWidget::initObject( adb );
 	QObject *obj;
-	QObjectList *lb = this->queryList( "wDBField" );
-	QObjectListIt itb( *lb ); // iterate over the buttons
-	while ( (obj = itb.current()) != 0 )
+	QObjectList lb = this->queryList( "wDBField" );
+	QListIterator<QObject*> itb( lb ); // iterate over the buttons
+	while ( itb.hasNext() )
 	{
-		++itb;
+		obj = itb.next();
 //		if ( (wActionButtton*) obj )->isActionUpdate() )
 		connect( (wDBField *)obj, SIGNAL(valueChanged( const QVariant & )),
 				this, SLOT(valueChanged( const QVariant & )) );
 	}
-	delete lb; // delete the list, not the objects
+	//--delete lb; // delete the list, not the objects
 	lb = this->queryList( "wDBTable" );
-	QObjectListIt itb1( *lb ); // iterate over the buttons
-	while ( (obj = itb1.current()) != 0 )
+	QListIterator<QObject*> itb1( lb ); // iterate over the buttons
+	while ( itb1.hasNext() )
 	{
-		++itb1;
+		obj = itb1.next();
 //		if ( (wActionButtton*) obj )->isActionUpdate() )
 		connect( this, SIGNAL(changeObj(const QString &)),
 			 (wDBTable *)obj, SLOT(newFilter(const QString &)));
 		connect( this, SIGNAL(changeObjId(const qulonglong)),
 			 (wDBTable *)obj, SLOT(newDataId(const qulonglong)));
 	}
-	delete lb; // delete the list, not the objects
-	focusData()->next()->setFocus();
+	//--delete lb; // delete the list, not the objects
+	//--focusData()->next()->setFocus();
+	focusNextChild();
 }
 
 
@@ -347,17 +348,17 @@ void
 wDocument::NewValues()
 {
 	QString fname;
-	QObjectList *l = this->queryList( "wDBField" );
-	QObjectListIt it( *l );
+	QObjectList l = this->queryList( "wDBField" );
+	QListIterator<QObject*> it( l );
 	QObject *obj;
-	while ( (obj = it.current()) != 0 )
+	while ( it.hasNext() )
 	{
-		++it;
+		obj = it.next();
 		fname=((wDBField *)obj)->getFieldName();
 		((wDBField *)obj)->setValue(dbobj->Value(fname).toString());
 		aLog::print(aLog::DEBUG, tr("wDocument set new value %1 for field %2 ").arg(dbobj->Value(fname).toString()).arg(fname));
 	}
-	delete l; // delete the list, not the objects
+	//--delete l; // delete the list, not the objects
 }
 
 

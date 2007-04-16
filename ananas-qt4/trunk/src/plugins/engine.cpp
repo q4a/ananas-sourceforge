@@ -167,7 +167,7 @@ aObjectsFactory::create( const QString &className,
 		  res = new aTime();
 	}else if (className == "DataField") {
 		  res = new aDataField();
-	}else if ( AExtensionFactory::keys().contains( className )) {
+	}/*--else if ( AExtensionFactory::keys().contains( className )) {
 //		printf("create extension object %s\n",(const char*) className);
 		AExtension *obj = AExtensionFactory::create(className);
 		// Insert check existence signal in future!!!!
@@ -175,7 +175,7 @@ aObjectsFactory::create( const QString &className,
 			 engine, SLOT( on_event(const QString&)));
 		obj->init(db);
 		res = obj;
-	}else if ( className == "ComboBox" ) {
+	}*/else if ( className == "ComboBox" ) {
 		if (arguments.size() == 1) {
 			res = new AComboBox( 0, arguments[0].toString());
 		} else {

@@ -27,7 +27,7 @@
 **
 **********************************************************************/
 
-#include <q3datetimeedit.h> 
+#include <q3datetimeedit.h>
 //Added by qt3to4:
 #include <QFocusEvent>
 #include "wdateedit.h"
@@ -67,7 +67,7 @@ wDateEdit::~wDateEdit()
  * \en 	Focus out event handler. Emit signal lostFocus. \_en
  * \ru 	Обработчик сигнала выхода из фокуса. Испускает сигнал lostFocus. \_ru
  */
-void 
+void
 wDateEdit::focusOutEvent ( QFocusEvent * e)
 {
 	emit(lostFocus());

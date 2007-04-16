@@ -38,6 +38,7 @@
 #include <qsinterpreter.h>
 //Added by qt3to4:
 #include <QTimerEvent>
+#include <qwidgetplugin.h>
 
 #include "adatabase.h"
 #include "acfg.h"
@@ -61,7 +62,7 @@ class QSInterpreter;
  *	Наследует QSObjectFactory.
  * \~
  */
-class ANANAS_EXPORT aObjectsFactory //--: public QSObjectFactory
+class QT_WIDGET_PLUGIN_EXPORT aObjectsFactory : public QSObjectFactory
 {
 public:
         aEngine   *engine;
@@ -87,7 +88,7 @@ class aForm;
  *	системные функции получения даты и времени, печати сообщений об ошибках и т.д
  *	\~
  */
-class  ANANAS_EXPORT aEngine : public QObject
+class  QT_WIDGET_PLUGIN_EXPORT aEngine : public QObject
 {
 	Q_OBJECT
 public:
@@ -138,7 +139,7 @@ public:
  *	ссылка на проект.
  *	\~
 */
-	//--QSProject	project;
+    QSProject	project;
 /*!
  *	\~english
  *	number to form
