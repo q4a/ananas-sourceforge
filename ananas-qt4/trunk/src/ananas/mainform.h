@@ -37,10 +37,17 @@
 #include <qdialog.h>
 #include <qstringlist.h>
 #include <qworkspace.h>
-#include <qmainwindow.h>
-#include <qvbox.h>
+#include <q3mainwindow.h>
+#include <q3vbox.h>
 #include <qapplication.h>
 #include <qsettings.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3ActionGroup>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <Q3PopupMenu>
 #include "ananas.h"
 #include "amenubar.h"
 #include "atoolbar.h"
@@ -48,13 +55,13 @@
 #include "engine.h"
 
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QAction;
-class QActionGroup;
-class QToolBar;
-class QPopupMenu;
+class Q3ActionGroup;
+class Q3ToolBar;
+class Q3PopupMenu;
 
 /*!
  * \ru
@@ -63,17 +70,17 @@ class QPopupMenu;
  * \_ru
  */
 
-class MainForm : public QMainWindow {
+class MainForm : public Q3MainWindow {
 	Q_OBJECT
 
 public:
-	MainForm( QWidget* parent = 0, const char* name = 0, WFlags fl = WType_TopLevel );
+	MainForm( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = Qt::WType_TopLevel );
 	~MainForm();
 	aEngine engine;
 	aCfg *md;
 
 	AMenuBar* menubar;
-	QPopupMenu *windowsMenu;
+	Q3PopupMenu *windowsMenu;
 	QWorkspace* ws;
 	aWindowsList* wl;
 	QString rcfile;

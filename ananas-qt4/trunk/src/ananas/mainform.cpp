@@ -30,12 +30,16 @@
 ****************************************************************************/
 #include <qmenubar.h>
 #include <qmessagebox.h>
-#include <qtoolbar.h>
+#include <q3toolbar.h>
 #include <qstatusbar.h>
 #include <qworkspace.h>
 #include <qapplication.h>
 #include <qaction.h>
 #include <qdir.h>
+//Added by qt3to4:
+#include <Q3Frame>
+#include <QPixmap>
+#include <Q3PopupMenu>
 
 #include "mainform.h"
 
@@ -51,14 +55,14 @@ aWindowsList *mainformwl=NULL;
  *  name 'name' and widget flags set to 'f'.
  *
  */
-MainForm::MainForm( QWidget* parent, const char* name, WFlags fl )
-    : QMainWindow( parent, name, fl )
+MainForm::MainForm( QWidget* parent, const char* name, Qt::WFlags fl )
+    : Q3MainWindow( parent, name, fl )
 {
 //    QApopupmenu *popup;
-    QVBox	*vb = new QVBox(this);
+    Q3VBox	*vb = new Q3VBox(this);
 
     setIcon( rcIcon("a-system.png"));
-    vb->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+    vb->setFrameStyle( Q3Frame::StyledPanel | Q3Frame::Sunken );
     ws = new QWorkspace( vb );
     wl = new aWindowsList();
     ws->setScrollBarsEnabled( TRUE );
@@ -67,7 +71,7 @@ MainForm::MainForm( QWidget* parent, const char* name, WFlags fl )
     if ( !name ) setName( "mainwindow" );
     engine_settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
     engine_settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
-    
+
 //    QStringList lst = settings.entryList("/engine");
     engine_settings.beginGroup("/engine");
     bool maximize = engine_settings.readBoolEntry( "/maximize", 0 );
@@ -80,16 +84,16 @@ MainForm::MainForm( QWidget* parent, const char* name, WFlags fl )
     move(offset_x,offset_y);
     if(maximize)
     {
-//	   setWindowState(windowState() ^ WindowMaximized); 
+//	   setWindowState(windowState() ^ WindowMaximized);
     }
     rcfile="";
 }
 
-bool 
+bool
 MainForm::init()
 {
     MessagesWindow *msgWindow = new MessagesWindow( this );// , WDestructiveClose );
-    moveDockWindow( msgWindow, DockBottom );
+    moveDockWindow( msgWindow, Qt::DockBottom );
     setMessageHandler( true );
     msgWindow->hide();
     if ( !initEngine() ) return false;
@@ -122,9 +126,9 @@ MainForm::initEngine()
 void
 MainForm::initMenuBar()
 {
-	QPopupMenu *m;
-	m = new QPopupMenu();
-	windowsMenu = new QPopupMenu();
+	Q3PopupMenu *m;
+	m = new Q3PopupMenu();
+	windowsMenu = new Q3PopupMenu();
     	connect( windowsMenu, SIGNAL( aboutToShow() ),
 	     this, SLOT( windowsMenuAboutToShow() ) );
 	m->insertItem(rcIcon("a-system.png"), tr( "About" ), this, SLOT( helpAbout() ));
@@ -159,7 +163,7 @@ MainForm::helpAbout()
     QMessageBox::about( this, tr("About Ananas.Engine program"),
 			tr("<h4>Ananas.Engin %1</h4> is a programm<br>"
 			   "for executing application of accounting automation system<br><br>"
-			   "Copyright 2003-2006 Leader Infotech, Valery Grazdankin, " 
+			   "Copyright 2003-2006 Leader Infotech, Valery Grazdankin, "
 			   "Copyright 2003-2006 Project Ananas, Andrey Paskal, Grigory Panov, Andrey Strelnikov<br>"
 			   "License: GPL<br><br>"
 			   "technical support:<br>"
@@ -172,7 +176,7 @@ MainForm::helpAbout()
 }
 
 void MainForm::InsertMainMenu(QString text, QObject *pop){
-    menubar->insertItem(text, (QPopupMenu *) pop);
+    menubar->insertItem(text, (Q3PopupMenu *) pop);
 
 }
 
@@ -197,13 +201,13 @@ MainForm::close()
 //MainWindow::close();
 }
 
-void 
+void
 MainForm::statusMessage( const QString &msg )
 {
  	statusBar()->message( msg );
 }
 
-void 
+void
 MainForm::setBackground( const QPixmap &pix ){
 	ws->setBackgroundPixmap( pix );
 }
@@ -251,11 +255,11 @@ void MainForm::windowsMenuAboutToShow()
     QWidgetList windows = ws->windowList();
     if(windows.count()==0) return;
     int i=0, count = windows.count();
-    
+
     do
     {
 	int id=0;
-	if(windows.at(i) && windows.at(i)->isHidden()) 
+	if(windows.at(i) && windows.at(i)->isHidden())
 	{
 		++i;
 		continue;
@@ -279,7 +283,7 @@ void MainForm::tileHorizontal()
 	if(!window->isHidden()) count++;
     }
     if ( !count ) return;
-    
+
     int heightForEach = ws->height() / count;
     int y = 0;
     for ( int i = 0; i < windows.count(); ++i )
@@ -287,7 +291,7 @@ void MainForm::tileHorizontal()
 	QWidget *window = windows.at(i);
 	if ( !window ) continue;
 	if ( window->isHidden() ) continue;
-	if ( window->testWState( WState_Maximized ) )
+	if ( window->windowState() == Qt::WindowMaximized )
 	{
 	    // prevent flicker
 	    window->hide();
@@ -295,7 +299,7 @@ void MainForm::tileHorizontal()
 	}
 	int preferredHeight = window->minimumHeight()+window->parentWidget()->baseSize().height();
 	int actHeight = QMAX(heightForEach, preferredHeight);
-	
+
 	window->parentWidget()->setGeometry( 0, y, ws->width(), actHeight );
 	y += actHeight;
     }
