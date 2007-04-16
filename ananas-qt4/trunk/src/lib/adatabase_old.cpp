@@ -153,7 +153,7 @@ QString
 aDatabase::driverName()
 {
         QString name = db().driverName();
-        if ( name == "QMYSQL3U" ) name = "QMYSQL3";
+        if ( name == "QMYSQL" ) name = "QMYSQL";
         return name;
 }
 
@@ -170,7 +170,7 @@ QString
 aDatabase::feature(const QString& featureName)
 {
 	QString res = QString::null;
-        if(driverName() == "QMYSQL3")
+        if(driverName() == "QMYSQL")
 	{
 		res = featuresMySQL[featureName];
 	}
@@ -231,7 +231,7 @@ aDatabase::init( aCfgRc *rc, const QString &dbname )
 	if (!rc) return false;
 	dbtype = rc->value("dbtype");
 	if (dbtype =="internal") driver = "QSQLITE";
-	if (dbtype =="mysql") driver = "QMYSQL3U";
+	if (dbtype =="mysql") driver = "QMYSQL";
 	if (dbtype =="postgres") driver = "QPSQL7";
 	if (dbtype =="odbc") driver = "QODBC3";
 	if (dbtype =="oracle") driver = "QOCI8";
@@ -263,7 +263,7 @@ aDatabase::init( aCfgRc *rc, const QString &dbname )
 			QString query = QString("create database %1 %2").arg( rc->value("dbname") ).arg(feature("encoding"));
 		//if ( driver == "QPSQL7" ) query.append( " with encoding='UTF-8'" );
 //#ifdef MYSQL_UTF8
-		//if ( driver == "QMYSQL3U" ) query.append( " character set utf8" );
+		//if ( driver == "QMYSQL" ) query.append( " character set utf8" );
 //#endif
 			printf("query = %s\n",query.ascii());
 			QSqlQuery q = ddb.exec( query );
@@ -387,7 +387,7 @@ aDatabase::drop(const QString& dbname)
 	query = QString("create database %1 %2").arg( dbname ).arg(feature("encoding"));
 			//if ( driverName() == "QPSQL7" ) query.append( " with encoding='UTF-8'" );
 //#ifdef MYSQL_UTF8
-			//if ( driverName() == "QMYSQL3" ) query.append( " character set utf8" );
+			//if ( driverName() == "QMYSQL" ) query.append( " character set utf8" );
 //#endif
 			//printf("query = %s\n",query.ascii());
 			QSqlQuery q = db().exec( query );
@@ -722,7 +722,7 @@ aDatabase::fieldtype( const QString &tdef )
 		if ( notnull ) dt.append(" not null" );
 		return dt;
 	}
-        if ( drv == "QMYSQL3") {
+        if ( drv == "QMYSQL") {
 		switch ( t ) {
 		case 'i':
 			dt = QString("int");
@@ -856,7 +856,7 @@ aDatabase::dropIndexes(const QString & table, const QStringList & indices)
 	    QString idxname=ind.value("idxname").toString();
 	    qWarning("Dropping index %s on table %s.",idxname.ascii(),table.ascii());
 	    bool success=false;
-	    if (drv=="QMYSQL3")
+	    if (drv=="QMYSQL")
 		success=db().exec(QString("drop index %1 on %2").arg(idxname).arg(table)).lastError().type()==QSqlError::None;
 	    else if (drv=="QSQLITE")
 		success=db().exec(QString("drop index %1.%2").arg(table).arg(idxname)).lastError().type()==QSqlError::None;
@@ -910,7 +910,7 @@ aDatabase::verifyTable(
 			t.sprintf("L 0 0");
 			break;
 		case QVariant::String:
-			if(drv == "QMYSQL3") w /=3;
+			if(drv == "QMYSQL") w /=3;
 			t.sprintf("C %d 0", w);
 			break;
 		case QVariant::Double:
@@ -918,7 +918,7 @@ aDatabase::verifyTable(
 				d = w & 0xFF;
 				w = ( w & 0xFF0000 ) >> 16;
 			}
-	        	if ( drv == "QMYSQL3" ) {
+	        	if ( drv == "QMYSQL" ) {
 				w = w - d;
 				if ( d==0 ) w--;
 			}
@@ -1234,7 +1234,7 @@ aDatabase::createTable(int update, const QString table, QString flddef )
 					q = db().exec( query );
 //					db_transaction_commit();
 				}
-	        		if ( drv == "QMYSQL3" ) {
+	        		if ( drv == "QMYSQL" ) {
 					query = QString("alter table %1 modify column %2").arg( table ).arg( convFieldsDef( f, ind, pkey ) );
 					q = db().exec( query );
 				}
@@ -1262,7 +1262,7 @@ aDatabase::createTable(int update, const QString table, QString flddef )
 			// Создадим индексы
 			if (rc) rc= createIndexes(table, tindex);
 		}
-	        if ( drv == "QMYSQL3" ) {
+	        if ( drv == "QMYSQL" ) {
 			dquery =  QString("drop table if exists %1").arg( table );
 			query = QString( "create table %1 (").arg( table );
 			if ( !flddef.isEmpty() )	{
@@ -1419,7 +1419,7 @@ aDatabase::createTable(int update, const QString table, QString flddef )
 			}
     //                  db_transaction_commit();
                     }
-                        if ( drv == "QMYSQL3" ) {
+                        if ( drv == "QMYSQL" ) {
                         query = QString("alter table %1 modify column %2").arg( table ).arg( convFieldsDef( f, ind, pkey ) );
                         q = db().exec( query );
 			if(db().lastError().type()!=QSqlError::None)
@@ -1484,7 +1484,7 @@ aDatabase::createTable(int update, const QString table, QString flddef )
             // Создадим индексы
             if (rc) rc= createIndexes(table, tindex);
         }
-            if ( drv == "QMYSQL3" ) {
+            if ( drv == "QMYSQL" ) {
             dquery =  QString("drop table if exists %1").arg( table );
             query = QString( "create table %1 (").arg( table );
             if ( !flddef.isEmpty() )    {

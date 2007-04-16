@@ -100,7 +100,8 @@ aLog::print(	int status,
 void
 aLog::printr(	const QString &toWrite)
 {
-	if(aLog::f.handle () !=-1)
+	//--if(aLog::f.handle () !=-1)
+	if(aLog::f.isOpen())
 	{
 		aLog::f.writeBlock((const char*)toWrite.local8Bit(),strlen((const char*)toWrite.local8Bit()));
 		aLog::f.flush();

@@ -55,7 +55,7 @@
 
 void dSelectDB::init()
 {
-	aLog::init();
+	aLog::init("ananas.log", aLog::DEBUG);
 	createMenu();
 	progressBar1->hide();
 	QString fname;
