@@ -79,15 +79,15 @@ public:
 //	aCfgItem *getMDObject();
 //	void setMDObject( aCfgItem object );
 	ERR_Code decodeDocNum( QString nm, QString & pref, int & num);
-	virtual ERR_Code select( Q_ULLONG id );
-	Q_ULLONG getUid();
+	virtual ERR_Code select( qulonglong id );
+	qulonglong getUid();
 	bool selected( const QString & tablename = "" );
 	//void selectTable(const QString & tablename = "");
 	ERR_Code select(const QString & query, const QString &tableName = "");
 	aDataTable *table( const QString &name = "" );
 
 //	void updateAttributes( const QString & tname = "" );
-	virtual Q_ULLONG docId();
+	virtual qulonglong docId();
 
 
 	virtual bool Next(const QString &tableName = "" );
@@ -161,7 +161,7 @@ protected:
 
 private:
 	bool vInited, selectFlag, filtred;
-	QDict <aDataTable> dbtables;
+	Q3Dict <aDataTable> dbtables;
 
 //	QDict <aDataRecord> attributes;
 };

@@ -29,8 +29,8 @@
 
 #ifndef ASQLTABLE_H
 #define ASQLTABLE_H
-#include <qsqlcursor.h>
-#include <qdict.h>
+#include <q3sqlcursor.h>
+#include <q3dict.h>
 #include "acfg.h"
 //#include "aaregister.h"
 //#include "adatarecord.h"
@@ -51,7 +51,7 @@ class aSQLField;
  *	Позволяет работать с табличными представлениями данных, определенных метаданными бизнес схемы.
  *	\~
  */
-class  ANANAS_EXPORT aDataTable : public QSqlCursor
+class  ANANAS_EXPORT aDataTable : public Q3SqlCursor
 {
 public:
 	aDatabase *db;
@@ -70,7 +70,7 @@ public:
 	void clearFields();
 	bool checkStructure( bool update );
 	long getMdObjId();
-	Q_ULLONG getIdd();
+	qulonglong getIdd();
 	virtual QVariant value ( int i );
 	virtual QVariant value ( const QString & name );
 	virtual void setValue ( int i, QVariant value );
@@ -83,7 +83,7 @@ public:
 //	virtual QSqlRecord *primeUpdate();
 
 	virtual bool select( const QString & filter="", bool usefltr = true );
-	virtual bool select( Q_ULLONG id );
+	virtual bool select( qulonglong id );
 	virtual void clearFilter();
 	virtual bool setFilter( const QString &name, const QVariant &value );
 	virtual QString getFilter();
@@ -109,8 +109,8 @@ public:
 protected:
 	QVariant calcFieldValue( const QString &name );
 	virtual QVariant calculateField( const QString &name );
-	virtual QVariant calc_obj(int fid,Q_ULLONG idd);
-	virtual QVariant calc_rem(int fid,Q_ULLONG id);
+	virtual QVariant calc_obj(int fid,qulonglong idd);
+	virtual QVariant calc_rem(int fid,qulonglong id);
 	void insertFieldInfo(aCfgItem cobj, bool calculated=true);
 	long mdobjId;
 
@@ -118,14 +118,14 @@ private:
 //	bool fNewNotUpdated;
 	aCfgItem obj,init_obj;
 	aCfg *md;
-	QDict<QObject> p_cat;
-	QDict<QObject> p_doc;
-	QDict<QObject> p_reg;
+	Q3Dict<QObject> p_cat;
+	Q3Dict<QObject> p_doc;
+	Q3Dict<QObject> p_reg;
 	QMap<int,aCfgItem> mapCat, mapReg, mapDoc;
 	QMap<int,QString> mapDim,mapSum;
 	QStringList fildsList;
-	QDict<QString> fnames;
-	QDict<QVariant> userFilter;
+	Q3Dict<QString> fnames;
+	Q3Dict<QVariant> userFilter;
 //	QDict<aDataField> dataRecord;
 //	aDataRecord dataRecord;
 //	QSqlRecord r;

@@ -55,9 +55,9 @@ bool
 aTemplate::open( const QString &fname )
 {
 	QFile file( QDir::convertSeparators(QDir::currentDirPath()+"/"+templateDir+"/"+fname) );
-    if ( file.open( IO_ReadOnly ) )
+    if ( file.open( QIODevice::ReadOnly ) )
     {
-        QTextStream stream( &file );
+        Q3TextStream stream( &file );
         tpl = stream.read();
         file.close();
 	return true;
@@ -167,9 +167,9 @@ bool
 aTemplate::save( const QString & fname)
 {
 	QFile file( QDir::convertSeparators(QDir::currentDirPath()+"/"+templateDir+"/"+fname) );
-	if ( file.open( IO_WriteOnly ) )
+	if ( file.open( QIODevice::WriteOnly ) )
 	{
-		QTextStream stream( &file );
+		Q3TextStream stream( &file );
 		stream << result();
 		file.close();
 		aLog::print(aLog::INFO, tr("aTemplate save file %1").arg(file.name()));

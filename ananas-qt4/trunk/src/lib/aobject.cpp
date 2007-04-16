@@ -29,8 +29,8 @@
 **********************************************************************/
 
 #include <qobject.h>
-#include <qsqlcursor.h>
-#include <qsqlpropertymap.h>
+#include <q3sqlcursor.h>
+#include <q3sqlpropertymap.h>
 #include <qdialog.h>
 #include "adatabase.h"
 #include "aobject.h"
@@ -674,7 +674,7 @@ aObject::IsConducted()
  *\~
  *\return \~english 0.\~russian 0.\~
  */
-Q_ULLONG
+qulonglong
 aObject::docId()
 {
 	return 0;
@@ -690,7 +690,7 @@ aObject::docId()
  * \_ru
  */
 ERR_Code
-aObject::select( Q_ULLONG id )
+aObject::select( qulonglong id )
 {
 	aDataTable * t = table();
 	if ( !t ) return err_notable;
@@ -928,10 +928,10 @@ aObject::Uid()
 /*!
  *
  */
-Q_ULLONG
+qulonglong
 aObject::getUid()
 {
-	Q_ULLONG Uid = 0;
+	qulonglong Uid = 0;
 	if ( selected() ) Uid = table()->sysValue("id").toULongLong();
 	return Uid;
 }

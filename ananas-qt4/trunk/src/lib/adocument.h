@@ -63,14 +63,14 @@ class  ANANAS_EXPORT aDocument :public aObject
 {
 	Q_OBJECT
 	ERR_Code tableDeleteLines( const QString & tablename );
-	ERR_Code tableSelect( const QString & tablename, Q_ULLONG = 0 );
+	ERR_Code tableSelect( const QString & tablename, qulonglong = 0 );
 public:
 
 	aDocument( aCfgItem context, aDatabase * adb = 0 );
 	aDocument( const QString & name, aDatabase * adb = 0 );
 	virtual ~aDocument();
 	
-	virtual ERR_Code select ( Q_ULLONG uid );
+	virtual ERR_Code select ( qulonglong uid );
 	virtual ERR_Code initObject();
 	virtual QString trSysName( const QString & sname );
 	virtual QVariant sysValue( const QString & sname, const QString & = ""); // second parameter is here to make method declaration identical to aObject::sysValue

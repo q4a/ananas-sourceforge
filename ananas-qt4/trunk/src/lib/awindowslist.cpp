@@ -65,7 +65,7 @@ aWindowsList::~aWindowsList()
  *	\param ido - \~english object id (default 0) \~russian идентификатор объекта (по умолчанию 0) \~	
  */
 void
-aWindowsList::insert( int id, QWidget *window, Q_ULLONG ido )
+aWindowsList::insert( int id, QWidget *window, qulonglong ido )
 {
     list.insert( conv( id, ido ), window );
 }
@@ -80,7 +80,7 @@ aWindowsList::insert( int id, QWidget *window, Q_ULLONG ido )
  *	\param ido - \~english object id (default 0) \~russian идентификатор объекта (по умолчанию 0) \~	
  */
 void
-aWindowsList::remove( int id, Q_ULLONG ido )
+aWindowsList::remove( int id, qulonglong ido )
 {
     list.remove( conv( id, ido ) );
 }
@@ -96,7 +96,7 @@ aWindowsList::remove( int id, Q_ULLONG ido )
 void
 aWindowsList::remove( QWidget *window )
 {
-    QDictIterator<QWidget> it( list );
+    Q3DictIterator<QWidget> it( list );
     for ( ; it.current(); ++it ) 
     {
 	if ( it.current() == window ) {
@@ -117,7 +117,7 @@ aWindowsList::remove( QWidget *window )
  *	\return \~english true, if window found \~russian true, если окно найдено. \~
  */
 bool
-aWindowsList::find( int id, Q_ULLONG ido )
+aWindowsList::find( int id, qulonglong ido )
 {
     if ( !list.find( conv( id, ido ) ) ) return FALSE;
     return TRUE;
@@ -135,7 +135,7 @@ aWindowsList::find( int id, Q_ULLONG ido )
 bool
 aWindowsList::find( QWidget *window )
 {
-    QDictIterator<QWidget> it( list );
+    Q3DictIterator<QWidget> it( list );
     for ( ; it.current(); ++it ) if ( it.current() == window ) return TRUE;
     return FALSE;
 }
@@ -152,7 +152,7 @@ aWindowsList::find( QWidget *window )
  *	\return \~english link to window, or 0 if window not found \~russian ссылка на окно или 0\~
  */
 QWidget *
-aWindowsList::get( int id, Q_ULLONG ido )
+aWindowsList::get( int id, qulonglong ido )
 {
     return list.find( conv( id, ido ) );
 }
@@ -169,7 +169,7 @@ aWindowsList::get( int id, Q_ULLONG ido )
  *	\return \~english key \~russian ключ \~
  */
 QString
-aWindowsList::conv( int id, Q_ULLONG ido )
+aWindowsList::conv( int id, qulonglong ido )
 {
     return QString("%1_%2").arg( id ).arg( ido );
 }

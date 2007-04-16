@@ -33,6 +33,8 @@
 #include	"adatabase.h"
 #include	"acatalogue.h"
 #include 	"alog.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 
 
 /*!\en
@@ -83,7 +85,7 @@ aCatalogue::getCatGroup()
 	return t->sysValue("idg").toULongLong();
 }*/
 
-Q_ULLONG
+qulonglong
 aCatalogue::getGroup()
 {
 	aSQLTable * t = table(md_group);
@@ -93,7 +95,7 @@ aCatalogue::getGroup()
 }
 
 ERR_Code
-aCatalogue::setGroup( Q_ULLONG idg )
+aCatalogue::setGroup( qulonglong idg )
 {
 	aSQLTable * t = table();
 	if ( !t ) return err_notable;
@@ -111,7 +113,7 @@ aCatalogue::SetGroup( aCatalogue * cat )
 	else return setGroup(cat->getGroup());
 }
 
-Q_ULLONG
+qulonglong
 aCatalogue::getOwner()
 {
 	aSQLTable * t = table();
@@ -121,7 +123,7 @@ aCatalogue::getOwner()
 }
 
 ERR_Code
-aCatalogue::setOwner( Q_ULLONG ido )
+aCatalogue::setOwner( qulonglong ido )
 {
 	aSQLTable * t = table();
 	if ( !t ) return err_notable;
@@ -142,7 +144,7 @@ aCatalogue::SetOwner( aCatalogue * cat )
 ERR_Code
 aCatalogue::New( bool child )
 {
-	Q_ULLONG group = getGroup(), parent = getUid();
+	qulonglong group = getGroup(), parent = getUid();
 	ERR_Code err = aObject::New();
 	if ( err ) return err;
 	aSQLTable * t = table();
@@ -169,7 +171,7 @@ aCatalogue::Delete()
 	aSQLTable * t = table();
 	if ( !t ) return err_notable;
 	if ( !selected() ) return err_notselected;
-	Q_ULLONG ido = t->sysValue("id").toULongLong();
+	qulonglong ido = t->sysValue("id").toULongLong();
 	if ( ido )
 	{
 		aLog::print(aLog::DEBUG, tr("aCatalogue delete ido=%1").arg(ido));
@@ -220,7 +222,7 @@ aCatalogue::Select( bool grouponly )
 	if ( !t ) return err_notable;
 //	setSelected(true,md_group);
 //	setSelected(true);
-	Q_ULLONG idg = getGroup();
+	qulonglong idg = getGroup();
 	QString flt = "";
 //	groupSelect();
 	if ( grouponly ) flt = QString("idg=%1").arg( idg );
@@ -228,7 +230,7 @@ aCatalogue::Select( bool grouponly )
 		if ( t->first() )
 		{
 			setSelected(true);
-			Q_ULLONG newidg = t->sysValue("idg").toULongLong();
+			qulonglong newidg = t->sysValue("idg").toULongLong();
 			
 			aLog::print(aLog::DEBUG, tr("aCatalogue select group id=%1").arg(idg));
 			if ( newidg != idg ) groupSelect( newidg );
@@ -253,7 +255,7 @@ aCatalogue::GroupSelect()
 	aSQLTable * t = table();
 	if(!t) return err_notable;
 	if ( !selected() ) return err_notselected;;
-	Q_ULLONG idg = t->sysValue("idg").toULongLong();
+	qulonglong idg = t->sysValue("idg").toULongLong();
 	return groupSelect(idg);
 }
 void
@@ -266,7 +268,7 @@ aCatalogue::UnSelect( bool grouponly )
 	setSelected(false, md_group);
 }
 ERR_Code
-aCatalogue::groupSelect ( Q_ULLONG idg )
+aCatalogue::groupSelect ( qulonglong idg )
 {
 	if ( !idg ) return err_noerror;
 	aSQLTable * t = table( md_group );
@@ -288,12 +290,12 @@ aCatalogue::groupSelect ()
 {
 	aSQLTable * t = table(md_group);
 	if ( !t ) return err_notable;
-	Q_ULLONG idg = t->sysValue("id").toULongLong();
+	qulonglong idg = t->sysValue("id").toULongLong();
 	return groupSelect( idg );
 }
 
 ERR_Code
-aCatalogue::selectByOwner ( Q_ULLONG ido )
+aCatalogue::selectByOwner ( qulonglong ido )
 {
 	aSQLTable * t = table();
 	
@@ -309,7 +311,7 @@ aCatalogue::selectByOwner ( Q_ULLONG ido )
 }
 
 ERR_Code
-aCatalogue::selectByGroup ( Q_ULLONG idg )
+aCatalogue::selectByGroup ( qulonglong idg )
 {
 	aSQLTable * t = table();
 	if ( !t ) return err_notable;
@@ -325,7 +327,7 @@ aCatalogue::selectByGroup ( Q_ULLONG idg )
 }
 
 ERR_Code
-aCatalogue::groupByParent(Q_ULLONG idp )
+aCatalogue::groupByParent(qulonglong idp )
 {
 	aSQLTable * t = table( md_group );
 	if ( !t ) return err_notable;
@@ -390,8 +392,8 @@ aCatalogue::selectByLevel(int level )
  * \return идентификационный номер группы.
  *\_ru
  */
-Q_ULLONG
-aCatalogue::idGroupByElement(Q_ULLONG ide )
+qulonglong
+aCatalogue::idGroupByElement(qulonglong ide )
 {
 	aSQLTable * t = table();
 	if ( !t ) return 0;
@@ -411,7 +413,7 @@ aCatalogue::GroupNew( bool reparent )
 	if ( !te || !tg ) return err_notable;
 //	groupSelect();
 //	setSelected(true, md_group);
-	Q_ULLONG idp = getGroup(), level = tg->sysValue("level").toULongLong(),
+	qulonglong idp = getGroup(), level = tg->sysValue("level").toULongLong(),
 			idg = tg->primeInsert()->value("id").toULongLong();
 	if ( tg->insert() )
 	{
@@ -438,14 +440,14 @@ aCatalogue::GroupNew( bool reparent )
    *\_ru
 */
 ERR_Code
-aCatalogue::newGroup(Q_ULLONG parentId )
+aCatalogue::newGroup(qulonglong parentId )
 {
 	aSQLTable *tg = table( md_group );
 	if (!tg ) return err_notable;
 	setSelected(true, md_group);
 	tg->select(parentId);
 	setSelected(true,md_group);
-	Q_ULLONG level, idg;
+	qulonglong level, idg;
 	if(tg->first())
 	{
 		level = tg->sysValue("level").toULongLong()+1;
@@ -477,12 +479,12 @@ return groupSelect(idg);
  *\_ru
  */
 ERR_Code
-aCatalogue::newElement(Q_ULLONG parentId )
+aCatalogue::newElement(qulonglong parentId )
 {
 	aSQLTable *te = table();
 	if (!te) return err_notable;
 	QSqlRecord *rec;
-	Q_ULLONG ide;
+	qulonglong ide;
 	rec = te->primeInsert(); // get edit buffer for table elements
 	ide = rec->value("id").toULongLong();
 	rec->setValue("id",ide); // set defult values for all user fields = id
@@ -511,16 +513,16 @@ aCatalogue::newElement(Q_ULLONG parentId )
  * \return идентификационный номер удаляемого элемента.
  *\_ru
  */
-Q_ULLONG
-aCatalogue::setMarkDeletedElement(Q_ULLONG id_el,bool del)
+qulonglong
+aCatalogue::setMarkDeletedElement(qulonglong id_el,bool del)
 {
 	select(id_el);
 	SetMarkDeleted(del);
 	Update();
 return table()->sysValue("id").toULongLong();
 }
-Q_ULLONG
-aCatalogue::setMarkDeletedGroup(Q_ULLONG id_gr, bool del)
+qulonglong
+aCatalogue::setMarkDeletedGroup(qulonglong id_gr, bool del)
 {
 	groupSelect(id_gr);
 	SetMarkDeleted(del, md_group);
@@ -538,11 +540,11 @@ return table()->sysValue("id").toULongLong();
  * \return идентификационный номер удаляемого элемента.
  *\_ru
  */
-Q_ULLONG
+qulonglong
 aCatalogue::delElement()
 {
 	aSQLTable * t = table();
-	Q_ULLONG ide=0;
+	qulonglong ide=0;
 	if ( !t ) return ide;
 	ide = t->sysValue("id").toULongLong();
 	if ( ide )
@@ -574,13 +576,13 @@ aCatalogue::delElement()
   *\_ru
  */
 void
-aCatalogue::getMarkDeletedList(Q_ULLONG idg,
-				QValueList<Q_ULLONG> &listDelId)
+aCatalogue::getMarkDeletedList(qulonglong idg,
+				Q3ValueList<qulonglong> &listDelId)
 {
-	QValueList<Q_ULLONG> lst;
+	Q3ValueList<qulonglong> lst;
 	aSQLTable * tg = table ( md_group );
 	if ( !tg ) return;
-	Q_ULLONG tmp;
+	qulonglong tmp;
 	if ( idg )
 	{
 
@@ -600,7 +602,7 @@ aCatalogue::getMarkDeletedList(Q_ULLONG idg,
 				lst << GroupSysValue("id").toULongLong();
 				}while(NextInGroupTable());
 
-				QValueList<Q_ULLONG>::iterator it = lst.begin();
+				Q3ValueList<qulonglong>::iterator it = lst.begin();
 				while(it!= lst.end())
 				{
 					getMarkDeletedList((*it),listDelId);
@@ -639,13 +641,13 @@ aCatalogue::isElementMarkDeleted()
  * \param listDelId (in,out) - список идентификационных номеров выделенных для удаления элементов и групп.
  *\_ru
  */
-Q_ULLONG
-aCatalogue::delGroup(Q_ULLONG idg, QValueList<Q_ULLONG> &listDelId)
+qulonglong
+aCatalogue::delGroup(qulonglong idg, Q3ValueList<qulonglong> &listDelId)
 {
 	aSQLTable * tg = table ( md_group );
 	if ( !tg ) return 0;
 	//if ( !selected( md_group ) ) return err_notselected;
-	Q_ULLONG tmp;// idg = tg->sysValue("id").toULongLong();
+	qulonglong tmp;// idg = tg->sysValue("id").toULongLong();
 	groupSelect(idg);
 	if ( idg )
 	{
@@ -687,7 +689,7 @@ aCatalogue::GroupDelete()
 		return err_notselected;
 	}
 		
-	Q_ULLONG idg = tg->sysValue("id").toULongLong();
+	qulonglong idg = tg->sysValue("id").toULongLong();
 	if ( idg )
 	{
 		//printf("idg=" LLU_SPEC "\n",idg);
@@ -735,7 +737,7 @@ aCatalogue::GroupSetGroup( aCatalogue * cat )
 {
 	aSQLTable * t = table( md_group );
 	if ( !t ) return err_notable;
-	Q_ULLONG newidp, oldidp = t->sysValue("idp").toULongLong();
+	qulonglong newidp, oldidp = t->sysValue("idp").toULongLong();
 	if ( !cat ) newidp = 0;
 	else newidp = cat->getGroup();
 	if ( newidp == oldidp ) return err_noerror;
@@ -921,7 +923,7 @@ aCatGroup::aCatGroup(aCfgItem context, aDatabase * adb)
  *	Возвращает id родительской группы
  *\_ru
  */
-Q_ULLONG
+qulonglong
 aCatGroup::parentUid()
 {
 	if ( !selected() ) return 0;
@@ -931,11 +933,11 @@ aCatGroup::parentUid()
 
 
 void
-aCatGroup::setLevel( Q_ULLONG newLevel )
+aCatGroup::setLevel( qulonglong newLevel )
 {
 	if ( !selected() ) return;
 	aSQLTable * t = table();
-	Q_ULLONG level = t->sysValue("level").toULongLong();
+	qulonglong level = t->sysValue("level").toULongLong();
 	if ( level == newLevel ) return;
 	aCatGroup tgr( obj, db );
 	QString query;
@@ -1027,7 +1029,7 @@ ERR_Code
 aCatGroup::New()
 {
 	int rc = 0;
-	Q_ULLONG level = 0, idg=0, idp = 0;
+	qulonglong level = 0, idg=0, idp = 0;
 	aSQLTable * t;
 	aLog::print(aLog::INFO, tr("aCatGroup new group"));
 	int err = aObject::New();
@@ -1081,7 +1083,7 @@ aCatGroup::Select()
 ERR_Code
 aCatGroup::SelectChild( aCatGroup * parent )
 {
-	Q_ULLONG idp = 0;
+	qulonglong idp = 0;
 	if ( parent ) idp = parent->getUid();
 	QString query;
 	query = QString("idp=%1").arg(idp);
@@ -1110,10 +1112,10 @@ aCatGroup::SetParent( aCatGroup * parent )
 {
 	aSQLTable * t = table();
 	if ( !t ) return err_notable;
-	Q_ULLONG idp = 0, uid = getUid();
+	qulonglong idp = 0, uid = getUid();
 	if ( parent ) idp = parent->getUid();
 	if ( idp == uid ) return err_cyclereparent;
-	Q_ULLONG level, tmpid = idp;
+	qulonglong level, tmpid = idp;
 	aCatGroup tg( obj, db );
 	while ( tmpid )
 	{

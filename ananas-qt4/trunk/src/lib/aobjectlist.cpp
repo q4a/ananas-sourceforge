@@ -29,8 +29,8 @@
 **********************************************************************/
 
 #include <qobject.h>
-#include <qsqlcursor.h>
-#include <qsqlpropertymap.h>
+#include <q3sqlcursor.h>
+#include <q3sqlpropertymap.h>
 #include <qdialog.h>
 #include "adatabase.h"
 #include "aobjectlist.h"
@@ -316,7 +316,7 @@ aObjectList::SetMarked( bool Marked )
  * \_ru
  */
 ERR_Code
-aObjectList::select( Q_ULLONG id )
+aObjectList::select( qulonglong id )
 {
 	aDataTable * t = table;
 	if ( !t ) return err_notable;
@@ -430,10 +430,10 @@ aObjectList::Uid()
 /*!
  *
  */
-Q_ULLONG
+qulonglong
 aObjectList::getUid()
 {
-	Q_ULLONG Uid = 0;
+	qulonglong Uid = 0;
 	if ( selected() ) Uid = table->sysValue("id").toULongLong();
 	return Uid;
 }

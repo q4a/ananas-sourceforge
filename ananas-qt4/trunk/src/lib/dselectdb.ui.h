@@ -39,10 +39,12 @@
 //#include "acfgobj.h"
 #include <qdir.h>
 #include <qstring.h>
-#include <qfiledialog.h>
+#include <q3filedialog.h>
 #include <qlineedit.h>
 #include <qstring.h>
 #include <qdom.h>
+//Added by qt3to4:
+#include <Q3PopupMenu>
 
 #include "deditrc.h"
 #include "dimportdb.h"
@@ -159,7 +161,7 @@ void dSelectDB::readSettings(QStringList entryGroup)
 }
 
 
-void dSelectDB::itemSelect( QListViewItem *item )
+void dSelectDB::itemSelect( Q3ListViewItem *item )
 {
 	if (! item ) return;
 	rcListViewItem *i = ( rcListViewItem *) item ;
@@ -169,7 +171,7 @@ void dSelectDB::itemSelect( QListViewItem *item )
 
 void dSelectDB::newGroup()
 {
-	QListViewItem *gitem;
+	Q3ListViewItem *gitem;
 	gitem = new rcListViewItem(listDBRC, tr("New group"), "", true );
 	listDBRC->setRootIsDecorated(1);
 	gitem->setOpen(true);
@@ -231,7 +233,7 @@ void dSelectDB::editItem()
 
 void dSelectDB::deleteItem()
 {
-	QListViewItem *item;
+	Q3ListViewItem *item;
 	item=listDBRC->selectedItem();
 	if (item) 
 	{
@@ -323,7 +325,7 @@ void dSelectDB::onCancel()
 }
 
 
-void dSelectDB::ItemRenamed(QListViewItem *item, int col)
+void dSelectDB::ItemRenamed(Q3ListViewItem *item, int col)
 {
 	if (!item) return;
 	if (col>1) return;
@@ -359,10 +361,10 @@ void dSelectDB::createMenu()
 {
 	
 	menuBar = new QMenuBar(this);
-	QPopupMenu *menuFile = new QPopupMenu(this);
+	Q3PopupMenu *menuFile = new Q3PopupMenu(this);
 	menuFile->insertItem(tr("E&xit"), this, SLOT(onCancel()));
 	
-	QPopupMenu *menuEdit = new QPopupMenu(this);
+	Q3PopupMenu *menuEdit = new Q3PopupMenu(this);
 	menuEdit->insertItem(tr("New &group"), this, SLOT(newGroup()));
 	menuEdit->insertItem(tr("&New shema"), this, SLOT(newItem()));
 	menuEdit->insertSeparator();
@@ -370,7 +372,7 @@ void dSelectDB::createMenu()
 	menuEdit->insertSeparator();
 	menuEdit->insertItem(tr("&Delete"),  this, SLOT(deleteItem()));
 	
-	QPopupMenu *menuAction = new QPopupMenu(this);
+	Q3PopupMenu *menuAction = new Q3PopupMenu(this);
 	menuAction->insertItem(tr("&Import"),  this, SLOT(importItem()));
 	menuAction->insertItem(tr("&Export"),  this, SLOT(exportItem()));
 	
@@ -413,14 +415,14 @@ void dSelectDB::importItem()
 		connect (&newBase, SIGNAL(progress(int,int)), progressBar1, SLOT( setProgress(int,int)));
 		if(newBase.importData(rcfile, filename, true)==false)
 		{
-			QMessageBox::information(this,tr("Backup"),newBase.lastError(),QMessageBox::NoButton);
+			QMessageBox::information(this,tr("Backup"),newBase.lastError(),Qt::NoButton);
 			progressBar1->hide();
 			aLog::print(aLog::INFO, tr("dSelectDB business schema import"));
 		}
 		else
 		{
 			aLog::print(aLog::ERROR, tr("dSelectDB restore: %1").arg(newBase.lastError()));
-			QMessageBox::critical(this,tr("Backup"),newBase.lastError(),0, QMessageBox::NoButton);
+			QMessageBox::critical(this,tr("Backup"),newBase.lastError(),0, Qt::NoButton);
 			progressBar1->hide();
 			delete item;
 			item =0;
@@ -457,12 +459,12 @@ void dSelectDB::exportItem()
 		}
 		else
 		{
-			QMessageBox::information(this,tr("Select item"),tr("Please, select item for export"),QMessageBox::NoButton);
+			QMessageBox::information(this,tr("Select item"),tr("Please, select item for export"),Qt::NoButton);
 			return;
 		}
 
-		QFileDialog *fdlg = new QFileDialog(this, "fileDialog",true); // create modal dialog
-		fdlg->setMode ( QFileDialog::AnyFile ); 
+		Q3FileDialog *fdlg = new Q3FileDialog(this, "fileDialog",true); // create modal dialog
+		fdlg->setMode ( Q3FileDialog::AnyFile ); 
 		if(fdlg->exec()==QDialog::Accepted)
 		{
 			filename = fdlg->selectedFile();
@@ -481,28 +483,28 @@ void dSelectDB::exportItem()
 		if(backupBase.exportData(rcfile, filename, true )==0)
 		{
 			aLog::print(aLog::INFO, tr("dSelectDB backup ok"));
-			QMessageBox::information(this,tr("Backup"),backupBase.lastError(),QMessageBox::NoButton);
+			QMessageBox::information(this,tr("Backup"),backupBase.lastError(),Qt::NoButton);
 			progressBar1->hide();
 			
 		}
 		else
 		{
 			aLog::print(aLog::DEBUG, tr("dSelectDB backup: %1").arg(backupBase.lastError()));
-			QMessageBox::critical(this,tr("Backup"),backupBase.lastError(),0, QMessageBox::NoButton);
+			QMessageBox::critical(this,tr("Backup"),backupBase.lastError(),0, Qt::NoButton);
 			progressBar1->hide();
 			return;
 		}
 	}
 	else
 	{
-		QMessageBox::information(this,tr("Select item"),tr("Please, select item for export"),QMessageBox::NoButton);
+		QMessageBox::information(this,tr("Select item"),tr("Please, select item for export"),Qt::NoButton);
 		return;
 	}
     
 }
 
 
-void dSelectDB::onDblClick( QListViewItem *item)
+void dSelectDB::onDblClick( Q3ListViewItem *item)
 {
 	
 	if (! (( rcListViewItem *)item)->group )

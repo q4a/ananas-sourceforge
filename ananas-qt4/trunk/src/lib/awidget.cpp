@@ -29,10 +29,14 @@
 **********************************************************************/
 
 #include <qobject.h>
-#include <qsqlcursor.h>
-#include <qsqlpropertymap.h>
+#include <q3sqlcursor.h>
+#include <q3sqlpropertymap.h>
 #include <qdialog.h>
 #include <qlineedit.h>
+//Added by qt3to4:
+#include <Q3SqlForm>
+#include <QLabel>
+#include <QKeyEvent>
 #include "adatabase.h"
 #include "awidget.h"
 #include "wfield.h"
@@ -55,7 +59,7 @@
  *	\param fl - флаги используемые при создании виджета. Передаются в конструктор базового класса.
  *\_ru
  */
-aWidget::aWidget( QWidget *parent, const char *name, WFlags fl )
+aWidget::aWidget( QWidget *parent, const char *name, Qt::WFlags fl )
 :QWidget( parent, name, fl )
 {
 	vId = 0;
@@ -77,7 +81,7 @@ aWidget::aWidget( QWidget *parent, const char *name, WFlags fl )
  * 	\param fl - флаги, используемые конструктором базового класса.
  * \_ru
  */
-aWidget::aWidget( const QString &itemname, aDatabase *adb, QWidget *parent, const char *name, WFlags fl )
+aWidget::aWidget( const QString &itemname, aDatabase *adb, QWidget *parent, const char *name, Qt::WFlags fl )
 :QWidget( parent, name, fl )
 {
 	vId = 0;
@@ -103,7 +107,7 @@ aWidget::aWidget( const QString &itemname, aDatabase *adb, QWidget *parent, cons
  * 	\param fl - флаги, используемые конструктором базового класса.
  * \_ru
  */
-aWidget::aWidget( aCfgItem context, aDatabase *adb, QWidget *parent, const char *name, WFlags fl )
+aWidget::aWidget( aCfgItem context, aDatabase *adb, QWidget *parent, const char *name, Qt::WFlags fl )
 :QWidget( parent, name, fl )
 {
 	vId = 0;
@@ -148,8 +152,8 @@ aWidget::createDBObject(  aCfgItem , aDatabase * )
  *	Пока ничего не делает. Возвращает 0;
  *\_ru
  */
-QToolBar*
-aWidget::createToolBar( QMainWindow * )
+Q3ToolBar*
+aWidget::createToolBar( Q3MainWindow * )
 {
 	return 0;
 }
@@ -194,7 +198,7 @@ aWidget::initObject( aDatabase *adb )
 	setInited( true );
 	
 	//<для чего?
-	QSqlPropertyMap *pm = new QSqlPropertyMap();
+	Q3SqlPropertyMap *pm = new Q3SqlPropertyMap();
 	//>
 	
 	
@@ -217,7 +221,7 @@ aWidget::initObject( aDatabase *adb )
 
 	
 	//<для чего?
-	form = new QSqlForm( this );
+	form = new Q3SqlForm( this );
 	pm->insert("wDBField","value");
 	form->installPropertyMap( pm );
 	//>
@@ -246,9 +250,9 @@ aWidget::initObject( aDatabase *adb )
 			connect( this, SIGNAL( changeObj(const QString &) ),
 				//(wDBTable*)
 				obj, SLOT( newFilter(const QString &) ));
-			connect( this, SIGNAL( changeObjId(const Q_ULLONG) ),
+			connect( this, SIGNAL( changeObjId(const qulonglong) ),
 				//(wDBTable*)
-				obj, SLOT( newDataId(const Q_ULLONG) ));
+				obj, SLOT( newDataId(const qulonglong) ));
 		}
 	//	if ( obj->className()==QString("wDBField") )
 	//	{
@@ -439,7 +443,7 @@ aWidget::getMd()
  *\~
  *\return \~english current database record id\~russian id текущей записи в базе данных.\~
  */
-Q_ULLONG
+qulonglong
 aWidget::uid()
 {
 	if ( dbobj )
@@ -662,7 +666,7 @@ aWidget::New()
  *\return \~english error code.\~russian код ошибки.\~
  */
 ERR_Code
-aWidget::Select( Q_ULLONG id )
+aWidget::Select( qulonglong id )
 {
 	int rc = 0;
 	if ( dbobj )
@@ -743,7 +747,7 @@ aWidget::Refresh()
 
 	while ( (obj = (aWidget*) tit.current()) != 0 ){
 		++tit;
-		((QDataTable*)obj)->refresh();
+		((Q3DataTable*)obj)->refresh();
 	}
 	delete tl; // delete the list, not the objects
 
@@ -804,7 +808,7 @@ aWidget::value( const QString & nameWidget )
 		} else if (!strcmp(w->className(),"QCheckBox")){
 			res=((QCheckBox*)w)->text();
 		} else if (!strcmp(w->className(),"QDateEdit")){
-			res=((QDateEdit*)w)->date().toString(Qt::ISODate);
+			res=((Q3DateEdit*)w)->date().toString(Qt::ISODate);
 		}
 	} else {
 	//	debug_message(tr("Error! Can't find widget by name==`%s`\n"),(const char*) name.local8Bit());
@@ -855,7 +859,7 @@ aWidget::setValue( const QString & nameWidget, const QVariant &value )
 		} else if (!strcmp(w->className(),"QCheckBox")){
 			((QCheckBox*)w)->setText(value.toString() );
 		} else if (!strcmp(w->className(),"QDateEdit")){
-			((QDateEdit*)w)->setDate( value.toDate() );
+			((Q3DateEdit*)w)->setDate( value.toDate() );
 		}
 	} else {
 		//debug_message(tr("aForm::SetValue() Error! Can't find widget by name==`%s`\n"),(const char*) name.local8Bit());
@@ -962,7 +966,7 @@ aWidget::SetReadOnly ( bool status )
 	{
 		//printf("QFrame classname '%s'\n", (const char*) obj->className() );
 		++tl;
-		if (obj->inherits("QTable")) (( QTable * )obj)->setReadOnly(true);
+		if (obj->inherits("QTable")) (( Q3Table * )obj)->setReadOnly(true);
 		//else (( QFrame *)obj)->setDisabled( status );
 	}
 	delete l; // delete the list, not the objects
@@ -973,7 +977,7 @@ aWidget::SetReadOnly ( bool status )
 /*!
  *
  */
-Q_ULLONG
+qulonglong
 aWidget::docId()
 {
 	if ( dbobj )

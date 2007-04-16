@@ -36,6 +36,8 @@
 #include	"adocjournal.h"
 #include	"airegister.h"
 #include	"aaregister.h"
+//Added by qt3to4:
+#include <QSqlQuery>
 
 
 
@@ -328,7 +330,7 @@ aDocument::New()
 		aLog::print(aLog::ERROR, tr("aDocument metaobject is null=%1"));
 		return err_noobject;
 	}
-	Q_ULLONG Uid = getUid();
+	qulonglong Uid = getUid();
 	SetPrefix(md->attr(obj,mda_name));
 	aLog::print(aLog::DEBUG, tr("aDocument new type = %1").arg(md->id(obj)));
 	err = sysJournal->New( Uid, Prefix(), md->id(obj) );
@@ -371,7 +373,7 @@ aDocument::TableNewLine( const QString & tablename )
 	if ( IsConducted() ) return err_docconducted;
 	aSQLTable *t = table( tablename );
 	if ( !t ) return err_notable;
-	Q_ULLONG tUid = t->primeInsert()->value("id").toULongLong(), dUid = getUid();
+	qulonglong tUid = t->primeInsert()->value("id").toULongLong(), dUid = getUid();
 	if ( !dUid ) return err_abstractobj;
 	if ( t->insert() )
 	{
@@ -424,7 +426,7 @@ aDocument::Delete()
 {
 	if ( !selected() ) return err_notselected;
 	if(IsConducted()) UnConduct();
-	Q_ULLONG uid = getUid();
+	qulonglong uid = getUid();
 	sysJournal->deleteDocument(uid);
 	
 	aLog::print(aLog::DEBUG, tr("aDocument delete from sysjournal"));
@@ -481,7 +483,7 @@ aDocument::TableDelete( const QString & tablename )
 		aLog::print(aLog::ERROR, tr("aDocument deleted table not selected"));
 		return err_notselected;
 	}
-	Q_ULLONG tUid = t->sysValue("id").toULongLong();
+	qulonglong tUid = t->sysValue("id").toULongLong();
 	aIRegister * reg = new aIRegister("",db);
 	reg->deleteTable(tUid);
 	delete reg;
@@ -520,7 +522,7 @@ aDocument::TableDelete( const QString & tablename )
 ERR_Code
 aDocument::tableDeleteLines( const QString & tablename )
 {
-	Q_ULLONG dUid = getUid();
+	qulonglong dUid = getUid();
 	if ( !dUid )
 	{
 		aLog::print(aLog::ERROR, tr("aDocument not selected"));
@@ -858,9 +860,9 @@ aDocument::Select()
  *	\return \en error code. \_en \ru код ошибки.\_ru
  */
 ERR_Code
-aDocument::tableSelect( const QString & name, Q_ULLONG idd )
+aDocument::tableSelect( const QString & name, qulonglong idd )
 {
-	Q_ULLONG dUid = idd;
+	qulonglong dUid = idd;
 	if ( !dUid ) dUid = getUid();
 	if ( !dUid ) return err_abstractobj;
 	aSQLTable * t = table( name );
@@ -939,10 +941,10 @@ aDocument::Copy()
 {
 	if ( !sysJournal ) return err_nosysjournal;
 	QString nowPrefix = sysJournal->getPrefix();
-	Q_ULLONG oldUid = getUid();
+	qulonglong oldUid = getUid();
 	ERR_Code err = aObject::Copy();
 	if ( err ) return err;
-	Q_ULLONG Uid = getUid();
+	qulonglong Uid = getUid();
 	err = sysJournal->New( Uid, nowPrefix, md->id(obj) );
 	if ( err )
 	{
@@ -1251,7 +1253,7 @@ aDicument::TableClearFilter( const QString & tname )
 ERR_Code
 aDocument::setConduct( bool cond )
 {
-	Q_ULLONG idd = getUid();
+	qulonglong idd = getUid();
 
 	if (!idd) return err_nodocument;
 	QSqlDatabase *tdb = db->db();
@@ -1370,7 +1372,7 @@ aDocument::IsConducted(){
 bool
 aDocument::IsSignedIn()
 {
-	Q_ULLONG idd = getUid();
+	qulonglong idd = getUid();
 	if (!idd) return false;
 	QSqlQuery q = db->db()->exec(QString("SELECT cf FROM a_journ WHERE idd=%1").arg(idd));
 	if ( q.first() ) return q.value(0).toBool();
@@ -1388,10 +1390,10 @@ aDocument::IsSignedIn()
  *	\_ru
  */
 ERR_Code
-aDocument::select( Q_ULLONG uid)
+aDocument::select( qulonglong uid)
 {
 	ERR_Code res= err_noerror;
-	Q_ULLONG idd = 0;
+	qulonglong idd = 0;
 	if ( !sysJournal ) return err_nosysjournal;
 	res = aObject::select(uid);
 	if(res != err_noerror) return res;

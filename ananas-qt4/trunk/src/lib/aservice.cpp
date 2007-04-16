@@ -61,7 +61,7 @@ aService::number2money(	double rubli,
 	{
 		rubli = -rubli;
 	}
-	Q_ULLONG r = QVariant(rubli).toULongLong();
+	qulonglong r = QVariant(rubli).toULongLong();
 	double tmp = rubli-r;
 	
 	uint kop;
@@ -101,7 +101,7 @@ aService::number2money(	 QString currency, double amount ) {
  *	\see part2string(unsigned int st3, unsigned int st2, unsigned int st1, int stepen)
 */
 QString 
-aService::parts2money(Q_ULLONG rubli,
+aService::parts2money(qulonglong rubli,
 			 unsigned int kopeyki,
 			 bool need_kopeyki,
 			 bool positive,
@@ -510,12 +510,12 @@ aService::copyFile(const QString& srcFileName, const QString& destFileName, bool
 		return false;
 	}
 
-	if(!srcFile.open( IO_ReadOnly ))
+	if(!srcFile.open( QIODevice::ReadOnly ))
 	{
 		aLog::print(aLog::ERROR, QObject::tr("aService copy: source file %1 open for read error").arg(srcFileName));
 		return false;
 	}
-	if(!destFile.open( IO_WriteOnly))
+	if(!destFile.open( QIODevice::WriteOnly))
 	{
 		aLog::print(aLog::ERROR, QObject::tr("aService copy: destination file %1 open for write error").arg(destFileName));
 		return false;

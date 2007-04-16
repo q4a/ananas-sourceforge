@@ -30,8 +30,8 @@
 #define AOOTEMPLATE_H
 
 #include <qstring.h>
-#include <qptrlist.h>
-#include <qvaluestack.h>
+#include <q3ptrlist.h>
+#include <q3valuestack.h>
 #include <qdom.h>
 
 #define open_token "<:"

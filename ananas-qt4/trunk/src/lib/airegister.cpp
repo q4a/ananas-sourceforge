@@ -199,7 +199,7 @@ aDocument*
 aIRegister::GetDocument()
 {
 	//TODO: проверить, не происходит ли утечек памяти
-	Q_ULLONG doc_id = table()->sysValue("idd").toULongLong();
+	qulonglong doc_id = table()->sysValue("idd").toULongLong();
 	aCfgItem o = md->find(db->uidType(doc_id));
 	if(!o.isNull())
 	{
@@ -281,7 +281,7 @@ aIRegister::New()
 	if ( !docseted ) return err_nodocument;
 	aSQLTable * t = table();
 	if ( !t ) return err_notable;
-	Q_ULLONG idd = nowDoc->getUid();
+	qulonglong idd = nowDoc->getUid();
 	if ( !idd ) return err_notselected;
 	int err = aObject::New();
 	if ( err ) return err;
@@ -323,7 +323,7 @@ aIRegister::deleteDocument( aDocument * doc )
 		aLog::print(aLog::ERROR, tr("aIRegister metaobject is null"));
 		return false;
 	}
-	Q_ULLONG idd = doc->getUid();
+	qulonglong idd = doc->getUid();
 	if ( !idd )
 	{
 		aLog::print(aLog::ERROR, tr("aIRegister deleted document have invalid idd"));
@@ -358,7 +358,7 @@ aIRegister::deleteDocument( aDocument * doc )
  *\_ru
  */
 bool
-aIRegister::deleteTable( Q_ULLONG iddt)
+aIRegister::deleteTable( qulonglong iddt)
 {
 	QString tdbname;
 	aCfgItem iReg, iRegs = md->find(md->find(md->find(mdc_metadata),md_registers,0),md_iregisters,0);
@@ -467,7 +467,7 @@ int
 aIRegister::SelectByDoc()
 {
 	if ( !docseted ) return err_nodocument;
-	Q_ULLONG uidd = nowDoc->getUid();
+	qulonglong uidd = nowDoc->getUid();
 	if ( !uidd ) return err_nodocument;
 	aSQLTable * t = table();
 	if ( !t ) return err_notable;

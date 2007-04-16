@@ -150,7 +150,7 @@ aLog::init(const QString &log_name, int show_up)
 	aLog::logName = log;
 		
 	aLog::f.setName(getLogName());
-	aLog::f.open( IO_WriteOnly | IO_Append );
+	aLog::f.open( QIODevice::WriteOnly | QIODevice::Append );
 
 }
 

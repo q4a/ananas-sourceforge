@@ -58,7 +58,7 @@ class  ANANAS_EXPORT aRole: public aObject
 public:
 
 	aRole();
-	aRole(Q_ULLONG roleId, aDatabase * adb);
+	aRole(qulonglong roleId, aDatabase * adb);
 	aRole(aDatabase * adb);
 	virtual ERR_Code initObject();
 	
@@ -69,18 +69,18 @@ public:
 	virtual ERR_Code Delete();
 	virtual ERR_Code Update();
 	virtual ERR_Code Select();
-	virtual ERR_Code Select(Q_ULLONG id);
+	virtual ERR_Code Select(qulonglong id);
 	
 	virtual ERR_Code addPermission( aPermission );
 	virtual ERR_Code delPermission( aPermission );
 	virtual bool hasPermission( aPermission );
 
-	virtual ERR_Code addUser( Q_ULLONG userId );
-	virtual ERR_Code delUser( Q_ULLONG userId );
+	virtual ERR_Code addUser( qulonglong userId );
+	virtual ERR_Code delUser( qulonglong userId );
 	
 //	QValueList< aUser *> getUsers( bool assigned);
 
-	bool hasUser( Q_ULLONG userId);
+	bool hasUser( qulonglong userId);
 	
 	virtual ERR_Code SetName( const QString & );
 	virtual QString GetName();

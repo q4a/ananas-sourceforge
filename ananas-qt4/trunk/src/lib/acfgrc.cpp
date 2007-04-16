@@ -30,9 +30,9 @@
 #include <stdlib.h>
 #include <qfile.h>
 #include <qstringlist.h>
-#include <qtextstream.h>
+#include <q3textstream.h>
 #include <qpixmap.h>
-#include <qdragobject.h>
+#include <q3dragobject.h>
 
 #include "acfg.h"
 #include "acfgrc.h"
@@ -42,8 +42,8 @@ QPixmap
 rcIcon(const char *name){
 	QPixmap pm;
 	const QMimeSource *e;
-	e=QMimeSourceFactory::defaultFactory()->data(QString(name));
-	QImageDrag::decode(e, pm);
+	e=Q3MimeSourceFactory::defaultFactory()->data(QString(name));
+	Q3ImageDrag::decode(e, pm);
 	return pm;
 }
 
@@ -98,12 +98,12 @@ aCfgRc::read(const QString &fname)
 
 	filename = fname;
 	values.clear();
-	if ( file.open( IO_ReadOnly ) )
+	if ( file.open( QIODevice::ReadOnly ) )
 	{
-		QTextStream stream( &file );
+		Q3TextStream stream( &file );
 		QString line, k, v;
 
-		stream.setEncoding(QTextStream::UnicodeUTF8);
+		stream.setEncoding(Q3TextStream::UnicodeUTF8);
 		while ( !stream.eof() ) {
 			line = stream.readLine(); // line of text excluding '\n'
 			k = line.section("=",0,0);
@@ -123,13 +123,13 @@ aCfgRc::write(const QString &fname)
 	QFile file( fname );
 //	int i;
 
-	if ( file.open( IO_WriteOnly ) )
+	if ( file.open( QIODevice::WriteOnly ) )
 	{
-		QTextStream stream( &file );
-		QDictIterator<QString> it( values );
+		Q3TextStream stream( &file );
+		Q3DictIterator<QString> it( values );
 //		int i, vc;
 
-		stream.setEncoding(QTextStream::UnicodeUTF8);
+		stream.setEncoding(Q3TextStream::UnicodeUTF8);
 		for( ; it.current(); ++it )
 		stream << it.currentKey() << "=" << *it.current() << endl;
 //			cout << endl;

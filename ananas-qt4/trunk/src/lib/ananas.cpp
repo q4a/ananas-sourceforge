@@ -86,7 +86,7 @@ ananas_login( QString &rcfile, QString &username, QString &userpassword )
  */
 QString
 ANANAS_EXPORT
-ananas_objectstr( aDatabase *db, Q_ULLONG uid, int oid )
+ananas_objectstr( aDatabase *db, qulonglong uid, int oid )
 {
 	QString res = "";
 

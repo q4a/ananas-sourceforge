@@ -32,6 +32,8 @@
 
 #include	"acfg.h"
 #include 	"aobject.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 
 class aDatabase;
 class aCatGroup;
@@ -66,21 +68,21 @@ protected:
 
 private:
 //	Q_ULLONG getCatGroup();
-	Q_ULLONG getGroup();
-	Q_ULLONG getOwner();
-	ERR_Code setOwner( Q_ULLONG ido );
-	ERR_Code setGroup( Q_ULLONG idg );
-	ERR_Code selectByOwner ( Q_ULLONG ido );
+	qulonglong getGroup();
+	qulonglong getOwner();
+	ERR_Code setOwner( qulonglong ido );
+	ERR_Code setGroup( qulonglong idg );
+	ERR_Code selectByOwner ( qulonglong ido );
 	ERR_Code groupSelect ();
-	ERR_Code groupByParent(Q_ULLONG idp );
+	ERR_Code groupByParent(qulonglong idp );
 public slots:
 	//virtual aCatGroup * group();
 	virtual int New( bool child);
 	virtual int New();
 	virtual int Delete();
 
-	virtual int newGroup( Q_ULLONG parentId );
-	virtual int newElement( Q_ULLONG parentId );
+	virtual int newGroup( qulonglong parentId );
+	virtual int newElement( qulonglong parentId );
 
 	virtual int Update();
 	virtual int Copy();
@@ -89,18 +91,18 @@ public slots:
 	virtual int Select( bool grouponly = false );
 	void UnSelect( bool grouponly = false );
 	virtual int selectByLevel ( int level );
-	virtual int selectByGroup ( Q_ULLONG idg );
-	virtual Q_ULLONG idGroupByElement(Q_ULLONG ide );
-	virtual int groupSelect ( Q_ULLONG idg );
+	virtual int selectByGroup ( qulonglong idg );
+	virtual qulonglong idGroupByElement(qulonglong ide );
+	virtual int groupSelect ( qulonglong idg );
 
 	virtual QVariant GetElementValue(QVariant ide, const QString &fname);
 		
-	virtual Q_ULLONG delElement();
-	virtual Q_ULLONG delGroup(Q_ULLONG idg, QValueList<Q_ULLONG> &listDelId);
+	virtual qulonglong delElement();
+	virtual qulonglong delGroup(qulonglong idg, Q3ValueList<qulonglong> &listDelId);
 	
-	Q_ULLONG setMarkDeletedElement(Q_ULLONG el_id, bool del);
-	Q_ULLONG setMarkDeletedGroup(Q_ULLONG gr_id, bool del);
-	void getMarkDeletedList(Q_ULLONG idg, QValueList<Q_ULLONG> &listDelId);
+	qulonglong setMarkDeletedElement(qulonglong el_id, bool del);
+	qulonglong setMarkDeletedGroup(qulonglong gr_id, bool del);
+	void getMarkDeletedList(qulonglong idg, Q3ValueList<qulonglong> &listDelId);
 
 	virtual bool isGroupMarkDeleted();
 	virtual bool isElementMarkDeleted();
@@ -153,8 +155,8 @@ public:
 class  ANANAS_EXPORT aCatGroup :public aObject
 {
 	Q_OBJECT
-	Q_ULLONG parentUid();
-	void setLevel( Q_ULLONG newlevel );
+	qulonglong parentUid();
+	void setLevel( qulonglong newlevel );
 	virtual QString trSysName( const QString & sname );
 	QVariant sysValue( const QString & sname );
 public:

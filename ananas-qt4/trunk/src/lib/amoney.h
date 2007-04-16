@@ -52,8 +52,8 @@ class ANANAS_EXPORT AMoney{
 		Degree* 	degree;
 		
 		QString degreeText( QString , int );
-		QString valueToText( Q_ULLONG );
-		QString decimalValueToText( Q_ULLONG );
+		QString valueToText( qulonglong );
+		QString decimalValueToText( qulonglong );
 		QString singleToText( QString  );
 		QString coupleToText( QString  );
 		QString tripleToText( QString  );

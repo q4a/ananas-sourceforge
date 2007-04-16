@@ -33,7 +33,9 @@
 #include "ananasglobal.h"
 
 #include <qobject.h>
-#include <qdict.h>
+#include <q3dict.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 QPixmap ANANAS_EXPORT rcIcon(const char *name);
 void ANANAS_EXPORT setMessageHandler(bool GUI = false);
@@ -52,7 +54,7 @@ public:
 	int count();
 private:
 	QString filename;
-	QDict <QString> values;
+	Q3Dict <QString> values;
 };
 
 #endif

@@ -34,7 +34,7 @@
 #include <qapplication.h>
 #include <qfile.h>
 #include <qdir.h>
-#include <qprocess.h>
+#include <q3process.h>
 #include <stdio.h>
 
 
@@ -195,7 +195,7 @@ bool
 aContainer::extractManifest(const QString& archName, aCManifest *mf)
 {
 #ifndef Q_OS_WIN32
-	QProcess process( QString("unzip") );
+	Q3Process process( QString("unzip") );
 //	process.setWorkingDirectory (dir);
 	process.addArgument("-op");
 	process.addArgument( archName );
@@ -204,7 +204,7 @@ aContainer::extractManifest(const QString& archName, aCManifest *mf)
 	process.addArgument( tmpDirName );
 
 #else 
-	QProcess process( QString("7z") );	
+	Q3Process process( QString("7z") );	
 //	process.setWorkingDirectory ( templateDir);
 //	printf("working dir = `%s'\n", QString(templateDir).ascii());
 	process.addArgument( "x" );
@@ -249,7 +249,7 @@ bool
 aContainer::extractData(const QString& archName)
 {
 #ifndef Q_OS_WIN32
-	QProcess process( QString("unzip") );
+	Q3Process process( QString("unzip") );
 //	process.setWorkingDirectory (dir);
 	process.addArgument("-op");
 	process.addArgument( archName );
@@ -257,7 +257,7 @@ aContainer::extractData(const QString& archName)
 	process.addArgument( tmpDirName );
 
 #else 
-	QProcess process( QString("7z") );	
+	Q3Process process( QString("7z") );	
 //	process.setWorkingDirectory ( templateDir);
 //	printf("working dir = `%s'\n", QString(templateDir).ascii());
 	process.addArgument( "x" );
@@ -300,7 +300,7 @@ aContainer::compressFile(const QString& fileName)
 
 #ifndef Q_OS_WIN32
 
-	QProcess processUpdate( QString("zip") );
+	Q3Process processUpdate( QString("zip") );
 	processUpdate.setWorkingDirectory(tmpDirName);
 //	processUpdate.addArgument( "-r" ); // recurce into subdirectories
 //	processUpdate.addArgument( "-0" ); // store only
@@ -309,7 +309,7 @@ aContainer::compressFile(const QString& fileName)
 	processUpdate.addArgument("-i");
 	processUpdate.addArgument(fileName);
 #else
-	QProcess processUpdate( QString("7z") );
+	Q3Process processUpdate( QString("7z") );
 	processUpdate.setWorkingDirectory(tmpDirName);
 	processUpdate.addArgument( "a" );
 	processUpdate.addArgument( "-tzip" );

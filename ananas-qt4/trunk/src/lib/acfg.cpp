@@ -40,7 +40,7 @@
 #include <qdom.h>
 #include <qfile.h>
 #include <qstringlist.h>
-#include <qtextstream.h>
+#include <q3textstream.h>
 
 #include "acfg.h"
 #include "alog.h"
@@ -170,7 +170,7 @@ aCfg::read(const QString &fname){
     QByteArray buf;
     QString err;
     int errLine = 0, errColumn = 0;
-    if ( !file.open( IO_ReadOnly ) ) return RC_ERROR;
+    if ( !file.open( QIODevice::ReadOnly ) ) return RC_ERROR;
     buf = file.readAll();
     file.close();
     xml.setContent( QString("") );
@@ -219,9 +219,9 @@ aCfg::write(QDomDocument doc, const QString &fname)
 {
     QFile file( fname );
     QByteArray buf( xml.toString(4).utf8() );
-    if ( file.open( IO_WriteOnly ) ) {
-	QTextStream ts( &file );
-	ts.setEncoding(QTextStream::UnicodeUTF8);
+    if ( file.open( QIODevice::WriteOnly ) ) {
+	Q3TextStream ts( &file );
+	ts.setEncoding(Q3TextStream::UnicodeUTF8);
 	doc.save(ts, 4);
 	//ts <<  toString(4);
 	file.close();
@@ -1081,7 +1081,7 @@ aCfg::loadOneObject( const QString &fileName )
 		QByteArray buf;
 		QString err;
 //		int errLine = 0, errColumn = 0;
-		if ( file.open( IO_ReadOnly ) )
+		if ( file.open( QIODevice::ReadOnly ) )
 		{
 			buf = file.readAll();
 			file.close();

@@ -59,13 +59,13 @@ aTests::print2log(	const QString &log_name,
 	QFile f;
 	if(log_name==QString::null)
 	{
-		f.open( IO_WriteOnly, stdout );
+		f.open( QIODevice::WriteOnly, stdout );
 		f.writeBlock((const char*)toWrite,strlen((const char*)toWrite));
 	}
 	else
 	{
 		f.setName(log_name);
-		f.open( IO_WriteOnly | IO_Append );
+		f.open( QIODevice::WriteOnly | QIODevice::Append );
 		f.writeBlock((const char*)toWrite,strlen((const char*)toWrite));
 		f.flush();
 	}
@@ -98,7 +98,7 @@ aTests::readConfig(const QString &conf_name,const QString &log_name)
 	}
 	else
 	{
-		if(!f.open( IO_ReadOnly ))
+		if(!f.open( QIODevice::ReadOnly ))
 		{
 			aLog::print(aLog::ERROR, QObject::tr("aTests file %1 not open for read").arg(f.name()));
 		}
@@ -147,7 +147,7 @@ aTests::writeConfig(const QString &conf_name, QMap<QString,QString> map, const Q
 	}
 	//else
 	//{
-		if(f.open( IO_WriteOnly ))
+		if(f.open( QIODevice::WriteOnly ))
 		{
 			QMap<QString,QString>::Iterator it;
 			for ( it = map.begin(); it != map.end(); ++it )
@@ -187,13 +187,13 @@ aTests::printline2log(const QString &log_name)
 	QFile f;
 	if(log_name==QString::null)
 	{
-		f.open( IO_WriteOnly, stdout );
+		f.open( QIODevice::WriteOnly, stdout );
 		f.writeBlock((const char*)toWrite,strlen((const char*)toWrite));
 	}
 	else
 	{
 		f.setName(log_name);
-		f.open( IO_WriteOnly | IO_Append );
+		f.open( QIODevice::WriteOnly | QIODevice::Append );
 		f.writeBlock((const char*)toWrite,strlen((const char*)toWrite));
 		f.flush();
 	}

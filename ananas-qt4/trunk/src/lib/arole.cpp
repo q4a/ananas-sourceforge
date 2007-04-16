@@ -39,7 +39,7 @@
  *	\param adb - ссылка на базу данных.
  *	\_ru
  */
-aRole::aRole( Q_ULLONG roleId, aDatabase * adb ):aObject("",adb)
+aRole::aRole( qulonglong roleId, aDatabase * adb ):aObject("",adb)
 {
 	
 	initObject();
@@ -161,7 +161,7 @@ aRole::Select(  )
  *	\return \en error code \_en \ru код ошибки \_ru
 */
 ERR_Code
-aRole::Select( Q_ULLONG id )
+aRole::Select( qulonglong id )
 {
 	aSQLTable * t = table();
 	if ( !t ) return err_notable;
@@ -194,7 +194,7 @@ aRole::addPermission( aPermission p )
 	aSQLTable *tg = table( md_right_roles );
 	if ( !tg ) return err_notable;
 	setSelected(true, md_right_roles);
-	Q_ULLONG idg;
+	qulonglong idg;
 	QSqlRecord* rec = tg->primeInsert(); // get edit buffer for table groups
 	idg = rec->value("id").toULongLong();
 	rec->setValue("id",idg );
@@ -276,7 +276,7 @@ aRole::hasPermission( aPermission p )
 */
 
 ERR_Code
-aRole::addUser( Q_ULLONG userId )
+aRole::addUser( qulonglong userId )
 {
 	aUser *user = new aUser(userId, db);
 	user->addRole(sysValue("id").toULongLong());
@@ -296,7 +296,7 @@ return  err_noerror;
  *	\return \en error code \_en \ru код ошибки \_ru
 */
 ERR_Code
-aRole::delUser( Q_ULLONG userId )
+aRole::delUser( qulonglong userId )
 {
 	aUser *user = new aUser(userId, db);
 	user->delRole(sysValue("id").toULongLong());
@@ -316,7 +316,7 @@ return  err_noerror;
  *	\return \en true, if role has user \_en \ru true, если у пользователя есть эта роль\_ru
 */
 bool
-aRole::hasUser(Q_ULLONG userId)
+aRole::hasUser(qulonglong userId)
 {
 	aUser *user = new aUser(userId, db);
 	bool res;
@@ -347,7 +347,7 @@ aRole::New(const QString &rname)
 	aSQLTable *te = table();
 	if (!te) return err_notable;
 	QSqlRecord *rec;
-	Q_ULLONG ide;
+	qulonglong ide;
 	rec = te->primeInsert(); // get edit buffer for table elements
 	ide = rec->value("id").toULongLong();
 	rec->setValue("id",ide); // set defult values for all user fields = id
@@ -375,7 +375,7 @@ ERR_Code
 aRole::Delete()
 {
 	aSQLTable * t = table();
-	Q_ULLONG ide=0;
+	qulonglong ide=0;
 	if ( !t ) return err_notable;
 	ide = t->sysValue("id").toULongLong();
 	if ( ide )

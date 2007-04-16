@@ -64,8 +64,8 @@ public:
 
 	ERR_Code init();
 	ERR_Code decodeDocNum( QString nm, QString & pref, int & num);
-	virtual ERR_Code select( Q_ULLONG id );
-	Q_ULLONG getUid();
+	virtual ERR_Code select( qulonglong id );
+	qulonglong getUid();
 	bool selected();
 	void setSelected( bool sel );
 	ERR_Code select(const QString & query );
@@ -104,7 +104,7 @@ protected:
 private:
 	aDataTable *table;
 	bool vInited, selectFlag, filtred;
-	QDict <aDataTable> dbtables;
+	Q3Dict <aDataTable> dbtables;
 //	QDict <aDataRecord> attributes;
 };
 

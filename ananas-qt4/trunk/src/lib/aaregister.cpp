@@ -33,6 +33,8 @@
 #include	"adatabase.h"
 #include	"adocjournal.h"
 #include 	"alog.h"
+//Added by qt3to4:
+#include <QSqlQuery>
 
 
 /*!
@@ -177,7 +179,7 @@ aARegister::New()
 	if ( !docseted ) return err_nodocument;
 	aSQLTable * t = table();
 	if ( !t ) return err_notable;
-	Q_ULLONG idd = nowDoc->getUid();
+	qulonglong idd = nowDoc->getUid();
 	if ( !idd ) return err_notselected;
 	int err = aObject::New();
 	if ( err ) return err;
@@ -210,7 +212,7 @@ int
 aARegister::Update()
 {
 	aIRegister::Update();
-	Q_ULLONG uid = getUid();
+	qulonglong uid = getUid();
 	resum( table(), nowDoc->Value("DocDate").toDateTime(), true );
 	aLog::print(aLog::DEBUG, tr("Accumulation Register update"));
 	return err_noerror;//aIRegister::Update();
@@ -233,7 +235,7 @@ aARegister::Update()
 bool
 aARegister::deleteDocument( aDocument * doc )
 {
-	Q_ULLONG idd = doc->getUid();
+	qulonglong idd = doc->getUid();
 	if ( !idd ) return false;
 	aSQLTable *t = table();
 	if ( t->select(QString("idd=%1").arg(idd) ))

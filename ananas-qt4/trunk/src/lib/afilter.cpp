@@ -30,6 +30,8 @@
 
 #include "afilter.h"
 #include <stdio.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 /*!
  *	\~english
@@ -77,7 +79,7 @@ QString
 aFilter::toString(bool removeFirst) const
 {
 	QString str = QString::null;
-	QValueList<filterCondition>::const_iterator it;
+	Q3ValueList<filterCondition>::const_iterator it;
 	for ( it = conditions.begin(); it != conditions.end(); ++it )
 	{
 		filterCondition flt = (*it);
@@ -191,7 +193,7 @@ aFilter::AddHelper(const QString& fname, const QString& value, OperationEnum op,
 	}
 	if(replace) // replace all entries, append to end list of conditions, if nothing found 
 	{
-		QValueList<filterCondition>::iterator it;
+		Q3ValueList<filterCondition>::iterator it;
 		bool isFound = false;
 		for ( it = conditions.begin(); it != conditions.end(); ++it )
 		{

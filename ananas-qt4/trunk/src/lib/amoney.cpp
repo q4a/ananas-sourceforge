@@ -142,7 +142,7 @@ QString
 AMoney::toText(){
 	
 	uint integerKopeiki;
-	Q_ULLONG integerRubli;
+	qulonglong integerRubli;
 	
 	integerRubli = QVariant( this->amount).toULongLong();
 
@@ -184,7 +184,7 @@ AMoney::toText(){
  * \_ru
  */
 QString 
-AMoney::valueToText( Q_ULLONG value ){
+AMoney::valueToText( qulonglong value ){
 	QString sValue = QString::number( value);
 	QString tripleText;
 	QString coupleSingleText;
@@ -229,7 +229,7 @@ AMoney::valueToText( Q_ULLONG value ){
  * \_ru
  */
 QString 
-AMoney::decimalValueToText( Q_ULLONG value ){
+AMoney::decimalValueToText( qulonglong value ){
 	QString currencyId = this->currency->getId();
 	this->currency->setId( "d"+ currencyId);
 	QString result = valueToText( value );

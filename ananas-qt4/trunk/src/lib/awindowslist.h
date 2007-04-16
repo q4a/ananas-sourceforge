@@ -33,7 +33,7 @@
 
 
 #include <qwidget.h>
-#include <qdict.h>
+#include <q3dict.h>
 
 /*!
  * \~english
@@ -53,16 +53,16 @@ public:
     aWindowsList();
     virtual ~aWindowsList();
     
-    void insert( int id, QWidget *window, Q_ULLONG ido = 0 );
-    void remove( int id, Q_ULLONG ido = 0 );
+    void insert( int id, QWidget *window, qulonglong ido = 0 );
+    void remove( int id, qulonglong ido = 0 );
     void remove( QWidget *window );
-    bool find( int id, Q_ULLONG ido = 0 ); 
+    bool find( int id, qulonglong ido = 0 ); 
     bool find( QWidget *window );
-    QWidget *get( int id, Q_ULLONG ido = 0 );
+    QWidget *get( int id, qulonglong ido = 0 );
     
 private:
-    QDict<QWidget> list;
-    QString conv( int id, Q_ULLONG ido );
+    Q3Dict<QWidget> list;
+    QString conv( int id, qulonglong ido );
 };
 
 	

@@ -29,11 +29,13 @@
 
 /*
 */
-#include <qtextbrowser.h>
+#include <q3textbrowser.h>
 #include <qlayout.h>
 #include <qworkspace.h>
 #include <qimage.h>
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <QHideEvent>
 #include "messageswindow.h"
 #include "acfg.h"
 
@@ -51,10 +53,10 @@ messageproc(int n, const char *msg){
 }
 
 
-MessagesWindow::MessagesWindow( QWidget* parent, WFlags fl )
-    : QDockWindow( parent, "MessagesWindow", fl )
+MessagesWindow::MessagesWindow( QWidget* parent, Qt::WFlags fl )
+    : Q3DockWindow( parent, "MessagesWindow", fl )
 {
-	msgBrowser = new QTextBrowser( this, "msgBrowser" );
+	msgBrowser = new Q3TextBrowser( this, "msgBrowser" );
 	boxLayout()->addWidget( msgBrowser );
 	languageChange();
 	setMinimumSize( QSize( 1, 1 ) );
@@ -62,7 +64,7 @@ MessagesWindow::MessagesWindow( QWidget* parent, WFlags fl )
 	clearWState( WState_Polished );
 	setResizeEnabled( TRUE );
 	setExpanded(false);
-	setCloseMode( QDockWindow::Always );
+	setCloseMode( Q3DockWindow::Always );
 	msgBrowser->show();
 	msgwindow = this;
 	connect(msgBrowser, SIGNAL(doubleClicked(int,int)), this, SLOT(on_click()));
@@ -107,7 +109,7 @@ void
 MessagesWindow::hideEvent ( QHideEvent *e )
 {
 	msgBrowser->clear();
-	QDockWindow::hideEvent( e );
+	Q3DockWindow::hideEvent( e );
 }
 
 

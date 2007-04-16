@@ -38,7 +38,7 @@
 #define token_close "#>"
 
 #include <qobject.h>
-#include <qdict.h>
+#include <q3dict.h>
 #include <qstringlist.h>
 
 /**
@@ -126,7 +126,7 @@ protected:
 private:
     QString buf;
     QString tpl;
-    QDict<QString> values;
+    Q3Dict<QString> values;
 
     void freeValues();
 };

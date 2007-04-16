@@ -29,7 +29,7 @@
 
 #ifndef AIREGISTER_H
 #define AIREGISTER_H
-#include	<qvaluelist.h>
+#include	<q3valuelist.h>
 #include	<qstringlist.h>
 #include	<qvariant.h>
 #include	<qdatetime.h>
@@ -68,7 +68,7 @@ public:
 //	ERR_Code initObject(aDatabase * adb);
 	virtual ERR_Code initObject();
 	virtual bool deleteDocument( aDocument * doc );
-	virtual bool deleteTable( Q_ULLONG iddt );
+	virtual bool deleteTable( qulonglong iddt );
 public slots:
 	virtual int SetDocument( aDocument * doc );
 	virtual aDocument * GetDocument();

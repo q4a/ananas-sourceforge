@@ -55,7 +55,7 @@ class ANANAS_EXPORT aService
 					const QString &end2="рубль",
 					const QString &end3="рубля");
 	static QString	number2money( QString currency, double rubli );
-	static QString	parts2money(	Q_ULLONG rubli,
+	static QString	parts2money(	qulonglong rubli,
 					unsigned int kopeyki,
 					bool need_kopeyki=true,
 					bool positive = true,

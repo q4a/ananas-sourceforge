@@ -29,19 +29,19 @@
 #include "rclistviewitem.h"
 #include "qpixmap.h"
 
-rcListViewItem::rcListViewItem( QListView *parent,
+rcListViewItem::rcListViewItem( Q3ListView *parent,
 			const QString &name, 
 			const QString &rc,
-			bool fgroup): QListViewItem( parent, name )
+			bool fgroup): Q3ListViewItem( parent, name )
 	{
 		init( rc, fgroup );
 	};
 	
-rcListViewItem::rcListViewItem( QListView *parent,
+rcListViewItem::rcListViewItem( Q3ListView *parent,
 			rcListViewItem* after,
 			const QString &name, 
 			const QString &rc,
-			bool fgroup ): QListViewItem( parent, after, name )
+			bool fgroup ): Q3ListViewItem( parent, after, name )
 	{
 		init( rc, fgroup );
 	};
@@ -49,7 +49,7 @@ rcListViewItem::rcListViewItem( QListView *parent,
 rcListViewItem::rcListViewItem( rcListViewItem *parent,
 			const QString &name, 
 			const QString &rc,
-			bool fgroup): QListViewItem( parent, name )
+			bool fgroup): Q3ListViewItem( parent, name )
 	{
 		init( rc, fgroup );
 	};

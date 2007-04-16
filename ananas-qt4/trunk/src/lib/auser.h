@@ -34,7 +34,7 @@
 #include 	"adatabase.h"
 #include 	"acfg.h"
 #include 	"aobject.h"
-#include 	<qvaluelist.h>
+#include 	<q3valuelist.h>
 //class aDatabase;
 //class aRole;
 //class aObject;
@@ -55,7 +55,7 @@ class  ANANAS_EXPORT aUser: public aObject
 	Q_OBJECT
 public:
 	aUser();
-	aUser(Q_ULLONG userId, aDatabase * adb);
+	aUser(qulonglong userId, aDatabase * adb);
 	aUser(aDatabase * adb);
 	virtual ERR_Code initObject();
 	
@@ -69,21 +69,21 @@ public:
 	virtual ERR_Code Delete();
 	virtual ERR_Code Update();
 	virtual ERR_Code Select();
-	virtual ERR_Code Select( Q_ULLONG userId );	
+	virtual ERR_Code Select( qulonglong userId );	
 
-	virtual ERR_Code addRole( Q_ULLONG roleId );
-	virtual ERR_Code delRole( Q_ULLONG roleId );
+	virtual ERR_Code addRole( qulonglong roleId );
+	virtual ERR_Code delRole( qulonglong roleId );
 	virtual ERR_Code UpdateRole();
 	
-	QValueList< aRole *> getRoles( bool assigned);
+	Q3ValueList< aRole *> getRoles( bool assigned);
 
-	bool hasRole( Q_ULLONG roleId);
+	bool hasRole( qulonglong roleId);
 //	virtual ERR_Code setPassword( const QString & );
 	//virtual ERR_Code setLogin( const QString & );
 	//virtual ERR_Code setFirstName( const QString & );
 	//virtual ERR_Code setLastName( const QString & );
 	
-	virtual Q_ULLONG getUserId( const QString &login, const QString &password );
+	virtual qulonglong getUserId( const QString &login, const QString &password );
 	//virtual ERR_Code getRoles(QValueList<aRole> *lst); 
 	bool First();
 	bool Next();

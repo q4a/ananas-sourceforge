@@ -33,13 +33,13 @@
 
 #include <stdlib.h>
 #include <qfile.h>
-#include <qdict.h>
+#include <q3dict.h>
 #include <qsqlquery.h>
-#include <qprocess.h>
+#include <q3process.h>
 #include <qdom.h>
 #include <qregexp.h>
 #include <qdatetime.h>
-#include <qtextstream.h>
+#include <q3textstream.h>
 
 
 aOOTemplate::aOOTemplate() : iTemplate()
@@ -87,14 +87,14 @@ aOOTemplate::open( const QString &fname )
 		aLog::print(aLog::DEBUG, tr("aOOTemplate create temporary directory %1").arg(copyName));
 	}
 #ifndef Q_OS_WIN32
-	QProcess process( QString("unzip") );
+	Q3Process process( QString("unzip") );
 	process.setWorkingDirectory (templateDir);
 	process.addArgument( fname );
 	process.addArgument( "-d" );
 	process.addArgument( copyName );
 
 #else 
-	QProcess process( QString("7z") );	
+	Q3Process process( QString("7z") );	
 	process.setWorkingDirectory ( templateDir);
 	//printf("working dir = `%s'\n", QString(templateDir).ascii());
 	process.addArgument( "x" );
@@ -556,22 +556,22 @@ aOOTemplate::save( const QString & fname )
 	
 	QString homeDir = QString("%1").arg(QDir::convertSeparators(QDir::homeDirPath ())); 
 	QFile fContent( QDir::convertSeparators(copyName+"/content.xml") );
-	if( !fContent.open( IO_WriteOnly ) ) 
+	if( !fContent.open( QIODevice::WriteOnly ) ) 
 	{
 		aLog::print(aLog::ERROR, tr("aOOTemplate save %1 open for write").arg(fContent.name()));
 		return false;
 	}
-	QTextStream stream4content(&fContent);
+	Q3TextStream stream4content(&fContent);
 	docTpl.save(stream4content,2);
 	fContent.close();
 	
 	QFile fStyle( QDir::convertSeparators(copyName+"/styles.xml") );
-	if( !fStyle.open( IO_WriteOnly ) )
+	if( !fStyle.open( QIODevice::WriteOnly ) )
 	{
 		aLog::print(aLog::ERROR, tr("aOOTemplate save %1 open for write").arg(fContent.name()));
 		return false;
 	}
-	QTextStream stream4styles(&fStyle);
+	Q3TextStream stream4styles(&fStyle);
 	docStyle.save(stream4styles,2);
 	fStyle.close();
 	
@@ -583,13 +583,13 @@ aOOTemplate::save( const QString & fname )
 	
 #ifndef Q_OS_WIN32 
 
-	QProcess process( QString("zip") );
+	Q3Process process( QString("zip") );
 	process.setWorkingDirectory(copyName);
 	process.addArgument( "-r" );
 	process.addArgument( fname );	
 	process.addArgument(".");
 #else
-	QProcess process( QString("7z") );
+	Q3Process process( QString("7z") );
 	process.setWorkingDirectory(copyName);
 	process.addArgument( "a" );
 	process.addArgument( "-tzip" );

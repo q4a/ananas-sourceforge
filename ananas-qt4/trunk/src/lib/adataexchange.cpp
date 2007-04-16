@@ -33,7 +33,7 @@
 #include <qapplication.h>
 #include <qfile.h>
 #include <qdir.h>
-#include <qprocess.h>
+#include <q3process.h>
 #include <stdio.h>
 
 //#define ERROR true
@@ -356,14 +356,14 @@ bool
 aBackup::unzipArchive(const QString& archName, const QString& dir)
 {
 #ifndef _Windows
-	QProcess process( QString("unzip") );
+	Q3Process process( QString("unzip") );
 //	process.setWorkingDirectory (dir);
 	process.addArgument( archName );
 	process.addArgument( "-d" );
 	process.addArgument( dir );
 
 #else 
-	QProcess process( QString("7z") );	
+	Q3Process process( QString("7z") );	
 //	process.setWorkingDirectory ( templateDir);
 //	printf("working dir = `%s'\n", QString(templateDir).ascii());
 	process.addArgument( "x" );
@@ -413,14 +413,14 @@ aBackup::zipArchive(const QString& archName, const QString& dir)
 	
 #ifndef _Windows
 
-	QProcess processUpdate( QString("zip") );
+	Q3Process processUpdate( QString("zip") );
 	processUpdate.setWorkingDirectory(dir);
 	processUpdate.addArgument( "-r" ); // recurce into subdirectories
 	processUpdate.addArgument( "-0" ); // store only
 	processUpdate.addArgument( archName ); // backup name
 	processUpdate.addArgument(".");
 #else
-	QProcess processUpdate( QString("7z") );
+	Q3Process processUpdate( QString("7z") );
 	processUpdate.setWorkingDirectory(dir);
 	processUpdate.addArgument( "a" );
 	processUpdate.addArgument( "-tzip" );
@@ -510,10 +510,10 @@ aBackup::writeXml(const QString & name2Save, QDomDocument xml)
 {
 	QFile file(name2Save);
 	QByteArray buf( xml.toString(4).utf8() );
-	if ( file.open( IO_WriteOnly ) )
+	if ( file.open( QIODevice::WriteOnly ) )
 	{
-		QTextStream ts( &file );
-		ts.setEncoding(QTextStream::UnicodeUTF8);
+		Q3TextStream ts( &file );
+		ts.setEncoding(Q3TextStream::UnicodeUTF8);
 		xml.save(ts, 4);
 		file.close();
 	}

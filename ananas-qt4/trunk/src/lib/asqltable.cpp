@@ -30,8 +30,10 @@
 
 #include "asqltable.h"
 #include <qdatetime.h>
+//Added by qt3to4:
+#include <QSqlError>
 #include "adatabase.h"
-#include <qsqlcursor.h>
+#include <q3sqlcursor.h>
 
 #include "acatalogue.h"
 #include "adocument.h"
@@ -50,7 +52,7 @@
  *	\~
  */
 aDataTable::aDataTable( aCfgItem context, aDatabase *adb )
-:QSqlCursor( QString::null, false, adb->db() )
+:Q3SqlCursor( QString::null, false, adb->db() )
 {
 	db = adb;
 	md = &db->cfg;
@@ -81,7 +83,7 @@ aDataTable::aDataTable( aCfgItem context, aDatabase *adb )
  * 
  */
 aDataTable::aDataTable( const QString &tname, aDatabase *adb )
-:QSqlCursor( tname, true, adb->db() )
+:Q3SqlCursor( tname, true, adb->db() )
 {
 	db = adb;
 	md = &db->cfg;
@@ -233,7 +235,7 @@ aSQLTable::insertFieldInfo(aCfgItem cobj, bool calculated)
 			{
 				fnames.insert( fname, new QString(fdbname) );
         			fdbname = QString("text_uf%1").arg( fid );
-                		append( QSqlFieldInfo( fdbname, QVariant::String ) );
+                		append( Q3SqlFieldInfo( fdbname, QVariant::String ) );
 		             //   setGenerated( fdbname, false );
 		                setCalculated( fdbname, calculated );
 				int ftid = objt.section(" ", 1, 1 ).toInt();
@@ -254,7 +256,7 @@ aSQLTable::insertFieldInfo(aCfgItem cobj, bool calculated)
                         if ( objt[0]==' ' )
 			{
         			fdbname = QString("text_uf%1").arg( fid );
-                		append( QSqlFieldInfo( fdbname, QVariant::String ) );
+                		append( Q3SqlFieldInfo( fdbname, QVariant::String ) );
 		                setCalculated( fdbname, calculated );
 		               // setGenerated( fdbname, false );
 				fnames.insert( fname, new QString(fdbname) );
@@ -307,7 +309,7 @@ aSQLTable::insertFieldInfo(aCfgItem cobj, bool calculated)
  *	\return объект метаданных, который описывает таблицу.
  *	\~
  */
-Q_ULLONG
+qulonglong
 aDataTable::getIdd(void)
 {
 	return 0;
@@ -415,7 +417,7 @@ aDataTable::value ( int i )
 {
  //       QVariant v = QSqlCursor::value( i );
 
-	QVariant v = sysValue(QSqlCursor::fieldName(i));
+	QVariant v = sysValue(Q3SqlCursor::fieldName(i));
 	return v;
 }
 
@@ -479,7 +481,7 @@ QVariant
 aDataTable::sysValue ( const QString & name )
 {
 	if(isCalculated(name)) return calcFieldValue(name);
-	else return QSqlCursor::value( name );
+	else return Q3SqlCursor::value( name );
 }
 
 
@@ -496,7 +498,7 @@ aDataTable::setSysValue ( const QString & name, QVariant value )
 	//	debug_message("document prefix set to '%s'\n",(const char*)value.toString());
 	}
 
-	QSqlCursor::setValue( name, value );
+	Q3SqlCursor::setValue( name, value );
 }
 
 
@@ -507,7 +509,7 @@ aDataTable::setSysValue ( const QString & name, QVariant value )
 void
 aDataTable::setValue ( int i, QVariant value )
 {
-	QSqlCursor::setValue( i, value );
+	Q3SqlCursor::setValue( i, value );
 }
 
 
@@ -522,7 +524,7 @@ aDataTable::setValue ( const QString & name, QVariant value )
 	if ( !fnames[name] ) return false;
 	fname = * fnames[ name ];
 	if ( contains( fname ) ) {
-		QSqlCursor::setValue( fname, value );
+		Q3SqlCursor::setValue( fname, value );
 	}
 	else return false;
 	return true;
@@ -539,7 +541,7 @@ aDataTable::primeInsert()
 	QSqlRecord *rec;
 	QVariant v;
 
-	rec = QSqlCursor::primeInsert();
+	rec = Q3SqlCursor::primeInsert();
 	if ( sysFieldExists("id") ) {
 		rec->setValue("id", QVariant( db->uid( mdobjId ) ) );
 	}
@@ -577,7 +579,7 @@ aDataTable::select( const QString & filter, bool usefltr )
 		else if ( filter != "" ) flt = flt + " AND " + filter;
 	}
 	else flt = filter;
-	res = QSqlCursor::select( flt );
+	res = Q3SqlCursor::select( flt );
 //	next();
 //	r = *this;
 	return res;
@@ -589,11 +591,11 @@ aDataTable::select( const QString & filter, bool usefltr )
  *
  */
 bool
-aDataTable::select( Q_ULLONG id )
+aDataTable::select( qulonglong id )
 {
 	bool res;
 //	printf("aSQLTable::select %llu\n",id);
-	res = QSqlCursor::select( QString( "id=%1" ).arg( id ) );
+	res = Q3SqlCursor::select( QString( "id=%1" ).arg( id ) );
 	//setSelected(true);
 //	next();
 //	r = *this;
@@ -629,7 +631,7 @@ aDataTable::setFilter( const QString& name, const QVariant& value )
 	}
 	QVariant *v = new QVariant(value);
 	userFilter.replace(*fnames[name], v );
-	QSqlCursor::setFilter(getFilter());
+	Q3SqlCursor::setFilter(getFilter());
 	return true;
 }
 
@@ -643,7 +645,7 @@ aDataTable::getFilter()
 {
 	QString filter = "", fid, type;
 	aCfgItem field;
-	QDictIterator<QVariant>it( userFilter );
+	Q3DictIterator<QVariant>it( userFilter );
 	if ( it.toFirst() )
 	{
 		fid = it.currentKey().mid(2);
@@ -684,7 +686,7 @@ aDataTable::getNFilter()
 {
 	QString filter = "", fid, type;
 	aCfgItem field;
-	QDictIterator<QVariant>it( userFilter );
+	Q3DictIterator<QVariant>it( userFilter );
 	if ( it.toFirst() )
 	{
 		fid = it.currentKey().mid(2);
@@ -723,7 +725,7 @@ aDataTable::getNFilter()
 void
 aDataTable::printRecord(){
 	unsigned int i;
-        QDictIterator<QString> it( fnames );
+        Q3DictIterator<QString> it( fnames );
 	QString fname, sname;
 
 	for (i=0; i< count(); i++){
@@ -768,13 +770,13 @@ aDataTable::printRecord(){
 bool
 aDataTable::exec( QString query )
 {
-	return QSqlCursor::exec( query );
+	return Q3SqlCursor::exec( query );
 }
 
 
 
 QVariant
-aDataTable::calc_rem(int fid, Q_ULLONG id)
+aDataTable::calc_rem(int fid, qulonglong id)
 {
 	aCfgItem o,fto;
 	QString t,oclass;
@@ -798,7 +800,7 @@ aDataTable::calc_rem(int fid, Q_ULLONG id)
 
 
 QVariant
-aDataTable::calc_obj(int fid, Q_ULLONG idd)
+aDataTable::calc_obj(int fid, qulonglong idd)
 {
 	aCfgItem o,fto;
 	QString t,oclass;
@@ -867,7 +869,7 @@ aDataTable::calcFieldValue( const QString &name )
 
         QVariant v="", fv=0;
 	int fid = 0; //, ftid;
-	Q_ULLONG id = 0;
+	qulonglong id = 0;
 	aCfgItem o, fto;
 	QString t, oclass;
         if ( name.left(5)=="text_" )
@@ -963,7 +965,7 @@ aDataTable::setMarkDeleted( bool Deleted )
 bool
 aDataTable::seek ( int i, bool relative )
 {
-	bool res = QSqlCursor::seek( i, relative );
+	bool res = Q3SqlCursor::seek( i, relative );
 //	if ( res ) r = *this;
 	return res;
 }
@@ -971,7 +973,7 @@ aDataTable::seek ( int i, bool relative )
 bool
 aDataTable::next ()
 {
-	bool res = QSqlCursor::next();
+	bool res = Q3SqlCursor::next();
 //	if ( res ) r = *this;
 	return res;
 }
@@ -979,7 +981,7 @@ aDataTable::next ()
 bool
 aDataTable::prev ()
 {
-	bool res = QSqlCursor::prev();
+	bool res = Q3SqlCursor::prev();
 //	if ( res ) r = *this;
 	return res;
 }
@@ -987,7 +989,7 @@ aDataTable::prev ()
 bool
 aDataTable::first ()
 {
-	bool res = QSqlCursor::first();
+	bool res = Q3SqlCursor::first();
 //	if ( res ) r = *this;
 	return res;
 }
@@ -996,7 +998,7 @@ aDataTable::first ()
 bool
 aDataTable::last ()
 {
-	bool res = QSqlCursor::last();
+	bool res = Q3SqlCursor::last();
 //	if ( res ) r = *this;
 	return res;
 }
@@ -1008,10 +1010,10 @@ aDataTable::New()
 {
 	QSqlRecord *rec;
 	QVariant v;
-	Q_ULLONG Uid = 0;
+	qulonglong Uid = 0;
 	bool res = false;
 
-	rec = QSqlCursor::primeInsert();
+	rec = Q3SqlCursor::primeInsert();
 	if ( sysFieldExists("id") ) 
 	{
 		Uid = db->uid( mdobjId );
@@ -1076,7 +1078,7 @@ aDataTable::Update()
 {
 	QSqlRecord *rec;
 
-	rec = QSqlCursor::primeUpdate();
+	rec = Q3SqlCursor::primeUpdate();
 	//for ( unsigned int i=0; i<rec->count(); i++ ) rec->setValue( i, value( i ) );
 	update();
 	QSqlError err = lastError();

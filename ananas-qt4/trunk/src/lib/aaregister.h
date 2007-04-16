@@ -33,6 +33,8 @@
 
 #include	"acfg.h"
 #include	"airegister.h"
+//Added by qt3to4:
+#include <QSqlQuery>
 
 
 

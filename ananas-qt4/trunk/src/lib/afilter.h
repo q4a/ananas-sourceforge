@@ -32,7 +32,7 @@
 #define afilter_h
 
 #include <qstring.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qdatetime.h>
 #include "ananasglobal.h"
  
@@ -75,7 +75,7 @@ private:
 		QString AndOr;
 	}f;
 	//typedef struct filterCondition FilterCondition;
-	QValueList<filterCondition> conditions;
+	Q3ValueList<filterCondition> conditions;
 };
 
 #endif

@@ -31,6 +31,9 @@
  ******************************************************************/
 
 #include "amenubar.h"
+//Added by qt3to4:
+#include <Q3PopupMenu>
+#include <QPixmap>
 
 
 AMenuBar::AMenuBar( QWidget* parent , const char* name  )
@@ -49,7 +52,7 @@ void
 AMenuBar::ReadMenu( aCfgItem obj )
 {
 	aCfgItem	cobj;
-	QPopupMenu	*parent;
+	Q3PopupMenu	*parent;
 	QString		text, aKey ;
 	long 		id;
 
@@ -61,7 +64,7 @@ AMenuBar::ReadMenu( aCfgItem obj )
 		id = md->id( cobj );
 		if ( md->objClass ( cobj ) == md_submenu )
 		{
-			parent = new QPopupMenu ();
+			parent = new Q3PopupMenu ();
 			insertItem( md->attr( cobj, mda_name ), parent );
 			ReadMenu( parent, cobj );
 		}
@@ -82,10 +85,10 @@ AMenuBar::ReadMenu( aCfgItem obj )
 }
 
 void
-AMenuBar::ReadMenu( QPopupMenu *parent, aCfgItem obj )
+AMenuBar::ReadMenu( Q3PopupMenu *parent, aCfgItem obj )
 {
 	aCfgItem	cobj, apix;
-	QPopupMenu	*mparent;
+	Q3PopupMenu	*mparent;
 	QString		text, aKey;
 	long id, pid;
     QPixmap		pix;
@@ -99,7 +102,7 @@ AMenuBar::ReadMenu( QPopupMenu *parent, aCfgItem obj )
 		id = md->id( cobj );
 		if ( md->objClass ( cobj ) == md_submenu )
 		{
-			mparent = new QPopupMenu ();
+			mparent = new Q3PopupMenu ();
 			parent->insertItem( md->attr ( cobj, mda_name ), mparent );
 			ReadMenu( mparent, cobj );
 		}
@@ -128,7 +131,7 @@ AMenuBar::ReadMenu( QPopupMenu *parent, aCfgItem obj )
 AMenuBar::~AMenuBar(){
 }
 
-int AMenuBar::insertItem ( const QString & text, QPopupMenu * popup, int id, int index ) {
+int AMenuBar::insertItem ( const QString & text, Q3PopupMenu * popup, int id, int index ) {
 	return QMenuBar::insertItem ( text, popup, id, index);
 };
 

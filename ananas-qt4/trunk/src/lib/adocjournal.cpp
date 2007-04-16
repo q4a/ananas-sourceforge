@@ -28,6 +28,8 @@
 **********************************************************************/
 
 #include	<qdatetime.h>
+//Added by qt3to4:
+#include <QSqlQuery>
 
 #include	"acfg.h"
 #include	"aobject.h"
@@ -147,7 +149,7 @@ aDocJournal::initObject()
  *\~
  *\return \~english database document id. \~russian id документа в базе данных.\~
  */
-Q_ULLONG
+qulonglong
 aDocJournal::docId()
 {
 	if (!journalType) {
@@ -209,10 +211,10 @@ aDocJournal::Delete()
  *\return \~english error code \~russian код ошибки.\~
  */
 ERR_Code
-aDocJournal::deleteDocument( Q_ULLONG idd )
+aDocJournal::deleteDocument( qulonglong idd )
 {
 	aSQLTable * t = table();
-	Q_ULLONG Uid = findDocument(idd);
+	qulonglong Uid = findDocument(idd);
 	db->markDeleted( Uid );
 	if (t->exec("DELETE FROM a_journ WHERE idd =" + QString("%1").arg(idd)))
 	{
@@ -248,9 +250,9 @@ aDocJournal::deleteDocument( Q_ULLONG idd )
  *\return \~english error code.\~russian код ошибки.\~
  */
 ERR_Code
-aDocJournal::New( Q_ULLONG idd, const QString & docPrefix, int type )
+aDocJournal::New( qulonglong idd, const QString & docPrefix, int type )
 {
-	Q_ULLONG Uid =0;// db->uid( md_systemjournal );
+	qulonglong Uid =0;// db->uid( md_systemjournal );
 	aDataTable * t = table();
 	if ( !t ) return err_notable;
 	//t->exec("LOCK TABLE a_journ WRITE");
@@ -301,7 +303,7 @@ aDocJournal::New( Q_ULLONG idd, const QString & docPrefix, int type )
  *\return \~english error code \~russian код ошибки.\~
  */
 ERR_Code
-aDocJournal::selectDocument( Q_ULLONG idd )
+aDocJournal::selectDocument( qulonglong idd )
 {
 	aDataTable * t = table();
 	if ( !t ) return err_notable;
@@ -467,8 +469,8 @@ aDocJournal::setNumber( QVariant number  )
  *\return 	\~english document id or 0 if document not found 
  *		\~russian id документа или 0, если документ не найден.\~
  */
-Q_ULLONG
-aDocJournal::findDocument( Q_ULLONG idd )
+qulonglong
+aDocJournal::findDocument( qulonglong idd )
 {
 	aSQLTable * t = table();
 	if ( !t ) return 0;
@@ -499,7 +501,7 @@ aDocJournal::findDocument( Q_ULLONG idd )
  *\return 	\~english document id or 0 if document not found 
  *		\~russian id документа или 0, если документ не найден.\~
  */
-Q_ULLONG
+qulonglong
 aDocJournal::findDoc( const QString & number, int type )
 {
 	QString pref;
@@ -651,7 +653,7 @@ QString
 aDocJournal::getPrefix()
 {
 	QString pref = "";
-	Q_ULLONG dUid = docId();
+	qulonglong dUid = docId();
 	if ( dUid )
 	{
 		QSqlQuery q = db->db()->exec(QString("SELECT pnum FROM a_journ WHERE idd=%1").arg(dUid));

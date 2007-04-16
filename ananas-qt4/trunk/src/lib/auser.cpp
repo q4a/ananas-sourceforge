@@ -28,6 +28,8 @@
 **********************************************************************/
 
 #include	"auser.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 //#include 	"ananas.h"
 
 
@@ -36,7 +38,7 @@
  * \ru Конструктор для создания конкретного объекта класса
  * \_ru
  */
-aUser::aUser( Q_ULLONG userId, aDatabase * adb ):aObject("",adb)
+aUser::aUser( qulonglong userId, aDatabase * adb ):aObject("",adb)
 {
 	
 	initObject();
@@ -83,11 +85,11 @@ aUser::initObject()
  * \param assibned 	\en true for return assigned roles, false for retun unassigned roles\_en 
  * 			\ru true для возврата назначенных ролей, false для возврата неназначенных ролей \_ru
  */
-QValueList< aRole *> 
+Q3ValueList< aRole *> 
 aUser::getRoles(bool assigned)
 {
-	QValueList<aRole*> list;
-	Q_ULLONG rid;
+	Q3ValueList<aRole*> list;
+	qulonglong rid;
 	aRole *rl = new aRole(db);
 	rl->Select();
 	if(rl->First())
@@ -115,7 +117,7 @@ aUser::getRoles(bool assigned)
  * \return 	\en 0 if login and password has no match, user id otherwise \_en
  * 		\ru 0 если логин и пароль не совпадают, в противном случае id пользователя\_ru
  */
-Q_ULLONG
+qulonglong
 aUser::getUserId(const QString &login, const QString &password)
 {
 	aSQLTable * t = table();
@@ -180,7 +182,7 @@ aUser::Select( )
  * \param id -	\en user id \_en \ru id пользователя \_ru  
  */
 ERR_Code
-aUser::Select( Q_ULLONG id)
+aUser::Select( qulonglong id)
 {
 	aSQLTable * t = table();
 	if ( !t ) return err_notable;
@@ -206,14 +208,14 @@ aUser::Select( Q_ULLONG id)
  * \param roleId - 	\en id role to asssign \_en \ru id роли для назначения\_ru
  */
 ERR_Code
-aUser::addRole( Q_ULLONG roleId )
+aUser::addRole( qulonglong roleId )
 {
 	aSQLTable *tg = table( md_user_roles );
 	if (!tg ) return err_notable;
 	setSelected(true, md_user_roles);
 //	tg->select(parentId);
 //	setSelected(true,md_group);
-	Q_ULLONG idg;
+	qulonglong idg;
 	QSqlRecord* rec = tg->primeInsert(); // get edit buffer for table groups
 	idg = sysValue("id").toULongLong();
 	//printf( "idg=%lu\n", idg );
@@ -232,10 +234,10 @@ return  err_noerror;
  * 			\ru id роли, назначение которой будет сброшено\_ru 
  */
 ERR_Code
-aUser::delRole( Q_ULLONG roleId )
+aUser::delRole( qulonglong roleId )
 {
 	aSQLTable *t = table( md_user_roles );
-	Q_ULLONG ide=0;
+	qulonglong ide=0;
 	if ( !t ) return err_notable;
 	ide = sysValue("id").toULongLong();
 	t->select(QString("id=%1 and idr=%2").arg(ide).arg(roleId));
@@ -261,7 +263,7 @@ return  err_noerror;
  * 		\ru true, если роль назначена, false в противном случае \_ru
  */
 bool
-aUser::hasRole(Q_ULLONG rid)
+aUser::hasRole(qulonglong rid)
 {
 	aSQLTable *tg = table( md_user_roles );
 	if (!tg ) return err_notable;
@@ -293,7 +295,7 @@ aUser::New(const QString &login,
 	aSQLTable *te = table();
 	if (!te) return err_notable;
 	QSqlRecord *rec;
-	Q_ULLONG ide;
+	qulonglong ide;
 	rec = te->primeInsert(); // get edit buffer for table elements
 	ide = rec->value("id").toULongLong();
 //	printf(">>>id=%lu\n",ide);
@@ -323,7 +325,7 @@ ERR_Code
 aUser::Delete()
 {
 	aSQLTable * t = table();
-	Q_ULLONG ide=0;
+	qulonglong ide=0;
 	if ( !t ) return err_notable;
 	ide = t->sysValue("id").toULongLong();
 	if ( ide )

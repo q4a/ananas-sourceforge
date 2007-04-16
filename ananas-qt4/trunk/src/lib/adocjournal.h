@@ -71,8 +71,8 @@ public:
 	aDocJournal( const QString & name, aDatabase * adb = 0);
 	aDocJournal( aDatabase * adb = 0);
 	virtual ERR_Code initObject();
-	ERR_Code selectDocument( Q_ULLONG idd );
-	virtual Q_ULLONG docId();
+	ERR_Code selectDocument( qulonglong idd );
+	virtual qulonglong docId();
 	int docType();
 	
 	/*!\ru	\return тип журнала. \n
@@ -90,11 +90,11 @@ public:
 	ERR_Code setDate( QVariant date );
 	ERR_Code setNumber( QVariant number );
 
-	virtual ERR_Code New ( Q_ULLONG idd, const QString & docPrefix, int type );
-	virtual ERR_Code deleteDocument ( Q_ULLONG idd );
-	Q_ULLONG findDocument( Q_ULLONG idd );
+	virtual ERR_Code New ( qulonglong idd, const QString & docPrefix, int type );
+	virtual ERR_Code deleteDocument ( qulonglong idd );
+	qulonglong findDocument( qulonglong idd );
 //	Q_ULLONG docId( Q_ULLONG id );
-	Q_ULLONG findDoc( const QString & num, int type );
+	qulonglong findDoc( const QString & num, int type );
 	QString getPrefix();
 	QString selectionFilter( QDateTime from, QDateTime to, const QString & mdName = "",
 							bool full=false );

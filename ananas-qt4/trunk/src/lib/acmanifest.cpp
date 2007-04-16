@@ -69,10 +69,10 @@ aCManifest::write(const QString& fname)
 {
 	QFile file(fname);
 	QByteArray buf( manifest.toString(4).utf8() );
-	if ( file.open( IO_WriteOnly ) )
+	if ( file.open( QIODevice::WriteOnly ) )
 	{
-		QTextStream ts( &file );
-		ts.setEncoding(QTextStream::UnicodeUTF8);
+		Q3TextStream ts( &file );
+		ts.setEncoding(Q3TextStream::UnicodeUTF8);
 		manifest.save(ts, 4);
 		file.close();
 	}
@@ -93,7 +93,7 @@ aCManifest::read(const QString& fname)
 	QByteArray buf;
 	QString err;
 	int errLine = 0, errColumn = 0;
-	if ( !file.open( IO_ReadOnly ) )
+	if ( !file.open( QIODevice::ReadOnly ) )
 	{
 		aLog::print(aLog::ERROR, tr("aCManifest read file `%1'").arg(fname));
 		return false; 

@@ -29,17 +29,19 @@
 **********************************************************************/
 
 #include	<qlayout.h>
-#include	<qtoolbar.h>
+#include	<q3toolbar.h>
 #include	<qaction.h>
-#include	<qvbox.h>
-#include	<qsimplerichtext.h>
+#include	<q3vbox.h>
+#include	<q3simplerichtext.h>
 #include	<qpainter.h>
-#include	<qpaintdevicemetrics.h>
+#include	<q3paintdevicemetrics.h>
 #include	<qkeysequence.h>
 #include	<qprinter.h>
-#include 	<qprocess.h>
+#include 	<q3process.h>
 #include 	<qmessagebox.h>
-#include 	<qfiledialog.h>
+#include 	<q3filedialog.h>
+//Added by qt3to4:
+#include <QPixmap>
 #include	"acfg.h"
 #include	"aobject.h"
 #include	"adatabase.h"
@@ -56,12 +58,12 @@
 *	Создает объект
 *	\_ru
 */
-aReportBrowser::aReportBrowser(  QWidget *parent, const char *name, WFlags f )
-:QMainWindow( parent, name, f )
+aReportBrowser::aReportBrowser(  QWidget *parent, const char *name, Qt::WFlags f )
+:Q3MainWindow( parent, name, f )
 {
 	QAction *a;
 
-	QToolBar *t = new QToolBar( this, "ReportTool" );
+	Q3ToolBar *t = new Q3ToolBar( this, "ReportTool" );
 	a = new QAction(
 	QPixmap::fromMimeSource("print.png"),
 	tr("Print"),
@@ -73,8 +75,8 @@ aReportBrowser::aReportBrowser(  QWidget *parent, const char *name, WFlags f )
 	connect( a, SIGNAL( activated() ), this, SLOT( print() ) );
 	t->show();
 
-	textBrowser = new QTextBrowser( this, "textBrowser" );
-	textBrowser->setTextFormat( QTextBrowser::RichText );
+	textBrowser = new Q3TextBrowser( this, "textBrowser" );
+	textBrowser->setTextFormat( Q3TextBrowser::RichText );
 	textBrowser->setFocus();
 //	textBrowser->showMaximized();
     	setCentralWidget( textBrowser );
@@ -135,11 +137,11 @@ aReportBrowser::print()
 
 	if (!printer.setup()) return;
 	if ( p.begin( &printer ) ){
-            QPaintDeviceMetrics metrics( p.device() );
+            Q3PaintDeviceMetrics metrics( p.device() );
             int dpiy = metrics.logicalDpiY();
             int margin = (int) ( (2/2.54)*dpiy ); // 2 cm margins
             QRect body( margin, margin, metrics.width() - 2*margin, metrics.height() - 2*margin );
-            QSimpleRichText richText( textBrowser->text(),
+            Q3SimpleRichText richText( textBrowser->text(),
                                       QFont(),
                                       textBrowser->context(),
                                       textBrowser->styleSheet(),
@@ -443,16 +445,16 @@ aReport::show()
 		if(!ok || oowriter == "" )
 		{
 
-			QFileDialog dlg(0,"select_file_dialog",true);
+			Q3FileDialog dlg(0,"select_file_dialog",true);
 			dlg.addFilter( filter );
-			dlg.setMode(QFileDialog::ExistingFile);
+			dlg.setMode(Q3FileDialog::ExistingFile);
 			dlg.setDir(QDir(startCatalog));
 			dlg.setCaption("Для отображения отчета необходим OpenOffice. Укажите исполняемый файл OpenOffice"); 
 			if(dlg.exec()==QDialog::Accepted)
 			{
 				oowriter = dlg.selectedFile();
 				//printf("select %s", oowriter.ascii());
-				QProcess process( oowriter );
+				Q3Process process( oowriter );
 				process.addArgument( "-n" );
 				process.addArgument( QDir::convertSeparators( fileName ) );
 				if( !process.start() )
@@ -470,7 +472,7 @@ aReport::show()
 		else
 		{
 			
-			QProcess process( oowriter );
+			Q3Process process( oowriter );
 			process.addArgument( "-n" );
 			process.addArgument( QDir::convertSeparators( fileName ) );
 			if( !process.start() )

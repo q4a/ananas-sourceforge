@@ -29,9 +29,11 @@
 
 #ifndef AWIDGET_H
 #define AWIDGET_H
-#include <qsqlform.h>
-#include <qtoolbar.h>
-#include <qmainwindow.h>
+#include <q3sqlform.h>
+#include <q3toolbar.h>
+#include <q3mainwindow.h>
+//Added by qt3to4:
+#include <QKeyEvent>
 #include "ananas.h"
 
 class QWidget;
@@ -61,9 +63,9 @@ public:
 	aCfg*		md;
 	aEngine*	engine;
 
-	aWidget( QWidget *parent = 0, const char *name = 0, WFlags fl = 0 );
-	aWidget( const QString &oname, aDatabase *adb, QWidget *parent = 0, const char *name = 0, WFlags fl = 0 );
-	aWidget( aCfgItem context, aDatabase *adb, QWidget *parent = 0, const char *name = 0, WFlags fl = 0 );
+	aWidget( QWidget *parent = 0, const char *name = 0, Qt::WFlags fl = 0 );
+	aWidget( const QString &oname, aDatabase *adb, QWidget *parent = 0, const char *name = 0, Qt::WFlags fl = 0 );
+	aWidget( aCfgItem context, aDatabase *adb, QWidget *parent = 0, const char *name = 0, Qt::WFlags fl = 0 );
 	virtual ~aWidget();
 
 	virtual bool		checkStructure();
@@ -71,7 +73,7 @@ public:
 	virtual void		widgetEditor();
         static void		widgetEditor( QWidget *object, QDialog *editor );
 	virtual QDialog*	createEditor( QWidget *parent );
-	virtual QToolBar*	createToolBar( QMainWindow *parent );
+	virtual Q3ToolBar*	createToolBar( Q3MainWindow *parent );
         virtual aObject*	createDBObject( aCfgItem obj, aDatabase * );
 	virtual QString		displayString();
 
@@ -93,14 +95,14 @@ public:
 	void			setObjectData( QWidget *object, aCfg *md );
 	void			getObjectData( QWidget *object );
 	aCfg*			getMd();
-	virtual Q_ULLONG	uid();
+	virtual qulonglong	uid();
 	virtual ERR_Code	New();
 	virtual ERR_Code	Update();
 	virtual ERR_Code	TurnOn();
-	virtual ERR_Code	Select( Q_ULLONG id );
+	virtual ERR_Code	Select( qulonglong id );
 	aObject*		dataObject(){ return dbobj; };
 
-	virtual Q_ULLONG	docId();
+	virtual qulonglong	docId();
 	int			formMode() const { return vFormMode; };
 	virtual void		setFormMode( int mode ){ vFormMode = mode; };
 	virtual QString		getFieldName()	const 	{ return "";	};
@@ -134,7 +136,7 @@ signals:
 	void valueChanged( const QString &, const QVariant & );
 	void valueChanged( const QString &, const QVariant &, const QString & );
 	void changeObj(const QString &);
-	void changeObjId(const Q_ULLONG);
+	void changeObjId(const qulonglong);
 	void keyPressed(QKeyEvent *e);
 	
 protected:
@@ -146,7 +148,7 @@ private:
 	QString		vName;
 	int		vId, vFormMode;
 	aCfgItem	obj;
-	QSqlForm*	form;
+	Q3SqlForm*	form;
 //	QDict <aSQLTable> dbtables;
 };
 

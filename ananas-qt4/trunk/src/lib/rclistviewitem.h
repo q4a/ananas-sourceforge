@@ -31,7 +31,7 @@
 
 //#include <qdir.h>
 //#include <qstring.h>
-#include <qlistview.h>
+#include <q3listview.h>
 //#include <qlineedit.h>
 //#include <qstring.h>
 
@@ -39,21 +39,21 @@
 //#include "acfgrc.h"
 //#include "atests.h"
 
-class QListView;
-class QListViewItem;
+class Q3ListView;
+class Q3ListViewItem;
 
-class rcListViewItem : public QListViewItem
+class rcListViewItem : public Q3ListViewItem
 {
 public:
 	QString rcfile;
 	bool group;
 	
-	rcListViewItem( QListView *parent,
+	rcListViewItem( Q3ListView *parent,
 			const QString &name = QString::null, 
 			const QString &rc = QString::null,
 			bool fgroup = false );
 
-	rcListViewItem( QListView *parent,
+	rcListViewItem( Q3ListView *parent,
 			rcListViewItem* after,
 			const QString &name = QString::null, 
 			const QString &rc = QString::null,

@@ -39,9 +39,14 @@ default-character-set=utf8
 #include <qfile.h>
 #include <qdom.h>
 #include <qstringlist.h>
-#include <qtextstream.h>
+#include <q3textstream.h>
 #include <qsqlrecord.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <QSqlQuery>
+#include <Q3SqlCursor>
+#include <QSqlError>
+#include <Q3SqlRecordInfo>
 
 #include "alog.h" 
 
@@ -262,7 +267,7 @@ aDatabase::init( aCfgRc *rc, const QString &dbname )
 //#endif
 			printf("query = %s\n",query.ascii());
 			QSqlQuery q = ddb->exec( query );
-			if(ddb->lastError().type()!=QSqlError::None)
+			if(ddb->lastError().type()!=QSqlError::NoError)
 			{
 				reportError(ddb->lastError(),query);
 			}
@@ -549,10 +554,10 @@ aDatabase::tableDbName( aCfg &md, aCfgItem context, long * tid )
  *	\param otype (in) - \~english object type (e.g. document, catalog, journal etc.) \~russian тип объекта \~
  *	\return \~english newly generated unique id. \~russian новый сгенерированный номер \~
  */
-Q_ULLONG
+qulonglong
 aDatabase::uid( int otype )
 {
-	Q_ULLONG uid = 0;
+	qulonglong uid = 0;
 	QString query;
 	QString drv = driverName();
 //	printf("driver name =%s\n",drv.ascii());
@@ -594,7 +599,7 @@ aDatabase::uid( int otype )
  *	\return \~english object's type \~russian тип объекта \~
  */
 int
-aDatabase::uidType ( Q_ULLONG uid )
+aDatabase::uidType ( qulonglong uid )
 {
 	QSqlQuery q = db()->exec( QString("SELECT otype FROM uniques WHERE id=%1").arg(uid) );
 	if ( q.first() )
@@ -842,7 +847,7 @@ aDatabase::dropIndexes(const QString & table, const QStringList & indices)
 {
     QString drv=driverName();
     QStringList sli=indices;
-    QSqlCursor ind(db_indices,true,db());
+    Q3SqlCursor ind(db_indices,true,db());
     for(uint i=0;i<sli.size();i++)
     {
 	ind.select(QString("(tname='%1')and(uindices='%2')").arg(table).arg(sli[i]));
@@ -879,8 +884,8 @@ aDatabase::verifyTable(
 		QString &f_drop, QString &f_add, QString &f_upd,
 		QString &i_drop, QString &i_add, QStringList &ui_drop, QStringList &ui_add)
 {
-	QSqlRecordInfo ts;
-	QSqlFieldInfo f;
+	Q3SqlRecordInfo ts;
+	Q3SqlFieldInfo f;
 	aCfgItem cont, item;
 	int w, d;
 	QString t, tc, fname, fname1, fname2;
@@ -889,7 +894,7 @@ aDatabase::verifyTable(
 	QString drv = driverName();
 
 	ts = db()->recordInfo( table );
-	QSqlRecordInfo::Iterator it = ts.begin();
+	Q3SqlRecordInfo::Iterator it = ts.begin();
 	while( it != ts.end() ) {
 		f = *it;
 		w = f.length();
@@ -1019,13 +1024,13 @@ void
 aDatabase::checkIndices(const QString& table, const QString& flddef, QStringList &ui_add, QStringList &ui_drop)
 {
     QStringList sli=getUniqueIndices(flddef);
-    QSqlCursor indices(db_indices,true,db());
+    Q3SqlCursor indices(db_indices,true,db());
     
 	aLog::print(aLog::INFO,tr("aDatabase check indices for %1").arg(table));
     //qWarning("Checking indices for table %s",table.ascii());
     if (true)
     {
-	QDict<int> mapIndices;
+	Q3Dict<int> mapIndices;
 	// Check for new indices
 	int mark=1;
 	for(uint i=0;i<sli.size();i++)
@@ -1599,8 +1604,8 @@ aDatabase::createSystables( bool update )
 bool
 aDatabase::createCatalogues( bool update )
 {
-	QSqlRecordInfo ts;
-	QSqlFieldInfo f;
+	Q3SqlRecordInfo ts;
+	Q3SqlFieldInfo f;
 //	aTable *t;
 	aCfgItem gcont, cont, item;
 	long id;
@@ -1644,8 +1649,8 @@ aDatabase::createCatalogues( bool update )
 bool
 aDatabase::createDocuments( bool update )
 {
-	QSqlRecordInfo ts;
-	QSqlFieldInfo f;
+	Q3SqlRecordInfo ts;
+	Q3SqlFieldInfo f;
 //	aTable *t;
 	aCfgItem rcont, cont, item, tcont;
 //	aCatalogue *c;
@@ -1824,7 +1829,7 @@ aDatabase::createAccumulationRegisters( bool update )
  *	\param uid - \~english id for mark deleted \~russian id для пометки на удаление \~
  */
 void
-aDatabase::markDeleted(Q_ULLONG uid)
+aDatabase::markDeleted(qulonglong uid)
 {
 	db()->exec(QString("UPDATE uniques SET df='1' WHERE id=%1").arg(uid));
 }

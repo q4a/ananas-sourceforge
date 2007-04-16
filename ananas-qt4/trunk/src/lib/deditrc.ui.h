@@ -35,7 +35,7 @@
 ** init() function in place of a constructor, and a destroy() function in
 ** place of a destructor.
 *****************************************************************************/
-#include <qfiledialog.h>
+#include <q3filedialog.h>
 //#include <qstring.h>
 
 
@@ -97,10 +97,10 @@ void dEditRC::onOK()
 
 void dEditRC::onRCFile()
 {
-		QFileDialog fd( QString::null,
+		Q3FileDialog fd( QString::null,
   			tr("ananas config resource (*.rc)"),
 			0, 0, TRUE );
-		fd. setMode ( QFileDialog::AnyFile );
+		fd. setMode ( Q3FileDialog::AnyFile );
 		fd.setSelection( QDir::convertSeparators(eRCFile->text()));
 		if ( fd.exec() == QDialog::Accepted ) {
 			eRCFile->setText(QDir::convertSeparators(fd.selectedFile()));
@@ -113,10 +113,10 @@ void dEditRC::onRCFile()
 
 void dEditRC::onCFGFile()
 {
-		QFileDialog fd( QString::null,
+		Q3FileDialog fd( QString::null,
   			tr("ananas config file (*.cfg)"),
 			0, 0, TRUE );
-		fd. setMode ( QFileDialog::AnyFile );
+		fd. setMode ( Q3FileDialog::AnyFile );
 		fd.setSelection( QDir::convertSeparators(eCfgName->text()));
 		if ( fd.exec() == QDialog::Accepted ) {
 			eCfgName->setText(QDir::convertSeparators(fd.selectedFile()));

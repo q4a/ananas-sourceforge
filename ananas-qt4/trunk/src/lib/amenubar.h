@@ -34,6 +34,8 @@
 #define AMENUBAR_H
 
 #include <qmenubar.h>
+//Added by qt3to4:
+#include <Q3PopupMenu>
 
 #include	"acfg.h"
 
@@ -50,12 +52,12 @@ class  ANANAS_EXPORT AMenuBar : public QMenuBar
 	~AMenuBar();
 
 	void ReadMenu( aCfgItem obj );
-	void ReadMenu( QPopupMenu *parent, aCfgItem obj );
+	void ReadMenu( Q3PopupMenu *parent, aCfgItem obj );
 
     public slots:
 	void on_Item(){};
 
-	int insertItem ( const QString & text, QPopupMenu * popup, int id = -1, int index = -1 );
+	int insertItem ( const QString & text, Q3PopupMenu * popup, int id = -1, int index = -1 );
 /*
 	int insertItem ( const QString & text, const QObject * receiver, const char * member, const QKeySequence & accel = 0, int id = -1, int index = -1 ); 
 	int insertItem ( const QPixmap & pixmap, const QObject * receiver, const char * member, const QKeySequence & accel = 0, int id = -1, int index = -1 );
@@ -73,7 +75,7 @@ class  ANANAS_EXPORT AMenuBar : public QMenuBar
 	int insertSeparator ( int index = -1 );
 */	
 private:
-	QIntDict <aCfgItem> cfgItems;
+	Q3IntDict <aCfgItem> cfgItems;
 };
 
 

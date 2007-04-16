@@ -33,7 +33,9 @@
 #include <qobject.h>
 #include <qstringlist.h>
 #include <qsqldatabase.h>
-#include <qdict.h>
+#include <q3dict.h>
+//Added by qt3to4:
+#include <QSqlError>
 #include "acfg.h"
 #include <qwidget.h>
 
@@ -158,12 +160,12 @@ public:
 	bool create();
 	bool drop( const QString &);
 	bool update();
-	Q_ULLONG uid( int otype );
+	qulonglong uid( int otype );
 //	int otype( Q_ULLONG uid );
-	int uidType ( Q_ULLONG uid );
+	int uidType ( qulonglong uid );
 	aDataTable *table( const QString & name = QString::null );
 	bool tableExists( const QString & name );
-	void markDeleted(Q_ULLONG uid);
+	void markDeleted(qulonglong uid);
 	void deleteMarked();
         QString driverName();
 

@@ -12,9 +12,9 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qlineedit.h>
-#include <qfiledialog.h>
+#include <q3filedialog.h>
 
-dImportDB::dImportDB( QWidget* parent, const char* name, bool modal, WFlags fl )
+dImportDB::dImportDB( QWidget* parent, const char* name, bool modal, Qt::WFlags fl )
     : dEditRC( parent, name, modal, fl )
 {
     if ( !name )
@@ -47,10 +47,10 @@ dImportDB::languageChange()
 void
 dImportDB::onCFGFile()
 {
-		QFileDialog fd( QString::null,
+		Q3FileDialog fd( QString::null,
   			tr("any files (*)"),
 			0, 0, TRUE );
-		fd.setMode(QFileDialog::AnyFile);
+		fd.setMode(Q3FileDialog::AnyFile);
 		fd.addFilter(tr("ananas business schema archiff file (*.bsa)"));
 		fd.setSelection( QDir::convertSeparators(eCfgName->text()));
 		if ( fd.exec() == QDialog::Accepted )
