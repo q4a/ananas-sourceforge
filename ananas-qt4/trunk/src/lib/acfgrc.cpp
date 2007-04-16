@@ -42,10 +42,10 @@
 
 QPixmap
 rcIcon(const char *name){
-	QPixmap pm;
-	const QMimeSource *e;
+	QPixmap pm(QString(":/images/%1").arg(name));
+	/*--const QMimeSource *e;
 	e=Q3MimeSourceFactory::defaultFactory()->data(QString(name));
-	Q3ImageDrag::decode(e, pm);
+	Q3ImageDrag::decode(e, pm);*/
 	return pm;
 }
 

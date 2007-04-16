@@ -138,7 +138,7 @@ wJournal::createToolBar( Q3MainWindow * owner )
 	QAction *a,*b,*c,*d, *e;
 	toolbar = new Q3ToolBar( owner, "JournalTools" );
 	a = new QAction(
-	qPixmapFromMimeSource("doc_new.png"),
+	rcIcon("doc_new.png"),
 	tr("New"),
 	QKeySequence(QString("Insert")),
 	toolbar,
@@ -148,7 +148,7 @@ wJournal::createToolBar( Q3MainWindow * owner )
 	a->addTo( toolbar );
 	connect( a, SIGNAL( activated() ), this, SLOT( insert() ) );
 	b = new QAction(
-	qPixmapFromMimeSource("doc_edit.png"),
+	rcIcon("doc_edit.png"),
 	tr("Edit"),
 	QKeySequence(Qt::Key_Return),
 	toolbar,
@@ -158,7 +158,7 @@ wJournal::createToolBar( Q3MainWindow * owner )
 	b->addTo( toolbar );
 	connect( b, SIGNAL( activated() ), this, SLOT( update() ) );
 	c = new QAction(
-	qPixmapFromMimeSource("doc_view.png"),
+	rcIcon("doc_view.png"),
 	tr("View"),
 	QKeySequence(Qt::SHIFT + Qt::Key_Return),
 	toolbar,
@@ -168,7 +168,7 @@ wJournal::createToolBar( Q3MainWindow * owner )
 	c->addTo( toolbar );
 	connect( c, SIGNAL( activated() ), this, SLOT( view() ) );
 	d = new QAction(
-	qPixmapFromMimeSource("doc_delete.png"),
+	rcIcon("doc_delete.png"),
 	tr("Delete"),
 	QKeySequence(QString("Del")),
 	toolbar,
@@ -179,7 +179,7 @@ wJournal::createToolBar( Q3MainWindow * owner )
 	connect( d, SIGNAL( activated() ), this, SLOT( markDelete() ) );
 
 	e = new QAction(
-	qPixmapFromMimeSource("doc_copy.png"),
+	rcIcon("doc_copy.png"),
 	tr("Copy"),
 	QKeySequence(Qt::CTRL+Qt::Key_D),
 	toolbar,

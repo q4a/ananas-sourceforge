@@ -951,15 +951,15 @@ wDBTable::init(aDatabase *adb, aEngine *e )
 	int tid;
 	aWidget *container = NULL;
 
-	t_doc = qPixmapFromMimeSource( "t_doc.png" );
-        t_doc_d = qPixmapFromMimeSource( "t_doc_d.png" );
-        t_doc_t = qPixmapFromMimeSource( "t_doc_t.png" );
-        t_doc_m = qPixmapFromMimeSource( "t_doc_m.png" );
-        t_doc_tm = qPixmapFromMimeSource( "t_doc_tm.png" );
-	t_cat_e = qPixmapFromMimeSource( "t_cat_e.png" );
-        t_cat_ed = qPixmapFromMimeSource( "t_cat_ed.png" );
-	t_cat_g = qPixmapFromMimeSource( "t_cat_g.png" );
-	t_cat_gd = qPixmapFromMimeSource( "t_cat_gd.png" );
+	t_doc = rcIcon( "t_doc.png" );
+        t_doc_d = rcIcon( "t_doc_d.png" );
+        t_doc_t = rcIcon( "t_doc_t.png" );
+        t_doc_m = rcIcon( "t_doc_m.png" );
+        t_doc_tm = rcIcon( "t_doc_tm.png" );
+	t_cat_e = rcIcon( "t_cat_e.png" );
+        t_cat_ed = rcIcon( "t_cat_ed.png" );
+	t_cat_g = rcIcon( "t_cat_g.png" );
+	t_cat_gd = rcIcon( "t_cat_gd.png" );
 
 	engine = e;
 	setConfirmDelete(true);

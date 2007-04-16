@@ -69,8 +69,8 @@ MainForm::MainForm( QWidget* parent, const char* name, Qt::WFlags fl )
     setCentralWidget( vb );
     statusBar()->setName("statusbar");
     if ( !name ) setName( "mainwindow" );
-    engine_settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
-    engine_settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
+    //--engine_settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
+    //--engine_settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
 
 //    QStringList lst = settings.entryList("/engine");
     engine_settings.beginGroup("/engine");

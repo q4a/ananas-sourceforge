@@ -389,8 +389,8 @@ void
 aService::saveSize2Config(QRect windowSize, const QString &mdname)
 {
 	QSettings settings;
-	settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
-	settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
+	//--settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
+	//--settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
 	settings.beginGroup(QString("/config/%1").arg(mdname));
 	settings.writeEntry("/left", windowSize.left());
 	settings.writeEntry("/top", windowSize.top());
@@ -419,8 +419,8 @@ QRect
 aService::loadSizeFromConfig(const QString &mdname)
 {
 	QSettings settings;
-	settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
-	settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
+	//--settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
+	//--settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
 	settings.beginGroup(QString("/config/%1").arg(mdname));
 	int l = settings.readNumEntry("/left", 0);
 	int t = settings.readNumEntry("/top", 0);
@@ -448,8 +448,8 @@ QString
 aService::readConfigVariable(const QString &name, bool *ok)
 {
 	QSettings settings;
-	settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
-	settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
+	//--settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
+	//--settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
 	settings.beginGroup(QString("/config/variables"));
 	return settings.readEntry(QString("/%1").arg(name), "", ok);
 }
@@ -471,8 +471,8 @@ void
 aService::writeConfigVariable(const QString &name, const QString &value)
 {
 	QSettings settings;
-	settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
-	settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
+	//--settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
+	//--settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
 	settings.beginGroup(QString("/config/variables"));
 	settings.writeEntry(QString("/%1").arg(name), value);
 }

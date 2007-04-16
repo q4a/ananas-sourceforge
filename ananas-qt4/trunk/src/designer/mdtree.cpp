@@ -532,7 +532,8 @@ aListViewItem::edit()
 	    e->setData( this );
 	    e->show();
 	   // mainform->addTab();
-	    mainform->addTab(++mainform->lastTabId,e->name());
+	    //--mainform->addTab(++mainform->lastTabId,e->name());
+	    mainform->addTab(e);
 	    e->parentWidget()->setGeometry(0,0,e->parentWidget()->frameSize().width(),
 		e->parentWidget()->frameSize().height());
 	    return;
@@ -546,7 +547,8 @@ aListViewItem::edit()
 	    QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
 	    e->setData( this );
 	    e->show();
-	    mainform->addTab(++mainform->lastTabId,e->name());
+	    //--mainform->addTab(++mainform->lastTabId,e->name());
+	    mainform->addTab(e);
 	    e->parentWidget()->setGeometry(0,0,e->parentWidget()->frameSize().width(),
 		e->parentWidget()->frameSize().height());
 	    return;
@@ -560,7 +562,8 @@ aListViewItem::edit()
 	    e->setData( this );
 	    e->show();
 	    //mainform->updateTabs();
-	    mainform->addTab(++mainform->lastTabId,e->name());
+	    //--mainform->addTab(++mainform->lastTabId,e->name());
+	    mainform->addTab(e);
 	    e->parentWidget()->setGeometry(0,0,e->parentWidget()->frameSize().width(),
 		e->parentWidget()->frameSize().height());
 	    return;
@@ -574,7 +577,8 @@ aListViewItem::edit()
 	    e->setData( this );
 	    e->show();
 	    //mainform->updateTabs();
-	    mainform->addTab(++mainform->lastTabId,e->name());
+	    //--mainform->addTab(++mainform->lastTabId,e->name());
+	    mainform->addTab(e);
 	    e->parentWidget()->setGeometry(0,0,e->parentWidget()->frameSize().width(),
 		e->parentWidget()->frameSize().height());
 	    return;
@@ -588,7 +592,8 @@ aListViewItem::edit()
 	    e->setData( this );
 	    e->show();
 	   // mainform->updateTabs();
-	    mainform->addTab(++mainform->lastTabId,e->name());
+	    //--mainform->addTab(++mainform->lastTabId,e->name());
+	    mainform->addTab(e);
 	    e->parentWidget()->setGeometry(0,0,e->parentWidget()->frameSize().width(),
 		e->parentWidget()->frameSize().height());
 	    return;
@@ -602,7 +607,8 @@ aListViewItem::edit()
 	    e->setData( this );
 	    e->show();
 	    //mainform->updateTabs();
-	    mainform->addTab(++mainform->lastTabId,e->name());
+	    //--mainform->addTab(++mainform->lastTabId,e->name());
+	    mainform->addTab(e);
 	    e->parentWidget()->setGeometry(0,0,e->parentWidget()->frameSize().width(),
 		e->parentWidget()->frameSize().height());
 	    return;
@@ -616,7 +622,8 @@ aListViewItem::edit()
 	    e->setData( this );
 	    e->show();
 	    //mainform->updateTabs();
-	    mainform->addTab(++mainform->lastTabId,e->name());
+	    //--mainform->addTab(++mainform->lastTabId,e->name());
+	    mainform->addTab(e);
 	    e->parentWidget()->setGeometry(0,0,e->parentWidget()->frameSize().width(),
 		e->parentWidget()->frameSize().height());
 	    return;
@@ -630,7 +637,8 @@ aListViewItem::edit()
 	    e->setData( this );
 	    e->show();
 	    //mainform->updateTabs();
-	    mainform->addTab(++mainform->lastTabId, e->name());
+	    //--mainform->addTab(++mainform->lastTabId, e->name());
+	    mainform->addTab(e);
 	    e->parentWidget()->setGeometry(0,0,e->parentWidget()->frameSize().width(),
 		e->parentWidget()->frameSize().height());
 	    return;
@@ -644,7 +652,8 @@ aListViewItem::edit()
 	    QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
 	    e->show();
 	    //mainform->updateTabs();
-	    mainform->addTab(++mainform->lastTabId,e->name());
+	    //--mainform->addTab(++mainform->lastTabId,e->name());
+	    mainform->addTab(e);
 	    e->parentWidget()->setGeometry(0,0,e->parentWidget()->frameSize().width(),
 		e->parentWidget()->frameSize().height());
 	    return;
@@ -658,7 +667,8 @@ aListViewItem::edit()
 	    e->setData( this );
 	    e->show();
 	    //mainform->updateTabs();
-	    mainform->addTab(++mainform->lastTabId,e->name());
+	    //--mainform->addTab(++mainform->lastTabId,e->name());
+	    mainform->addTab(e);
 	    e->parentWidget()->setGeometry(0,0,e->parentWidget()->frameSize().width(),
 		e->parentWidget()->frameSize().height());
 	    return;
@@ -672,7 +682,8 @@ aListViewItem::edit()
 	    e->setData( this );
 	    e->show();
 	    //mainform->updateTabs();
-	    mainform->addTab(++mainform->lastTabId,e->name());
+	    //--mainform->addTab(++mainform->lastTabId,e->name());
+	    mainform->addTab(e);
 	    e->parentWidget()->setGeometry(0,0,e->parentWidget()->frameSize().width(),
 		e->parentWidget()->frameSize().height());
 	    return;

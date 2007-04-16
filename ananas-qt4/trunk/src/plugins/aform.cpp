@@ -286,21 +286,21 @@ aForm::init()
                 // Create main widgets container.
 	    	if ( md->objClass( par ) == md_catalogue ) {
                         mainWidget = ( wCatalogue *) form; //new wCatalogue( mw );
-                        mw->setIcon( qPixmapFromMimeSource("wcatalogue.png"));
+                        mw->setIcon( rcIcon("wcatalogue.png"));
                 }
 	    	if ( md->objClass( par ) == md_document ) {
                         mainWidget = ( wDocument *) form; //new wDocument( mw );
-                        mw->setIcon( qPixmapFromMimeSource("wdocument.png"));
+                        mw->setIcon( rcIcon("wdocument.png"));
                 }
 	    	if ( md->objClass( par ) == md_journal ) {
                         mainWidget = ( wJournal *) form; //new wJournal( mw );
-                        mw->setIcon( qPixmapFromMimeSource("wjournal.png"));
+                        mw->setIcon( rcIcon("wjournal.png"));
 			mw->statusBar()->show();
 			mw->statusBar()->message(tr("New document - <Ins>, Edit - <Enter>, View - <Shift+Enter>"));
 		}
 	    	if ( md->objClass( par ) == md_report ) {
                         mainWidget = ( wReport *) form;
-                        mw->setIcon( qPixmapFromMimeSource("wreport.png"));
+                        mw->setIcon( rcIcon("wreport.png"));
                 }
 
 		if ( !mainWidget ) {

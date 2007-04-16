@@ -41,7 +41,7 @@
 #include "awindowslist.h"
 
 extern MainForm *mainform;
-extern QPixmap rcIcon(const char *name);
+extern QPixmap ANANAS_EXPORT rcIcon(const char *name);
 extern void set_Icon(Q3ListViewItem *item, const char *name);
 
 
@@ -167,7 +167,8 @@ ActionListViewItem::edit ()
 	QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
 	e->setData( this );
 	e->show();
-	mainform->addTab(++mainform->lastTabId,e->name());
+	//--mainform->addTab(++mainform->lastTabId,e->name());
+	mainform->addTab(e);
 	return;
     }
 }

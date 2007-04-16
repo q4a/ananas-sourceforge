@@ -20,7 +20,7 @@ public:
     int lastFormId;
     int lastTabId;
     aWindowsList *wl;
-    QSettings designer_settings;
+    //--QSettings designer_settings;
 
     virtual CfgForm * cfgForm();
     virtual QWidget * activeWindow();
@@ -50,6 +50,12 @@ public slots:
     virtual void getMd( aCfg * * md );
     virtual int getId();
     virtual void addTab( int uid, const QString & winName );
+    // -- Help for add to workspace
+    virtual void addTab(QWidget* window) {
+        ws->addWindow(window);
+        window->show();
+        addTab(++lastTabId, window->objectName());
+    };
     virtual void removeTab( const QString & winName );
     virtual void closeChildWindows();
     virtual void fileNewAction_activated();

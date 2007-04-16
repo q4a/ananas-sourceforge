@@ -242,7 +242,8 @@ InterfaceListViewItem::edit ()
 	QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
 	e->setData( this );
 	e->show();
-	mainform->addTab(++mainform->lastTabId,e->name());
+	//--mainform->addTab(++mainform->lastTabId,e->name());
+	mainform->addTab(e);
 	return;
     }
 }

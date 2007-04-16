@@ -130,6 +130,11 @@ int main( int argc, char ** argv )
 //#ifndef _Windows
         QTextCodec::setCodecForCStrings( QTextCodec::codecForName("UTF8") );
 //#endif
+
+    // Для QSettings
+	app.setOrganizationName("ananasgroup");
+    app.setApplicationName("ananas");
+
 	mainform = w;
 	mainformws = mainform->ws;
 	mainformwl = mainform->wl;
@@ -145,10 +150,10 @@ int main( int argc, char ** argv )
 	pixmap = QPixmap( ":/images/designer-splash-"+lang+".png" );
 	if ( pixmap.isNull() )
 #ifdef Q_OS_WIN32
-	pixmap = qPixmapFromMimeSource( qApp->applicationDirPath()+"/designer-splash-"+lang+".png" );
+	pixmap = QPixmap( qApp->applicationDirPath()+"/designer-splash-"+lang+".png" );
 	qApp->addLibraryPath( qApp->applicationDirPath() );
 #else
-	pixmap = qPixmapFromMimeSource( "/usr/share/ananas/designer/locale/designer-splash-"+lang+".png" );
+	pixmap = QPixmap( "/usr/share/ananas/designer/locale/designer-splash-"+lang+".png" );
 	qApp->addLibraryPath( "/usr/lib/ananas/" );
 #endif
 	if ( pixmap.isNull() )

@@ -270,7 +270,7 @@ CatalogForm::init()
 	QSpacerItem* spacer = new QSpacerItem( 20, 390, QSizePolicy::Minimum, QSizePolicy::Expanding );
 	GridLayout->addMultiCell( spacer, 0,2,1, 1);
 
- 	QPixmap  pix= qPixmapFromMimeSource("cat.png");
+ 	QPixmap  pix= rcIcon("cat.png");
 	if(pix.isNull())
 	{
 		aLog::print(aLog::INFO, tr("Catalog Form image cat.png not loaded"));
@@ -609,7 +609,7 @@ CatalogForm::new_group( Q3ListViewItem * parentItem )
 QPixmap
 CatalogForm::getGroupPixmap()
 {
- QPixmap  pixmap = qPixmapFromMimeSource("group2.png");
+ QPixmap  pixmap = rcIcon("group2.png");
 // pixmap.detach();
 	if(pixmap.isNull())
 	{
@@ -626,7 +626,7 @@ return pixmap;
 QPixmap
 CatalogForm::getElementPixmap()
 {
-	QPixmap  pixmap= qPixmapFromMimeSource("field2.png");
+	QPixmap  pixmap= rcIcon("field2.png");
 	if(pixmap.isNull())
 	{
 		aLog::print(aLog::INFO, tr("Catalog Form element pixmap not load"));
@@ -641,7 +641,7 @@ return pixmap;
 QPixmap
 CatalogForm::getMarkDeletedPixmap()
 {
-	QPixmap  pixmap = qPixmapFromMimeSource("editdelete2.png");
+	QPixmap  pixmap = rcIcon("editdelete2.png");
 // pixmap.
 	if(pixmap.isNull())
 	{

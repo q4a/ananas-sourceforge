@@ -131,6 +131,11 @@ int main( int argc, char ** argv )
 	QPixmap pixmap;
 
 	QTextCodec::setCodecForCStrings( QTextCodec::codecForName("UTF8") );
+
+	// Для QSettings
+	a.setOrganizationName("ananasgroup");
+    a.setApplicationName("ananas");
+
 	if ( parseCommandLine( qApp->argc(), qApp->argv() ) ) return 1;
 	qApp->installTranslator( &tr_app );
 	qApp->installTranslator( &tr_lib );
@@ -139,10 +144,10 @@ int main( int argc, char ** argv )
 	pixmap = QPixmap( ":/images/engine-splash-"+lang+".png" );
 	if ( pixmap.isNull() )
 #ifdef Q_OS_WIN32
-	pixmap = qPixmapFromMimeSource( qApp->applicationDirPath()+"/engine-splash-"+lang+".png" );
+	pixmap = QPixmap( qApp->applicationDirPath()+"/engine-splash-"+lang+".png" );
 	qApp->addLibraryPath( qApp->applicationDirPath() );
 #else
-	pixmap = qPixmapFromMimeSource( "/usr/share/ananas/designer/locale/engine-splash-"+lang+".png" );
+	pixmap = QPixmap( "/usr/share/ananas/designer/locale/engine-splash-"+lang+".png" );
 	qApp->addLibraryPath( "/usr/lib/ananas/" );
 #endif
 	//--printf("extensions: \n%s\n",( const char *) AExtensionFactory::keys().join("\n") );

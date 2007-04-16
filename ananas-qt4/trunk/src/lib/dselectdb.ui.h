@@ -60,16 +60,16 @@ void dSelectDB::init()
 	progressBar1->hide();
 	QString fname;
 	withgroups = 1;
-	settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
-	settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
+	//--settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
+	//--settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
 
 	local = settings.entryList("/groups").count();
 	changes = false;
-	if(!local)
+	/*--if(!local)
 	{
 
 		aLog::print(aLog::DEBUG, tr("dSelectDB local settings not found"));
-//		settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas/globalsettings");
+		settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas/globalsettings");
 #ifdef Q_OS_WIN32
 		QStringList subkeys = settings.subkeyList("/ananasgroup/ananas/globalsettings");
 		settings.insertSearchPath(QSettings::Windows,"/ananasgroup/ananas/globalsettings");
@@ -101,7 +101,7 @@ void dSelectDB::init()
 		}
 #endif
 	}
-	else
+	else*/
 	{
 		QStringList lst = settings.entryList("/groups");
 		settings.beginGroup("/groups");
@@ -269,8 +269,8 @@ void dSelectDB::saveRC()
 			return;
 		}
 	}
-		settings.removeSearchPath( QSettings::Unix, "/etc/ananas" );
-		settings.removeSearchPath( QSettings::Windows, "/ananasgroup/ananas/globalsettings");
+		//--settings.removeSearchPath( QSettings::Unix, "/etc/ananas" );
+		//--settings.removeSearchPath( QSettings::Windows, "/ananasgroup/ananas/globalsettings");
 
 
 		gitem= ( rcListViewItem *) listDBRC->firstChild();

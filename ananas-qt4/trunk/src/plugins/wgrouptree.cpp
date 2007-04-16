@@ -87,7 +87,7 @@ wGroupTree::wGroupTree( QWidget *parent, Qt::WFlags fl )
 	tree->setSelectionMode( Q3ListView::Single );
 	root = new wGroupTreeItem( tree, "ROOT" );
 	root->setOpen( true );
-	root->setPixmap(0, qPixmapFromMimeSource("wcatalogue.png"));
+	root->setPixmap(0, rcIcon("wcatalogue.png"));
 
 	Q3GridLayout *l = new Q3GridLayout( this );
 	l->addWidget( tree, 0, 0 );
@@ -149,7 +149,7 @@ wGroupTree::buildGroupTree( aCfgItem obj, aCatGroup * cg1, wGroupTreeItem * wG )
 			t = cg2.Value("Name").toString();
 //			CHECK_POINT
 			item = new wGroupTreeItem ( wG, 0, &cg2 ); //cg2.Value("Level").toInt(), cg2.getUid() );
-			item->setPixmap( 0, qPixmapFromMimeSource( "t_cat_g.png" ));
+			item->setPixmap( 0, rcIcon( "t_cat_g.png" ));
 //			buildGroupTree( obj, &cg2, wG );
 //			CHECK_POINT
 			buildGroupTree( obj, &cg2, item );
@@ -361,7 +361,7 @@ wGroupTree::createToolBar( Q3MainWindow * owner )
 	Q3ToolBar *t = new Q3ToolBar( owner, "GroupTreeTools" );
 
 	a = new QAction(
-	qPixmapFromMimeSource("doc_new.png"),
+	rcIcon("doc_new.png"),
 	tr("New"),
 	QKeySequence(""),//Insert"),
 	t,
@@ -372,7 +372,7 @@ wGroupTree::createToolBar( Q3MainWindow * owner )
 	connect( a, SIGNAL( activated() ), this, SLOT( NewGroup() ) );
 
 	a = new QAction(
-	qPixmapFromMimeSource("doc_edit.png"),
+	rcIcon("doc_edit.png"),
 	tr("Edit"),
 	QKeySequence(""),//Return"),
 	t,
@@ -394,7 +394,7 @@ wGroupTree::createToolBar( Q3MainWindow * owner )
 	connect( a, SIGNAL( activated() ), this, SLOT( view() ) );
 */
 	a = new QAction(
-	qPixmapFromMimeSource("doc_delete.png"),
+	rcIcon("doc_delete.png"),
 	tr("Delete group"),
 	QKeySequence(""),//Delete"),
 	t,

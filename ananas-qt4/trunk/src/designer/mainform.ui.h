@@ -151,10 +151,11 @@ void MainForm::init()
     //    help->insertItem( trUtf8("Что &это"), this, SLOT(whatsThis()), SHIFT+Key_F1);
 
 
-    designer_settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
-    designer_settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
+    //--designer_settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
+    //--designer_settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
 
 //    QStringList lst = settings.entryList("/engine");
+    QSettings designer_settings;
     designer_settings.beginGroup("/designer");
     bool maximize = designer_settings.readBoolEntry( "/maximize", 0 );
     int width = designer_settings.readNumEntry( "/geometry/width", 600 );
@@ -210,7 +211,8 @@ void MainForm::configNew()
 		cf->ws=ws;
 		cf->show();
  		((QWidget*)cf->parent())->move(0,0);
-		addTab(++lastTabId,cf->name());
+		//--addTab(++lastTabId,cf->name());
+		addTab(cf);
 	}
 }
 
@@ -230,7 +232,8 @@ void MainForm::configOpen()
 		cf->ws=ws;
 		cf->show();
  		((QWidget*)cf->parent())->move(0,0);
-		addTab(++lastTabId,cf->name());
+		//--addTab(++lastTabId,cf->name());
+		addTab(cf);
     }
 }
 
@@ -331,7 +334,8 @@ void MainForm::closeEvent( QCloseEvent *e )
 	}
     }
 
-        designer_settings.beginGroup("/designer");
+    QSettings designer_settings;
+    designer_settings.beginGroup("/designer");
 //	designer_settings.writeEntry( "/maximize", windowState()&WindowMaximized ? true: false);
 	designer_settings.writeEntry( "/geometry/width", width() );
 	designer_settings.writeEntry( "/geometry/height", height() );
