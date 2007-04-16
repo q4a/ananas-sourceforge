@@ -36,10 +36,14 @@
 *****************************************************************************/
 #include <qapplication.h>
 #include <qsettings.h>
-#include "qfiledialog.h"
+#include "q3filedialog.h"
 #include "qstatusbar.h"
 #include "qmessagebox.h"
 #include <qapplication.h>
+//Added by qt3to4:
+#include <QCloseEvent>
+#include <Q3Frame>
+#include <Q3PopupMenu>
 
 #include "ananas.h"
 //#include "adatabase.h"
@@ -68,42 +72,42 @@ void MainForm::fileExit()
 
 void MainForm::editUndo()
 {
-    
+
 }
 
 void MainForm::editRedo()
 {
-    
+
 }
 
 void MainForm::editCut()
 {
-    
+
 }
 
 void MainForm::editCopy()
 {
-    
+
 }
 
 void MainForm::editPaste()
 {
-    
+
 }
 
 void MainForm::editFind()
 {
-    
+
 }
 
 void MainForm::helpIndex()
 {
-    
+
 }
 
 void MainForm::helpContents()
 {
-    
+
 }
 
 void MainForm::helpAbout()
@@ -111,7 +115,7 @@ void MainForm::helpAbout()
     QMessageBox::about( this, tr("About Ananas.Designer"),
 			tr("<h4>Ananas.Designer %1</h4> is a programm<br>"
 			   "for adjusting accounting automation system<br><br>"
-			   "Copyright 2003-2006 Leader Infotech, Valery Grazdankin <br>" 
+			   "Copyright 2003-2006 Leader Infotech, Valery Grazdankin <br>"
 			   "Copyright 2003-2006 Project Ananas, Andrey Paskal, Grigory Panov, Andrey Strelnikov<br>"
 			   "License: GPL<br><br>"
 			   "technical support:<br>"
@@ -120,27 +124,27 @@ void MainForm::helpAbout()
 			   "Web sites:<br>"
 			   "<a href=\"http://ananas.lrn.ru\">http://ananas.lrn.ru</a><br>"
 			   "<a href=\"http://www.leaderit.ru\">http://www.leaderit.ru</a>"
-			   "<br><br>Avalable extensions:<br>%2").arg(ananas_libversion()).arg( AExtensionFactory::keys().join(", ")) );
+			   "<br><br>Avalable extensions:<br>%2").arg(ananas_libversion()).arg( ""/*--AExtensionFactory::keys().join(", ")*/) );
 }
 
 
 void MainForm::init()
-{	
+{
 
-			 
+
     setName("ananas-designer_mainwindow");
     rcfile="";
-    windowsMenu = new QPopupMenu( this );
+    windowsMenu = new Q3PopupMenu( this );
     windowsMenu->setCheckable( TRUE );
     connect( windowsMenu, SIGNAL( aboutToShow() ),
 	     this, SLOT( windowsMenuAboutToShow() ) );
     menuBar()->insertItem( tr("&Windows"), windowsMenu );
 
     menuBar()->insertSeparator();
-    QPopupMenu * help = new QPopupMenu( this );
+    Q3PopupMenu * help = new Q3PopupMenu( this );
     menuBar()->insertItem( tr("&Help"), help );
 
-    help->insertItem( tr("&About"), this, SLOT(helpAbout()), Key_F1);
+    help->insertItem( tr("&About"), this, SLOT(helpAbout()), Qt::Key_F1);
   //  help->insertItem( tr("&Test"), this, SLOT(helpTest()));
     //    help->insertItem( "About &Qt", this, SLOT(aboutQt()));
     help->insertSeparator();
@@ -149,7 +153,7 @@ void MainForm::init()
 
     designer_settings.insertSearchPath( QSettings::Unix, QString(QDir::homeDirPath())+QString("/.ananas"));
     designer_settings.insertSearchPath( QSettings::Windows, "/ananasgroup/ananas" );
-    
+
 //    QStringList lst = settings.entryList("/engine");
     designer_settings.beginGroup("/designer");
     bool maximize = designer_settings.readBoolEntry( "/maximize", 0 );
@@ -162,13 +166,13 @@ void MainForm::init()
     move(offset_x,offset_y);
     if(maximize)
     {
-//	   setWindowState(windowState() ^ WindowMaximized); 
+//	   setWindowState(windowState() ^ WindowMaximized);
     }
-    
+
     setIcon( rcIcon("a-system.png"));
     setCaption(tr("Ananas: Designer"));
-    QVBox* vb = new QVBox( this );
-    vb->setFrameStyle( QFrame::StyledPanel | QFrame::Sunken );
+    Q3VBox* vb = new Q3VBox( this );
+    vb->setFrameStyle( Q3Frame::StyledPanel | Q3Frame::Sunken );
     ws = new QWorkspace( vb );
     wl = new aWindowsList();
     ws->setScrollBarsEnabled( TRUE );
@@ -176,7 +180,7 @@ void MainForm::init()
     cfgform=NULL;
 
     MessagesWindow *msgWindow = new MessagesWindow( this ); // , WDestructiveClose );
-    moveDockWindow( msgWindow, DockBottom );
+    moveDockWindow( msgWindow, Qt::DockBottom );
     setMessageHandler( TRUE );
     msgWindow->hide();
     tbMetadata->setShown( FALSE );
@@ -198,7 +202,7 @@ void MainForm::configNew()
 	{
 		if ( !cf->close() ) return; // close configuration form if opened
     	}
-    	cf = new CfgForm(ws, 0, WDestructiveClose); // create new cfgform
+    	cf = new CfgForm(ws, 0, Qt::WDestructiveClose); // create new cfgform
    	if ( cf )
 	{
 		cf->init( rcfile, TRUE ); // initialization NEW configuration
@@ -218,7 +222,7 @@ void MainForm::configOpen()
 		if ( !cf->close() ) return;
    	}
 	if ( rcfile.isEmpty()) return;
-	cf = new CfgForm( ws, 0, WDestructiveClose); 
+	cf = new CfgForm( ws, 0, Qt::WDestructiveClose);
 	if ( cf )
 	{
 		cf->init( rcfile, FALSE );	//	initialization configuration
@@ -245,17 +249,17 @@ void MainForm::configSaveAs()
 
 void MainForm::fileOpen()
 {
-    
+
 }
 
 void MainForm::fileSave()
 {
-    
+
 }
 
 void MainForm::fileSaveAs()
 {
-    
+
 }
 
 void MainForm::fileNew()
@@ -297,19 +301,19 @@ void MainForm::tileHorizontal()
     QWidgetList windows = ws->windowList();
     if ( !windows.count() )
 	return;
-    
+
     int heightForEach = ws->height() / windows.count();
     int y = 0;
     for ( int i = 0; i < int(windows.count()); ++i ) {
 	QWidget *window = windows.at(i);
-	if ( window->testWState( WState_Maximized ) ) {
+	if ( window->windowState() == Qt::WindowMaximized ) {
 	    // prevent flicker
 	    window->hide();
 	    window->showNormal();
 	}
 	int preferredHeight = window->minimumHeight()+window->parentWidget()->baseSize().height();
 	int actHeight = QMAX(heightForEach, preferredHeight);
-	
+
 	window->parentWidget()->setGeometry( 0, y, ws->width(), actHeight );
 	y += actHeight;
     }
@@ -335,7 +339,7 @@ void MainForm::closeEvent( QCloseEvent *e )
 	designer_settings.writeEntry( "/geometry/y", pos().y() );
 	designer_settings.endGroup();
 	//aLog::print(aLog::DEBUG,"exit");
-    QMainWindow::closeEvent( e );
+    Q3MainWindow::closeEvent( e );
 }
 
 
@@ -393,30 +397,30 @@ void MainForm::addTab(int uid, const QString& winName )
 {
     QWidgetList windows = ws->windowList();
     QToolButton* bt;
-    
+
     QString S = winName;
     for ( int i = 0; i < int( windows.count() ); i++ ) {
 		if( !strcmp(windows.at(i)->name(), S.ascii()))
 		{
 			windows.at(i)->setName(QString(windows.at(i)->name()+QString("_%1").arg(uid)));
 			//ixmap pixmap(*windows.at(i)->icon());
-			bt = new QToolButton(QIconSet(),
+			bt = new QToolButton(QIcon(),
 					     windows.at(i)->caption(),
 					     "",
 					     windows.at(i),
 					     SLOT(setFocus( )),
 					     tbTabs,
 					     windows.at(i)->name() );
-				
+
 			bt->setUsesTextLabel ( true );
 //		 	bt->setAutoRaise ( true );
 		//	aLog::print(aLog::DEBUG, QString("button name = %1").arg(bt->name()));
 			break;
-			
+
 		}
 /*		if( windows.at(i)->isShown() and !strcmp(windows.at(i)->name(),"designer_mainwindow"))
 		{
-			
+
 			bt = new QToolButton(QIconSet(),
 					     windows.at(i)->caption(),
 					     "",
@@ -424,7 +428,7 @@ void MainForm::addTab(int uid, const QString& winName )
 					     SLOT(setFocus( )),
 					     tbTabs,
 					     windows.at(i)->name() );
-				
+
 			bt->setUsesTextLabel ( true );
 //		 	bt->setAutoRaise ( true );
 			printf("button name = %s\n",bt->name());
@@ -434,10 +438,10 @@ void MainForm::addTab(int uid, const QString& winName )
 	}
    // }
 //    if(windows.count()>1)
-    if(tbTabs->queryList ("QToolButton"))
+    if(tbTabs->queryList ("QToolButton").size() > 0)
     {
 	//    tbTabs->show();
-	    
+
     	tbTabs->setShown( true );
     }
     else
@@ -453,22 +457,22 @@ void MainForm::removeTab(const  QString &winName )
 //	int ind = winName.findRev("_");
 //	printf("winName = %s\n",winName.ascii());
 //	QString str = winName;
-//	str = str.remove(ind,winName.length()-ind); 
+//	str = str.remove(ind,winName.length()-ind);
 	QObject *button = tbTabs->child( winName );
 	if(button)
 	{
-		
+
 //		printf("deletes tab\n");
 		delete button;
 		button = NULL;
 	}
-	
+
 }
 
 
 void MainForm::closeChildWindows()
 {
- 
+
     QWidgetList windows = ws->windowList();
     for ( int i = 0; i < int( windows.count() ); i++ )
     {

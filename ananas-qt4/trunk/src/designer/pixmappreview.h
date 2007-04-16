@@ -31,15 +31,15 @@
 
 #include <qlabel.h>
 #include <qpixmap.h>
-#include <qfiledialog.h>
+#include <q3filedialog.h>
 #include <qinputdialog.h>
 
-class PixmapPreview : public QLabel, public QFilePreview
+class PixmapPreview : public QLabel, public Q3FilePreview
 {
     Q_OBJECT
 public:
     PixmapPreview( QWidget *parent=0 ) : QLabel( parent ) {}
-    void previewUrl( const QUrl &u )
+    void previewUrl( const Q3Url &u )
     {
 	QString path = u.path();
 	QPixmap pix( path );

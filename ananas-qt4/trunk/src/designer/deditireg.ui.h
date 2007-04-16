@@ -77,7 +77,7 @@ void dEditIReg::updateMD()
 {
 	aCfg *md = item->md;
 	aCfgItem obj = item->obj;
-	
+
 	al->updateMD();
 	item->setText( 0, eName->text().stripWhiteSpace() );
 	md->setAttr( obj, mda_name, eName->text().stripWhiteSpace() );

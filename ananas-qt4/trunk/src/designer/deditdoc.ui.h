@@ -64,7 +64,7 @@ void dEditDoc::setData( aListViewItem *o )
     item = o;
     aCfg *md = o->md;
     aCfgItem obj = o->obj, sv, field;
-	
+
     aAliasEditor *a = new aAliasEditor( md, obj, tAliases );
     al = a;
     al->setData();
@@ -102,7 +102,7 @@ void dEditDoc::updateMD()
 {
 	aCfg *md = item->md;
 	aCfgItem obj = item->obj, sv;
-	
+
 	al->updateMD();
 	re->updateMD();
 	item->setText( 0, eName->text().stripWhiteSpace() );
@@ -111,7 +111,7 @@ void dEditDoc::updateMD()
 	md->setSText( obj, md_sourcecode, eModule->text() );
 	sv = md->find( obj, md_string_view );
 	if ( sv.isNull() ) sv = md->insert( obj, md_string_view );
-	md->setSText( sv, md_svfunction, eStrViewF->text() );	
+	md->setSText( sv, md_svfunction, eStrViewF->text() );
 	if ( eSv->currentItem() == 0 ) md->setAttr( sv, mda_stdf, "1" );
 	else {
 	    md->setAttr( sv, mda_stdf, "0" );

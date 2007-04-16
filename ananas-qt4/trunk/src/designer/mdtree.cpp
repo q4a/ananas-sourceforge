@@ -26,18 +26,18 @@
 **
 **********************************************************************/
 
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qlabel.h>
 #include <qpixmap.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qstatusbar.h>
 #include <qlineedit.h>
 #include <qmessagebox.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qimage.h>
 #include <qbitmap.h>
-#include <qdragobject.h>
-#include <qheader.h>
+#include <q3dragobject.h>
+#include <q3header.h>
 #include <qfont.h>
 #include <qcursor.h>
 #include <qlayout.h>
@@ -76,7 +76,7 @@ aListViewItem::aListViewItem(ananasListViewItem *parent, ananasListViewItem *aft
 
 
 
-aListViewItem::aListViewItem(QListView *parent, aCfg *cfgmd,  aCfgItem cfgobj, const QString &name )
+aListViewItem::aListViewItem(Q3ListView *parent, aCfg *cfgmd,  aCfgItem cfgobj, const QString &name )
 : ananasListViewItem( parent, cfgmd, cfgobj, name )
 {
 	loadTree();
@@ -92,9 +92,9 @@ aListViewItem::~aListViewItem()
 QString
 aListViewItem::text( int column ) const
 {
-	return QListViewItem::text( column );
+	return Q3ListViewItem::text( column );
 //	if ( obj.isNull() ) return QObject::tr("Unknown object context");
-	if ( !id ) return QListViewItem::text( column );
+	if ( !id ) return Q3ListViewItem::text( column );
 	switch ( column ) {
 	case 0: return md->attr( obj, mda_name );
 	default:
@@ -103,7 +103,7 @@ aListViewItem::text( int column ) const
 }
 
 int
-aListViewItem::compare( QListViewItem *i, int col, bool accending ) const
+aListViewItem::compare( Q3ListViewItem *i, int col, bool accending ) const
 {
 	int id1 = 0, id2 = 0;
 	aListViewItem *ai = (aListViewItem *) i;
@@ -121,7 +121,7 @@ aListViewItem::compare( QListViewItem *i, int col, bool accending ) const
 void
 aListViewItem::setup()
 {
-	QListViewItem::setup();
+	Q3ListViewItem::setup();
 }
 
 
@@ -515,17 +515,17 @@ void
 aListViewItem::edit()
 {
     QWorkspace *ws = mainform->ws;
-    aWindowsList *wl = mainform->wl;    
+    aWindowsList *wl = mainform->wl;
     QString oclass = md->objClass( obj );
     int objid = md->id( obj );
     if ( wl->find( objid ) ) {
 	wl->get( objid )->setFocus();
 	return;
     }
-        
+
 	if ( oclass == md_metadata )
 	{
-	    dEditCfg *e = new dEditCfg( ws, 0, WDestructiveClose );
+	    dEditCfg *e = new dEditCfg( ws, 0, Qt::WDestructiveClose );
 	    wl->insert( objid, e );
 	    editor = e;
 	    QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
@@ -540,7 +540,7 @@ aListViewItem::edit()
 //	if ( !md || !id ) return;
 	if ( oclass == md_document)
 	{
-	    dEditDoc *e = new dEditDoc( ws, 0, WDestructiveClose );
+	    dEditDoc *e = new dEditDoc( ws, 0, Qt::WDestructiveClose );
 	    wl->insert( objid, e );
 	    editor = e;
 	    QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
@@ -553,7 +553,7 @@ aListViewItem::edit()
 	};
 	if ( oclass == md_iregister)
 	{
-	    dEditIReg *e = new dEditIReg( ws, 0, WDestructiveClose );
+	    dEditIReg *e = new dEditIReg( ws, 0, Qt::WDestructiveClose );
 	    wl->insert( objid, e );
 	    editor = e;
 	    QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
@@ -567,7 +567,7 @@ aListViewItem::edit()
 	};
 	if ( oclass == md_aregister)
 	{
-	    dEditAReg *e = new dEditAReg( ws, 0, WDestructiveClose );
+	    dEditAReg *e = new dEditAReg( ws, 0, Qt::WDestructiveClose );
 	    wl->insert( objid, e );
 	    editor = e;
 	    QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
@@ -581,7 +581,7 @@ aListViewItem::edit()
 	};
 	if ( oclass == md_catalogue)
 	{
-	    dEditCat *e = new dEditCat( ws, 0, WDestructiveClose );
+	    dEditCat *e = new dEditCat( ws, 0, Qt::WDestructiveClose );
 	    wl->insert( objid, e );
 	    editor = e;
 	    QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
@@ -595,7 +595,7 @@ aListViewItem::edit()
 	};
 	if ( oclass == md_field )
 	{
-	    dEditField *e = new dEditField( ws, 0, WDestructiveClose );
+	    dEditField *e = new dEditField( ws, 0, Qt::WDestructiveClose );
 	    wl->insert( objid, e );
 	    editor = e;
 	    QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
@@ -609,7 +609,7 @@ aListViewItem::edit()
 	};
 	if ( oclass == md_report )
 	{
-	    dEditReport *e = new dEditReport( ws, 0, WDestructiveClose );
+	    dEditReport *e = new dEditReport( ws, 0, Qt::WDestructiveClose );
 	    wl->insert( objid, e );
 	    editor = e;
 	    QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
@@ -623,7 +623,7 @@ aListViewItem::edit()
 	};
 	if ( oclass == md_journal )
 	{
-	    dEditJournal *e = new dEditJournal( ws, 0, WDestructiveClose );
+	    dEditJournal *e = new dEditJournal( ws, 0, Qt::WDestructiveClose );
 	    wl->insert( objid, e );
 	    editor = e;
 	    QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
@@ -637,7 +637,7 @@ aListViewItem::edit()
 	};
 	if ( oclass == md_form )
 	{
-	    dEditDialog *e = new dEditDialog( ws, 0, WDestructiveClose );
+	    dEditDialog *e = new dEditDialog( ws, 0, Qt::WDestructiveClose );
 	    wl->insert( objid, e );
 	    editor = e;
 	    e->setData( this );
@@ -651,7 +651,7 @@ aListViewItem::edit()
 	};
 	if ( oclass == md_webform )
 	{
-	    dEditWebForm *e = new dEditWebForm( ws, 0, WDestructiveClose );
+	    dEditWebForm *e = new dEditWebForm( ws, 0, Qt::WDestructiveClose );
 	    wl->insert( objid, e );
 	    editor = e;
 	    QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
@@ -665,7 +665,7 @@ aListViewItem::edit()
 	};
 	if ( oclass == md_column )
 	{
-	    dEditColumns *e = new dEditColumns( ws, 0, WDestructiveClose );
+	    dEditColumns *e = new dEditColumns( ws, 0, Qt::WDestructiveClose );
 	    wl->insert( objid, e );
 	    editor = e;
 	    QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
@@ -705,7 +705,7 @@ void aListViewItem::saveItem()
 
 	//md->saveOneObject()
 	QString oclass = md->objClass( obj );
-	if ( 	oclass == md_field || 
+	if ( 	oclass == md_field ||
 		oclass == md_document ||
 		oclass == md_catalogue ||
 		oclass == md_journal ||
@@ -713,15 +713,15 @@ void aListViewItem::saveItem()
 		oclass == md_aregister ||
 		oclass == md_report ||
 		oclass == md_webform ||
-		oclass == md_form || 
+		oclass == md_form ||
 		oclass == md_table)
 	{
-			
+
 		QString fname;
-		QFileDialog fd( QString::null,
+		Q3FileDialog fd( QString::null,
   			QObject::tr("any files (*)"),
 			0, 0, TRUE );
-		fd.setMode(QFileDialog::AnyFile);
+		fd.setMode(Q3FileDialog::AnyFile);
 //		fd.addFilter(tr(" (*.bsa)"));
 		fd.setSelection( oclass + md->attr(obj,mda_id) );
 		if ( fd.exec() == QDialog::Accepted )
@@ -734,17 +734,17 @@ void aListViewItem::saveItem()
 
 void aListViewItem::loadItem()
 {
-	
+
 	QString oclass = md->objClass( obj );
-	
+
 	if ( 	oclass == md_header ||
 		oclass == md_table ||
-		oclass == md_element || 
+		oclass == md_element ||
 		oclass == md_group ||
 		oclass == md_resources ||
 		oclass == md_dimensions ||
 		oclass == md_information ||
-		oclass == md_columns || 
+		oclass == md_columns ||
 		oclass == md_documents ||
 		oclass == md_catalogues ||
 		oclass == md_journals ||
@@ -758,10 +758,10 @@ void aListViewItem::loadItem()
 	{
 
 		QString fname;
-		QFileDialog fd( QString::null,
+		Q3FileDialog fd( QString::null,
   			QObject::tr("any files (*)"),
 			0, 0, TRUE );
-		fd.setMode(QFileDialog::ExistingFiles);
+		fd.setMode(Q3FileDialog::ExistingFiles);
 		aCfgItem loadObj;
 //		fd.addFilter(tr(" (*.bsa)"));
 //		fd.setSelection( QDir::convertSeparators(eCfgName->text()));
@@ -774,7 +774,7 @@ void aListViewItem::loadItem()
 			// c.setAttr(loadObj, mda_name, "CATALOGUE1 COPY!!!");
 			// append to cfg
 			// c.importCfgItem( c.find(c.find(0), md_catalogues) , loadObj);
-			// 					
+			//
 			loadObj = md->loadOneObject(fname);
 			if(loadObj.isNull())
 			{
@@ -784,7 +784,7 @@ void aListViewItem::loadItem()
 			{
 				md->setAttr(loadObj, mda_name, QString("%1_copy").arg(md->attr(loadObj, mda_name)));
 				QString loclass = md->objClass(loadObj);
-				if ( loclass==md_field	&& 
+				if ( loclass==md_field	&&
 						(oclass == md_header || oclass == md_table ||
 						oclass == md_element || oclass == md_group ||
 						oclass == md_resources || oclass == md_dimensions ||
@@ -801,12 +801,12 @@ void aListViewItem::loadItem()
 					aListViewItem *newitem = new aListViewItem( this, getLastChild(), md, newobj );
 				}
 				if ( loclass==md_catalogue && oclass == md_catalogues )
-				{	
+				{
 					aCfgItem newobj = md->importCfgItem( obj, loadObj );
 					aListViewItem *newitem = new aListViewItem( this, getLastChild(), md, newobj );
 				}
 				if ( loclass==md_journal && oclass == md_journals )
-				{	
+				{
 					aCfgItem newobj = md->importCfgItem( obj, loadObj );
 					aListViewItem *newitem = new aListViewItem( this, getLastChild(), md, newobj );
 				}
@@ -820,7 +820,7 @@ void aListViewItem::loadItem()
 					aCfgItem newobj = md->importCfgItem( obj, loadObj );
 					aListViewItem *newitem = new aListViewItem( this, getLastChild(), md, newobj );
 				}
-				if ( loclass==md_report && oclass == md_reports ) 
+				if ( loclass==md_report && oclass == md_reports )
 				{
 					aCfgItem newobj = md->importCfgItem( obj, loadObj );
 					aListViewItem *newitem = new aListViewItem( this, getLastChild(), md, newobj );
@@ -1070,14 +1070,14 @@ aMetadataTreeView::aMetadataTreeView(  QWidget *parent, aCfg *cfgmd )
 	if ( !md ) return;
 	conf = new aListViewItem( this, md, md->find( mdc_metadata ), md->info( mda_name ));
 	conf->setOpen( TRUE );
-	connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int) ), this, SLOT(ContextMenu() ) );
-	connect( this, SIGNAL( returnPressed( QListViewItem* ) ), this, SLOT( itemEdit() ) );
-	connect( this, SIGNAL( doubleClicked( QListViewItem* ) ), this, SLOT( itemEdit() ) );
-	connect( this, SIGNAL( collapsed( QListViewItem* ) ), this, SLOT( on_collapsed( QListViewItem* ) ) );
+	connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int) ), this, SLOT(ContextMenu() ) );
+	connect( this, SIGNAL( returnPressed( Q3ListViewItem* ) ), this, SLOT( itemEdit() ) );
+	connect( this, SIGNAL( doubleClicked( Q3ListViewItem* ) ), this, SLOT( itemEdit() ) );
+	connect( this, SIGNAL( collapsed( Q3ListViewItem* ) ), this, SLOT( on_collapsed( Q3ListViewItem* ) ) );
 }
 
-void 
-aMetadataTreeView::on_collapsed( QListViewItem * item )
+void
+aMetadataTreeView::on_collapsed( Q3ListViewItem * item )
 {
 	aListViewItem *i = (aListViewItem *) item;
 	if ( i )
@@ -1092,7 +1092,7 @@ void
 aMetadataTreeView::ContextMenu()
 {
 
-	QPopupMenu *m=new QPopupMenu( this, "PopupMenu" );
+	Q3PopupMenu *m=new Q3PopupMenu( this, "PopupMenu" );
 	Q_CHECK_PTR(m);
 
 /*    	QLabel *caption = new QLabel( "<font color=darkblue><u><b>"
@@ -1105,7 +1105,7 @@ aMetadataTreeView::ContextMenu()
     	m->insertItem( "&Delete", this, SLOT( itemDelete() ), CTRL+Key_O );*/
 
 		ContextMenuAdd(m);
-		m->insertItem( tr("&New"),  this, SLOT( itemNew() ), CTRL+Key_N );
+		m->insertItem( tr("&New"),  this, SLOT( itemNew() ), Qt::CTRL+Qt::Key_N );
 		m->exec( QCursor::pos() );
 		delete m;
 }

@@ -47,7 +47,7 @@ void dEditCat::setData( aListViewItem *o )
     item = o;
     aCfg *md = o->md;
     aCfgItem obj = o->obj, sv, g, e, field;
-	
+
     aAliasEditor *a = new aAliasEditor( md, obj, tAliases );
     al = a;
     al->setData();
@@ -60,7 +60,7 @@ void dEditCat::setData( aListViewItem *o )
     g = md->find( obj, md_group ); // Find group context
     e = md->find( obj, md_element ); // Find Element context
     sv = md->find( g, md_string_view ); // Group string view
-//====================================    
+//====================================
     eStrViewFG->setText( md->sText( sv, md_svfunction ) );
     eSvG->insertItem( "[ standart function ]" );
     eSvG->insertItem( "[ user function ]" );
@@ -81,8 +81,8 @@ void dEditCat::setData( aListViewItem *o )
 	eStrViewFG->setEnabled( TRUE );
 	eSvG->setCurrentItem( 1 );
     }
-    
-//====================================    
+
+//====================================
     sv = md->find( e, md_string_view );
     eStrViewF->setText( md->sText( sv, md_svfunction ) );
     eSv->insertItem( "[ standart function ]" );
@@ -118,7 +118,7 @@ void dEditCat::init()
 void dEditCat::updateMD()
 {
     	aCfg *md = item->md;
-	aCfgItem obj = item->obj, sv, g, e;	
+	aCfgItem obj = item->obj, sv, g, e;
 
 	al->updateMD();
 	re->updateMD();
@@ -147,7 +147,7 @@ void dEditCat::updateMD()
 	    if ( eSvG->currentItem() == 1 ) md->setSText( sv, md_fieldid, "0" );
 	    else md->setSText( sv, md_fieldid, QString("%1").arg( *(fieldsg.find( eSvG->currentItem() - 2 ) ) ) );
 	}
-	
+
 }
 
 void dEditCat::destroy()

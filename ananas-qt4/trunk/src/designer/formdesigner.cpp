@@ -26,24 +26,28 @@
 **
 **********************************************************************/
 
-#include <formwindow.h>
-#include <hierarchyview.h>
-#include <propertyeditor.h>
-#include <actioneditorimpl.h>
-#include <outputwindow.h>
-#include <workspace.h>
-#include <propertyeditor.h>
+//--#include <formwindow.h>
+//--#include <hierarchyview.h>
+//--#include <propertyeditor.h>
+//--#include <actioneditorimpl.h>
+//--#include <outputwindow.h>
+//--#include <workspace.h>
+//--#include <propertyeditor.h>
 #include <qevent.h>
 #include <qstatusbar.h>
+//Added by qt3to4:
+#include <QCloseEvent>
+#include <QMouseEvent>
 
 #include "acfg.h"
 #include "formdesigner.h"
 #include "mainform.h"
 
 aFormDesigner::aFormDesigner()
-: MainWindow( true, true )
+: QWidget()
+//--: MainWindow( true, true )
 {
-	resize( 800, 600 );
+	/*--resize( 800, 600 );
 //	menuBar()->hide();
 	menuBar()->setItemVisible( menuBar()->idAt(0), false );
 	menuBar()->setItemVisible( menuBar()->idAt(2), false );
@@ -55,7 +59,7 @@ aFormDesigner::aFormDesigner()
 //	showGUIStuff( false );
 //	propertyeditor()->hide();
 //	objectHierarchy()->hide();
-//	actioneditor()->hide();
+//	actioneditor()->hide();*/
 }
 
 
@@ -79,7 +83,7 @@ aFormDesigner::closeEvent( QCloseEvent *e )
 void
 aFormDesigner::show()
 {
-CHECK_POINT
+/*--CHECK_POINT
 	MainWindow::show();
 CHECK_POINT
 //	actioneditor()->hide();
@@ -92,7 +96,7 @@ CHECK_POINT
 		outputWindow()->parentWidget()->close();
 #endif
 	}
-	workspace()->parentWidget()->parentWidget()->close();
+	workspace()->parentWidget()->parentWidget()->close();*/
 }
 
 
@@ -100,9 +104,9 @@ CHECK_POINT
 void
 aFormDesigner::hide()
 {
-	MainWindow::hide();
+	/*--MainWindow::hide();
 	fileSaveAll();
-	fileClose();
+	fileClose();*/
   //  ( (MainForm*)this->topLevelWidget() )->removeTab(caption());
 }
 
@@ -113,6 +117,6 @@ aFormDesigner::mouseDoubleClickEvent ( QMouseEvent * e )
 {
 //CHECK_POINT
 
-	MainWindow::mouseDoubleClickEvent ( e );
+	//--MainWindow::mouseDoubleClickEvent ( e );
 }
 

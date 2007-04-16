@@ -26,11 +26,13 @@
 **
 **********************************************************************/
 
-#include <qlistview.h>
-#include <qheader.h>
-#include <qpopupmenu.h>
+#include <q3listview.h>
+#include <q3header.h>
+#include <q3popupmenu.h>
 #include <qlabel.h>
 #include <qcursor.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 #include "acfg.h"
 #include "interfacetree.h"
@@ -41,9 +43,9 @@
 
 extern MainForm *mainform;
 extern QPixmap rcIcon(const char *name);
-extern void set_Icon(QListViewItem *item, const char *name);
+extern void set_Icon(Q3ListViewItem *item, const char *name);
 
-InterfaceListViewItem::InterfaceListViewItem( QListView *parent, aCfg * cfgmd, aCfgItem cfgobj, const QString &name )
+InterfaceListViewItem::InterfaceListViewItem( Q3ListView *parent, aCfg * cfgmd, aCfgItem cfgobj, const QString &name )
 : ananasListViewItem( parent, cfgmd, cfgobj, name )
 {
 	id = md->id(obj);
@@ -224,17 +226,17 @@ void
 InterfaceListViewItem::edit ()
 {
     QWorkspace *ws = mainform->ws;
-    aWindowsList *wl = mainform->wl;    
+    aWindowsList *wl = mainform->wl;
     QString oclass = md->objClass( obj );
     int objid = md->id( obj );
     if ( wl->find( objid ) ) {
 	wl->get( objid )->setFocus();
 	return;
     }
-    
+
     if ( oclass == md_command )
     {
-	dEditCommand * e = new dEditCommand ( ws, 0, WDestructiveClose );
+	dEditCommand * e = new dEditCommand ( ws, 0, Qt::WDestructiveClose );
 	wl->insert( objid, e );
 	editor = e;
 	QObject::connect( mainform, SIGNAL( tosave() ), editor, SLOT( updateMD() ) );
@@ -271,16 +273,16 @@ InterfaceTreeView::InterfaceTreeView ( QWidget *parent, aCfg *cfgmd )
 	popups->setPixmap(0, rcIcon("p_menus.png"));
 	popups->loadTree();
 	popups->setOpen ( TRUE );
-	connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int) ), this, SLOT(ContextMenu() ) );
-	connect( this, SIGNAL( returnPressed( QListViewItem*) ), this, SLOT( itemEdit() ) );
-	connect( this, SIGNAL( doubleClicked( QListViewItem*) ), this, SLOT( itemEdit() ) );
+	connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int) ), this, SLOT(ContextMenu() ) );
+	connect( this, SIGNAL( returnPressed( Q3ListViewItem*) ), this, SLOT( itemEdit() ) );
+	connect( this, SIGNAL( doubleClicked( Q3ListViewItem*) ), this, SLOT( itemEdit() ) );
 };
 
 
 void
 InterfaceTreeView::ContextMenu()
 {
-	QPopupMenu *m=new QPopupMenu( this, "PopupMenu" );
+	Q3PopupMenu *m=new Q3PopupMenu( this, "PopupMenu" );
 	Q_CHECK_PTR(m);
 
 /*	QLabel *caption = new QLabel( "<font color=darkblue><u><b>" "Context Menu</b></u></font>", this );
@@ -293,9 +295,9 @@ InterfaceTreeView::ContextMenu()
 	m->insertItem( tr("&MoveDown"), this, SLOT( itemMoveDown() ), CTRL+Key_M );
 */
 	ananasTreeView::ContextMenuAdd( m );
-	m->insertItem( tr("&New Submenu"),  this, SLOT( itemNewSubmenu() ), CTRL+Key_N );
-	m->insertItem( tr("New &Command"),  this, SLOT( itemNewCommand() ), CTRL+Key_C );
-	m->insertItem( tr("New &Separator"),  this, SLOT( itemNewSeparator() ), CTRL+Key_S );
+	m->insertItem( tr("&New Submenu"),  this, SLOT( itemNewSubmenu() ), Qt::CTRL+Qt::Key_N );
+	m->insertItem( tr("New &Command"),  this, SLOT( itemNewCommand() ), Qt::CTRL+Qt::Key_C );
+	m->insertItem( tr("New &Separator"),  this, SLOT( itemNewSeparator() ), Qt::CTRL+Qt::Key_S );
 	m->exec( QCursor::pos() );
 	delete m;
 };

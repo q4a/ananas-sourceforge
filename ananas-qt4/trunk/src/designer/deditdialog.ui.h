@@ -43,13 +43,14 @@
 #include "qsscript.h"
 #include <qsinterpreter.h>
 #include <qdialog.h>
-#include <qwidgetfactory.h>
-#include <qobjectlist.h>
-#include <qtextstream.h>
+//--#include <qwidgetfactory.h>
+#include <QFormBuilder>
+#include <qobject.h>
+#include <q3textstream.h>
 #include <qbuffer.h>
 #include <qsinterpreter.h>
 #include <qseditor.h>
-#include <qprocess.h>
+#include <q3process.h>
 #include <qapplication.h>
 
 #include "formdesigner.h"
@@ -168,12 +169,12 @@ void dEditDialog::EditForm()
 
 		aLog::print(aLog::DEBUG, tr("dEditDialog create form file from metadata"));
 		QFile f1(eFormFile->text());
-		f1.open(IO_WriteOnly);
+		f1.open(QIODevice::WriteOnly);
 		f1.writeBlock(ui, strlen(ui));
 		f1.close();
 
 	}
-	else 
+	else
 	{
 		aLog::print(aLog::DEBUG, tr("dEditDialog create new form file from template"));
 		o = md->parent( md->parent( obj ) );
@@ -182,12 +183,12 @@ void dEditDialog::EditForm()
 		if ( md->objClass( o ) == md_journal ) tpl_name = "inputformjourn.ui.tpl";
 		if ( md->objClass( o ) == md_report ) tpl_name = "inputformrep.ui.tpl";
 		QFile fi( tpldir+tpl_name );
-		if ( fi.open( IO_ReadOnly ))
+		if ( fi.open( QIODevice::ReadOnly ))
 		{
-			if(f.open( IO_WriteOnly ))
+			if(f.open( QIODevice::WriteOnly ))
 			{
-				QTextStream tso( &f );
-				tso.setEncoding( QTextStream::UnicodeUTF8 );
+				Q3TextStream tso( &f );
+				tso.setEncoding( Q3TextStream::UnicodeUTF8 );
 				QString form = fi.readAll();
 //			printf("obj id = %i\n", md->id( o ) );
 				form.replace( QString("$$$id$$$"), QString("%1").arg( md->id( o ) ) );
@@ -271,9 +272,9 @@ void dEditDialog::updateMD()
 		(1<<md_form_edit) * cbEdit->isChecked() +\
 		(1<<md_form_select) * cbSelect->isChecked();
 	md->setSText( obj, md_defaultmod, QString( "%1" ).arg( i ) );
-	if (f.open(IO_ReadOnly)){
-		QTextStream ts(&f);
-		ts.setEncoding(QTextStream::UnicodeUTF8);
+	if (f.open(QIODevice::ReadOnly)){
+		Q3TextStream ts(&f);
+		ts.setEncoding(Q3TextStream::UnicodeUTF8);
 		ui=ts.read();
 		md->setSText( obj, md_formdesign, ui );
 		f.close();
@@ -296,14 +297,14 @@ void dEditDialog::formPreview()
 	if (!f.exists()){
 		ui= md->sText( obj, md_formdesign );
 		if (!ui.isEmpty()) {
-			f.open(IO_WriteOnly);
+			f.open(QIODevice::WriteOnly);
 			f.writeBlock(ui, strlen(ui));
 			f.close();
 		} else {
 		    return;
 			QFile fi("inputform.ui.tpl");
-			if ( fi.open( IO_ReadOnly ) && f.open( IO_WriteOnly ) ){
-				QTextStream tsi( &fi ), tso( &f );
+			if ( fi.open( QIODevice::ReadOnly ) && f.open( QIODevice::WriteOnly ) ){
+				Q3TextStream tsi( &fi ), tso( &f );
 				tso << tsi.read();
 				fi.close();
 				f.close();
@@ -313,8 +314,10 @@ void dEditDialog::formPreview()
 
 	QIODevice *d;
 	d= &f;
-	d->open(IO_ReadOnly);
-	QWidget *form = QWidgetFactory::create(d);
+	d->open(QIODevice::ReadOnly);
+	//--QWidget *form = QWidgetFactory::create(d);
+    QFormBuilder fb;
+    QWidget *form = fb.load(d);
 	d->close();
 	form->show();
 

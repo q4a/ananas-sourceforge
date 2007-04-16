@@ -36,7 +36,9 @@
 ** place of a destructor.
 *****************************************************************************/
 #include <qstatusbar.h>
-#include <qheader.h>
+#include <q3header.h>
+//Added by qt3to4:
+#include <QPixmap>
 #include "acfg.h"
 
 //extern aCfg cfg;
@@ -112,12 +114,14 @@ void dEditCommand::setData( InterfaceListViewItem * o )
 
 	vComActions = new ananasTreeView( tabWidget2->page(1),  md );
     vComActions->setSorting( -1 );
-    layout28->addWidget( vComActions, 0, 0 );
+    // TODO Fixme!!!
+    //--layout28->addWidget( vComActions, 0, 0 );
     actiontree = new aActionTreeView ( tabWidget2->page(1),  md );
-    disconnect( actiontree, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int) ), actiontree, SLOT(ContextMenu() ) );
-    disconnect( actiontree, SIGNAL( returnPressed( QListViewItem*) ), actiontree, SLOT( itemEdit() ) );
-    disconnect( actiontree, SIGNAL( doubleClicked( QListViewItem*) ), actiontree, SLOT( itemEdit() ) );
-    layout29->addWidget( actiontree, 0, 0 );
+    disconnect( actiontree, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int) ), actiontree, SLOT(ContextMenu() ) );
+    disconnect( actiontree, SIGNAL( returnPressed( Q3ListViewItem*) ), actiontree, SLOT( itemEdit() ) );
+    disconnect( actiontree, SIGNAL( doubleClicked( Q3ListViewItem*) ), actiontree, SLOT( itemEdit() ) );
+    // TODO Fixme!!!
+    //--layout29->addWidget( actiontree, 0, 0 );
 
     al = a;
     al->setData();

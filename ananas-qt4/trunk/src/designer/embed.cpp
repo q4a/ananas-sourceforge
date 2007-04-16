@@ -30,6 +30,8 @@
 #include <qstringlist.h>
 #include <qdatetime.h>
 #include <qfileinfo.h>
+//Added by qt3to4:
+#include <Q3PtrList>
 #include <stdio.h>
 #include <ctype.h>
 
@@ -68,7 +70,7 @@ static QString convertToCIdentifier( const char *s )
 }
 
 
-static ulong embedData( QTextStream& out, const uchar* input, int nbytes )
+static ulong embedData( Q3TextStream& out, const uchar* input, int nbytes )
 {
 #ifndef QT_NO_IMAGE_COLLECTION_COMPRESSION
     QByteArray bazip( qCompress( input, nbytes ) );
@@ -102,7 +104,7 @@ static ulong embedData( QTextStream& out, const uchar* input, int nbytes )
     return len;
 }
 
-static void embedData( QTextStream& out, const QRgb* input, int n )
+static void embedData( Q3TextStream& out, const QRgb* input, int n )
 {
     out << hex;
     const QRgb *v = input;
@@ -117,7 +119,7 @@ static void embedData( QTextStream& out, const QRgb* input, int n )
     out << dec; // back to decimal mode
 }
 
-void Uic::embed( QTextStream& out, const char* project, const QStringList& images )
+void Uic::embed( Q3TextStream& out, const char* project, const QStringList& images )
 {
 
     QString cProject = convertToCIdentifier( project );
@@ -143,7 +145,7 @@ void Uic::embed( QTextStream& out, const char* project, const QStringList& image
     out << "#include <qdragobject.h>\n";
     out << "\n";
 
-    QPtrList<EmbedImage> list_image;
+    Q3PtrList<EmbedImage> list_image;
     list_image.setAutoDelete( TRUE );
     int image_count = 0;
     for ( it = images.begin(); it != images.end(); ++it ) {

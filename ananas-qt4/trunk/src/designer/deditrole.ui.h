@@ -45,7 +45,7 @@ void dEditRole::setData( CfgForm *c, aCfgItem o )
 {
 //    aCfgItem alias;
 //    int i, n, count;
-    
+
     cf = c;
     obj = o;
 
@@ -72,5 +72,5 @@ dEditRole::updateMD()
     cf->initRoles();
     ( (MainForm*)this->topLevelWidget() )->wl->remove( this );
 }
-    
+
 

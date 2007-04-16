@@ -37,6 +37,8 @@
 ** place of a destructor.
 *****************************************************************************/
 #include <qstatusbar.h>
+//Added by qt3to4:
+#include <QPixmap>
 #include "acfg.h"
 #include <qtabbar.h>
 #include <qsinterpreter.h>
@@ -53,14 +55,14 @@ void dEditAction::setData( ActionListViewItem * o )
     QPixmap pix, pix1;
     static const char *empty[] = {
  "1 1 1 1",
- ". c None", 
+ ". c None",
  "."};
     dp = new QPixmap( empty );
-    
+
     aAliasEditor *a = new aAliasEditor( md, obj, tAliases );
     al = a;
     al->setData();  // alias table init
-    
+
     pActive->setPixmap( *dp ); // set empty pixmaps
     pPassive->setPixmap( *dp );
     eName->setText( md->attr( obj, mda_name ) );
@@ -110,7 +112,7 @@ void dEditAction::setData( ActionListViewItem * o )
    cbForm->setCurrentItem( i );
    break;
   }
-	 
+
  }
  int type = md->sText( obj, md_actiontype ).toInt();
  switch ( type )
@@ -255,14 +257,14 @@ void dEditAction::bSetActive_clicked()
 //    fd->setContentsPreviewEnabled( TRUE );  // prepair file dialog
 //    fd->setCaption( tr("Open image dialog" ) );
 //    fd->setMode( QFileDialog::ExistingFiles );
- name= QFileDialog::getOpenFileName("", "Images (*.png *.xpm *.jpg *.jpeg *.bmp)", this,
+ name= Q3FileDialog::getOpenFileName("", "Images (*.png *.xpm *.jpg *.jpeg *.bmp)", this,
    tr("Open image dialog"),
    tr("Choose an image") );
 //    if ( fd->exec() == QDialog::Accepted ) { // if accepted
 // name = fd->selectedFile(); // get filename
  if ( !name.isEmpty() ) { // if not empty
      f.setName( name );
-     if ( f.open( IO_ReadOnly ) ){ // open file
+     if ( f.open( QIODevice::ReadOnly ) ){ // open file
   ba = f.readAll(); // read data
   f.close();  // close file
   pix.loadFromData( ba );  // load data into pixmap
@@ -284,23 +286,23 @@ void dEditAction::bSetPassive_clicked()
 {
     QString st;
     QPixmap pix;
-    QFileDialog *fd = new QFileDialog( "", "Images (*.png *.xpm *.jpg *.jpeg *.bmp)", 0, 0, TRUE );
+    Q3FileDialog *fd = new Q3FileDialog( "", "Images (*.png *.xpm *.jpg *.jpeg *.bmp)", 0, 0, TRUE );
     QByteArray ba;
     QString name;
     QFile f;
     PixmapPreview *p = new PixmapPreview;
     aCfgItem passive;
-    
+
     fd->setContentsPreview( p, p );
-    fd->setPreviewMode( QFileDialog::Contents );
+    fd->setPreviewMode( Q3FileDialog::Contents );
     fd->setContentsPreviewEnabled( TRUE );
     fd->setCaption( tr("Open image dialog" ) );
-    fd->setMode( QFileDialog::ExistingFiles );
+    fd->setMode( Q3FileDialog::ExistingFiles );
     if ( fd->exec() == QDialog::Accepted ) {
  name = fd->selectedFile();
  if ( !name.isEmpty() ) {
      f.setName( name );
-     if ( f.open( IO_ReadOnly ) ){
+     if ( f.open( QIODevice::ReadOnly ) ){
   ba = f.readAll();
   f.close();
   pix.loadFromData( ba );

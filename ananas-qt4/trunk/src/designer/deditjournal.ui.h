@@ -59,10 +59,11 @@ void dEditJournal::setData( aListViewItem *o )
 
     journalDocs = new ananasTreeView( tabWidget18->page(2),  md  );
     journalDocs->setSorting( -1 );
-    layout28->addWidget( journalDocs, 0, 0 );
+    // TODO Fix me!!!
+    //--layout28->addWidget( journalDocs, 0, 0 );
     n = md->count( obj, md_used_doc );
     for ( j = 0; j < n; j++ )
-    {	
+    {
 	cobj = md->find( obj, md_used_doc, j );
 	if ( cobj.isNull() )
 	    continue;
@@ -76,7 +77,8 @@ void dEditJournal::setData( aListViewItem *o )
 
     allDocs = new ananasTreeView( tabWidget18->page(2),  md  );
     allDocs->setSorting( -1 );
-    layout29->add( allDocs );
+    // TODO Fix me!!!
+    //--layout29->add( allDocs );
     docs = md->find(md->find(mdc_metadata),md_documents,0);
     n = md->count( docs, md_document );
     for ( j = 0; j < n; j++ )
@@ -104,7 +106,7 @@ void dEditJournal::updateMD()
 {
     aCfgItem doc, docs;
     int i;
-    
+
     al->updateMD();
     re->updateMD();
     item->setText( 0, eName->text().stripWhiteSpace() );

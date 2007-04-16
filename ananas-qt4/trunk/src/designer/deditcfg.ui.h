@@ -106,7 +106,7 @@ void dEditCfg::setData( aListViewItem *o )
 	eDescription->setText( md->info( md_info_remark ) );
 	globals = md->find( obj, md_globals, 0 );
 	eModule->setText( md->sText( globals, md_sourcecode ) );
-	
+
 /*
 	n=cfgobj_count(context, aot_remark);
 	if (n) {
@@ -118,7 +118,7 @@ void dEditCfg::setData( aListViewItem *o )
 		id0=cfgobj_idn(context, aot_sourcecode, 1, &code);
 		if (code) eModule->setText(trUtf8(cfgobj_text(code)));
 	}
-*/	
+*/
 }
 
 
@@ -148,8 +148,8 @@ void dEditCfg::updateMD()
 	if (eDBType->currentItem()==2) md->rc.setValue( "dbtype", "postgres" );
 	globals = md->find( obj, md_globals, 0 );
 	md->setSText( globals, md_sourcecode, eModule->text() );
-	
-/*	
+
+/*
 	if (cancelupdate) return;
 	item->setText(0, eName->text());
 //	item->setText(1, eID->text());
@@ -167,5 +167,5 @@ void dEditCfg::updateMD()
 	else id=cfgobj_idn(context, aot_sourcecode, 1, &code);
 	if (code) cfgobj_settext(code, eModule->text().utf8());
 
-*/	
+*/
 }

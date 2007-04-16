@@ -27,12 +27,12 @@
 **
 **********************************************************************/
 
-#include <qheader.h>
+#include <q3header.h>
 #include "roleeditor.h"
 #include "acfg.h"
 
 
-aRoleEditor::aRoleEditor( aCfg *c, aCfgItem o, QTable *t, const char *p )
+aRoleEditor::aRoleEditor( aCfg *c, aCfgItem o, Q3Table *t, const char *p )
 {
     ac = c;
     obj = o;
@@ -53,42 +53,42 @@ aRoleEditor::aRoleEditor( aCfg *c, aCfgItem o, QTable *t, const char *p )
 	tRoles->horizontalHeader()->setLabel( 1, tr("Write") );
 	tRoles->horizontalHeader()->setLabel( 2, tr("Delete") );
     }
-    
+
 }
 
 aRoleEditor::~aRoleEditor()
 {
 }
 
-void 
+void
 aRoleEditor::setData()
 {
     int i, j, n;
     aCfgItem orole, roles, role;
     QString rolename, right;
-    
+
     roles = ac->find( ac->find( mdc_root ), md_roles, 0 );
     roleCount = ac->count( roles, md_role );
-    n = ac->countChild( obj, md_role );    
+    n = ac->countChild( obj, md_role );
     tRoles->setNumRows( roleCount );
     for ( i = 0; i < roleCount; i++ ) {
 	role = ac->findChild( roles, md_role, i );
 	rolename = ac->attr( role, mda_name );
 	tRoles->verticalHeader()->setLabel( i, rolename );
-	QCheckTableItem *r = new QCheckTableItem( tRoles, QString::null );
+	Q3CheckTableItem *r = new Q3CheckTableItem( tRoles, QString::null );
 	tRoles->setItem( i, 0, r );
-	QCheckTableItem *w = new QCheckTableItem( tRoles, QString::null );
-    	QCheckTableItem *d = new QCheckTableItem( tRoles, QString::null );
-    	QCheckTableItem *on = new QCheckTableItem( tRoles, QString::null );
-    	QCheckTableItem *off = new QCheckTableItem( tRoles, QString::null );
+	Q3CheckTableItem *w = new Q3CheckTableItem( tRoles, QString::null );
+    	Q3CheckTableItem *d = new Q3CheckTableItem( tRoles, QString::null );
+    	Q3CheckTableItem *on = new Q3CheckTableItem( tRoles, QString::null );
+    	Q3CheckTableItem *off = new Q3CheckTableItem( tRoles, QString::null );
 	if ( !strcmp( parent, md_catalogue ) ) {
 		tRoles->setItem( i, 1, w );
-		tRoles->setItem( i, 2, d );		
-	    }    
+		tRoles->setItem( i, 2, d );
+	    }
 	if ( !strcmp( parent, md_document ) ) {
 		tRoles->setItem( i, 1, w );
-		tRoles->setItem( i, 2, d );		
-		tRoles->setItem( i, 3, on );		
+		tRoles->setItem( i, 2, d );
+		tRoles->setItem( i, 3, on );
 		tRoles->setItem( i, 4, off );
 	    }
 	for ( j = 0; j < n; j++) {
@@ -100,7 +100,7 @@ aRoleEditor::setData()
 		if ( right.find( "-d" ) > -1 ) d->setChecked( TRUE );
 		if ( right.find( "-on" ) > -1 ) on->setChecked( TRUE );
 		if ( right.find( "-off" ) > -1 ) off->setChecked( TRUE );
-	    }	
+	    }
 	}
     }
 }
@@ -109,25 +109,25 @@ void aRoleEditor::updateMD()
 {
     int i;
     aCfgItem role;
-    
-    do { 
+
+    do {
 	role = ac->findChild( obj, md_role, 0 ) ;
 	if ( !role.isNull() ) ac->remove( role );
     } while ( !role.isNull() );
     for ( i = 0; i < tRoles->numRows(); i++ ) {
 	QString right;
-	QCheckTableItem *q;
+	Q3CheckTableItem *q;
 	role = ac->insert( obj, md_role, tRoles->text( i, 0 ), -1 );
 	ac->setAttr( role, mda_name, tRoles->verticalHeader()->label( i ));
-	q = (QCheckTableItem *)tRoles->item( i, 4 );
+	q = (Q3CheckTableItem *)tRoles->item( i, 4 );
 	if ( q ) if ( q->isChecked() ) right.insert( 0, "-off" );
-	q = (QCheckTableItem *)tRoles->item( i, 3 );
+	q = (Q3CheckTableItem *)tRoles->item( i, 3 );
 	if ( q ) if ( q->isChecked() ) right.insert( 0, "-on" );
-	q = (QCheckTableItem *)tRoles->item( i, 2 );
+	q = (Q3CheckTableItem *)tRoles->item( i, 2 );
 	if ( q ) if ( q->isChecked() ) right.insert( 0, "-d" );
-	q = (QCheckTableItem *)tRoles->item( i, 1 );
+	q = (Q3CheckTableItem *)tRoles->item( i, 1 );
 	if ( q ) if ( q->isChecked() ) right.insert( 0, "-w" );
-	q = (QCheckTableItem *)tRoles->item( i, 0 );
+	q = (Q3CheckTableItem *)tRoles->item( i, 0 );
 	if ( q ) if ( q->isChecked() ) right.insert( 0, "-r" );
 	ac->setAttr( role, mda_rights, right );
     }

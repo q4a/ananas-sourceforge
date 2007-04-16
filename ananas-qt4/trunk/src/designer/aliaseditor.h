@@ -30,7 +30,7 @@
 #ifndef ALIASEDITOR_H
 #define ALIASEDITOR_H
 
-#include <qtable.h>
+#include <q3table.h>
 #include <qobject.h>
 #include "acfg.h"
 
@@ -41,12 +41,12 @@ class aAliasEditor : public QObject
 public:
     aCfg *ac;
     aCfgItem obj;
-    QTable *tAliases;
+    Q3Table *tAliases;
     int langCount;
-    
-    aAliasEditor( aCfg *c, aCfgItem o, QTable *tAliases );
+
+    aAliasEditor( aCfg *c, aCfgItem o, Q3Table *tAliases );
     ~aAliasEditor();
-    
+
     void setData();
     void updateMD( );//aCfgItem o );
 };

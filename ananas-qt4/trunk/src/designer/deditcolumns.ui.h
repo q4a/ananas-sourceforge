@@ -36,7 +36,10 @@
 ** place of a destructor.
 *****************************************************************************/
 #include <qstatusbar.h>
-#include <qheader.h>
+#include <q3header.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <QPixmap>
 #include "acfg.h"
 
 
@@ -50,10 +53,10 @@ void dEditColumns::setData( ananasListViewItem * o )
 
 
 	usedFields = new ananasTreeView( gbFields,  md );
-	QGridLayout *l = new QGridLayout( gbFields );
+	Q3GridLayout *l = new Q3GridLayout( gbFields );
 	l->addWidget( usedFields, 0, 0);
 	availableFields = new ananasTreeView( frmFields,  md );
-	l = new QGridLayout( frmFields );
+	l = new Q3GridLayout( frmFields );
 	l->addWidget( availableFields, 0, 0);
 
 	aCfgItem	cobj, fobj, dobj, pobj, tobj;
@@ -210,7 +213,7 @@ void dEditColumns::bRemoveAction_clicked()
 
 void dEditColumns::bMoveUp_clicked()
 {
-    QListViewItem *aitem, *after;
+    Q3ListViewItem *aitem, *after;
 
     aitem =  usedFields->selectedItem();
     if ( aitem )
@@ -224,7 +227,7 @@ void dEditColumns::bMoveUp_clicked()
 
 void dEditColumns::bMoveDown_clicked()
 {
-	QListViewItem *aitem, *after;
+	Q3ListViewItem *aitem, *after;
 	aitem = usedFields->selectedItem();
 	if ( aitem )
 	{

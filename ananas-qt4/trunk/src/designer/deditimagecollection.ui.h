@@ -44,6 +44,6 @@ void dEditImageCollection::init()
 
 void dEditImageCollection::setData( )
 {
-    obj = o;
-    
+    //--obj = o;
+
 }

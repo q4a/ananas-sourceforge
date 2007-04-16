@@ -60,7 +60,7 @@ void dEditWebForm::setData( aListViewItem *o )
 	item = o;
 	aCfg *md = o->md;
 	aCfgItem obj = o->obj;
-	
+
 	aAliasEditor *a = new aAliasEditor( md, obj, tAliases );
 	al = a;
 	al->setData();
@@ -76,7 +76,7 @@ void dEditWebForm::updateMD()
 {
 	aCfg *md = item->md;
 	aCfgItem obj = item->obj;
-	
+
 	al->updateMD( );
 	item->setText( 0, eName->text().stripWhiteSpace() );
 	md->setAttr( obj, mda_name, eName->text().stripWhiteSpace() );

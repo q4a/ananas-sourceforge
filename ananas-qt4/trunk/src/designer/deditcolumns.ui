@@ -1,286 +1,239 @@
-<!DOCTYPE UI><UI version="3.2" stdsetdef="1">
-<class>dEditColumns</class>
-<widget class="QMainWindow">
-    <property name="name">
-        <cstring>dEditColumns</cstring>
+<ui version="4.0" stdsetdef="1" >
+  <author></author>
+  <comment></comment>
+  <exportmacro></exportmacro>
+  <class>dEditColumns</class>
+  <widget class="Q3MainWindow" name="dEditColumns" >
+    <property name="geometry" >
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>495</width>
+        <height>361</height>
+      </rect>
     </property>
-    <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>495</width>
-            <height>361</height>
-        </rect>
+    <property name="windowTitle" >
+      <string>Columns</string>
     </property>
-    <property name="caption">
-        <string>Columns</string>
-    </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <widget class="QLayoutWidget" row="0" column="0" rowspan="1" colspan="3">
-            <property name="name">
-                <cstring>layout5</cstring>
-            </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
+    <widget class="QWidget" >
+      <layout class="QGridLayout" >
+        <item rowspan="1" row="0" column="0" colspan="3" >
+          <layout class="QHBoxLayout" >
+            <item>
+              <widget class="QLabel" name="textLabel1" >
+                <property name="text" >
+                  <string>Name:</string>
                 </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel1</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Name:</string>
-                    </property>
-                </widget>
-                <widget class="QLineEdit">
-                    <property name="name">
-                        <cstring>eName</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>true</bool>
-                    </property>
-                    <property name="minimumSize">
-                        <size>
-                            <width>0</width>
-                            <height>22</height>
-                        </size>
-                    </property>
-                </widget>
-            </hbox>
-        </widget>
-        <widget class="QLayoutWidget" row="1" column="1">
-            <property name="name">
-                <cstring>layout4</cstring>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
+                <property name="wordWrap" >
+                  <bool>false</bool>
                 </property>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer7</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>44</height>
-                        </size>
-                    </property>
-                </spacer>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>bAddAction</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                    <property name="pixmap">
-                        <pixmap>arrow_left.png</pixmap>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>bRemoveAction</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                    <property name="pixmap">
-                        <pixmap>editdelete.png</pixmap>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>bMoveUp</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                    <property name="pixmap">
-                        <pixmap>arrow_up.png</pixmap>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>bMoveDown</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>0</hsizetype>
-                            <vsizetype>0</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="text">
-                        <string></string>
-                    </property>
-                    <property name="pixmap">
-                        <pixmap>arrow_down.png</pixmap>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>spacer8</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>21</width>
-                            <height>35</height>
-                        </size>
-                    </property>
-                </spacer>
-            </vbox>
-        </widget>
-        <widget class="QFrame" row="1" column="2">
-            <property name="name">
-                <cstring>frmFields</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>5</vsizetype>
+              </widget>
+            </item>
+            <item>
+              <widget class="QLineEdit" name="eName" >
+                <property name="enabled" >
+                  <bool>true</bool>
+                </property>
+                <property name="minimumSize" >
+                  <size>
+                    <width>0</width>
+                    <height>22</height>
+                  </size>
+                </property>
+              </widget>
+            </item>
+          </layout>
+        </item>
+        <item row="1" column="1" >
+          <layout class="QVBoxLayout" >
+            <item>
+              <spacer name="spacer7" >
+                <property name="sizeHint" >
+                  <size>
+                    <width>20</width>
+                    <height>44</height>
+                  </size>
+                </property>
+                <property name="sizeType" >
+                  <enum>Expanding</enum>
+                </property>
+                <property name="orientation" >
+                  <enum>Vertical</enum>
+                </property>
+              </spacer>
+            </item>
+            <item>
+              <widget class="QPushButton" name="bAddAction" >
+                <property name="sizePolicy" >
+                  <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
-                </sizepolicy>
-            </property>
-            <property name="frameShape">
-                <enum>NoFrame</enum>
-            </property>
-            <property name="frameShadow">
-                <enum>Raised</enum>
-            </property>
-        </widget>
-        <widget class="QGroupBox" row="1" column="0">
-            <property name="name">
-                <cstring>gbFields</cstring>
-            </property>
-            <property name="sizePolicy">
-                <sizepolicy>
-                    <hsizetype>5</hsizetype>
-                    <vsizetype>5</vsizetype>
+                  </sizepolicy>
+                </property>
+                <property name="text" >
+                  <string/>
+                </property>
+                <property name="icon" >
+                  <pixmap>arrow_left.png</pixmap>
+                </property>
+              </widget>
+            </item>
+            <item>
+              <widget class="QPushButton" name="bRemoveAction" >
+                <property name="sizePolicy" >
+                  <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
-                </sizepolicy>
+                  </sizepolicy>
+                </property>
+                <property name="text" >
+                  <string/>
+                </property>
+                <property name="icon" >
+                  <pixmap>editdelete.png</pixmap>
+                </property>
+              </widget>
+            </item>
+            <item>
+              <widget class="QPushButton" name="bMoveUp" >
+                <property name="sizePolicy" >
+                  <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="text" >
+                  <string/>
+                </property>
+                <property name="icon" >
+                  <pixmap>arrow_up.png</pixmap>
+                </property>
+              </widget>
+            </item>
+            <item>
+              <widget class="QPushButton" name="bMoveDown" >
+                <property name="sizePolicy" >
+                  <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                  </sizepolicy>
+                </property>
+                <property name="text" >
+                  <string/>
+                </property>
+                <property name="icon" >
+                  <pixmap>arrow_down.png</pixmap>
+                </property>
+              </widget>
+            </item>
+            <item>
+              <spacer name="spacer8" >
+                <property name="sizeHint" >
+                  <size>
+                    <width>21</width>
+                    <height>35</height>
+                  </size>
+                </property>
+                <property name="sizeType" >
+                  <enum>Expanding</enum>
+                </property>
+                <property name="orientation" >
+                  <enum>Vertical</enum>
+                </property>
+              </spacer>
+            </item>
+          </layout>
+        </item>
+        <item row="1" column="2" >
+          <widget class="Q3Frame" name="frmFields" >
+            <property name="sizePolicy" >
+              <sizepolicy>
+                <hsizetype>5</hsizetype>
+                <vsizetype>5</vsizetype>
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+              </sizepolicy>
             </property>
-            <property name="margin">
-                <number>10</number>
+            <property name="frameShape" >
+              <enum>NoFrame</enum>
             </property>
-            <property name="midLineWidth">
-                <number>0</number>
+            <property name="frameShadow" >
+              <enum>Raised</enum>
             </property>
-            <property name="title">
-                <string>Columns</string>
+          </widget>
+        </item>
+        <item row="1" column="0" >
+          <widget class="Q3GroupBox" name="gbFields" >
+            <property name="sizePolicy" >
+              <sizepolicy>
+                <hsizetype>5</hsizetype>
+                <vsizetype>5</vsizetype>
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+              </sizepolicy>
             </property>
-        </widget>
-    </grid>
-</widget>
-<toolbars>
-</toolbars>
-<actions>
-    <action>
-        <property name="name">
-            <cstring>Action</cstring>
-        </property>
-        <property name="text">
-            <string>Action</string>
-        </property>
+            <property name="margin" >
+              <number>10</number>
+            </property>
+            <property name="midLineWidth" >
+              <number>0</number>
+            </property>
+            <property name="title" >
+              <string>Columns</string>
+            </property>
+          </widget>
+        </item>
+      </layout>
+    </widget>
+    <action name="Action" >
+      <property name="name" >
+        <cstring>Action</cstring>
+      </property>
+      <property name="iconText" >
+        <string>Action</string>
+      </property>
     </action>
-</actions>
-<connections>
+  </widget>
+  <layoutdefault spacing="5" margin="5" />
+  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+  <includes>
+    <include location="local" >atreeitems.h</include>
+    <include location="local" >aliaseditor.h</include>
+    <include location="local" >mdtree.h</include>
+    <include location="local" >mainform.h</include>
+  </includes>
+  <connections>
     <connection>
-        <sender>bAddAction</sender>
-        <signal>clicked()</signal>
-        <receiver>dEditColumns</receiver>
-        <slot>bAddAction_clicked()</slot>
+      <sender>bAddAction</sender>
+      <signal>clicked()</signal>
+      <receiver>dEditColumns</receiver>
+      <slot>bAddAction_clicked()</slot>
     </connection>
     <connection>
-        <sender>bRemoveAction</sender>
-        <signal>clicked()</signal>
-        <receiver>dEditColumns</receiver>
-        <slot>bRemoveAction_clicked()</slot>
+      <sender>bRemoveAction</sender>
+      <signal>clicked()</signal>
+      <receiver>dEditColumns</receiver>
+      <slot>bRemoveAction_clicked()</slot>
     </connection>
     <connection>
-        <sender>bMoveUp</sender>
-        <signal>clicked()</signal>
-        <receiver>dEditColumns</receiver>
-        <slot>bMoveUp_clicked()</slot>
+      <sender>bMoveUp</sender>
+      <signal>clicked()</signal>
+      <receiver>dEditColumns</receiver>
+      <slot>bMoveUp_clicked()</slot>
     </connection>
     <connection>
-        <sender>bMoveDown</sender>
-        <signal>clicked()</signal>
-        <receiver>dEditColumns</receiver>
-        <slot>bMoveDown_clicked()</slot>
+      <sender>bMoveDown</sender>
+      <signal>clicked()</signal>
+      <receiver>dEditColumns</receiver>
+      <slot>bMoveDown_clicked()</slot>
     </connection>
-</connections>
-<includes>
-    <include location="local" impldecl="in declaration">atreeitems.h</include>
-    <include location="local" impldecl="in declaration">aliaseditor.h</include>
-    <include location="local" impldecl="in declaration">mdtree.h</include>
-    <include location="local" impldecl="in declaration">mainform.h</include>
-    <include location="local" impldecl="in implementation">deditcolumns.ui.h</include>
-</includes>
-<variables>
-    <variable access="private">aCfgItem obj;</variable>
-    <variable access="private">aCfg *md;</variable>
-    <variable access="private">aAliasEditor *al;</variable>
-    <variable access="private">ananasListViewItem * item;</variable>
-    <variable access="private">ananasTreeView *availableFields;</variable>
-    <variable access="private">ananasTreeView *usedFields;</variable>
-    <variable access="private">QStringList fieldsList;</variable>
-</variables>
-<slots>
-    <slot>setData( ananasListViewItem * o )</slot>
-    <slot>updateMD()</slot>
-    <slot>bAddAction_clicked()</slot>
-    <slot>bRemoveAction_clicked()</slot>
-    <slot>bMoveUp_clicked()</slot>
-    <slot>bMoveDown_clicked()</slot>
-</slots>
-<functions>
-    <function access="private" specifier="non virtual">destroy()</function>
-    <function access="private" specifier="non virtual">init()</function>
-    <function access="private">addField( aCfgItem addItem )</function>
-</functions>
-<pixmapinproject/>
-<layoutdefaults spacing="5" margin="5"/>
-</UI>
+  </connections>
+</ui>

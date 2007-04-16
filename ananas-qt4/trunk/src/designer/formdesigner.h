@@ -29,16 +29,22 @@
 #ifndef FORMDESIGNER_H
 #define FORMDESIGNER_H
 
-#include <mainwindow.h>
+//--#include <mainwindow.h>
+//Added by qt3to4:
+#include <QMouseEvent>
+#include <QCloseEvent>
 
 
-class aFormDesigner: public MainWindow
+class aFormDesigner : public QWidget//--: public MainWindow
 {
 public:
 	aFormDesigner();
-	~aFormDesigner();
+	virtual ~aFormDesigner();
 	void show();
 	void hide();
+	//--
+	void fileOpen(const QString&, const QString&, const QString&) {};
+	void fileSaveAll() {};
 protected:
 	virtual void closeEvent( QCloseEvent *e );
 	virtual void mouseDoubleClickEvent ( QMouseEvent * e );

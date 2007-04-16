@@ -27,18 +27,18 @@
 **
 **********************************************************************/
 
-#include <qlistview.h>
-#include <qheader.h>
-#include <qpopupmenu.h>
+#include <q3listview.h>
+#include <q3header.h>
+#include <q3popupmenu.h>
 #include <qlabel.h>
 #include <qcursor.h>
 
 #include "atreeitems.h"
 #include "alog.h"
 
-ananasListViewItem::ananasListViewItem( QListView *parent, aCfg * cfgmd, aCfgItem cfgobj,
+ananasListViewItem::ananasListViewItem( Q3ListView *parent, aCfg * cfgmd, aCfgItem cfgobj,
 										 const QString &name )
-: QListViewItem( parent )
+: Q3ListViewItem( parent )
 {
 	obj = cfgobj;
 	md = cfgmd;
@@ -49,7 +49,7 @@ ananasListViewItem::ananasListViewItem( QListView *parent, aCfg * cfgmd, aCfgIte
 
 ananasListViewItem::ananasListViewItem( ananasListViewItem *parent, ananasListViewItem *after,
 										 aCfg * cfgmd, aCfgItem cfgobj, const QString &name )
-: QListViewItem( parent, after )
+: Q3ListViewItem( parent, after )
 {
 	obj = cfgobj;
 	md = cfgmd;
@@ -58,8 +58,8 @@ ananasListViewItem::ananasListViewItem( ananasListViewItem *parent, ananasListVi
 	id = md->id(obj);
 }
 
-ananasListViewItem::ananasListViewItem( QListView *parent, QListViewItem *after, aCfg * cfgmd, aCfgItem cfgobj, const QString &name )
-: QListViewItem( parent, after )
+ananasListViewItem::ananasListViewItem( Q3ListView *parent, Q3ListViewItem *after, aCfg * cfgmd, aCfgItem cfgobj, const QString &name )
+: Q3ListViewItem( parent, after )
 {
 	obj = cfgobj;
 	md = cfgmd;
@@ -71,7 +71,7 @@ ananasListViewItem::ananasListViewItem( QListView *parent, QListViewItem *after,
 void
 ananasListViewItem::clearTree()
 {
-	QListViewItem	*item, *nextitem;
+	Q3ListViewItem	*item, *nextitem;
 
 	// clear tree
 	item = firstChild();
@@ -99,7 +99,7 @@ ananasListViewItem::moveUp ()
 {
 	if(!previousSibling()) return; // not previous item! - no changes
 	aCfgItem item = previousSibling()->obj;
-	
+
 	if ( obj.isNull() )
 	{
 		aLog::print(aLog::ERROR, QObject::tr(" Ananas List View Item %1 is null").arg(md->attr(obj,mda_name)));
@@ -140,7 +140,7 @@ ananasListViewItem::moveDown ()
 ananasListViewItem *
 ananasListViewItem::previousSibling() // becose QListViewItem not have function previousSibling();
 {
-	QListViewItem *parent, *item;
+	Q3ListViewItem *parent, *item;
 	parent = this->parent();
 	item = parent->firstChild();
 	while ( item )
@@ -153,14 +153,14 @@ ananasListViewItem::previousSibling() // becose QListViewItem not have function 
 ananasListViewItem*
 ananasListViewItem::nextSibling()
 {
-	return (ananasListViewItem *)QListViewItem::nextSibling();
+	return (ananasListViewItem *)Q3ListViewItem::nextSibling();
 }
 
 
 void
 ananasListViewItem::okRename( int col )
 {
-	QListViewItem::okRename( col );
+	Q3ListViewItem::okRename( col );
 	if ( id && !obj.isNull() && col == 0 ) {
 		setText( 0, text( 0 ).stripWhiteSpace() );
 		md->setAttr( obj, mda_name, text( 0 ) );
@@ -188,7 +188,7 @@ ananasListViewItem::getLastChild( QListViewItem * parent )
 ananasListViewItem*
 ananasListViewItem::getLastChild()
 {
-	QListViewItem *item, *nextitem;
+	Q3ListViewItem *item, *nextitem;
 	item = firstChild();
 	while( item )
 	{
@@ -203,7 +203,7 @@ ananasListViewItem::getLastChild()
 
 
 ananasTreeView::ananasTreeView ( QWidget *parent, aCfg *cfgmd )
-:QListView ( parent )
+:Q3ListView ( parent )
 {
 	md = cfgmd;
 	addColumn( "" );
@@ -214,16 +214,16 @@ ananasTreeView::ananasTreeView ( QWidget *parent, aCfg *cfgmd )
 
 
 void
-ananasTreeView::ContextMenuAdd( QPopupMenu * m )
+ananasTreeView::ContextMenuAdd( Q3PopupMenu * m )
 {
-	QLabel *caption = new QLabel( tr("<font color=darkblue><u><b>" "Context Menu</b></u></font>"), this );
-	caption->setAlignment( Qt::AlignCenter );
-	m->insertItem( caption );
-	m->insertItem( tr("&Rename"), this, SLOT( itemRename() ), CTRL+Key_R);
-	m->insertItem( tr("&Edit"),  this, SLOT( itemEdit() ), CTRL+Key_E );
-	m->insertItem( tr("&Delete"), this, SLOT( itemDelete() ), CTRL+Key_D );
-	m->insertItem( tr("&MoveUp"), this, SLOT( itemMoveUp() ), CTRL+Key_U );
-	m->insertItem( tr("&MoveDown"), this, SLOT( itemMoveDown() ), CTRL+Key_M );
+	//--QLabel *caption = new QLabel( tr("<font color=darkblue><u><b>" "Context Menu</b></u></font>"), this );
+	//--caption->setAlignment( Qt::AlignCenter );
+	//--m->insertItem( caption );
+	m->insertItem( tr("&Rename"), this, SLOT( itemRename() ), Qt::CTRL+Qt::Key_R);
+	m->insertItem( tr("&Edit"),  this, SLOT( itemEdit() ), Qt::CTRL+Qt::Key_E );
+	m->insertItem( tr("&Delete"), this, SLOT( itemDelete() ), Qt::CTRL+Qt::Key_D );
+	m->insertItem( tr("&MoveUp"), this, SLOT( itemMoveUp() ), Qt::CTRL+Qt::Key_U );
+	m->insertItem( tr("&MoveDown"), this, SLOT( itemMoveDown() ), Qt::CTRL+Qt::Key_M );
 	m->insertItem( tr("&SaveItem"), this, SLOT( itemSave() ) );
 	m->insertItem( tr("&LoadItem"), this, SLOT( itemLoad() ) );
 	m->insertSeparator();

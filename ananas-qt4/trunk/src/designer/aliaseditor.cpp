@@ -27,12 +27,12 @@
 **
 **********************************************************************/
 
-#include <qheader.h>
+#include <q3header.h>
 #include "aliaseditor.h"
 #include "acfg.h"
 
 
-aAliasEditor::aAliasEditor( aCfg *c, aCfgItem o, QTable *t )
+aAliasEditor::aAliasEditor( aCfg *c, aCfgItem o, Q3Table *t )
 {
     ac = c;
     obj = o;
@@ -51,10 +51,10 @@ void aAliasEditor::setData()
     int i, j, n;
     aCfgItem alias, langs, lang;
     QString langtag;
-    
+
     langs = ac->find( ac->find( mdc_root ), md_languages, 0 );
     langCount = ac->count( langs, md_language );
-    n = ac->countChild( obj, md_alias );    
+    n = ac->countChild( obj, md_alias );
     tAliases->setNumRows( langCount );
 	for ( i = 0; i < langCount; i++ ) {
 	    lang = ac->findChild( langs, md_language, i );
@@ -64,7 +64,7 @@ void aAliasEditor::setData()
 		alias = ac->findChild( obj, md_alias, j );
 		if ( langtag == ac->attr( alias, mda_tag ) ) {
 		    tAliases->setText( i, 0, ac->attr( alias, mda_name ) );
-		}	
+		}
 	    }
 	}
 }
@@ -73,8 +73,8 @@ void aAliasEditor::updateMD()
 {
     int i;
     aCfgItem alias;
- 
-    do { 
+
+    do {
 	alias = ac->findChild( obj, md_alias, 0 ) ;
 	if ( !alias.isNull() ) ac->remove( alias );
     } while ( !alias.isNull() );

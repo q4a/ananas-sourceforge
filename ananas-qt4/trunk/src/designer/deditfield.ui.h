@@ -45,7 +45,7 @@
 #include <qseditor.h>
 #include <qsinterpreter.h>
 */
-  
+
 void
 setText(){
 
@@ -70,7 +70,7 @@ void dEditField::init()
 	eType->clear();
 	otypes.append(" ");
 	eType->insertItem(tr("Unknown"), 0);
- 
+
 }
 
 
@@ -79,7 +79,7 @@ void dEditField::setData( aListViewItem *o )
 	item = o;
 	aCfg *md = o->md;
 	aCfgItem obj = o->obj;
-	
+
 	QString ts;
 	char t=' ';
 	int w=0, d=0, oid, idx=0;
@@ -106,13 +106,13 @@ void dEditField::setData( aListViewItem *o )
 		comboBox2->hide();
 //		layout()->remove(comboBox2);
 //		layout()->remove(saldoTextLabel);
-		
+
 //		updateGeometry();
 	}
 	// eType0->setText( ts );
 	// eModule->setText( md->sText( obj, md_sourcecode ) );
 	eDescription->setText( md->sText( obj, md_description ) );
-	 
+
 	if( md->attr( obj, mda_sort ) == "1" ) efSort->setChecked( true );
 	else efSort->setChecked( false );
 	if( md->attr( obj, mda_plus ) == "1" ) efPlus->setChecked( true );
@@ -120,7 +120,7 @@ void dEditField::setData( aListViewItem *o )
 	if( md->attr( obj, mda_nz ) == "1" ) efNZ->setChecked( true );
 	else efNZ->setChecked( false );
 	efSum->setChecked(md->attr( obj, mda_sum ) == "1");
-	 
+
 	QStringList tlist;
 	if(md->objClass(md->parent(obj))==md_resources)
 	{
@@ -160,13 +160,13 @@ void dEditField::setData( aListViewItem *o )
 		}
 	} else {
 		 if ( t == ' ' ) eType->setCurrentItem( 0 );
-	 	 if ( t == 'N' ) 
+	 	 if ( t == 'N' )
 		 {
 			eWidth->setMaxValue(20);
 			eDec->setMaxValue(99);
 			eType->setCurrentItem( 1 );
 		 }
-	 	 if ( t == 'C' ) 
+	 	 if ( t == 'C' )
 		 {
 
 			eWidth->setMaxValue(254);
@@ -190,10 +190,10 @@ void dEditField::setData( aListViewItem *o )
 	artypes.append(" ");
 	n = md->count( context, md_aregister );
 // printf("n=%d name = %s\n",n, md->attr(context,mda_name).ascii());
-	for (i=0; i<n; i++) 
+	for (i=0; i<n; i++)
 	{
 		obj = md->find( context, md_aregister, i);
-		if ( !obj.isNull() ) 
+		if ( !obj.isNull() )
 		{
 			aregid=md->attr(obj,mda_id).toInt();
 			str = tr(QString("AccumulationRegister."))+md->attr( obj, mda_name );
@@ -201,10 +201,10 @@ void dEditField::setData( aListViewItem *o )
 			obj = md->findChild(obj,md_resources);
 			n1 = md->count( obj, md_field);
 //   printf("n=%d name = %s\n",n, md->attr(obj,mda_name).ascii());
-			for (uint j=0; j<n1; j++) 
+			for (uint j=0; j<n1; j++)
 			{
 				obj2 = md->find( obj, md_field, j);
-				if ( !obj2.isNull() ) 
+				if ( !obj2.isNull() )
 				{
 					aregfid = md->attr(obj2, mda_id).toInt();
 					artypes.append(QString(" %1 %2").arg(aregid).arg(aregfid));
@@ -213,7 +213,7 @@ void dEditField::setData( aListViewItem *o )
 				}
 			}
 		}
-	}	
+	}
 	typeSelect( eType->currentItem() );
 }
 
@@ -223,7 +223,7 @@ void dEditField::updateMD()
 
  aCfg *md = item->md;
  aCfgItem obj = item->obj;
- 
+
  al->updateMD();
  item->setText( 0, eName->text().stripWhiteSpace() );
  md->setAttr( obj, mda_name, eName->text().stripWhiteSpace() );
@@ -284,7 +284,7 @@ void dEditField::typeSelect( int idx )
 			efSum->setChecked(false);
 			comboBox2->setEnabled(false);
 		}
-		else 
+		else
 		{
 			if( idx == 0)
 			{
@@ -306,7 +306,7 @@ void dEditField::typeSelect( int idx )
 				efSum->hide();
 				efSum->setChecked(false);
  // comboBox2->setEnabled(false);
-  			}	
+  			}
 		}
 	}
 }
@@ -320,5 +320,5 @@ void dEditField::nameChanged()
 
 void dEditField::AARegSelect( int i )
 {
-	
+
 }

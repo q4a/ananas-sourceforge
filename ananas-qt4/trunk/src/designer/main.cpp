@@ -30,6 +30,9 @@
 #include <qtranslator.h>
 #include <qsplashscreen.h>
 #include <qtextcodec.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <q3mimefactory.h>
 #include "alog.h"
 #include "ananas.h"
 #include "mainform.h"
@@ -42,11 +45,11 @@ QWorkspace *mainformws = 0;
 //QApplication *application = 0;
 QTranslator *translator = 0, tr_app(0), tr_lib(0), tr_plugins(0);
 aFormDesigner *formdesigner = 0;
-QString lang="en", 
-	rcfile="", 
-	username="", 
+QString lang="en",
+	rcfile="",
+	username="",
 	userpassword="";
-    
+
 
 int setTranslator(QString lang)
 {
@@ -62,7 +65,7 @@ int setTranslator(QString lang)
 	return 0;
 }
 
-int 
+int
 parseCommandLine( int argc, char **argv )
 {
 	QString param, name, value;
@@ -76,7 +79,7 @@ parseCommandLine( int argc, char **argv )
 	}
         lang = locale;
         setTranslator( lang );
-//	printf("locale=%s\n", locale );	
+//	printf("locale=%s\n", locale );
 	QString str_ru=QString::null, str_en=QString::null;
 	bool lang_setted = false;
 	bool help_setted = false;
@@ -90,12 +93,12 @@ parseCommandLine( int argc, char **argv )
 		    str_ru = "Использование: ananas-designer [--help] [--lang=<LANG>] [--rc=<RC_PATH>]\n";
 		    str_ru+= "LANG=ru|en\n";
 		    str_ru+= "RC_PATH=путь к *.rc файлу описания бизнес схемы\n";
-			    
+
 	    	    str_en = "Usage: ananas-designer [--help] [--lang=<LANG>] [--rc=<RC_PATH>]\n";
 		    str_en+= "LANG=ru|en\n";
 		    str_en+= "RC_PATH=path to *.rc file of paticular business scheme\n";
 		    help_setted = true;
-			    
+
 	    }
 	    if (name == "--lang") {
 		lang = value;
@@ -115,7 +118,7 @@ parseCommandLine( int argc, char **argv )
 			printf("%s",str_en.ascii());
 		}
 		return 1;
-	}	
+	}
 	return 0;
 }
 
@@ -134,22 +137,22 @@ int main( int argc, char ** argv )
 //	dSelectDB dselectdb;
 	int rc;
 	QPixmap pixmap;
-    
+
 	if ( parseCommandLine( argc, argv ) ) return 1;
 	qApp->installTranslator( &tr_lib );
 	qApp->installTranslator( &tr_plugins );
 	qApp->installTranslator( &tr_app );
-	pixmap = QPixmap::fromMimeSource( "designer-splash-"+lang+".png" );
-	if ( pixmap.isNull() ) 
+	pixmap = QPixmap( ":/images/designer-splash-"+lang+".png" );
+	if ( pixmap.isNull() )
 #ifdef Q_OS_WIN32
-	pixmap = QPixmap::fromMimeSource( qApp->applicationDirPath()+"/designer-splash-"+lang+".png" );
+	pixmap = qPixmapFromMimeSource( qApp->applicationDirPath()+"/designer-splash-"+lang+".png" );
 	qApp->addLibraryPath( qApp->applicationDirPath() );
 #else
-	pixmap = QPixmap::fromMimeSource( "/usr/share/ananas/designer/locale/designer-splash-"+lang+".png" );
+	pixmap = qPixmapFromMimeSource( "/usr/share/ananas/designer/locale/designer-splash-"+lang+".png" );
 	qApp->addLibraryPath( "/usr/lib/ananas/" );
 #endif
-	if ( pixmap.isNull() ) 
-	pixmap = QPixmap::fromMimeSource( "designer-splash-en.png" );
+	if ( pixmap.isNull() )
+	pixmap = QPixmap( ":/images/designer-splash-en.png" );
    	QSplashScreen *splash = new QSplashScreen( pixmap );
 	if ( ananas_login( rcfile, username, userpassword ) ){
 //	if ( rcfile.isEmpty() ) {
@@ -157,7 +160,7 @@ int main( int argc, char ** argv )
 //	}
 //	if ( !rcfile.isEmpty() ) {
 //		if (dselectdb.rcfile.isEmpty()) return 0;
-	       	
+
 		splash->show();
 		splash->message( QObject::tr("Init application"), Qt::AlignBottom, Qt::white );
 		w->rcfile = rcfile;
