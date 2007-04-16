@@ -1,0 +1,4 @@
+#/bin/sh
+. ananas-setenv
+ananas-webengine.bin
+

@@ -1,0 +1,9 @@
+dbpass=
+workdir=/usr/share/ananas/inventory
+dbhost=localhost
+dbtitle=Оперативный учет
+dbuser=postgres
+dbtype=postgres
+dbname=ananas_inventory
+configfile=/etc/ananas/inventory.cfg
+dbport=

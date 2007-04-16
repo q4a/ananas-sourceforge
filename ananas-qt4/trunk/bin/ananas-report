@@ -1,0 +1,19 @@
+#!/bin/sh
+# $Id: ananas-report,v 1.1.1.1 2004/04/10 06:14:54 leader Exp $
+# $Name:  $
+
+# Перекодируем из utf-8 в koi8-r
+# rm -f %1.*
+#iconv -f UTF-8 -t KOI8-R $1 -o $1.koi
+#cat $1.koi| sed s/\\utf-8/\\koi8-r/g  > $1
+#latex -interaction=batchmode $1 >/dev/null 2>/dev/null
+#dvips $2 -o $1.ps $1.dvi >/dev/null 2>/dev/null
+#gv -media a4 $3 $1.ps >/dev/null 2>/dev/null &
+N1=lastout
+cd $HOME/tmp
+rm -f $N1.*
+iconv -f UTF-8 -t KOI8-R $1 -o $N1.koi
+cat $N1.koi| sed s/\\utf-8/\\koi8-r/g  > $N1.tex
+latex -interaction=batchmode $N1.tex >/dev/null 2>/dev/null
+dvips -o $N1.ps $N1.dvi >/dev/null 2>/dev/null
+gv -media a4 $N1.ps >/dev/null 2>/dev/null &

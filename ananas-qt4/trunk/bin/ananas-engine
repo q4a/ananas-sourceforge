@@ -1,0 +1,6 @@
+QTDIR=/usr/local/qt
+PATH=$QTDIR/bin:$PATH
+MANPATH=$QTDIR/doc/man:$MANPATH
+LD_LIBRARY_PATH=/usr/local/lib:$QTDIR/lib:$QTDIR/plugins/designer:$LD_LIBRARY_PATH
+export QTDIR PATH MANPATH LD_LIBRARY_PATH
+ananas-engine.bin
