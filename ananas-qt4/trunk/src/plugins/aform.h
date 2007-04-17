@@ -39,7 +39,7 @@
 #include <q3buttongroup.h>
 #include <qsproject.h>
 #include <qsinterpreter.h>
-#include <qsargument.h>
+//--#include <qsargument.h>
 #include <qmutex.h>
 //Added by qt3to4:
 #include <Q3SqlForm>

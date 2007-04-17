@@ -2,6 +2,9 @@ QMAKE_CLEAN += $(TARGET) Makefile
 CONFIG	+= qt warn_on release thread
 LANGUAGE = C++
 
+QT += qt3support sql xml
+CONFIG += designer
+
 unix {
     UI_DIR = .ui
     MOC_DIR = .moc

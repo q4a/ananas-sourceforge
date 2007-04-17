@@ -1,90 +1,107 @@
 TEMPLATE = lib 
-CONFIG		+= warn_on link_prl
-shared:CONFIG 	+= qt dll
-unix:VERSION 	= 1.0.1
+CONFIG += warn_on link_prl
+shared:CONFIG += qt dll
+unix:VERSION = 1.0.1
 
-TARGET 		= ananas
+TARGET = ananas
 
-SOURCES	+= acfg.cpp \
-	acfgrc.cpp \
-	adatabase.cpp \
-	adatafield.cpp \
-	asqlfield.cpp \
-	asqltable.cpp \
-	messageswindow.cpp \	
-	amenubar.cpp \
-	aobject.cpp \
-	awidget.cpp \
-	airegister.cpp \
-	aaregister.cpp \
+# Add by DmP
+DLLDESTDIR = ../../bin
+DESTDIR = ../../lib
+LIBS += -L../../lib
+
+SOURCES	= \
+    aaregister.cpp \
+	acalctemplate.cpp \
 	acatalogue.cpp \
-	adocument.cpp \
-	adocjournal.cpp \
-	areport.cpp \
-	awindowslist.cpp \
-	atemplate.cpp \
-	atime.cpp \
-	itemplate.cpp \
-	aootemplate.cpp \
-	auser.cpp \
-	arole.cpp \
-	aservice.cpp \
-	atests.cpp \
-	rclistviewitem.cpp \
-	ananas.cpp \
-	aextension.cpp \
-	aextensionplugin.cpp \
-	aextensionfactory.cpp \
-	adataexchange.cpp \
-	dimportdb.cpp \
-	alog.cpp \
-	aobjectlist.cpp\
+	acfg.cpp \
+	acfgrc.cpp \
 	acmanifest.cpp \
 	acontainer.cpp \
-	acalctemplate.cpp \
+	adatabase.cpp \
+	adataexchange.cpp \
+	adatafield.cpp \
+	adocjournal.cpp \
+	adocument.cpp \
+	aextension.cpp \
 	afilter.cpp \
-	amoney.cpp
+	airegister.cpp \
+	alog.cpp \
+	amenubar.cpp \
+	amoney.cpp \
+	ananas.cpp \
+	aobject.cpp \
+	aobjectlist.cpp \
+	aootemplate.cpp \
+	areport.cpp \
+	arole.cpp \
+	aservice.cpp \
+	asqlfield.cpp \
+	asqltable.cpp \
+	atemplate.cpp \
+	atests.cpp \
+	atime.cpp \
+	auser.cpp \
+	awidget.cpp \
+	awindowslist.cpp \
+	deditrc.cpp \
+	dhelpcfgform.cpp \
+	dimportdb.cpp \
+	dlogin.cpp \
+	dselectdb.cpp \
+	itemplate.cpp \
+	messageswindow.cpp \
+	rclistviewitem.cpp
+
 	
-HEADERS	+= ananasglobal.h \
-	ananas.h \
+HEADERS	= \
+    aaregister.h \
+	acalctemplate.h \
+	acatalogue.h \
 	acfg.h \
 	acfgrc.h \
-	adatabase.h \
-	adatafield.h \
-	asqlfield.h \
-	asqltable.h \
-	messageswindow.h \
-	amenubar.h \
-	aobject.h \
-	awidget.h \
-	airegister.h \
-	aaregister.h \
-	acatalogue.h \
-	adocument.h \
-	adocjournal.h \
-	areport.h \
-	awindowslist.h \
-	atemplate.h \
-	atime.h \
-	itemplate.h \
-	aootemplate.h \
-	auser.h \
-	arole.h \
-	aservice.h \
-	rclistviewitem.h \
-	atests.h \
-	aextension.h \
-	aextensionplugin.h \
-	aextensionfactory.h \
-	adataexchange.h \
-	dimportdb.h \
-	alog.h \
-	aobjectlist.h\
 	acmanifest.h \
 	acontainer.h \
-	acalctemplate.h \
+	adatabase.h \
+	adataexchange.h \
+	adatafield.h \
+	adocjournal.h \
+	adocument.h \
+	aextension.h \
 	afilter.h \
-	amoney.h
+	airegister.h \
+	alog.h \
+	amenubar.h \
+	amoney.h \
+	ananas.h \
+	ananasglobal.h \
+	aobject.h \
+	aobjectlist.h \
+	aootemplate.h \
+	areport.h \
+	arole.h \
+	aservice.h \
+	asqlfield.h \
+	asqltable.h \
+	atemplate.h \
+	atests.h \
+	atime.h \
+	auser.h \
+	awidget.h \
+	awindowslist.h \
+	deditrc.h \
+	deditrc.ui.h \
+	dhelpcfgform.h \
+	dhelpcfgform.ui.h \
+	dimportdb.h \
+	dlogin.h \
+	dlogin.ui.h \
+	dselectdb.h \
+	dselectdb.ui.h \
+	itemplate.h \
+	messageswindow.h \
+	rclistviewitem.h
+
 	
 unix{
 	alib.path = $(LIBDIR) 
@@ -121,7 +138,6 @@ shared {
 include ( ../ananas.pri )
 
 
-
 win32 {
   CONFIG -= console
 #  CONFIG += dll
@@ -132,18 +148,18 @@ TRANSLATIONS = \
     ../../translations/ananas-lib-ru.ts 
 
 
-FORMS	= deditrc.ui \
-	dselectdb.ui \
+FORMS = \
+    deditrc.ui \
+	dhelpcfgform.ui \
 	dlogin.ui \
-	dhelpcfgform.ui
+	dselectdb.ui
 	
-IMAGES	= images/lib_database.png \
-	images/lib_dbgroup.png \
-	images/print.png
+RESOURCE = \
+    lib.qrc
 
 #INCLUDEPATH	+= ../plugins
 LANGUAGE	= C++
-LIBS		+= -L$(QTDIR)/plugins/designer -lqsa  -L../designer -lformdesigner
+LIBS		+= -L$(QTDIR)/plugins/designer -lqsa  # Why? -L../designer -lformdesigner
 unix{
 LIBS		+=  -L/usr/X11R6/lib/
 }

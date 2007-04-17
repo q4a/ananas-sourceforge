@@ -38,6 +38,7 @@
 #include <QSqlError>
 #include "acfg.h"
 #include <qwidget.h>
+#include <QMap>
 
 
 #define db_document_header	"dh%1"
