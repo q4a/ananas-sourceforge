@@ -26,40 +26,19 @@
 **
 **********************************************************************/
 
-//--#include <formwindow.h>
-//--#include <hierarchyview.h>
-//--#include <propertyeditor.h>
-//--#include <actioneditorimpl.h>
-//--#include <outputwindow.h>
-//--#include <workspace.h>
-//--#include <propertyeditor.h>
-#include <qevent.h>
-#include <qstatusbar.h>
-//Added by qt3to4:
-#include <QCloseEvent>
-#include <QMouseEvent>
-
-#include "acfg.h"
 #include "formdesigner.h"
-#include "mainform.h"
+
+#include <QCloseEvent>
+
+#include "../formdesigner/qdesigner_workbench.h"
+
+
+//--aFormDesigner* aFormDesigner::m_designer = 0;
 
 aFormDesigner::aFormDesigner()
-: QWidget()
-//--: MainWindow( true, true )
 {
-	/*--resize( 800, 600 );
-//	menuBar()->hide();
-	menuBar()->setItemVisible( menuBar()->idAt(0), false );
-	menuBar()->setItemVisible( menuBar()->idAt(2), false );
-	menuBar()->setItemVisible( menuBar()->idAt(3), false );
-	menuBar()->setItemVisible( menuBar()->idAt(7), false );
-	menuBar()->setItemVisible( menuBar()->idAt(9), false );
-	statusBar()->hide();
-	setEditorsReadOnly( true );
-//	showGUIStuff( false );
-//	propertyeditor()->hide();
-//	objectHierarchy()->hide();
-//	actioneditor()->hide();*/
+    m_workbench = new QDesignerWorkbench();
+    setCentralWidget(m_workbench->mainWindow());
 }
 
 
@@ -68,8 +47,28 @@ aFormDesigner::~aFormDesigner()
 }
 
 
-void
-aFormDesigner::closeEvent( QCloseEvent *e )
+/*aFormDesigner* aFormDesigner::designer()
+{
+    if (!m_designer)
+        m_designer = new aFormDesigner();
+    return m_designer;
+}*/
+
+
+/*QWidget* aFormDesigner::mainWindow()
+{
+    return m_workbench->mainWindow();
+}*/
+
+
+void aFormDesigner::fileOpen(const QString& fileName)
+{
+    //m_guibuilder->openFile(fileName);
+    m_workbench->readInForm(fileName);
+}
+
+
+void aFormDesigner::closeEvent( QCloseEvent *e )
 {
 //CHECK_POINT
 	e->accept();
@@ -79,11 +78,10 @@ aFormDesigner::closeEvent( QCloseEvent *e )
 }
 
 
-
-void
-aFormDesigner::show()
+void aFormDesigner::show()
 {
-/*--CHECK_POINT
+    QMainWindow::show();
+/*CHECK_POINT
 	MainWindow::show();
 CHECK_POINT
 //	actioneditor()->hide();
@@ -97,29 +95,28 @@ CHECK_POINT
 #endif
 	}
 	workspace()->parentWidget()->parentWidget()->close();*/
+	//--mainWindow()->show();
 }
 
 
-
-void
-aFormDesigner::hide()
+void aFormDesigner::hide()
 {
-	/*--MainWindow::hide();
-	fileSaveAll();
-	fileClose();*/
+	QMainWindow::hide();
+	//--fileSaveAll();
+	//--fileClose();
   //  ( (MainForm*)this->topLevelWidget() )->removeTab(caption());
 }
 
 
-
-void
-aFormDesigner::mouseDoubleClickEvent ( QMouseEvent * e )
+void aFormDesigner::mouseDoubleClickEvent ( QMouseEvent * e )
 {
 //CHECK_POINT
 
-	//--MainWindow::mouseDoubleClickEvent ( e );
+//	MainWindow::mouseDoubleClickEvent ( e );
 }
 
-void aFormDesigner::fileOpen(const QString&, const QString&, const QString&)
+
+/*GuiBuilderPart *aFormDesigner::guibuilder() const
 {
-}
+  return m_guibuilder;
+}*/
