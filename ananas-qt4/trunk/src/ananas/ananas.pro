@@ -1,43 +1,42 @@
-#project for Engine application from Ananas automation accounting system
-TARGET	= ananas
+TARGET = ananas
+TEMPLATE = app
 
-# Add by DmP
 DESTDIR = ../../bin
-LIBS += -L../../lib
+
+INCLUDEPATH += ../lib ../../tmp/ui/lib ../plugins
+LIBS += -L../../lib -lananas -lananasplugin -L$(QTDIR)/lib -lqsa1
+#LIBS += -L$(QTDIR)/lib -lqsa1  -L../lib -lananas -L../plugins -lananasplugin # -lqui
+
+MOC_DIR = ../../tmp/moc/$$TARGET
+OBJECTS_DIR = ../../tmp/obj/$$TARGET
+UI_DIR = ../../tmp/ui/$$TARGET
 
 include ( ../ananas.pri )
-
-SOURCES	= \
-    main.cpp \
-	mainform.cpp
-	
-HEADERS	= \
-    mainform.h
-	
 load(qsa)
 
-TRANSLATIONS = \
-    ../../translations/ananas-engine-en.ts \
-    ../../translations/ananas-engine-ru.ts 
-	
+HEADERS = \
+    mainform.h
 
-unix {
-	ananas.path = $(BINDIR)
-	ananas.files = ananas
-     }
-win32{
-#	ananas.path =.
-#	ananas.extra = CALL create_base.bat
-     }	
+SOURCES = \
+    main.cpp \
+    mainform.cpp
 
-INSTALLS += ananas
-
-#FORMS	= qadocjournal.ui
+#FORMS = qadocjournal.ui
 
 RESOURCE = \
     ananas.qrc
-	
-TEMPLATE	=app
+    
+TRANSLATIONS = \
+    ../../translations/ananas-engine-en.ts \
+    ../../translations/ananas-engine-ru.ts 
+    
+unix {
+    ananas.path = $(BINDIR)
+    ananas.files = ananas
+}
+win32{
+#    ananas.path =.
+#    ananas.extra = CALL create_base.bat
+}    
 
-INCLUDEPATH	+= ../lib ../lib/tmp/ui ../lib/.ui ../plugins
-LIBS	+= -L$(QTDIR)/lib -lqsa1  -L../lib -lananas -L../plugins -lananasplugin # Why? -lqui
+INSTALLS += ananas
