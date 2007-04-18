@@ -20,7 +20,10 @@
 #include "wdocument_plugin.h"
 
 #include <QtPlugin>
+#include <QDesignerFormEditorInterface>
+#include <QExtensionManager>
 
+#include "wdocument_taskmenu.h"
 #include "wdocument.h"
 
 
@@ -45,6 +48,12 @@ void wDocumentPlugin::initialize(QDesignerFormEditorInterface *core)
     if (m_initialized)
         return;
     Q_UNUSED(core);
+
+    QExtensionManager *manager = core->extensionManager();
+    Q_ASSERT(manager != 0);
+    manager->registerExtensions(new wDocumentTaskMenuFactory(manager),
+                                Q_TYPEID(QDesignerTaskMenuExtension));
+
     m_initialized = true;
 }
 

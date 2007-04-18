@@ -20,7 +20,10 @@
 #include "wdbtable_plugin.h"
 
 #include <QtPlugin>
+#include <QDesignerFormEditorInterface>
+#include <QExtensionManager>
 
+#include "wdbtable_taskmenu.h"
 #include "wdbtable.h"
 
 
@@ -45,6 +48,12 @@ void wDBTablePlugin::initialize(QDesignerFormEditorInterface *core)
     if (m_initialized)
         return;
     Q_UNUSED(core);
+
+    QExtensionManager *manager = core->extensionManager();
+    Q_ASSERT(manager != 0);
+    manager->registerExtensions(new wDBTableTaskMenuFactory(manager),
+                                Q_TYPEID(QDesignerTaskMenuExtension));
+
     m_initialized = true;
 }
 

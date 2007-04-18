@@ -20,7 +20,10 @@
 #include "wdbfield_plugin.h"
 
 #include <QtPlugin>
+#include <QDesignerFormEditorInterface>
+#include <QExtensionManager>
 
+#include "wdbfield_taskmenu.h"
 #include "wdbfield.h"
 
 
@@ -45,6 +48,12 @@ void wDBFieldPlugin::initialize(QDesignerFormEditorInterface *core)
     if (m_initialized)
         return;
     Q_UNUSED(core);
+
+    QExtensionManager *manager = core->extensionManager();
+    Q_ASSERT(manager != 0);
+    manager->registerExtensions(new wDBFieldTaskMenuFactory(manager),
+                                Q_TYPEID(QDesignerTaskMenuExtension));
+
     m_initialized = true;
 }
 

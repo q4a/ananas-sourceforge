@@ -20,7 +20,10 @@
 #include "wjournal_plugin.h"
 
 #include <QtPlugin>
+#include <QDesignerFormEditorInterface>
+#include <QExtensionManager>
 
+#include "wjournal_taskmenu.h"
 #include "wjournal.h"
 
 
@@ -45,6 +48,12 @@ void wJournalPlugin::initialize(QDesignerFormEditorInterface *core)
     if (m_initialized)
         return;
     Q_UNUSED(core);
+
+    QExtensionManager *manager = core->extensionManager();
+    Q_ASSERT(manager != 0);
+    manager->registerExtensions(new wJournalTaskMenuFactory(manager),
+                                Q_TYPEID(QDesignerTaskMenuExtension));
+
     m_initialized = true;
 }
 

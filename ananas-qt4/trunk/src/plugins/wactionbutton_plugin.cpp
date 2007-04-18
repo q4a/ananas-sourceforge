@@ -20,7 +20,10 @@
 #include "wactionbutton_plugin.h"
 
 #include <QtPlugin>
+#include <QDesignerFormEditorInterface>
+#include <QExtensionManager>
 
+#include "wactionbutton_taskmenu.h"
 #include "wactionbutton.h"
 
 
@@ -45,6 +48,12 @@ void wActionButtonPlugin::initialize(QDesignerFormEditorInterface *core)
     if (m_initialized)
         return;
     Q_UNUSED(core);
+
+    QExtensionManager *manager = core->extensionManager();
+    Q_ASSERT(manager != 0);
+    manager->registerExtensions(new wActionButtonTaskMenuFactory(manager),
+                                Q_TYPEID(QDesignerTaskMenuExtension));
+
     m_initialized = true;
 }
 
