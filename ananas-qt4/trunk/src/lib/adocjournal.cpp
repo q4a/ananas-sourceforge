@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: adocjournal.cpp,v 1.40 2007/02/27 19:32:58 gr Exp $
+** $Id: adocjournal.cpp,v 1.41 2007/04/16 13:41:03 gr Exp $
 **
 ** Documents journal metadata object implementation file of
 ** Ananas application library
@@ -92,7 +92,7 @@ aDocJournal::aDocJournal( aDatabase * adb )
 ERR_Code
 aDocJournal::initObject()
 {
-	ERR_Code err;
+	ERR_Code err = err_noerror;
 	aCfgItem mditem, docitem, header;
 
 
@@ -252,7 +252,7 @@ aDocJournal::deleteDocument( qulonglong idd )
 ERR_Code
 aDocJournal::New( qulonglong idd, const QString & docPrefix, int type )
 {
-	qulonglong Uid =0;// db->uid( md_systemjournal );
+	//qulonglong Uid =0;// db->uid( md_systemjournal );
 	aDataTable * t = table();
 	if ( !t ) return err_notable;
 	//t->exec("LOCK TABLE a_journ WRITE");
@@ -541,9 +541,23 @@ aDocument*
 aDocJournal::CurrentDocument()
 {
 	aCfgItem i = md->find( docType() );
-	aDocument *d = new aDocument( i, db );
-	d->select( docId() );
-	return d;
+	if(!i.isNull())
+	{
+		aDocument *d = new aDocument( i, db );
+		if(!d->select( docId() ))
+		{
+			return d;
+		}
+		else
+		{
+			delete d;
+			return 0;
+		}
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 

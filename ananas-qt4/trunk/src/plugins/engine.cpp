@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: engine.cpp,v 1.36 2006/11/06 09:16:17 app Exp $
+** $Id: engine.cpp,v 1.37 2007/04/19 07:30:49 gr Exp $
 **
 ** Code file of the Ananas Engine of Ananas
 ** Engine applications
@@ -33,6 +33,7 @@
 #include <q3valuelist.h>
 #include <qstringlist.h>
 #include <qstring.h>
+#include <stdlib.h>
 #include <qfile.h>
 #include <qsproject.h>
 #include <qsscript.h>

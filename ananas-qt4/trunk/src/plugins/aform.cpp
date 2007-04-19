@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: aform.cpp,v 1.65 2007/03/31 14:34:03 app Exp $
+** $Id: aform.cpp,v 1.68 2007/04/14 08:34:04 app Exp $
 **
 ** Code file of Ananas forms of Ananas
 ** Designer and Engine applications
@@ -434,25 +434,22 @@ aForm::show() {
  *\~
 */
 void
-aForm::Close()
-{
+aForm::Close() {
         // don't call function name() in this place in Win32 - crash
 	emit(closeForm(selectedCatId()));
 	on_form_close(); //to run ananas-script
-
-	if(form)
-	if( form->isShown() )
-	{
-#ifndef Q_OS_WIN32
-		form->disconnect();
-		form->hide();
-#endif
+	
+	if( form ) {
+		if( form->isShown() ) {
+			aLog::print(aLog::DEBUG,tr("aForm::Close() hides form"));
+			disconnect( form );
+			form->hide();
+		}
 	}
-	if(engine && engine->wl)
-	{
+	if( engine && engine->wl ) {
 		engine->wl->remove( objid, db_uid );
 	}
-        deleteLater();
+    deleteLater();
 }
 
 /**
@@ -460,7 +457,7 @@ aForm::Close()
  */
 void
 aForm::close() {
-	aLog::print(aLog::DEBUG,tr("Deprecated method call: aForm::close()"));
+	aLog::print(aLog::DEBUG,tr("Deprecated method call: aForm::close(). Use aForm::Close() instead"));
 	this->Close();
 }
 
@@ -1457,7 +1454,10 @@ aForm::on_tabselected( qulonglong uid )
 {
 	emit selected( uid );
 	if ( closeAfterSelect ) {
+		aLog::print(aLog::DEBUG, QObject::tr("aForm::on_tabselected(...),   closeAfterSelect is true"));
 		close();
+	} else {
+		aLog::print(aLog::DEBUG, QObject::tr("aForm::on_tabselected(...),   closeAfterSelect is false"));
 	}
 }
 

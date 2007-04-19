@@ -95,7 +95,7 @@
     </message>
     <message>
         <source>Save changes %1?</source>
-        <translation>Сохранить изменения %1?</translation>
+        <translation>Сохранить изменения в &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -920,6 +920,18 @@ app@linux.ru.net&lt;br&gt;
         <source>Ananas List View Item swaping</source>
         <translation>Обмен пунктов списка</translation>
     </message>
+    <message>
+        <source>any files (*)</source>
+        <translation>все файлы (*)</translation>
+    </message>
+    <message>
+        <source>New &amp;Group</source>
+        <translation>Новая &amp;Группа</translation>
+    </message>
+    <message>
+        <source>New &amp;Action</source>
+        <translation>Новое &amp;действие</translation>
+    </message>
 </context>
 <context>
     <name>aAliasEditor</name>
@@ -983,6 +995,14 @@ app@linux.ru.net&lt;br&gt;
     <message>
         <source>&amp;MoveDown</source>
         <translation>&amp;Опустить</translation>
+    </message>
+    <message>
+        <source>&amp;SaveItem</source>
+        <translation>&amp;Сохранить элемент в файл</translation>
+    </message>
+    <message>
+        <source>&amp;LoadItem</source>
+        <translation>&amp;Загрузить элемент из файла</translation>
     </message>
 </context>
 <context>
@@ -1801,6 +1821,10 @@ app@linux.ru.net&lt;br&gt;
     <message>
         <source>Information register:</source>
         <translation>Информационный регистр:</translation>
+    </message>
+    <message>
+        <source>Don&apos;t delete record in unconduct</source>
+        <translation>Не удалять записи при отмене проведения документа</translation>
     </message>
 </context>
 <context>

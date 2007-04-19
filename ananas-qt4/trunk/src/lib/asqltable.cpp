@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: asqltable.cpp,v 1.71 2007/02/27 19:34:40 gr Exp $
+** $Id: asqltable.cpp,v 1.73 2007/04/17 09:49:30 gr Exp $
 **
 ** Code file of the Ananas database table of Ananas
 ** Designer and Engine applications
@@ -615,6 +615,25 @@ aDataTable::clearFilter()
 	userFilter.clear();
 }
 
+
+/*QDict<QVariant>
+aDataTable::getUserFilter() {
+	return this.userFilter;
+};
+
+void
+setUserFilter( QDict<QVariant> newFilter) {
+	this.userFilter = newFilter;
+};
+*/
+
+/**
+ *
+ */
+void
+aDataTable::setFilter ( const QString & newFilter ) {
+	Q3SqlCursor::setFilter( newFilter );
+}
 
 
 /*!

@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: eactionbutton.ui.h,v 1.9 2006/04/22 07:20:23 gr Exp $
+** $Id: eactionbutton.ui.h,v 1.10 2007/04/19 07:30:49 gr Exp $
 **
 ** Code file of the edit catalogue plugin of Ananas
 ** Designer and Engine applications
@@ -35,6 +35,7 @@
 ** place of a destructor.
 *****************************************************************************/
 #include <qseditor.h>
+#include <stdlib.h>
 
 void eActionButton::Action_toggled( bool o )
 {

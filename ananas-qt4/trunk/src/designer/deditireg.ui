@@ -62,7 +62,7 @@
         <item row="1" column="0" >
          <widget class="QCheckBox" name="checkBox1" >
           <property name="text" >
-           <string>Don't delete recorn in unconduct</string>
+           <string>Don't delete record in unconduct</string>
           </property>
          </widget>
         </item>

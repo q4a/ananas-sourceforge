@@ -781,6 +781,18 @@
         <source>Ananas List View Item swaping</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>any files (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New &amp;Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New &amp;Action</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>aAliasEditor</name>
@@ -843,6 +855,14 @@
     </message>
     <message>
         <source>&amp;MoveDown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;SaveItem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;LoadItem</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1637,6 +1657,10 @@
     </message>
     <message>
         <source>Information register:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t delete record in unconduct</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -4,3 +4,4 @@ Makefile
 .obj
 ananas-designer
 
+libformdesigner.a

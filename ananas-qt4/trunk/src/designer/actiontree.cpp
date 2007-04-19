@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: actiontree.cpp,v 1.23 2004/12/23 14:37:55 gr Exp $
+** $Id: actiontree.cpp,v 1.24 2007/04/17 15:52:48 app Exp $
 **
 ** Code file of the Action Tree of Ananas Designer applications
 **
@@ -199,11 +199,11 @@ aActionTreeView::ContextMenu()
 	Q_CHECK_PTR(m);
 
 	ContextMenuAdd( m );
-	m->insertItem( "New &Group",  this, SLOT( itemNewGroup() ), Qt::CTRL+Qt::Key_G );
-	m->insertItem( "New &Action",  this, SLOT( itemNewAction() ), Qt::CTRL+Qt::Key_A );
-//	m->insertItem( "&Rename", this, SLOT( itemRename() ), CTRL+Key_R);
-//	m->insertItem( "&Edit",  this, SLOT( itemEdit() ), CTRL+Key_E );
-//	m->insertItem( "&Delete", this, SLOT( itemDelete() ), CTRL+Key_D );
+	m->insertItem( QObject::tr("New &Group"),  this, SLOT( itemNewGroup() ), Qt::CTRL+Qt::Key_G );
+	m->insertItem( QObject::tr("New &Action"),  this, SLOT( itemNewAction() ), Qt::CTRL+Qt::Key_A );
+//	m->insertItem( QObject::tr("&Rename"), this, SLOT( itemRename() ), CTRL+Key_R);
+//	m->insertItem( QObject::tr("&Edit"),  this, SLOT( itemEdit() ), CTRL+Key_E );
+//	m->insertItem( QObject::tr("&Delete"), this, SLOT( itemDelete() ), CTRL+Key_D );
 	m->exec( QCursor::pos() );
 	delete m;
 };

@@ -3,7 +3,7 @@
 ; (c) Leader InfoTech, 2004
 ; (c) Valery Grazdankin ( leader ), 2004
 ; (c) patched by Andrey Paskal, 2005
-; (c) patched by Grigory Panov, 2005
+; (c) patched by Grigory Panov, 2005 - 2007
 ; (c) patched by Alexey Chernov, 2006
 
 [Languages]
@@ -13,8 +13,8 @@ Name: English; MessagesFile: "compiler:default.isl"
 [Setup]
 SourceDir=..\..\
 AppName=Обновления Ananas
-AppVersion=0.9.3
-AppVerName=Обновление Ananas 0.9.3
+AppVersion=0.9.4
+AppVerName=Обновление Ananas 0.9.4
 AppPublisher=Ananas Team
 AppPublisherURL=http://ananas.lrn.ru, http://www.leaderit.ru/page=ananas
 AppSupportURL=http://ananas.lrn.ru, http://www.leaderit.ru/page=ananas
@@ -22,14 +22,14 @@ AppUpdatesURL=http://ananas.lrn.ru, http://www.leaderit.ru/page=ananas
 DefaultDirName={pf}\Ananas
 DefaultGroupName=Ananas
 DirExistsWarning=No
-AppCopyright=Copyright c 2002-2006 Leader InfoTech, Ananas Project Team
+AppCopyright=Copyright c 2002-2007 Leader InfoTech, Ananas Project Team
 DisableProgramGroupPage=yes
 AllowNoIcons=yes
 LicenseFile=COPYING.RU.cp1251
 Compression=lzma
 SolidCompression=yes
 OutputDir=.\
-OutputBaseFilename=Ananas-Update-0.9.3
+OutputBaseFilename=Ananas-Update-0.9.4
 
 [Files]
 Source: "build\win32\setuplogo.bmp"; DestDir: {tmp}; Flags: dontcopy
@@ -40,7 +40,7 @@ Source: "src\plugins\ananasplugin.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\lib\ananas.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "COPYING.RU.cp1251"; DestDir: "{app}";DestName:"License.txt" ; Flags: ignoreversion
 Source: "translations\*.qm"; DestDir: "{app}\translations"; Flags: ignoreversion
-Source: "c:\Qt\3.2.1noncommercial\lib\qsa110.dll"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "c:\Qt\3.2.1noncommercial\lib\qsa110.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 [Code]
 //

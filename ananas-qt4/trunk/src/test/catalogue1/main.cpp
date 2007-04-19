@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: main.cpp,v 1.2 2005/12/19 12:42:11 gr Exp $
+** $Id: main.cpp,v 1.3 2007/04/19 07:33:39 gr Exp $
 ** 
 ** Tool for automatic running Ananas tests
 **
@@ -36,6 +36,7 @@
 #include <qapplication.h>
 #include <math.h>
 #include <qmap.h>
+#include <stdlib.h>
 
 
 double rnd(double m=1);

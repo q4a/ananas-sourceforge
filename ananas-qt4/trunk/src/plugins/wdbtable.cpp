@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: wdbtable.cpp,v 1.95 2007/04/04 14:26:53 app Exp $
+** $Id: wdbtable.cpp,v 1.96 2007/04/19 07:30:49 gr Exp $
 **
 ** Code file of the database table plugin of Ananas
 ** Designer and Engine applications
@@ -30,6 +30,7 @@
 **********************************************************************/
 
 //--#include <qfocusdata.h>
+#include <stdlib.h>
 #include <qpainter.h>
 #include <qmessagebox.h>
 //Added by qt3to4:

@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: areport.cpp,v 1.26 2007/03/05 09:28:09 app Exp $
+** $Id: areport.cpp,v 1.27 2007/04/19 07:30:30 gr Exp $
 **
 ** Report metadata object implementation file of
 ** Ananas application library
@@ -49,7 +49,7 @@
 #include	"acalctemplate.h"
 #include 	"aservice.h"
 #include 	"alog.h"
-
+#include 	"stdlib.h"
 /*!
 *	\en
 *	Constuct object

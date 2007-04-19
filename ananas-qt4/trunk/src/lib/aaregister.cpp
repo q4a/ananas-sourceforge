@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: aaregister.cpp,v 1.39 2007/03/10 12:26:51 gr Exp $
+** $Id: aaregister.cpp,v 1.41 2007/04/19 07:30:30 gr Exp $
 **
 ** Code file of the Accumulation Register of Ananas
 ** Engine applications
@@ -33,6 +33,7 @@
 #include	"adatabase.h"
 #include	"adocjournal.h"
 #include 	"alog.h"
+#include	<stdlib.h>
 //Added by qt3to4:
 #include <QSqlQuery>
 
@@ -370,36 +371,43 @@ QVariant
 aARegister::getSaldoByManyDimensions(const QString &from, const QString &to, const QString & dimfieldname, QVariant dimvalue, const QString &resname)
 {
 	aSQLTable *t = table();
+	QString currentFilter;
+		
 	if(!t)
 	{
 		aLog::print(aLog::ERROR,QString(tr("Accumulation register not found main table")));
 		return QVariant::Invalid;
 	}
-//	t->clearFilter();
+	currentFilter = t->filter(); // QSqlCursor method call
+	
 	if(!t->setFilter(dimfieldname,dimvalue))
 	{
 		aLog::print(aLog::ERROR,tr("Accumulation register set filter"));
+		t->setFilter(  currentFilter ); // QSqlCursor method call
+		t->select();
 		return QVariant::Invalid;
 	}
 	QString flt = QString("date>='%1' and date<='%2' and %3 ").arg(from).arg(to).arg(t->getFilter());
 
 	QString query = QString("select sum(%1) from %2 where %3").arg(resSysNames[resname]).arg(t->tableName).arg(flt);
-//	t_dim->clearFilter();
-//	t_dim->select();
-
+	
 	aLog::print(aLog::INFO,QString("Accumulation register query %1").arg(query));
 	QSqlQuery q = db->db().exec(query);
 	q.last();
 	if(q.isValid())
 	{
+		t->setFilter( currentFilter );
+		t->select();
 		return q.value(0);//t->position(resSysNames[resname]));
 	}
 	else
 	{
 		aLog::print(aLog::DEBUG,"Accumulation register record empty");
 	}
-	return 0;// t_dim->value(resname);//QVariant::Invalid;
-
+	t->setFilter( currentFilter );
+	t->select();
+	return 0;
+	
 }
 /*!
  *\en

@@ -147,6 +147,7 @@ CREATE TABLE `ce828` (
 
 /*!40000 ALTER TABLE `ce828` DISABLE KEYS */;
 LOCK TABLES `ce828` WRITE;
+INSERT INTO `ce828` VALUES (1,'0',0,NULL,'ИНН',''),(2,'0',0,NULL,'Расч. счет',''),(3,'0',0,NULL,'Название',''),(4,'0',0,NULL,'Руководитель',''),(5,'0',0,NULL,'Главный бухгалтер',''),(6,'0',0,NULL,'КПП',''),(7,'0',0,NULL,'Банк',''),(8,'0',0,NULL,'Кассир',''),(9,'0',0,NULL,'ОКУД',''),(10,'0',0,NULL,'ОКПО',''),(11,'0',0,NULL,'Адрес','');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `ce828` ENABLE KEYS */;
 

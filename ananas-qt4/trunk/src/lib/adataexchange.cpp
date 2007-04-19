@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: adataexchange.cpp,v 1.13 2007/03/05 09:28:09 app Exp $
+** $Id: adataexchange.cpp,v 1.14 2007/04/19 07:30:30 gr Exp $
 **
 ** Import/export function implementation file of
 ** Ananas application
@@ -36,6 +36,7 @@
 #include <q3process.h>
 #include <QTextStream>
 #include <stdio.h>
+#include <stdlib.h>
 
 //#define ERROR true
 

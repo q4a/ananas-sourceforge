@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: efield.ui.h,v 1.12 2006/05/23 05:32:52 gr Exp $
+** $Id: efield.ui.h,v 1.13 2007/04/19 07:30:49 gr Exp $
 **
 ** Code file of the edit field plugin of Ananas
 ** Designer and Engine applications
@@ -36,6 +36,7 @@
 ** place of a destructor.
 *****************************************************************************/
 #include "acfg.h"
+#include <stdlib.h>
 
 void eField::init()
 {

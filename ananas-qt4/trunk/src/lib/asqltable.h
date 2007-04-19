@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: asqltable.h,v 1.46 2006/08/23 08:27:46 app Exp $
+** $Id: asqltable.h,v 1.48 2007/04/17 09:49:30 gr Exp $
 **
 ** Header file of the Ananas database table of Ananas
 ** Designer and Engine applications
@@ -54,14 +54,13 @@ class aSQLField;
 class  ANANAS_EXPORT aDataTable : public Q3SqlCursor
 {
 public:
-	aDatabase *db;
-	QString tableName;
+	aDatabase*	db;
+	QString 	tableName;
+	bool 		selected;
 
-
-	bool selected;
-	aSQLTable( aCfgItem context, aDatabase *adb );
-	aSQLTable( const QString &tname, aDatabase *adb );
-	virtual ~aSQLTable();
+				aSQLTable( aCfgItem context, aDatabase *adb );
+				aSQLTable( const QString &tname, aDatabase *adb );
+	virtual 	~aSQLTable();
 	void init( aCfgItem context, aDatabase *adb );
 	void setObject(aCfgItem context);
 	void appendField( aSQLField * fieldinfo );
@@ -71,6 +70,10 @@ public:
 	bool checkStructure( bool update );
 	long getMdObjId();
 	qulonglong getIdd();
+	void		printRecord();
+	//QDict<QVariant> getUserFilter();
+	//void		setUserFilter( QDict<QVariant> );
+
 	virtual QVariant value ( int i );
 	virtual QVariant value ( const QString & name );
 	virtual void setValue ( int i, QVariant value );
@@ -84,15 +87,15 @@ public:
 
 	virtual bool select( const QString & filter="", bool usefltr = true );
 	virtual bool select( qulonglong id );
-	virtual void clearFilter();
-	virtual bool setFilter( const QString &name, const QVariant &value );
-	virtual QString getFilter();
-	virtual QString getNFilter();
-	virtual bool exec( QString query );
-	void printRecord();
-	virtual QStringList getUserFields();
-	virtual ERR_Code setMarkDeleted( bool Deleted );
-	virtual bool isMarkDeleted();
+	virtual void		clearFilter();
+	virtual bool		setFilter( const QString &name, const QVariant &value );
+	virtual void		setFilter( const QString& );
+	virtual QString		getFilter();
+	virtual QString		getNFilter();
+	virtual bool		exec( QString query );
+	virtual QStringList	getUserFields();
+	virtual ERR_Code 	setMarkDeleted( bool Deleted );
+	virtual bool 		isMarkDeleted();
 
 	virtual bool New();
 	virtual bool Copy();
@@ -112,12 +115,14 @@ protected:
 	virtual QVariant calc_obj(int fid,qulonglong idd);
 	virtual QVariant calc_rem(int fid,qulonglong id);
 	void insertFieldInfo(aCfgItem cobj, bool calculated=true);
-	long mdobjId;
+
+	long		mdobjId;
 
 private:
 //	bool fNewNotUpdated;
-	aCfgItem obj,init_obj;
-	aCfg *md;
+	aCfgItem		obj;
+	aCfgItem		init_obj;
+	aCfg*			md;
 	Q3Dict<QObject> p_cat;
 	Q3Dict<QObject> p_doc;
 	Q3Dict<QObject> p_reg;

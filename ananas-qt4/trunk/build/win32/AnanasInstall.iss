@@ -3,7 +3,7 @@
 ; (c) Leader InfoTech, 2004
 ; (c) Valery Grazdankin ( leader ), 2004
 ; (c) patched by Andrey Paskal, 2005
-; (c) patched by Grigory Panov, 2005
+; (c) patched by Grigory Panov, 2005 - 2007
 
 [Languages]
 Name: Russian; MessagesFile: "compiler:languages\Russian.isl"
@@ -12,8 +12,8 @@ Name: English; MessagesFile: "compiler:default.isl"
 [Setup]
 SourceDir=..\..\
 AppName=Ananas
-AppVersion=0.9.3
-AppVerName=Ananas 0.9.3
+AppVersion=0.9.4
+AppVerName=Ananas 0.9.4
 
 AppPublisher=Ananas Team
 AppPublisherURL=http://ananas.lrn.ru, http://www.leaderit.ru/page=ananas
@@ -21,7 +21,7 @@ AppSupportURL=http://ananas.lrn.ru, http://www.leaderit.ru/page=ananas
 AppUpdatesURL=http://ananas.lrn.ru, http://www.leaderit.ru/page=ananas
 DefaultDirName={pf}\Ananas
 DefaultGroupName=Ananas
-AppCopyright=Copyright c 2002-2006 Leader InfoTech, Ananas Team
+AppCopyright=Copyright c 2002-2007 Leader InfoTech, Ananas Team
 DisableProgramGroupPage=yes
 AllowNoIcons=yes
 LicenseFile=COPYING.RU.cp1251
@@ -29,7 +29,7 @@ InfoBeforeFile=build\win32\secondstep.txt
 Compression=lzma
 SolidCompression=yes
 OutputDir=.\
-OutputBaseFilename=Ananas-Setup-0.9.3
+OutputBaseFilename=Ananas-Setup-0.9.4
 
 [Components]
 Name: "designer"; Description: "Дизайнер"; Types: full compact custom
@@ -68,7 +68,7 @@ Source: "src\ananas\ananas.exe"; DestDir: "{app}"; Components: runtime; Flags: i
 Source: "src\plugins\ananasplugin.dll"; DestDir: "{app}\designer"; Flags: ignoreversion
 ;Source: "src\plugins\rcplugin.dll"; DestDir: "{app}\designer"; Flags: ignoreversion
 ;Source: "src\webengine\ananas-webengine.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\ananas\bkground.jpg"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "src\ananas\bkground.jpg"; DestDir: "{app}"; Flags: ignoreversion
 ;Source: "src\designer\my.rc"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\lib\ananas.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "COPYING.RU.cp1251"; DestDir: "{app}"; Flags: ignoreversion
@@ -82,20 +82,20 @@ Source: "src\designer\templates\*.*"; DestDir: "{app}\templates"; Components: de
 Source: "applications\inventory\*.*"; DestDir: "{app}\applications\inventory"; Components: applications; Flags: ignoreversion
 
 Source: "src\extensions\aexttext.dll"; DestDir: "{app}\extensions"; Components: extensions\text; Flags: ignoreversion;
-Source: "src\extensions\aexttext.lib"; DestDir: "{app}\extensions"; Components: extensions\text; Flags: ignoreversion;
+;Source: "src\extensions\aexttext.lib"; DestDir: "{app}\extensions"; Components: extensions\text; Flags: ignoreversion;
 Source: "src\extensions\aextxml.dll"; DestDir: "{app}\extensions"; Components: extensions\xml; Flags: ignoreversion;
-Source: "src\extensions\aextxml.lib"; DestDir: "{app}\extensions"; Components: extensions\xml; Flags: ignoreversion;
+;Source: "src\extensions\aextxml.lib"; DestDir: "{app}\extensions"; Components: extensions\xml; Flags: ignoreversion;
 Source: "src\extensions\aext_meta.dll"; DestDir: "{app}\extensions"; Components: extensions\meta; Flags: ignoreversion;
-Source: "src\extensions\aext_meta.lib"; DestDir: "{app}\extensions"; Components: extensions\meta; Flags: ignoreversion;
-Source: "c:\Qt\3.2.1noncommercial\lib\qtmtnc321.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "c:\Qt\3.2.1noncommercial\lib\qsa110.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "c:\Qt\3.2.1noncommercial\plugins\designer\qseditorplugin.dll"; DestDir: "{app}\designer"; Flags: ignoreversion
+;Source: "src\extensions\aext_meta.lib"; DestDir: "{app}\extensions"; Components: extensions\meta; Flags: ignoreversion;
+Source: "c:\Qt\lib\qtmt3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "c:\Qt\lib\qsa114.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "c:\Qt\plugins\designer\qseditorplugin.dll"; DestDir: "{app}\designer"; Flags: ignoreversion
 
-Source: "c:\Qt\3.2.1noncommercial\plugins\sqldrivers\*.dll"; DestDir: "{app}\sqldrivers"; Flags: ignoreversion
+Source: "c:\Qt\plugins\sqldrivers\*.dll"; DestDir: "{app}\sqldrivers"; Flags: ignoreversion
 ;if qsqlmysqlu exist in c:\Qt\3.2.1noncommercial\plugins\sqldrivers, replaced it with src\plugins\mysql
 Source: "src\plugins\mysql\qsqlmysqlu.dll"; DestDir: "{app}\sqldrivers"; Flags: ignoreversion
 
-Source: "..\MySQL\MySQL Server 4.1\bin\libmysql.dll"; DestDir: "{app}"; Flags: ignoreversion
+;Source: "..\MySQL\MySQL Server 4.1\bin\libmysql.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;Source: "c:\qt\3.2.1noncommercial\bin\pq.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;Source: "c:\qt\3.2.1noncommercial\bin\cc3250.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;Source: "c:\qt\3.2.1noncommercial\bin\cc3250mt.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -156,13 +156,13 @@ Filename: "{app}\ananas.exe"; Components: runtime; Description: "{cm:LaunchProgr
 FileName: "{app}\MySQL Server 4.1\bin\mysqld-nt.exe"; Parameters: "--install MySQLAnanas ""--defaults-file={app}\mysqls~1.1\my.ini"" "; Components:  mysql; Flags: runhidden; StatusMsg: "Установка MySQL..."
 FileName: "net"; Parameters: "start MySQLAnanas"; Components:  mysql; Flags: shellexec runhidden
 
-FileName: "{app}\MySQL Server 4.1\bin\mysqladmin.exe"; Parameters: "-u root create ananas_system"; Components:  mysql; Flags: runhidden; StatusMsg: "Установка MySQL... Создание БД ananas_system"
+;FileName: "{app}\MySQL Server 4.1\bin\mysqladmin.exe"; Parameters: "-u root create ananas_system"; Components:  mysql; Flags: runhidden; StatusMsg: "Установка MySQL... Создание БД ananas_system"
 
-FileName: "{app}\MySQL Server 4.1\bin\mysqladmin.exe"; Parameters: "-u root create ananas_inventory"; Components:  mysql applications\inventory; Flags: runhidden; StatusMsg: "Установка MySQL... Создание БД ananas_inventory"
+FileName: "{app}\MySQL Server 4.1\bin\mysqladmin.exe"; Parameters: "-u root create ananas_inventory"; Components:  mysql applications\inventory; Flags: runhidden; StatusMsg: "Создание БД ananas_inventory..."
 FileName: "{app}\wininstall.bat"; Components: applications\inventory; Parameters: """{app}\MySQL Server 4.1\bin"" ""{app}\applications\inventory\""";  Flags: shellexec runhidden;
 FileName: "{app}\makerc.bat"; Components: applications\inventory; Parameters: """{app}\applications\inventory""  ""{app}\applications\inventory\inventory.cfg""  ""{app}\applications\inventory\inventorywin.rc""";  Flags: shellexec runhidden;
 
-FileName: "{app}\MySQL Server 4.1\bin\mysqladmin.exe"; Parameters: "-u root create ananas_inventory_demo"; Components:  mysql applications\inventory_demo; Flags: runhidden; StatusMsg: "Установка MySQL... Создание БД ananas_inventory_demo"
+FileName: "{app}\MySQL Server 4.1\bin\mysqladmin.exe"; Parameters: "-u root create ananas_inventory_demo"; Components:  mysql applications\inventory_demo; Flags: runhidden; StatusMsg: "Создание БД ananas_inventory_demo..."
 FileName: "{app}\demowininstall.bat"; Components: applications\inventory_demo; Parameters: """{app}\MySQL Server 4.1\bin"" ""{app}\applications\inventory\""";  Flags: shellexec runhidden;
 FileName: "{app}\makerc.bat"; Components: applications\inventory_demo; Parameters: """{app}\applications\inventory""  ""{app}\applications\inventory\inventory-demo.cfg""  ""{app}\applications\inventory\inventory-demowin.rc""";  Flags: shellexec runhidden;
 
@@ -226,6 +226,5 @@ procedure ananasAfterInstall();
 begin
   { copy files }
   FileCopy( ExpandConstant('{app}\designer\ananasplugin.dll'), ExpandConstant('{app}\ananasplugin.dll'), false);
-  
 end;
 

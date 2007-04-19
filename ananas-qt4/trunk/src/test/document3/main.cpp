@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: main.cpp,v 1.2 2005/12/19 12:42:12 gr Exp $
+** $Id: main.cpp,v 1.3 2007/04/19 07:33:58 gr Exp $
 ** 
 ** Test saldo for Ananas
 **
@@ -29,6 +29,7 @@
 #include "ananas.h"
 #include <qapplication.h>
 #include <math.h>
+#include <stdlib.h>
 #include <qmap.h>
 
 

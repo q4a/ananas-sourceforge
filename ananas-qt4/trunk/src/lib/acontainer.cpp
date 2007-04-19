@@ -1,5 +1,5 @@
 /****************************************************************************
-** $Id: acontainer.cpp,v 1.5 2006/10/09 14:01:07 app Exp $
+** $Id: acontainer.cpp,v 1.6 2007/04/19 07:30:30 gr Exp $
 **
 ** Data container implementation file of
 ** Ananas application
@@ -36,6 +36,7 @@
 #include <qdir.h>
 #include <q3process.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 
 aContainer::aContainer():QObject()
