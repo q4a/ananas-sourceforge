@@ -1,4 +1,4 @@
-TARGET = ananas
+TARGET = ananas4
 TEMPLATE = lib 
 shared:CONFIG += dll
 unix:VERSION = 1.0.1
@@ -140,8 +140,8 @@ TRANSLATIONS = \
     
 unix{
     alib.path = $(LIBDIR) 
-    alib.files = libananas.so.$$VERSION
-    alib.extra = cp -df libananas.so* $(INSTALL_ROOT)$(LIBDIR)
+    alib.files = libananas4.so.$$VERSION
+    alib.extra = cp -df libananas4.so* $(INSTALL_ROOT)$(LIBDIR)
 
     alibheader.path = $(INCLUDEDIR)
     alibheader.files = $$HEADERS
@@ -150,14 +150,14 @@ unix{
 
 win32 {
     alib.path = $(QTDIR)\lib
-    alib.files += ananas.dll
-    alib.files += ananas.lib
+    alib.files += ananas4.dll
+    alib.files += ananas4.lib
 #    alibheader.path = $(INCLUDEDIR)
 #    alibheader.files = $$HEADERS
 #    alibheader.files += tmp\ui\*h
       }
 
-INSTALLS += alib
+#INSTALLS += alib
 unix{
-    INSTALLS += alibheader
+#    INSTALLS += alibheader
 }

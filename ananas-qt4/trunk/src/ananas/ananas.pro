@@ -1,10 +1,10 @@
-TARGET = ananas
+TARGET = ananas4
 TEMPLATE = app
 
 DESTDIR = ../../bin
 
 INCLUDEPATH += ../lib ../../tmp/ui/lib ../plugins
-LIBS += -L../../lib -lananas -lananasplugin -L$(QTDIR)/lib -lqsa1
+LIBS += -L../../lib -lananas4 -lananasplugin4 #-L$(QTDIR)/lib -lqsa1
 #LIBS += -L$(QTDIR)/lib -lqsa1  -L../lib -lananas -L../plugins -lananasplugin # -lqui
 
 MOC_DIR = ../../tmp/moc/$$TARGET
@@ -32,11 +32,11 @@ TRANSLATIONS = \
     
 unix {
     ananas.path = $(BINDIR)
-    ananas.files = ananas
+    ananas.files = ananas4
 }
 win32{
 #    ananas.path =.
 #    ananas.extra = CALL create_base.bat
 }    
 
-INSTALLS += ananas
+#INSTALLS += ananas
