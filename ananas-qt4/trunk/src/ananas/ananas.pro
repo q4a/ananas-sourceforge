@@ -3,7 +3,7 @@ TEMPLATE = app
 
 DESTDIR = ../../bin
 
-INCLUDEPATH += ../lib ../../tmp/ui/lib ../plugins
+INCLUDEPATH += ../lib ../../tmp/ui/ananas ../plugins
 LIBS += -L../../lib -lananas4 -lananasplugin4 #-L$(QTDIR)/lib -lqsa1
 #LIBS += -L$(QTDIR)/lib -lqsa1  -L../lib -lananas -L../plugins -lananasplugin # -lqui
 

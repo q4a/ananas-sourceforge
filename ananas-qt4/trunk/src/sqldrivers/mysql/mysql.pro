@@ -1,8 +1,38 @@
+TARGET = qsqlmysql4
 TEMPLATE = lib
-TARGET	 = qsqlmysqlu
 
-CONFIG	+= qt plugin sql
-include (../../ananas.pri)
+QT = core sql
+CONFIG += qt plugin
+
+DESTDIR = ../../../lib
+DLLDESTDIR = ../../../bin/plugins/sqldrivers
+
+DEFINES += QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_ASCII
+
+MOC_DIR = ../../../tmp/moc/$$TARGET
+OBJECTS_DIR = ../../../tmp/obj/$$TARGET
+UI_DIR = ../../../tmp/ui/$$TARGET
+
+HEADERS = \
+    qsql_mysql.h
+SOURCES	= \
+    main.cpp \
+    qsql_mysql.cpp
+
+win32 {
+#    CONFIG += debug_and_release
+    CONFIG += release
+    LIBS *= -lmysql    
+}
+unix {
+    INCLUDEPATH += $$system(mysql_config --cflags|sed s/"-I"//)
+
+	!contains( LIBS, .*mysql.* ) {
+	    LIBS    *= $$system(mysql_config --libs) -lmysqlclient 
+	}
+}
+
+#include (../../ananas.pri)
 #unix:target.path  = .
 #win32:target.path = $(QTDIR)\plugins\sqldrivers
 #$(LIBDIR) = /usr/lib
@@ -10,44 +40,12 @@ include (../../ananas.pri)
 # 	$(LIBDIR)=/usr/lib
 #}	
 win32 {
-	sqlplugin.path = $(QTDIR)\plugins\sqldrivers
-	sqlplugin.files = qsqlmysqlu.*
-      }		
+	sqlplugin.path = $(QTDIR)/plugins/sqldrivers
+	sqlplugin.files = qsqlmysql4.*
+}		
 unix  {
 	sqlplugin.path = $(QTDIR)/plugins/sqldrivers
-	sqlplugin.files = libqsqlmysqlu.so
-      }	
+	sqlplugin.files = libqsqlmysql4.so
+}	
 
-#CONFIG	+= qt plugin
-HEADERS		= qsql_mysql.h
-SOURCES		= main.cpp \
-		  qsql_mysql.cpp
-
-unix {
-	OBJECTS_DIR = .obj
-        INCLUDEPATH	+= $$system(mysql_config --cflags|sed s/"-I"//)
-
-	!contains( LIBS, .*mysql.* ) {
-	    LIBS    *= $$system(mysql_config --libs) -lmysqlclient 
-	}
-}
-win32 {
-	OBJECTS_DIR = obj
-	LIBS	*= libmysql.lib
-        INCLUDEPATH	+= c:\mysql\include
-	LIBS	+= -Lc:\mysql\lib
-	LIBS	+= -Lc:\mysql\lib\opt
-#	win32-msvc: {
-#		LIBS *= delayimp.lib
-#		QMAKE_LFLAGS += /DELAYLOAD:libmysql.dll
-#	}
-#	win32-borland: {
-#		QMAKE_LFLAGS += /dlibmysql.dll
-#	}
-}
-
-REQUIRES	= sql
-
-INSTALLS += sqlplugin
-
-DEFINES +=MYSQL_UTF8
+#INSTALLS += sqlplugin

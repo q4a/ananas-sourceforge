@@ -60,7 +60,7 @@ QDesignerFormWindow::QDesignerFormWindow(QDesignerFormWindowInterface *editor, Q
     m_action = new QAction(this);
     m_action->setCheckable(true);
 
-    connect(m_editor->commandHistory(), SIGNAL(commandExecuted()), this, SLOT(updateChanged()));
+    connect((QObject*)m_editor->commandHistory(), SIGNAL(commandExecuted()), this, SLOT(updateChanged()));
     connect(m_editor, SIGNAL(fileNameChanged(QString)), this, SLOT(updateWindowTitle(QString)));
 }
 

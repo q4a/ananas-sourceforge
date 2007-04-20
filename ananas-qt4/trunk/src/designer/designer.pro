@@ -1,132 +1,159 @@
-TEMPLATE	= app
-LANGUAGE	= C++
+TARGET = ananas-designer
+TEMPLATE = app
+
+DESTDIR = ../../bin
+
+INCLUDEPATH += . ./formdesigner ../lib ../../tmp/ui/ananas ../plugins
+LIBS += -L../../lib -lananas4 -lananasplugin4 -lQtDesignerComponents4
+
+MOC_DIR = ../../tmp/moc/$$TARGET
+OBJECTS_DIR = ../../tmp/obj/$$TARGET
+UI_DIR = ../../tmp/ui/$$TARGET
 
 #LIBS	+= -L../lib -L../plugins -lananas -lananasplugin -lqsa -ldesignercore -lqassistantclient
-LIBS	+= -L. -L../lib -L../plugins -lananas -lananasplugin -lqsa -lformdesigner -lqassistantclient
-
+#LIBS	+= -L. -L../lib -L../plugins -lananas -lananasplugin -lqsa -lformdesigner -lqassistantclient
 #INCLUDEPATH	+= ../lib ../lib/tmp/ui ../lib/.ui $(QTDIR)/tools/designer/designer ../../qt-headers/tools/designer/designer /usr/lib
-INCLUDEPATH	+= ../lib ../lib/tmp/ui ../lib/.ui ./formdesigner /usr/lib
+#INCLUDEPATH	+= ../lib ../lib/tmp/ui ../lib/.ui ./formdesigner /usr/lib
 
-unix {
-    INCLUDEPATH +=./formdesigner/.ui
-}
-win32 {
-    INCLUDEPATH +=.\formdesigner\tmp\ui
-}
-
-HEADERS	+= mdtree.h \
-	formdesigner.h \
-	actiontree.h \
-	interfacetree.h \
-	aliaseditor.h \
-	pixmappreview.h \
-	atreeitems.h \
-	roleeditor.h
-
-SOURCES	+= main.cpp \
-	mdtree.cpp \
-	formdesigner.cpp \
-	interfacetree.cpp \
-	actiontree.cpp \
-	aliaseditor.cpp \
-	atreeitems.cpp \
-	roleeditor.cpp
-
-FORMS	= mainform.ui \
-	deditfield.ui \
-	cfgform.ui \
-	deditcfg.ui \
-	deditdoc.ui \
-	deditdialog.ui \
-	deditcat.ui \
-	deditreport.ui \
-	deditireg.ui \
-	deditareg.ui \
-	deditlang.ui \
-	deditaction.ui \
-	deditcolumns.ui \
-	deditwebform.ui \
-	deditjournal.ui \
-	dedittoolbar.ui \
-	deditcommand.ui \
-	deditrole.ui
-
-IMAGES	= images/print.png \
-	images/editcopy.png \
-	images/editcut.png \
-	images/editdelete.png \
-	images/editpaste.png \
-	images/filenew.png \
-	images/fileopen.png \
-	images/filesave.png \
-	images/function.png \
-	images/help.png \
-	images/hi22-action-project_open.png \
-	images/hi22-action-run.png \
-	images/object.png \
-	images/play.png \
-	images/playprev.png \
-	images/project.png \
-	images/qsa.png \
-	images/redo.png \
-	images/script.png \
-	images/scriptnew.png \
-	images/scriptobject.png \
-	images/searchfind.png \
-	images/a-system.png \
-	images/form.png \
-	images/form_g.png \
-	images/doc.png \
-	images/doc_g.png \
-	images/field.png \
-	images/journ.png \
-	images/journ_g.png \
-	images/reg.png \
-	images/reg_g.png \
-	images/regs.png \
-	images/regs_g.png \
-	images/report.png \
-	images/report_g.png \
-	images/table.png \
-	images/table_g.png \
-	images/cat.png \
-	images/cat_g.png \
-	images/msg_info.png \
-	images/msg_warning.png \
-	images/msg_error.png \
-	images/msg_fatal.png \
-	images/arrow_up.png \
-	images/arrow_down.png \
-	images/arrow_left.png \
-	images/arrow_right.png \
-	images/d_editdelete.png \
-	images/designer-splash-en.png \
-	images/designer-splash-ru.png \
-	images/editedit.png \
-	images/editrename.png \
-	images/editsep.png \
-	images/doc_h.png \
-	images/action_g.png \
-	images/actions.png \
-	images/columns.png \
-	images/dimensions.png \
-	images/group.png \
-	images/information.png \
-	images/m_menu.png \
-	images/p_menus.png \
-	images/resourses.png \
-	images/submenu.png \
-	images/toolbar.png \
-	images/undo.png \
-	images/element.png \
-	images/separator.png \
-	images/webform.png \
-	images/webform_g.png
-
-TARGET = ananas-designer
-#project for Designer application from Ananas automation accounting system
 include ( ../ananas.pri )
+load(qsa)
 
+HEADERS	= \
+    actiontree.h \
+    aliaseditor.h \
+    atreeitems.h \
+    cfgform.h \
+    cfgform.ui.h \
+    deditaction.h \
+    deditaction.ui.h \
+    deditareg.h \
+    deditareg.ui.h \
+    deditcat.h \
+    deditcat.ui.h \
+    deditcfg.h \
+    deditcfg.ui.h \
+    deditcolumns.h \
+    deditcolumns.ui.h \
+    deditcommand.h \
+    deditcommand.ui.h \
+    deditdialog.h \
+    deditdialog.ui.h \
+    deditdoc.h \
+    deditdoc.ui.h \
+    deditfield.h \
+    deditfield.ui.h \
+    deditimagecollection.h \
+    deditimagecollection.ui.h \
+    deditireg.h \
+    deditireg.ui.h \
+    deditjournal.h \
+    deditjournal.ui.h \
+    deditlang.h \
+    deditlang.ui.h \
+    deditreport.h \
+    deditreport.ui.h \
+    deditrole.h \
+    deditrole.ui.h \
+    dedittoolbar.h \
+    dedittoolbar.ui.h \
+    deditwebform.h \
+    deditwebform.ui.h \
+    formdesigner.h \
+    interfacetree.h \
+    mainform.h \
+    mainform.ui.h \
+    mdtree.h \
+    pixmappreview.h \
+    roleeditor.h \    
+    formdesigner/formwindowsettings.h \
+    formdesigner/newform.h \
+    formdesigner/plugindialog.h \
+    formdesigner/qdesigner_actioneditor.h \
+    formdesigner/qdesigner_actions.h \
+    formdesigner/qdesigner_formwindow.h \
+    formdesigner/qdesigner_objectinspector.h \
+    formdesigner/qdesigner_pch.h \
+    formdesigner/qdesigner_propertyeditor.h \
+    formdesigner/qdesigner_resourceeditor.h \
+    formdesigner/qdesigner_settings.h \
+    formdesigner/qdesigner_signalsloteditor.h \
+    formdesigner/qdesigner_toolwindow.h \
+    formdesigner/qdesigner_widgetbox.h \
+    formdesigner/qdesigner_workbench.h \
+    formdesigner/saveformastemplate.h
+
+SOURCES	= \
+    actiontree.cpp \
+    aliaseditor.cpp \
+    atreeitems.cpp \
+    cfgform.cpp \
+    deditaction.cpp \
+    deditareg.cpp \
+    deditcat.cpp \
+    deditcfg.cpp \
+    deditcolumns.cpp \
+    deditcommand.cpp \
+    deditdialog.cpp \
+    deditdoc.cpp \
+    deditfield.cpp \
+    deditimagecollection.cpp \
+    deditireg.cpp \
+    deditjournal.cpp \
+    deditlang.cpp \
+    deditreport.cpp \
+    deditrole.cpp \
+    dedittoolbar.cpp \
+    deditwebform.cpp \
+    formdesigner.cpp \
+    interfacetree.cpp \
+    main.cpp \
+    mainform.cpp \
+    mdtree.cpp \
+    roleeditor.cpp \    
+    formdesigner/formwindowsettings.cpp \
+    formdesigner/newform.cpp \
+    formdesigner/plugindialog.cpp \
+    formdesigner/qdesigner_actioneditor.cpp \
+    formdesigner/qdesigner_actions.cpp \
+    formdesigner/qdesigner_formwindow.cpp \
+    formdesigner/qdesigner_objectinspector.cpp \
+    formdesigner/qdesigner_propertyeditor.cpp \
+    formdesigner/qdesigner_resourceeditor.cpp \
+    formdesigner/qdesigner_settings.cpp \
+    formdesigner/qdesigner_signalsloteditor.cpp \
+    formdesigner/qdesigner_toolwindow.cpp \
+    formdesigner/qdesigner_widgetbox.cpp \
+    formdesigner/qdesigner_workbench.cpp \
+    formdesigner/saveformastemplate.cpp
+
+FORMS = \
+    cfgform.ui \
+    deditaction.ui \
+    deditareg.ui \
+    deditcat.ui \
+    deditcfg.ui \
+    deditcolumns.ui \
+    deditcommand.ui \
+    deditdialog.ui \
+    deditdoc.ui \
+    deditfield.ui \
+    deditimagecollection.ui \
+    deditireg.ui \
+    deditjournal.ui \
+    deditlang.ui \
+    deditreport.ui \
+    deditrole.ui \
+    dedittoolbar.ui \
+    deditwebform.ui \
+    mainform.ui \    
+    formdesigner/formwindowsettings.ui \
+    formdesigner/newform.ui \
+    formdesigner/plugindialog.ui \
+    formdesigner/saveformastemplate.ui
+
+RESOURCES = \
+    designer.qrc \
+    formdesigner/designer.qrc
 
 TRANSLATIONS = \
     ../../translations/ananas-designer-en.ts \
@@ -139,5 +166,5 @@ unix {
 #	acfg.files= testwrite.cfg
      }	
 
-INSTALLS += adesigner
+#INSTALLS += adesigner
 
