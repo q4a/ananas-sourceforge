@@ -4,7 +4,13 @@ TEMPLATE = app
 DESTDIR = ../../bin
 
 INCLUDEPATH += . ./formdesigner ../lib ../../tmp/ui/ananas ../plugins
-LIBS += -L../../lib -lananas4 -lananasplugin4 -lQtDesignerComponents4
+LIBS += -L../../lib -lananas4 -lananasplugin4
+unix {
+    LIBS += -lQDesignerComponents
+}
+win32{
+    LIBS += -lQtDesignerComponents4
+}
 
 MOC_DIR = ../../tmp/moc/$$TARGET
 OBJECTS_DIR = ../../tmp/obj/$$TARGET
