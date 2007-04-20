@@ -1,11 +1,14 @@
 TARGET = ananas-designer
 TEMPLATE = app
 
+CONFIG += designer
+
 DESTDIR = ../../bin
 
 INCLUDEPATH += . ./formdesigner ../lib ../../tmp/ui/ananas ../plugins
 LIBS += -L../../lib -lananas4 -lananasplugin4
 unix {
+    #LIBS += -L$(QTINC)/QtDesigner
     LIBS += -lQDesignerComponents
 }
 win32{
