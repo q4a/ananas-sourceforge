@@ -36,6 +36,8 @@
 #include "aFilterTestCase.h"
 #include "aServiceTestCase.h"
 #include "aMoneyTestCase.h"
+#include "aSQLTableTestCase.h"
+#include "aDatabaseTestCase.h"
 #include "TestSuite.h"
 
 namespace com_uwyn_qtunit
@@ -51,6 +53,8 @@ namespace com_uwyn_qtunit
 		aFilterTest 	m_aFilterTestCase;
 		aServiceTest	m_aServiceTestCase;
 		aMoneyTest	m_aMoneyTestCase;
+		aSQLTableTest	m_aSQLTableTestCase;
+		aDatabaseTest	m_aDatabaseTestCase;
 	};
 }
 
