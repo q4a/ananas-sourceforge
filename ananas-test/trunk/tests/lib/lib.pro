@@ -8,7 +8,6 @@ HEADERS	 	=	aCfgRcTestCase.h\
 			aFilterTestCase.h \
 			aServiceTestCase.h \
 			aMoneyTestCase.h \
-			aSQLTableTestCase.h \
 			aDatabaseTestCase.h \
 			aTestSuite.h
 
@@ -17,7 +16,6 @@ SOURCES		=	aCfgRcTestCase.cpp\
 			aFilterTestCase.cpp\
 			aServiceTestCase.cpp\
 			aMoneyTestCase.cpp\
-			aSQLTableTestCase.cpp\
 			aDatabaseTestCase.cpp\
 			aTestSuite.cpp\
 			aTestModule.cpp
