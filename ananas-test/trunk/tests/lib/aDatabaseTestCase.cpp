@@ -17,7 +17,7 @@
 ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 **
 **********************************************************************/
-
+#include <qapplication.h>
 #include "adatabase.h"
 #include "acfgrc.h"
 #include "aDatabaseTestCase.h"
@@ -33,6 +33,7 @@ aDatabaseTest::aDatabaseTest()
 void	
 aDatabaseTest::setUp()
 {
+	qApp->addLibraryPath( "/usr/lib/ananas/qt3plugins" );
 // 	QTextCodec::setCodecForCStrings( QTextCodec::codecForName("UTF8") );
 }
 
