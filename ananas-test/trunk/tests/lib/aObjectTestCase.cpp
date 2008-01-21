@@ -41,8 +41,6 @@ aObjectTest::aObjectTest()
 
 void aObjectTest::setUp()
 {
-	//rcFile = "tests/lib/test.rc";
-	//rcFileTest = "tests/lib/testTest.rc";
 }
 
 void aObjectTest::testCreateAbstractObject()
