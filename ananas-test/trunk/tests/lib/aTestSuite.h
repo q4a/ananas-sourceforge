@@ -37,6 +37,8 @@
 #include "aServiceTestCase.h"
 #include "aMoneyTestCase.h"
 #include "aDatabaseTestCase.h"
+#include "aObjectTestCase.h"
+
 #include "TestSuite.h"
 
 namespace com_uwyn_qtunit
@@ -53,6 +55,7 @@ namespace com_uwyn_qtunit
 		aServiceTest	m_aServiceTestCase;
 		aMoneyTest	m_aMoneyTestCase;
 		aDatabaseTest	m_aDatabaseTestCase;
+		aObjectTest		m_aObjectTestCase;
 	};
 }
 
