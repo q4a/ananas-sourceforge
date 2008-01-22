@@ -25,8 +25,7 @@
 **********************************************************************/
 #include "aObjectTestCase.h"
 #include "aobject.h"
-#include "adatabase.h"
-#include "acfgrc.h"
+#include "alog.h"
 
 
 
@@ -36,18 +35,46 @@ aObjectTest::aObjectTest()
 {
 	addTest(aObjectTest, testCreateAbstractObject);
 	addTest(aObjectTest, testCreateBadDataObject);
-
+	addTest(aObjectTest, testCreateCatalogueDataObject);
+	addTest(aObjectTest, testCreateDocumentDataObject);
+	addTest(aObjectTest, testCreateDocJournalDataObject);
+	addTest(aObjectTest, testCreateReportDataObject);
+	addTest(aObjectTest, testCreateARegisterDataObject);
 }
 
 void aObjectTest::setUp()
 {
+	aLog::init();
+
+	_dbParams = new aCfgRc;
+	_dataBase = new aDatabase;
+
+	_dbParams->setValue( "configfile" , "tests/lib/resources/inventory-demo.cfg");
+	_dbParams->setValue( "dbhost" , "localhost");
+	_dbParams->setValue( "dbname" , "tests_tmp_db");
+	_dbParams->setValue( "dbuser" , "root");
+	_dbParams->setValue( "dbpass" , "");
+	_dbParams->setValue( "dbtype" , "mysql");
+
+	// Устанавливаем соединение с базой данных dbname.
+	//qassertEquals( _dataBase->init( _dbParams, ""), true);
+	_dataBase->init( _dbParams, "");
+	
+	// Подгружаем содержимое файла метаданных в свойство cfg объекта доступа к БД
+	_dataBase->cfg.read( _dbParams->value("configfile"));
+
+
 }
 
 void aObjectTest::testCreateAbstractObject()
 {
-	aObject* abstractObject;
+	aObject* 	abstractObject;
 	abstractObject = new aObject();
+	
+	// абстрактный объект должен быть успешно создан
 	qassertNotEquals((int) abstractObject, 0);
+	qassertEquals( abstractObject->LastErrorCode(), 0); 
+	
 	if ( abstractObject != 0) {
 		delete abstractObject;
 	}
@@ -55,22 +82,9 @@ void aObjectTest::testCreateAbstractObject()
 
 void aObjectTest::testCreateBadDataObject()
 {
-	aCfgRc*		dbParams = new aCfgRc;
-	aDatabase*	dataBase = new aDatabase;
-
-	dbParams->setValue( "configfile" , "resourses/inventory-demo.cfg");
-	dbParams->setValue( "dbhost" , "localhost");
-	dbParams->setValue( "dbname" , "tests_tmp_db");
-	dbParams->setValue( "dbuser" , "root");
-	dbParams->setValue( "dbpass" , "");
-	dbParams->setValue( "dbtype" , "mysql");
-
-	// Устанавливаем соединение с базой данных dbname.
-	qassertEquals( dataBase->init( dbParams, ""), true);
-
 	// Создаем объект для тестирования
 	// Используем неправильные параметры.
-	aObject* dataObject  = new aObject("", dataBase, 0, "");
+	aObject* dataObject  = new aObject("", _dataBase);
 	
 	// получаем результаты теста
 	qassertNotEquals((int) dataObject, 0);
@@ -80,4 +94,78 @@ void aObjectTest::testCreateBadDataObject()
 		delete dataObject;
 	}
 	
+}
+
+void aObjectTest::testCreateCatalogueDataObject()
+{
+	// Создаем объект для тестирования
+	aObject* dataObject  = new aObject("Catalogue.Каталог товаров", _dataBase);
+	
+	// Объект создан успешно и ошибок во время его инициализации не возникло 
+	qassertNotEquals((int) dataObject, 0);
+	qassertEquals(dataObject->LastErrorCode(), 0); 
+	
+	if ( dataObject != 0) {
+		delete dataObject;
+	}
+}
+
+
+void aObjectTest::testCreateDocumentDataObject()
+{
+	// Создаем объект для тестирования
+	aObject* dataObject  = new aObject("Document.Расходная накладная", _dataBase);
+	
+	// Объект создан успешно и ошибок во время его инициализации не возникло 
+	qassertNotEquals((int) dataObject, 0);
+	qassertEquals(dataObject->LastErrorCode(), 0); 
+	
+	if ( dataObject != 0) {
+		delete dataObject;
+	}
+}
+
+
+void aObjectTest::testCreateDocJournalDataObject()
+{
+	// Создаем объект для тестирования
+	aObject* dataObject  = new aObject("DocJournal.Журнал прихода", _dataBase);
+	
+	// Объект создан успешно и ошибок во время его инициализации не возникло 
+	qassertNotEquals((int) dataObject, 0);
+	qassertEquals(dataObject->LastErrorCode(), 0); 
+	
+	if ( dataObject != 0) {
+		delete dataObject;
+	}
+}
+
+
+void aObjectTest::testCreateReportDataObject()
+{
+	// Создаем объект для тестирования
+	aObject* dataObject  = new aObject("Report.Движение товара", _dataBase);
+	
+	// Объект создан успешно и ошибок во время его инициализации не возникло 
+	qassertNotEquals((int) dataObject, 0);
+	qassertEquals(dataObject->LastErrorCode(), 0); 
+	
+	if ( dataObject != 0) {
+		delete dataObject;
+	}
+}
+
+
+void aObjectTest::testCreateARegisterDataObject()
+{
+	// Создаем объект для тестирования
+	aObject* dataObject  = new aObject("AccumulationRegister.Главная книга", _dataBase);
+	
+	// Объект создан успешно и ошибок во время его инициализации не возникло 
+	qassertNotEquals((int) dataObject, 0);
+	qassertEquals(dataObject->LastErrorCode(), 0); 
+	
+	if ( dataObject != 0) {
+		delete dataObject;
+	}
 }

@@ -29,20 +29,29 @@
 #include <qstring.h>
 
 #include "TestCase.h"
+#include "acfgrc.h"
+#include "adatabase.h"
+
 
 namespace com_uwyn_qtunit
 {
 	class aObjectTest : public TestCase
 	{
 	protected:
-		QString	rcFile;
-		QString	rcFileTest;
+		aCfgRc*		_dbParams;
+		aDatabase*	_dataBase;
+		
 	public:
 		aObjectTest();
 		void	setUp();
 	protected:
 		void 	testCreateAbstractObject();
 		void	testCreateBadDataObject();
+		void	testCreateCatalogueDataObject();
+		void	testCreateDocumentDataObject();
+		void	testCreateDocJournalDataObject();
+		void	testCreateReportDataObject();
+		void	testCreateARegisterDataObject();
 	};
 }
 
