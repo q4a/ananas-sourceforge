@@ -44,6 +44,7 @@ namespace com_uwyn_qtunit
 	public:
 		aObjectTest();
 		void	setUp();
+		void	tearDown();
 	protected:
 		void 	testCreateAbstractObject();
 		void	testCreateBadDataObject();

@@ -33,6 +33,8 @@ using namespace com_uwyn_qtunit;
 
 aObjectTest::aObjectTest()
 {
+	_dbParams = 0;
+	_dataBase = 0;
 	addTest(aObjectTest, testCreateAbstractObject);
 	addTest(aObjectTest, testCreateBadDataObject);
 	addTest(aObjectTest, testCreateCatalogueDataObject);
@@ -42,6 +44,9 @@ aObjectTest::aObjectTest()
 	addTest(aObjectTest, testCreateARegisterDataObject);
 }
 
+/**
+ * 	Запускается перед каждым методом-тестом
+ */
 void aObjectTest::setUp()
 {
 	aLog::init();
@@ -64,6 +69,21 @@ void aObjectTest::setUp()
 	_dataBase->cfg.read( _dbParams->value("configfile"));
 
 
+}
+
+/**
+ * 	Запускается после каждого метода-теста
+ */
+void aObjectTest::tearDown()
+{
+	if ( _dbParams ) {
+		delete _dbParams;
+		_dbParams = 0;
+	}
+	if ( _dataBase ) {
+		delete _dataBase;
+		_dataBase = 0;
+	}
 }
 
 void aObjectTest::testCreateAbstractObject()
